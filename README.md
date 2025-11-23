@@ -536,6 +536,9 @@ npm run build-storybook
 - [ ] reduced-motion対応（アニメーション無効化）
 - [ ] 多言語対応（i18n）
 - [ ] テーマカスタマイザー
+- [ ] Style Dictionaryとの統合検討（マルチプラットフォーム対応時）
+  - 現在はPanda CSSのトークンシステムで十分
+  - 将来的にiOS/Androidアプリ等を作る場合に検討
 
 ## 🤝 コントリビューション
 
