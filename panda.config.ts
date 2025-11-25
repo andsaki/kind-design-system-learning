@@ -221,6 +221,44 @@ export default defineConfig({
       margin: "0 auto",
       textAlign: "left",
     },
+    // Typography base styles
+    "h1, h2, h3, h4, h5, h6": {
+      marginTop: "6",
+      marginBottom: "4",
+      fontWeight: "bold",
+      lineHeight: "tight",
+      color: "contents.primary",
+    },
+    h1: { fontSize: "5xl", marginTop: "8", marginBottom: "6" },
+    h2: { fontSize: "4xl", marginTop: "8", marginBottom: "5" },
+    h3: { fontSize: "3xl", marginTop: "6", marginBottom: "4" },
+    h4: { fontSize: "2xl", marginTop: "6", marginBottom: "3" },
+    h5: { fontSize: "xl", marginTop: "5", marginBottom: "3" },
+    h6: { fontSize: "lg", marginTop: "4", marginBottom: "2" },
+    p: {
+      marginBottom: "4",
+      lineHeight: "relaxed",
+      color: "contents.primary",
+    },
+    "ul, ol": {
+      marginBottom: "4",
+      paddingLeft: "6",
+      lineHeight: "relaxed",
+    },
+    li: {
+      marginBottom: "2",
+      color: "contents.primary",
+    },
+    code: {
+      fontSize: "sm",
+      fontFamily: "mono",
+      backgroundColor: "gray.100",
+      padding: "1",
+      borderRadius: "sm",
+      _dark: {
+        backgroundColor: "gray.800",
+      },
+    },
     'input[type="checkbox"], input[type="radio"]': {
       accentColor: "#3b82f6",
     },
