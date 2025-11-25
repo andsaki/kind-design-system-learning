@@ -232,6 +232,7 @@ export const Toast: React.FC<ToastProps> = ({
 
       {/* 閉じるボタン */}
       <button
+        type="button"
         onClick={handleClose}
         aria-label="通知を閉じる"
         className={cx(closeButton, textColorClass)}

@@ -112,6 +112,7 @@ export const Modal: React.FC<ModalProps> = ({
             {title}
           </h2>
           <button
+            type="button"
             onClick={onClose}
             className={cx(
               slots.closeButton,
