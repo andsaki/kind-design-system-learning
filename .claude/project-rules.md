@@ -619,6 +619,55 @@ export const UsageExample: Story = { /* 使用例 */ };
 - **開発効率**: 独立した環境でコンポーネントを開発
 - **デザインレビュー**: デザイナーと開発者が同じものを見て議論できる
 
+## 🤖 MCP (Model Context Protocol) Rules
+
+### TypeScript MCP
+
+#### 基本原則
+- **構文の解析にはMCPを使用すること**
+- **命名の置換に際してはMCPを使用し影響範囲を確定させること**
+
+#### 利用可能なMCP操作
+
+**1. セマンティックなファイル操作**
+- `mcp__typescript__move_file` - ファイル移動時にインポート文を自動更新
+- `mcp__typescript__move_directory` - ディレクトリ全体を移動し、すべてのインポートを更新
+
+**2. シンボル操作**
+- `mcp__typescript__rename_symbol` - プロジェクト全体でシンボルをリネーム
+- `mcp__typescript__delete_symbol` - シンボルとその参照をすべて削除
+- `mcp__typescript__find_references` - シンボルへのすべての参照を検索
+
+**3. コード分析**
+- `mcp__typescript__get_definitions` - シンボルの定義位置を取得
+- `mcp__typescript__get_diagnostics` - TypeScriptのエラーや警告を取得
+- `mcp__typescript__get_module_symbols` - モジュールのエクスポートを一覧表示
+- `mcp__typescript__get_type_in_module` / `mcp__typescript__get_type_at_symbol` - 詳細な型シグネチャを取得
+
+### Context7
+
+#### 基本原則
+1. **最新ライブラリの調査や命令を取得できる**
+2. **未知のバージョンのライブラリ等の場合 context7 を使用し、ライブラリの仕様を加味して実装を行うこと**
+
+#### 使用タイミング
+- 新しいライブラリやツールを導入する際
+- ライブラリのバージョンアップ時
+- 公式ドキュメントの最新情報が必要な場合
+- 未知のAPIやフレームワークの仕様確認
+
+### Playwright MCP
+
+#### アクセシビリティ検証
+- コンポーネントの実装後、Playwright MCPを使用してアクセシビリティ検証を実施すること
+- WCAG準拠を確認すること
+
+#### 利用可能な操作
+- `playwright_navigate` / `playwright_click` / `playwright_fill` - ブラウザ操作
+- `playwright_screenshot` - スクリーンショット取得
+- `playwright_evaluate` - JavaScript実行
+- アクセシビリティチェック（要素のaria属性、フォーカス状態の確認）
+
 ## 📚 参考資料
 
 ### 必読ドキュメント
