@@ -228,7 +228,7 @@ export default defineConfig({
       fontWeight: "bold",
       lineHeight: "tight",
       color: "contents.primary",
-      wordBreak: "keep-all",
+      wordBreak: "auto-phrase",
       overflowWrap: "break-word",
     },
     h1: { fontSize: "5xl", marginTop: "8", marginBottom: "6" },
