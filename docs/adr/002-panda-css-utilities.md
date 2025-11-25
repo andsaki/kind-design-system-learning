@@ -46,6 +46,14 @@
 **デメリット**
 - ⚠️ `@/styled-system` への alias 設定が必要（tsconfig / Vite で実施済み）
 
+### （補足）Tailwind CSS + semantic tokens を className で管理
+
+**懸念点**
+- ❌ `tokens.ts` と `tailwind.config.ts` の両方で semantic token を同期する必要があり、定義の二重管理になる。
+- ❌ クラス名は文字列のため型安全性がなく、`bg-surface-invers` のような typo をビルド時に検知できない。
+- ❌ VSCode の補完もユーティリティクラス単位に留まり、`colors.background.surface.inverse` のような階層的な token 名を明示できない。
+- ❌ 擬似クラスやブレークポイントを `hover:` や `md:` で足し合わせるため、状態ごとのスタイルが分散し可読性が落ちる。
+
 ## 決定
 
 **Panda CSS の `css()` / `cx()` を React セクションおよび主要コンポーネントで積極的に採用する。**
