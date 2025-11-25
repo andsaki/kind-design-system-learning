@@ -35,6 +35,7 @@ const barBase = css({
 export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onClick }) => {
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-label={isOpen ? '目次を閉じる' : '目次を開く'}
       aria-expanded={isOpen}
