@@ -61,13 +61,14 @@ export const breadcrumbs: SlotRecipeConfig = {
     wcagLevel: {
       A: {
         item: {
-          color: "gray.500",
+          color: "contents.secondary",
           "&[data-current='true']": {
-            color: "gray.700",
+            color: "contents.primary",
+            fontWeight: "medium",
           },
         },
         link: {
-          color: "blue.500",
+          color: "contents.link",
           _hover: {
             color: "blue.600",
             textDecorationThickness: "0.125rem",
@@ -81,20 +82,21 @@ export const breadcrumbs: SlotRecipeConfig = {
           },
         },
         separator: {
-          color: "gray.400",
+          color: "contents.tertiary",
         },
       },
       AA: {
         item: {
-          color: "gray.600",
+          color: "contents.secondary",
           "&[data-current='true']": {
-            color: "gray.900",
+            color: "contents.primary",
+            fontWeight: "semibold",
           },
         },
         link: {
-          color: "blue.700",
+          color: "contents.link",
           _hover: {
-            color: "blue.800",
+            color: "blue.700",
             textDecorationThickness: "0.125rem",
           },
           _focusVisible: {
@@ -106,14 +108,15 @@ export const breadcrumbs: SlotRecipeConfig = {
           },
         },
         separator: {
-          color: "gray.400",
+          color: "contents.tertiary",
         },
       },
       AAA: {
         item: {
-          color: "gray.700",
+          color: "contents.primary",
           "&[data-current='true']": {
-            color: "gray.900",
+            color: "contents.primary",
+            fontWeight: "bold",
           },
         },
         link: {
@@ -131,7 +134,7 @@ export const breadcrumbs: SlotRecipeConfig = {
           },
         },
         separator: {
-          color: "gray.500",
+          color: "contents.secondary",
         },
       },
     },
