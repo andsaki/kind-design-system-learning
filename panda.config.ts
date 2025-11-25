@@ -252,11 +252,13 @@ export default defineConfig({
     code: {
       fontSize: "sm",
       fontFamily: "mono",
-      backgroundColor: "gray.100",
+      backgroundColor: "gray.200",
+      color: "gray.800",
       padding: "1",
       borderRadius: "sm",
       _dark: {
-        backgroundColor: "gray.800",
+        backgroundColor: "gray.700",
+        color: "gray.100",
       },
     },
     'input[type="checkbox"], input[type="radio"]': {
