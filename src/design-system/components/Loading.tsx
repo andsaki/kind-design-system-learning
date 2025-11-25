@@ -110,6 +110,7 @@ export const Loading: React.FC<LoadingProps> = ({
   );
 
   if (fullscreen) {
+    // 背景の操作を完全に塞ぐモーダルオーバーレイとして扱う
     return (
       <div
         style={{
@@ -124,7 +125,7 @@ export const Loading: React.FC<LoadingProps> = ({
           justifyContent: "center",
           zIndex: 9999,
         }}
-        aria-modal="true"
+        aria-modal="true" // 背景が操作できないモーダルであることを支援技術に伝える
       >
         {spinner}
       </div>

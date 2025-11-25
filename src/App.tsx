@@ -9,6 +9,7 @@ import { MobileDrawer } from "./components/MobileDrawer";
 import { useActiveSection } from "./hooks/useActiveSection";
 import { useTheme } from "./design-system/theme";
 import { ComponentDemos } from "./sections/ComponentDemos";
+import { ARIAProperties } from "./sections/ARIAProperties";
 import { ARIAGuide } from "./sections/ARIAGuide";
 import { AccessibilityFeatures } from "./sections/AccessibilityFeatures";
 import { WCAGLevels } from "./sections/WCAGLevels";
@@ -111,6 +112,7 @@ function App() {
     { id: "modal-component", title: "Modalコンポーネント" },
     { id: "text-component", title: "Textコンポーネント" },
     { id: "breadcrumbs-component", title: "Breadcrumbsコンポーネント" },
+    { id: "aria-properties", title: "WAI-ARIA主要プロパティ" },
     { id: "aria-guide", title: "ARIAラベルとrole属性" },
     { id: "accessibility-features", title: "アクセシビリティ機能" },
     { id: "wcag-levels", title: "WCAGレベルとコントラスト比" },
@@ -357,6 +359,8 @@ function App() {
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
           />
+
+          <ARIAProperties />
 
           <ARIAGuide />
 

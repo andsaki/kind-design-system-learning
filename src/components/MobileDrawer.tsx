@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import { spacing, typography, colors, radii } from '../design-system/tokens';
 import { primitive } from '../design-system/tokens/colors';
 
@@ -20,6 +20,10 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   items,
   activeId,
 }) => {
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const headingId = useId();
+  const previouslyFocusedElement = useRef<HTMLElement | null>(null);
+
   // ドロワーが開いているときはスクロールを無効化
   useEffect(() => {
     if (isOpen) {
@@ -42,6 +46,25 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
+
+  // モーダルを開いたときにフォーカスを移動し、閉じたら元に戻す
+  useEffect(() => {
+    if (isOpen) {
+      if (document.activeElement instanceof HTMLElement) {
+        previouslyFocusedElement.current = document.activeElement;
+      }
+      // レイアウトが更新された後でフォーカスを移動する
+      const id = requestAnimationFrame(() => {
+        drawerRef.current?.focus();
+      });
+      return () => cancelAnimationFrame(id);
+    }
+
+    if (previouslyFocusedElement.current) {
+      previouslyFocusedElement.current.focus();
+      previouslyFocusedElement.current = null;
+    }
+  }, [isOpen]);
 
   const handleClick = (id: string) => {
     const element = document.getElementById(id);
@@ -74,10 +97,12 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
       />
 
       {/* ドロワー */}
-      <nav
+      <div
+        ref={drawerRef}
         role="dialog"
-        aria-label="目次"
+        aria-labelledby={headingId}
         aria-modal="true"
+        tabIndex={-1}
         style={{
           position: 'fixed',
           top: 0,
@@ -98,6 +123,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
       >
         <div style={{ marginTop: spacing.scale[12] }}>
           <h2
+            id={headingId}
             style={{
               margin: 0,
               marginBottom: spacing.scale[4],
@@ -108,60 +134,62 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
           >
             目次
           </h2>
-          <ul
-            style={{
-              listStyle: 'none',
-              margin: 0,
-              padding: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: spacing.scale[2],
-            }}
-          >
-            {items.map((item) => {
-              const isActive = activeId === item.id;
-              return (
-                <li key={item.id}>
-                  <a
-                    href={`#${item.id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleClick(item.id);
-                    }}
-                    style={{
-                      display: 'block',
-                      padding: `${spacing.scale[2]} ${spacing.scale[3]}`,
-                      fontSize: typography.fontSize.sm,
-                      color: isActive ? primitive.blue[700] : primitive.gray[700],
-                      textDecoration: 'none',
-                      borderRadius: radii.borderRadius.base,
-                      backgroundColor: isActive ? primitive.blue[50] : 'transparent',
-                      borderLeft: isActive
-                        ? `3px solid ${primitive.blue[500]}`
-                        : `3px solid transparent`,
-                      fontWeight: isActive ? 600 : 400,
-                      transition: 'all 0.2s ease',
-                      cursor: 'pointer',
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isActive) {
-                        e.currentTarget.style.backgroundColor = primitive.gray[100];
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isActive) {
-                        e.currentTarget.style.backgroundColor = 'transparent';
-                      }
-                    }}
-                  >
-                    {item.title}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
+          <nav aria-label="目次">
+            <ul
+              style={{
+                listStyle: 'none',
+                margin: 0,
+                padding: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: spacing.scale[2],
+              }}
+            >
+              {items.map((item) => {
+                const isActive = activeId === item.id;
+                return (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleClick(item.id);
+                      }}
+                      style={{
+                        display: 'block',
+                        padding: `${spacing.scale[2]} ${spacing.scale[3]}`,
+                        fontSize: typography.fontSize.sm,
+                        color: isActive ? primitive.blue[700] : primitive.gray[700],
+                        textDecoration: 'none',
+                        borderRadius: radii.borderRadius.base,
+                        backgroundColor: isActive ? primitive.blue[50] : 'transparent',
+                        borderLeft: isActive
+                          ? `3px solid ${primitive.blue[500]}`
+                          : `3px solid transparent`,
+                        fontWeight: isActive ? 600 : 400,
+                        transition: 'all 0.2s ease',
+                        cursor: 'pointer',
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isActive) {
+                          e.currentTarget.style.backgroundColor = primitive.gray[100];
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isActive) {
+                          e.currentTarget.style.backgroundColor = 'transparent';
+                        }
+                      }}
+                    >
+                      {item.title}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
         </div>
-      </nav>
+      </div>
     </>
   );
 };
