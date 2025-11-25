@@ -55,6 +55,7 @@ export const button: RecipeConfig = {
     transition: "all 0.2s ease-in-out",
     borderRadius: "md",
     outline: "none",
+    outlineStyle: "solid",
     position: "relative",
     gap: "0.5rem",
     _disabled: {

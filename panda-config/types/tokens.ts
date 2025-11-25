@@ -139,8 +139,8 @@ export const pandaSizes: GetPandaConfigMap<"sizes"> = {
   spinnerMd: { value: '1.5rem' },       // 24px
   spinnerLg: { value: '2rem' },         // 32px
   spinnerXl: { value: '3rem' },         // 48px
-  spinnerInlineSm: { value: '0.875rem' }, // 14px
-  spinnerInlineMd: { value: '1.125rem' }, // 18px
+  spinnerInlineSm: { value: '1em' },    // フォントサイズに追従
+  spinnerInlineMd: { value: '1.25em' }, // フォントサイズに追従
 };
 
 /**

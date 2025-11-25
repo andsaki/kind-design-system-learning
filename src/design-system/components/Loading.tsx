@@ -85,17 +85,12 @@ export const Loading: React.FC<LoadingProps> = ({
   return spinner;
 };
 
-const inlineSizeVariantMap = {
-  sm: "inline-sm",
-  md: "inline-md",
-} as const;
-
 export const InlineLoading: React.FC<{
   size?: "sm" | "md";
   color?: "primary" | "secondary";
 }> = ({ size = "sm", color = "primary" }) => {
-  const inlineSlots = loadingRecipe({
-    size: inlineSizeVariantMap[size],
+  const slots = loadingRecipe({
+    size: size === "sm" ? "inline-sm" : "inline-md",
     color,
   });
 
@@ -103,13 +98,7 @@ export const InlineLoading: React.FC<{
     <svg
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={cx(
-        inlineSlots.spinner,
-        css({
-          display: "inline-block",
-          verticalAlign: "middle",
-        })
-      )}
+      className={slots.spinner}
       role="status"
       aria-label="読み込み中"
     >

@@ -33,10 +33,20 @@ export const loading: SlotRecipeConfig = {
       lg: { spinner: { width: "sizes.spinnerLg", height: "sizes.spinnerLg" } },
       xl: { spinner: { width: "sizes.spinnerXl", height: "sizes.spinnerXl" } },
       "inline-sm": {
-        spinner: { width: "sizes.spinnerInlineSm", height: "sizes.spinnerInlineSm" },
+        spinner: {
+          width: "1em",
+          height: "1em",
+          display: "inline-block",
+          verticalAlign: "middle",
+        },
       },
       "inline-md": {
-        spinner: { width: "sizes.spinnerInlineMd", height: "sizes.spinnerInlineMd" },
+        spinner: {
+          width: "1.25em",
+          height: "1.25em",
+          display: "inline-block",
+          verticalAlign: "middle",
+        },
       },
     },
     color: {
