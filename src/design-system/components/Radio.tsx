@@ -43,7 +43,7 @@ export const Radio: React.FC<RadioProps> = ({
         className={slots.control}
         {...props}
       />
-      <div className={css({ flex: 1 })}>
+      <div>
         <label
           htmlFor={radioId}
           className={slots.label}
