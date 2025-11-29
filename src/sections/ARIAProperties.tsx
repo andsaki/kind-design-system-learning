@@ -245,6 +245,8 @@ const demoContainerClass = css({
 const demoLabelClass = css({
   fontSize: "sm",
   color: "contents.secondary",
+  wordBreak: "keep-all",
+  overflowWrap: "anywhere",
 });
 
 const tipBoxClass = css({
