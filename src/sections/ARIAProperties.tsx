@@ -298,6 +298,9 @@ const comparisonBoxBase = css({
   mb: 3,
   borderWidth: "thin",
   borderStyle: "solid",
+  display: "flex",
+  flexDirection: "column",
+  gap: 2,
 });
 
 const comparisonBoxRed = css({
@@ -324,7 +327,6 @@ const comparisonBoxGreen = css({
 
 const comparisonTextClass = css({
   m: 0,
-  mt: 2,
   color: "contents.secondary",
   fontStyle: "italic",
   fontSize: "sm",
@@ -615,14 +617,18 @@ export const ARIAProperties = () => {
             </h4>
 
             <div className={cx(comparisonBoxBase, comparisonBoxRed)}>
-              <strong className={css({ color: { base: token("colors.red.900"), _dark: token("colors.red.100") } })}>❌ aria-describedby なし:</strong>
+              <div>
+                <strong className={css({ color: { base: token("colors.red.900"), _dark: token("colors.red.100") } })}>❌ aria-describedby なし:</strong>
+              </div>
               <p className={comparisonTextClass}>
                 "メールアドレス 編集可能"
               </p>
             </div>
 
             <div className={cx(comparisonBoxBase, comparisonBoxGreen)}>
-              <strong className={css({ color: { base: token("colors.green.900"), _dark: token("colors.green.100") } })}>✅ aria-describedby あり:</strong>
+              <div>
+                <strong className={css({ color: { base: token("colors.green.900"), _dark: token("colors.green.100") } })}>✅ aria-describedby あり:</strong>
+              </div>
               <p className={comparisonTextClass}>
                 "メールアドレス 無効 編集可能 無効なメールアドレス"
               </p>
