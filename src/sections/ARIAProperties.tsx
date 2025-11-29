@@ -164,6 +164,7 @@ const innerCardBase = css({
   rounded: "md",
   borderWidth: "thin",
   borderStyle: "solid",
+  overflowX: "auto",
 });
 
 const innerCardPinkClass = css({
