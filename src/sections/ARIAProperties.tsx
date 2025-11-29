@@ -19,7 +19,7 @@ const sectionClass = css({
 
 const headingClass = css({
   mt: 0,
-  color: "contents.primary",
+  color: "contents.secondary",
   fontSize: "2xl",
   fontWeight: "bold",
   borderBottomWidth: "thick",
@@ -244,7 +244,7 @@ const demoContainerClass = css({
 
 const demoLabelClass = css({
   fontSize: "sm",
-  color: "contents.tertiary",
+  color: "contents.secondary",
 });
 
 const tipBoxClass = css({
