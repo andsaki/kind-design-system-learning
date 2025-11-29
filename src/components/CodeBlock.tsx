@@ -5,13 +5,13 @@ import { css } from '@/styled-system/css';
 
 const tokenColorClassMap = {
   text: css({ color: 'gray.200' }),
-  tag: css({ color: 'blue.300' }),
-  selector: css({ color: 'blue.300' }),
-  property: css({ color: 'blue.300' }),
-  string: css({ color: 'green.300' }),
+  tag: css({ color: 'blue.200' }),
+  selector: css({ color: 'blue.200' }),
+  property: css({ color: 'blue.200' }),
+  string: css({ color: 'green.200' }),
   comment: css({ color: 'gray.500' }),
-  keyword: css({ color: 'pink.300' }),
-  value: css({ color: 'orange.300' }),
+  keyword: css({ color: 'pink.200' }),
+  value: css({ color: 'orange.200' }),
 };
 
 interface CodeBlockProps {
@@ -276,6 +276,8 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
           <code
             className={css({
               display: 'block',
+              backgroundColor: 'transparent !important',
+              padding: 0,
             })}
           >
             {showLineNumbers ? (
