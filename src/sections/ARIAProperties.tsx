@@ -267,7 +267,7 @@ const tipBoxClass = css({
   },
 });
 
-const roleItemClass = css({
+const accessibilityItemClass = css({
   p: 3,
   bg: {
     base: token("colors.blue.50"),
@@ -276,18 +276,18 @@ const roleItemClass = css({
   rounded: "sm",
 });
 
-const roleCodeClass = css({
+const accessibilityItemTitleClass = css({
   color: {
     base: token("colors.blue.800"),
     _dark: token("colors.blue.200"),
   },
   fontWeight: "semibold",
   fontSize: "base",
+  mb: 2,
 });
 
-const roleDescClass = css({
+const accessibilityItemDescClass = css({
   m: 0,
-  mt: 2,
   color: "contents.secondary",
   fontSize: "sm",
 });
@@ -485,47 +485,47 @@ export const ARIAProperties = () => {
             </h4>
 
             <div className={gridClass}>
-              <div className={roleItemClass}>
-                <code className={roleCodeClass}>
+              <div className={accessibilityItemClass}>
+                <code className={accessibilityItemTitleClass}>
                   role="button"
                 </code>
-                <p className={roleDescClass}>
+                <p className={accessibilityItemDescClass}>
                   ボタンとして機能（可能な限り &lt;button&gt; を使用）
                 </p>
               </div>
 
-              <div className={roleItemClass}>
-                <code className={roleCodeClass}>
+              <div className={accessibilityItemClass}>
+                <code className={accessibilityItemTitleClass}>
                   role="dialog"
                 </code>
-                <p className={roleDescClass}>
+                <p className={accessibilityItemDescClass}>
                   モーダルダイアログ（aria-modal="true" と組み合わせる）
                 </p>
               </div>
 
-              <div className={roleItemClass}>
-                <code className={roleCodeClass}>
+              <div className={accessibilityItemClass}>
+                <code className={accessibilityItemTitleClass}>
                   role="navigation"
                 </code>
-                <p className={roleDescClass}>
+                <p className={accessibilityItemDescClass}>
                   ナビゲーション領域（&lt;nav&gt; は暗黙的にこのroleを持つ）
                 </p>
               </div>
 
-              <div className={roleItemClass}>
-                <code className={roleCodeClass}>
+              <div className={accessibilityItemClass}>
+                <code className={accessibilityItemTitleClass}>
                   role="alert"
                 </code>
-                <p className={roleDescClass}>
+                <p className={accessibilityItemDescClass}>
                   重要な即時通知（エラーメッセージ、警告）
                 </p>
               </div>
 
-              <div className={roleItemClass}>
-                <code className={roleCodeClass}>
+              <div className={accessibilityItemClass}>
+                <code className={accessibilityItemTitleClass}>
                   role="tooltip"
                 </code>
-                <p className={roleDescClass}>
+                <p className={accessibilityItemDescClass}>
                   ツールチップ（aria-describedby で参照）
                 </p>
               </div>
