@@ -3,47 +3,6 @@ import { CodeBlock } from "../components/CodeBlock";
 import { spacing, typography, radii, icons, borders } from "../design-system/tokens";
 import { token } from "@/styled-system/tokens";
 
-// Primitive colors helper
-const primitive = {
-  white: '#ffffff',
-  black: '#000000',
-  yellow: '#ffeb3b',
-  gray: {
-    600: token('colors.gray.600'),
-    700: token('colors.gray.700'),
-    900: token('colors.gray.900'),
-  },
-  pink: {
-    50: token('colors.pink.50'),
-    200: token('colors.pink.200'),
-    500: token('colors.pink.500'),
-    600: token('colors.pink.600'),
-    900: token('colors.pink.900'),
-  },
-  blue: {
-    50: token('colors.blue.50'),
-    200: token('colors.blue.200'),
-    800: token('colors.blue.800'),
-    900: token('colors.blue.900'),
-  },
-  green: {
-    50: token('colors.green.50'),
-    200: token('colors.green.200'),
-    300: token('colors.green.300'),
-    900: token('colors.green.900'),
-  },
-  red: {
-    50: token('colors.red.50'),
-    200: token('colors.red.200'),
-    900: token('colors.red.900'),
-  },
-  orange: {
-    50: token('colors.orange.50'),
-    200: token('colors.orange.200'),
-    900: token('colors.orange.900'),
-  },
-};
-
 export const ARIAProperties = () => {
 
   return (
@@ -52,7 +11,7 @@ export const ARIAProperties = () => {
       style={{
         marginBottom: spacing.scale[12],
         padding: spacing.scale[6],
-        backgroundColor: '#ffffff',
+        backgroundColor: token('colors.white'),
         borderRadius: radii.borderRadius.lg,
         border: borders.default,
         maxWidth: '100%',
@@ -62,22 +21,22 @@ export const ARIAProperties = () => {
     >
       <h2 style={{
         marginTop: 0,
-        color: primitive.gray[900],
+        color: token("colors.gray.900"),
         fontSize: typography.fontSize['2xl'],
         fontWeight: 'bold',
-        borderBottom: `${borders.width.thick} solid ${primitive.pink[500]}`,
+        borderBottom: `${borders.width.thick} solid ${token("colors.pink.500")}`,
         paddingBottom: spacing.scale[2],
         marginBottom: spacing.scale[6],
         display: 'flex',
         alignItems: 'center',
         gap: spacing.scale[2]
       }}>
-        <icons.concept.wcag size={28} color={primitive.pink[600]} strokeWidth={2} />
+        <icons.concept.wcag size={28} color={token("colors.pink.600")} strokeWidth={2} />
         WAI-ARIA 主要プロパティ
       </h2>
 
       <p style={{
-        color: primitive.gray[700],
+        color: token("colors.gray.700"),
         marginBottom: spacing.scale[6],
         fontSize: typography.fontSize.base,
         lineHeight: typography.lineHeight.relaxed
@@ -89,14 +48,14 @@ export const ARIAProperties = () => {
       <div style={{
         marginBottom: spacing.scale[8],
         padding: spacing.scale[6],
-        backgroundColor: primitive.pink[50],
+        backgroundColor: token("colors.pink.50"),
         borderRadius: radii.borderRadius.lg,
-        border: `${borders.width.base} solid ${primitive.pink[200]}`,
+        border: `${borders.width.base} solid ${token("colors.pink.200")}`,
       }}>
         <h3 style={{
           marginTop: 0,
           marginBottom: spacing.scale[4],
-          color: primitive.pink[900],
+          color: token("colors.pink.900"),
           fontSize: typography.fontSize.xl,
           fontWeight: typography.fontWeight.semibold,
           display: 'flex',
@@ -108,7 +67,7 @@ export const ARIAProperties = () => {
         </h3>
 
         <p style={{
-          color: primitive.gray[700],
+          color: token("colors.gray.700"),
           marginBottom: spacing.scale[4],
           lineHeight: typography.lineHeight.relaxed
         }}>
@@ -119,20 +78,20 @@ export const ARIAProperties = () => {
           {/* aria-label */}
           <div style={{
             padding: spacing.scale[4],
-            backgroundColor: primitive.white,
+            backgroundColor: token("colors.white"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.pink[200]}`,
+            border: `${borders.width.thin} solid ${token("colors.pink.200")}`,
           }}>
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.pink[900],
+              color: token("colors.pink.900"),
               fontSize: typography.fontSize.lg,
               fontWeight: typography.fontWeight.semibold,
             }}>
               aria-label
             </h4>
-            <p style={{ color: primitive.gray[700], marginBottom: spacing.scale[3] }}>
+            <p style={{ color: token("colors.gray.700"), marginBottom: spacing.scale[3] }}>
               直接ラベルテキストを指定します。視覚的なテキストがない要素に使用します。
             </p>
 
@@ -161,7 +120,7 @@ export const ARIAProperties = () => {
                 variant="outline"
                 size="sm"
               />
-              <span style={{ fontSize: typography.fontSize.sm, color: primitive.gray[600] }}>
+              <span style={{ fontSize: typography.fontSize.sm, color: token("colors.gray.600") }}>
                 ← aria-label="設定を開く" を使用
               </span>
             </div>
@@ -170,20 +129,20 @@ export const ARIAProperties = () => {
           {/* aria-labelledby */}
           <div style={{
             padding: spacing.scale[4],
-            backgroundColor: primitive.white,
+            backgroundColor: token("colors.white"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.pink[200]}`,
+            border: `${borders.width.thin} solid ${token("colors.pink.200")}`,
           }}>
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.pink[900],
+              color: token("colors.pink.900"),
               fontSize: typography.fontSize.lg,
               fontWeight: typography.fontWeight.semibold,
             }}>
               aria-labelledby
             </h4>
-            <p style={{ color: primitive.gray[700], marginBottom: spacing.scale[3] }}>
+            <p style={{ color: token("colors.gray.700"), marginBottom: spacing.scale[3] }}>
               他の要素のIDを参照して、その要素のテキストをラベルとして使用します。
             </p>
 
@@ -205,11 +164,11 @@ export const ARIAProperties = () => {
 
           <div style={{
             padding: spacing.scale[3],
-            backgroundColor: primitive.yellow,
+            backgroundColor: token("colors.yellow"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.base} solid ${primitive.black}`,
+            border: `${borders.width.base} solid ${token("colors.black")}`,
             fontSize: typography.fontSize.sm,
-            color: primitive.gray[900],
+            color: token("colors.gray.900"),
           }}>
             <strong>💡 使用場面:</strong> アイコンのみのボタン、モーダルのタイトル参照、セクション見出しとの関連付け
           </div>
@@ -220,14 +179,14 @@ export const ARIAProperties = () => {
       <div style={{
         marginBottom: spacing.scale[8],
         padding: spacing.scale[6],
-        backgroundColor: primitive.blue[50],
+        backgroundColor: token("colors.blue.50"),
         borderRadius: radii.borderRadius.lg,
-        border: `${borders.width.base} solid ${primitive.blue[200]}`,
+        border: `${borders.width.base} solid ${token("colors.blue.200")}`,
       }}>
         <h3 style={{
           marginTop: 0,
           marginBottom: spacing.scale[4],
-          color: primitive.blue[900],
+          color: token("colors.blue.900"),
           fontSize: typography.fontSize.xl,
           fontWeight: typography.fontWeight.semibold,
           display: 'flex',
@@ -239,7 +198,7 @@ export const ARIAProperties = () => {
         </h3>
 
         <p style={{
-          color: primitive.gray[700],
+          color: token("colors.gray.700"),
           marginBottom: spacing.scale[4],
           lineHeight: typography.lineHeight.relaxed
         }}>
@@ -250,14 +209,14 @@ export const ARIAProperties = () => {
           {/* 主要なロール一覧 */}
           <div style={{
             padding: spacing.scale[4],
-            backgroundColor: primitive.white,
+            backgroundColor: token("colors.white"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.blue[200]}`,
+            border: `${borders.width.thin} solid ${token("colors.blue.200")}`,
           }}>
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.blue[900],
+              color: token("colors.blue.900"),
               fontSize: typography.fontSize.lg,
               fontWeight: typography.fontWeight.semibold,
             }}>
@@ -267,85 +226,85 @@ export const ARIAProperties = () => {
             <div style={{ display: 'grid', gap: spacing.scale[3] }}>
               <div style={{
                 padding: spacing.scale[3],
-                backgroundColor: primitive.blue[50],
+                backgroundColor: token("colors.blue.50"),
                 borderRadius: radii.borderRadius.sm,
               }}>
                 <code style={{
-                  color: primitive.blue[800],
+                  color: token("colors.blue.800"),
                   fontWeight: typography.fontWeight.semibold,
                   fontSize: typography.fontSize.base
                 }}>
                   role="button"
                 </code>
-                <p style={{ margin: `${spacing.scale[2]} 0 0 0`, color: primitive.gray[700], fontSize: typography.fontSize.sm }}>
+                <p style={{ margin: `${spacing.scale[2]} 0 0 0`, color: token("colors.gray.700"), fontSize: typography.fontSize.sm }}>
                   ボタンとして機能（可能な限り &lt;button&gt; を使用）
                 </p>
               </div>
 
               <div style={{
                 padding: spacing.scale[3],
-                backgroundColor: primitive.blue[50],
+                backgroundColor: token("colors.blue.50"),
                 borderRadius: radii.borderRadius.sm,
               }}>
                 <code style={{
-                  color: primitive.blue[800],
+                  color: token("colors.blue.800"),
                   fontWeight: typography.fontWeight.semibold,
                   fontSize: typography.fontSize.base
                 }}>
                   role="dialog"
                 </code>
-                <p style={{ margin: `${spacing.scale[2]} 0 0 0`, color: primitive.gray[700], fontSize: typography.fontSize.sm }}>
+                <p style={{ margin: `${spacing.scale[2]} 0 0 0`, color: token("colors.gray.700"), fontSize: typography.fontSize.sm }}>
                   モーダルダイアログ（aria-modal="true" と組み合わせる）
                 </p>
               </div>
 
               <div style={{
                 padding: spacing.scale[3],
-                backgroundColor: primitive.blue[50],
+                backgroundColor: token("colors.blue.50"),
                 borderRadius: radii.borderRadius.sm,
               }}>
                 <code style={{
-                  color: primitive.blue[800],
+                  color: token("colors.blue.800"),
                   fontWeight: typography.fontWeight.semibold,
                   fontSize: typography.fontSize.base
                 }}>
                   role="navigation"
                 </code>
-                <p style={{ margin: `${spacing.scale[2]} 0 0 0`, color: primitive.gray[700], fontSize: typography.fontSize.sm }}>
+                <p style={{ margin: `${spacing.scale[2]} 0 0 0`, color: token("colors.gray.700"), fontSize: typography.fontSize.sm }}>
                   ナビゲーション領域（&lt;nav&gt; は暗黙的にこのroleを持つ）
                 </p>
               </div>
 
               <div style={{
                 padding: spacing.scale[3],
-                backgroundColor: primitive.blue[50],
+                backgroundColor: token("colors.blue.50"),
                 borderRadius: radii.borderRadius.sm,
               }}>
                 <code style={{
-                  color: primitive.blue[800],
+                  color: token("colors.blue.800"),
                   fontWeight: typography.fontWeight.semibold,
                   fontSize: typography.fontSize.base
                 }}>
                   role="alert"
                 </code>
-                <p style={{ margin: `${spacing.scale[2]} 0 0 0`, color: primitive.gray[700], fontSize: typography.fontSize.sm }}>
+                <p style={{ margin: `${spacing.scale[2]} 0 0 0`, color: token("colors.gray.700"), fontSize: typography.fontSize.sm }}>
                   重要な即時通知（エラーメッセージ、警告）
                 </p>
               </div>
 
               <div style={{
                 padding: spacing.scale[3],
-                backgroundColor: primitive.blue[50],
+                backgroundColor: token("colors.blue.50"),
                 borderRadius: radii.borderRadius.sm,
               }}>
                 <code style={{
-                  color: primitive.blue[800],
+                  color: token("colors.blue.800"),
                   fontWeight: typography.fontWeight.semibold,
                   fontSize: typography.fontSize.base
                 }}>
                   role="tooltip"
                 </code>
-                <p style={{ margin: `${spacing.scale[2]} 0 0 0`, color: primitive.gray[700], fontSize: typography.fontSize.sm }}>
+                <p style={{ margin: `${spacing.scale[2]} 0 0 0`, color: token("colors.gray.700"), fontSize: typography.fontSize.sm }}>
                   ツールチップ（aria-describedby で参照）
                 </p>
               </div>
@@ -355,14 +314,14 @@ export const ARIAProperties = () => {
           {/* 実装例 */}
           <div style={{
             padding: spacing.scale[4],
-            backgroundColor: primitive.white,
+            backgroundColor: token("colors.white"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.blue[200]}`,
+            border: `${borders.width.thin} solid ${token("colors.blue.200")}`,
           }}>
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.blue[900],
+              color: token("colors.blue.900"),
               fontSize: typography.fontSize.lg,
               fontWeight: typography.fontWeight.semibold,
             }}>
@@ -391,11 +350,11 @@ export const ARIAProperties = () => {
 
           <div style={{
             padding: spacing.scale[3],
-            backgroundColor: primitive.yellow,
+            backgroundColor: token("colors.yellow"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.base} solid ${primitive.black}`,
+            border: `${borders.width.base} solid ${token("colors.black")}`,
             fontSize: typography.fontSize.sm,
-            color: primitive.gray[900],
+            color: token("colors.gray.900"),
           }}>
             <strong>💡 ARIAの第一原則:</strong> まずは<strong>セマンティックHTML</strong>（&lt;button&gt;、&lt;nav&gt;、&lt;main&gt;）を使いましょう。ARIAはHTMLで実現できない場合の補完として使用します。
           </div>
@@ -406,14 +365,14 @@ export const ARIAProperties = () => {
       <div style={{
         marginBottom: spacing.scale[8],
         padding: spacing.scale[6],
-        backgroundColor: primitive.green[50],
+        backgroundColor: token("colors.green.50"),
         borderRadius: radii.borderRadius.lg,
-        border: `${borders.width.base} solid ${primitive.green[200]}`,
+        border: `${borders.width.base} solid ${token("colors.green.200")}`,
       }}>
         <h3 style={{
           marginTop: 0,
           marginBottom: spacing.scale[4],
-          color: primitive.green[900],
+          color: token("colors.green.900"),
           fontSize: typography.fontSize.xl,
           fontWeight: typography.fontWeight.semibold,
           display: 'flex',
@@ -425,7 +384,7 @@ export const ARIAProperties = () => {
         </h3>
 
         <p style={{
-          color: primitive.gray[700],
+          color: token("colors.gray.700"),
           marginBottom: spacing.scale[4],
           lineHeight: typography.lineHeight.relaxed
         }}>
@@ -436,20 +395,20 @@ export const ARIAProperties = () => {
           {/* aria-describedby */}
           <div style={{
             padding: spacing.scale[4],
-            backgroundColor: primitive.white,
+            backgroundColor: token("colors.white"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.green[200]}`,
+            border: `${borders.width.thin} solid ${token("colors.green.200")}`,
           }}>
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.green[900],
+              color: token("colors.green.900"),
               fontSize: typography.fontSize.lg,
               fontWeight: typography.fontWeight.semibold,
             }}>
               aria-describedby
             </h4>
-            <p style={{ color: primitive.gray[700], marginBottom: spacing.scale[3] }}>
+            <p style={{ color: token("colors.gray.700"), marginBottom: spacing.scale[3] }}>
               説明要素のIDを参照します。エラーメッセージやヘルプテキストに使用します。
             </p>
 
@@ -479,14 +438,14 @@ export const ARIAProperties = () => {
           {/* スクリーンリーダーの読み上げ比較 */}
           <div style={{
             padding: spacing.scale[4],
-            backgroundColor: primitive.white,
+            backgroundColor: token("colors.white"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.green[200]}`,
+            border: `${borders.width.thin} solid ${token("colors.green.200")}`,
           }}>
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.green[900],
+              color: token("colors.green.900"),
               fontSize: typography.fontSize.lg,
               fontWeight: typography.fontWeight.semibold,
             }}>
@@ -495,15 +454,15 @@ export const ARIAProperties = () => {
 
             <div style={{
               padding: spacing.scale[3],
-              backgroundColor: primitive.red[50],
+              backgroundColor: token("colors.red.50"),
               borderRadius: radii.borderRadius.sm,
               marginBottom: spacing.scale[3],
-              border: `${borders.width.thin} solid ${primitive.red[200]}`,
+              border: `${borders.width.thin} solid ${token("colors.red.200")}`,
             }}>
-              <strong style={{ color: primitive.red[900] }}>❌ aria-describedby なし:</strong>
+              <strong style={{ color: token("colors.red.900") }}>❌ aria-describedby なし:</strong>
               <p style={{
                 margin: `${spacing.scale[2]} 0 0 0`,
-                color: primitive.gray[700],
+                color: token("colors.gray.700"),
                 fontStyle: 'italic',
                 fontSize: typography.fontSize.sm
               }}>
@@ -513,14 +472,14 @@ export const ARIAProperties = () => {
 
             <div style={{
               padding: spacing.scale[3],
-              backgroundColor: primitive.green[50],
+              backgroundColor: token("colors.green.50"),
               borderRadius: radii.borderRadius.sm,
-              border: `${borders.width.thin} solid ${primitive.green[300]}`,
+              border: `${borders.width.thin} solid ${token("colors.green.300")}`,
             }}>
-              <strong style={{ color: primitive.green[900] }}>✅ aria-describedby あり:</strong>
+              <strong style={{ color: token("colors.green.900") }}>✅ aria-describedby あり:</strong>
               <p style={{
                 margin: `${spacing.scale[2]} 0 0 0`,
-                color: primitive.gray[700],
+                color: token("colors.gray.700"),
                 fontStyle: 'italic',
                 fontSize: typography.fontSize.sm
               }}>
@@ -531,11 +490,11 @@ export const ARIAProperties = () => {
 
           <div style={{
             padding: spacing.scale[3],
-            backgroundColor: primitive.yellow,
+            backgroundColor: token("colors.yellow"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.base} solid ${primitive.black}`,
+            border: `${borders.width.base} solid ${token("colors.black")}`,
             fontSize: typography.fontSize.sm,
-            color: primitive.gray[900],
+            color: token("colors.gray.900"),
           }}>
             <strong>💡 使用場面:</strong> フォームのヘルプテキスト、エラーメッセージ、ツールチップの参照、補足説明が必要な要素
           </div>
@@ -546,14 +505,14 @@ export const ARIAProperties = () => {
       <div style={{
         marginBottom: spacing.scale[6],
         padding: spacing.scale[6],
-        backgroundColor: primitive.orange[50],
+        backgroundColor: token("colors.orange.50"),
         borderRadius: radii.borderRadius.lg,
-        border: `${borders.width.base} solid ${primitive.orange[200]}`,
+        border: `${borders.width.base} solid ${token("colors.orange.200")}`,
       }}>
         <h3 style={{
           marginTop: 0,
           marginBottom: spacing.scale[4],
-          color: primitive.orange[900],
+          color: token("colors.orange.900"),
           fontSize: typography.fontSize.xl,
           fontWeight: typography.fontWeight.semibold,
           display: 'flex',
@@ -565,7 +524,7 @@ export const ARIAProperties = () => {
         </h3>
 
         <p style={{
-          color: primitive.gray[700],
+          color: token("colors.gray.700"),
           marginBottom: spacing.scale[4],
           lineHeight: typography.lineHeight.relaxed
         }}>
@@ -576,20 +535,20 @@ export const ARIAProperties = () => {
           {/* aria-expanded */}
           <div style={{
             padding: spacing.scale[4],
-            backgroundColor: primitive.white,
+            backgroundColor: token("colors.white"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.orange[200]}`,
+            border: `${borders.width.thin} solid ${token("colors.orange.200")}`,
           }}>
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.orange[900],
+              color: token("colors.orange.900"),
               fontSize: typography.fontSize.lg,
               fontWeight: typography.fontWeight.semibold,
             }}>
               aria-expanded
             </h4>
-            <p style={{ color: primitive.gray[700], marginBottom: spacing.scale[3] }}>
+            <p style={{ color: token("colors.gray.700"), marginBottom: spacing.scale[3] }}>
               要素が展開されているか折りたたまれているかを示します。
             </p>
 
@@ -613,12 +572,12 @@ export const ARIAProperties = () => {
             <div style={{
               marginTop: spacing.scale[4],
               padding: spacing.scale[3],
-              backgroundColor: primitive.orange[50],
+              backgroundColor: token("colors.orange.50"),
               borderRadius: radii.borderRadius.sm,
               fontSize: typography.fontSize.sm,
             }}>
-              <strong style={{ color: primitive.orange[900] }}>値の種類:</strong>
-              <ul style={{ marginTop: spacing.scale[2], marginBottom: 0, color: primitive.gray[700] }}>
+              <strong style={{ color: token("colors.orange.900") }}>値の種類:</strong>
+              <ul style={{ marginTop: spacing.scale[2], marginBottom: 0, color: token("colors.gray.700") }}>
                 <li><code>aria-expanded="true"</code>: 展開中</li>
                 <li><code>aria-expanded="false"</code>: 折りたたみ中</li>
                 <li>未指定: 展開/折りたたみ機能なし</li>
@@ -629,14 +588,14 @@ export const ARIAProperties = () => {
           {/* 実装例（アコーディオン） */}
           <div style={{
             padding: spacing.scale[4],
-            backgroundColor: primitive.white,
+            backgroundColor: token("colors.white"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.orange[200]}`,
+            border: `${borders.width.thin} solid ${token("colors.orange.200")}`,
           }}>
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.orange[900],
+              color: token("colors.orange.900"),
               fontSize: typography.fontSize.lg,
               fontWeight: typography.fontWeight.semibold,
             }}>
@@ -648,7 +607,7 @@ export const ARIAProperties = () => {
                 クリックして展開/折りたたみ（aria-expandedが自動で切り替わります）
               </AccordionSummary>
               <AccordionContent>
-                <p style={{ margin: 0, color: primitive.gray[700] }}>
+                <p style={{ margin: 0, color: token("colors.gray.700") }}>
                   このコンテンツの表示状態が aria-expanded で伝えられます。
                   スクリーンリーダーは「展開されています」または「折りたたまれています」と読み上げます。
                 </p>
@@ -658,12 +617,12 @@ export const ARIAProperties = () => {
             <div style={{
               marginTop: spacing.scale[4],
               padding: spacing.scale[3],
-              backgroundColor: primitive.blue[50],
+              backgroundColor: token("colors.blue.50"),
               borderRadius: radii.borderRadius.sm,
               fontSize: typography.fontSize.sm,
             }}>
-              <strong style={{ color: primitive.blue[900] }}>スクリーンリーダーの読み上げ:</strong>
-              <ul style={{ marginTop: spacing.scale[2], marginBottom: 0, color: primitive.gray[700] }}>
+              <strong style={{ color: token("colors.blue.900") }}>スクリーンリーダーの読み上げ:</strong>
+              <ul style={{ marginTop: spacing.scale[2], marginBottom: 0, color: token("colors.gray.700") }}>
                 <li>折りたたみ時: "セクションタイトル ボタン 折りたたまれています"</li>
                 <li>展開時: "セクションタイトル ボタン 展開されています"</li>
               </ul>
@@ -672,11 +631,11 @@ export const ARIAProperties = () => {
 
           <div style={{
             padding: spacing.scale[3],
-            backgroundColor: primitive.yellow,
+            backgroundColor: token("colors.yellow"),
             borderRadius: radii.borderRadius.md,
-            border: `${borders.width.base} solid ${primitive.black}`,
+            border: `${borders.width.base} solid ${token("colors.black")}`,
             fontSize: typography.fontSize.sm,
-            color: primitive.gray[900],
+            color: token("colors.gray.900"),
           }}>
             <strong>💡 使用場面:</strong> アコーディオン、ドロップダウンメニュー、展開可能なナビゲーション、ツリービュー、コンボボックス
           </div>
@@ -686,14 +645,14 @@ export const ARIAProperties = () => {
       {/* まとめ */}
       <div style={{
         padding: spacing.scale[6],
-        backgroundColor: primitive.blue[50],
+        backgroundColor: token("colors.blue.50"),
         borderRadius: radii.borderRadius.lg,
-        border: `${borders.width.base} solid ${primitive.blue[200]}`,
+        border: `${borders.width.base} solid ${token("colors.blue.200")}`,
       }}>
         <h3 style={{
           marginTop: 0,
           marginBottom: spacing.scale[4],
-          color: primitive.blue[900],
+          color: token("colors.blue.900"),
           fontSize: typography.fontSize.xl,
           fontWeight: typography.fontWeight.semibold,
           display: 'flex',
@@ -710,7 +669,7 @@ export const ARIAProperties = () => {
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.blue[900],
+              color: token("colors.blue.900"),
               fontSize: typography.fontSize.base,
               fontWeight: typography.fontWeight.semibold,
             }}>
@@ -736,7 +695,7 @@ export const ARIAProperties = () => {
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.blue[900],
+              color: token("colors.blue.900"),
               fontSize: typography.fontSize.base,
               fontWeight: typography.fontWeight.semibold,
             }}>
@@ -760,7 +719,7 @@ export const ARIAProperties = () => {
             <h4 style={{
               marginTop: 0,
               marginBottom: spacing.scale[3],
-              color: primitive.blue[900],
+              color: token("colors.blue.900"),
               fontSize: typography.fontSize.base,
               fontWeight: typography.fontWeight.semibold,
             }}>
