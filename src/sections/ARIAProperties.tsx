@@ -106,6 +106,7 @@ const summaryCardClass = css({
     base: token("colors.blue.200"),
     _dark: token("colors.blue.800"),
   },
+  overflowX: "auto",
 });
 
 const h3Class = css({
