@@ -24,7 +24,11 @@ export const Loading: React.FC<LoadingProps> = ({
       aria-live="polite"
       className={slots.root}
     >
-      <svg viewBox="0 0 24 24" className={slots.spinner} xmlns="http://www.w3.org/2000/svg">
+      <svg
+        viewBox="0 0 24 24"
+        className={slots.spinner}
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <circle
           cx="12"
           cy="12"
@@ -72,11 +76,9 @@ export const Loading: React.FC<LoadingProps> = ({
   });
 
   if (fullscreen) {
+    // 背景の操作を完全に塞ぐモーダルオーバーレイとして扱う
     return (
-      <div
-        className={cx(overlayClass, "loading__overlay")}
-        aria-modal="true"
-      >
+      <div className={cx(overlayClass, "loading__overlay")} aria-modal="true">
         {spinner}
       </div>
     );

@@ -499,6 +499,7 @@ npm run build-storybook
 - [A Complete Guide to Design Tokens](https://www.designtokens.org/)
 - [Inclusive Components](https://inclusive-components.design/)
 - [The A11Y Project](https://www.a11yproject.com/)
+- [React におけるアクセシビリティ向上のためのパターン](https://zenn.dev/kei9o/articles/65aa88add286fb)
 
 ## 🎁 実装済みコンポーネント
 

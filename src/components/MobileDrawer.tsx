@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import { css } from "@/styled-system/css";
 
 interface TocItem {
@@ -14,79 +14,80 @@ interface MobileDrawerProps {
 }
 
 const overlayClass = css({
-  position: 'fixed',
+  position: "fixed",
   inset: 0,
-  bg: 'rgba(0, 0, 0, 0.5)',
+  bg: "rgba(0, 0, 0, 0.5)",
   zIndex: 999,
   opacity: 1,
-  pointerEvents: 'auto',
-  transition: 'opacity 0.3s ease',
+  pointerEvents: "auto",
+  transition: "opacity 0.3s ease",
   "&[data-open='false']": {
     opacity: 0,
-    pointerEvents: 'none',
+    pointerEvents: "none",
   },
 });
 
 const drawerClass = css({
-  position: 'fixed',
+  position: "fixed",
   top: 0,
   right: 0,
   bottom: 0,
-  width: '280px',
-  maxWidth: '80vw',
-  bg: 'bg.primary',
+  width: "280px",
+  maxWidth: "80vw",
+  bg: "bg.primary",
   zIndex: 1000,
   p: 6,
-  overflowY: 'auto',
-  boxShadow: 'lg',
-  transform: 'translateX(0)',
+  overflowY: "auto",
+  boxShadow: "lg",
+  transform: "translateX(0)",
   opacity: 1,
-  pointerEvents: 'auto',
-  transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, box-shadow 0.3s ease',
+  pointerEvents: "auto",
+  transition:
+    "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, box-shadow 0.3s ease",
   "&[data-open='false']": {
-    transform: 'translateX(100%)',
+    transform: "translateX(100%)",
     opacity: 0,
-    pointerEvents: 'none',
-    boxShadow: 'none',
+    pointerEvents: "none",
+    boxShadow: "none",
   },
 });
 
 const headingClass = css({
   m: 0,
   mb: 4,
-  fontSize: 'lg',
-  fontWeight: 'semibold',
-  color: 'contents.primary',
+  fontSize: "lg",
+  fontWeight: "semibold",
+  color: "contents.primary",
 });
 
 const drawerList = css({
-  listStyle: 'none',
+  listStyle: "none",
   m: 0,
   p: 0,
-  display: 'flex',
-  flexDirection: 'column',
+  display: "flex",
+  flexDirection: "column",
   gap: 2,
 });
 
 const drawerLink = css({
-  display: 'block',
+  display: "block",
   px: 3,
   py: 2,
-  fontSize: 'sm',
-  textDecoration: 'none',
-  borderRadius: 'base',
-  borderLeftWidth: '3px',
-  borderLeftStyle: 'solid',
-  borderLeftColor: 'transparent',
-  transition: 'all 0.2s ease',
-  cursor: 'pointer',
-  color: 'contents.primary',
-  _hover: { bg: 'bg.hover' },
+  fontSize: "sm",
+  textDecoration: "none",
+  borderRadius: "base",
+  borderLeftWidth: "3px",
+  borderLeftStyle: "solid",
+  borderLeftColor: "transparent",
+  transition: "all 0.2s ease",
+  cursor: "pointer",
+  color: "contents.primary",
+  _hover: { bg: "bg.hover" },
   "&[data-active='true']": {
-    color: 'contents.link',
-    bg: 'bg.active',
-    borderLeftColor: 'accent.primary',
-    fontWeight: 'semibold',
+    color: "contents.link",
+    bg: "bg.active",
+    borderLeftColor: "accent.primary",
+    fontWeight: "semibold",
   },
 });
 
@@ -96,35 +97,58 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   items,
   activeId,
 }) => {
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const headingId = useId();
+  const previouslyFocusedElement = useRef<HTMLElement | null>(null);
+
   // ドロワーが開いているときはスクロールを無効化
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
 
   // Escキーで閉じる
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === "Escape" && isOpen) {
         onClose();
       }
     };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
   }, [isOpen, onClose]);
+
+  // モーダルを開いたときにフォーカスを移動し、閉じたら元に戻す
+  useEffect(() => {
+    if (isOpen) {
+      if (document.activeElement instanceof HTMLElement) {
+        previouslyFocusedElement.current = document.activeElement;
+      }
+      // レイアウトが更新された後でフォーカスを移動する
+      const id = requestAnimationFrame(() => {
+        drawerRef.current?.focus();
+      });
+      return () => cancelAnimationFrame(id);
+    }
+
+    if (previouslyFocusedElement.current) {
+      previouslyFocusedElement.current.focus();
+      previouslyFocusedElement.current = null;
+    }
+  }, [isOpen]);
 
   const handleClick = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       // URLハッシュを更新
-      window.history.pushState(null, '', `#${id}`);
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.history.pushState(null, "", `#${id}`);
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
       onClose();
     }
   };
@@ -140,7 +164,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
 
       <nav
         role="dialog"
-        aria-label="目次"
+        aria-labelledby={headingId}
         aria-modal="true"
         className={drawerClass}
         data-open={isOpen}
