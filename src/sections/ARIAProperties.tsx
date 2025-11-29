@@ -237,16 +237,19 @@ const paragraphClass = css({
 const demoContainerClass = css({
   mt: 4,
   display: "flex",
-  gap: 3,
-  alignItems: "center",
-  flexWrap: "wrap",
+  flexDirection: "column",
+  gap: 2,
+  alignItems: "flex-start",
+  md: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
+  },
 });
 
 const demoLabelClass = css({
   fontSize: "sm",
   color: "contents.secondary",
-  wordBreak: "keep-all",
-  overflowWrap: "anywhere",
 });
 
 const tipBoxClass = css({
