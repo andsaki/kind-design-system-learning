@@ -6,7 +6,10 @@ import { token } from "@/styled-system/tokens";
 
 const sectionClass = css({
   mb: 12,
-  p: 6,
+  p: 4,
+  md: {
+    p: 6,
+  },
   bg: "bg.primary",
   rounded: "lg",
   borderWidth: "base",
