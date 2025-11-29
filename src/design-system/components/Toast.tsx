@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { spacing, typography, radii, accessibilityLevels } from '../tokens';
-import { primitive } from '../tokens/colors';
+import { accessibilityLevels } from '../constants/accessibility';
+import type { WCAGLevel } from '../constants/accessibility';
+import { css, cx } from '@/styled-system/css';
 
+export type { WCAGLevel } from '../constants/accessibility';
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
-export type WCAGLevel = 'A' | 'AA' | 'AAA';
 
 export interface ToastProps {
   /** トーストのID */
@@ -35,6 +36,112 @@ export interface ToastProps {
  * - スライドインアニメーション
  * - アクセシブル（role="alert"）
  */
+// ベーススタイル
+const toastBase = css({
+  position: 'fixed',
+  top: 4,
+  right: 4,
+  zIndex: 10000,
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: 3,
+  p: 4,
+  borderWidth: 'thin',
+  borderStyle: 'solid',
+  borderLeftWidth: 'base',
+  rounded: 'lg',
+  boxShadow: 'lg',
+  minWidth: '320px',
+  maxWidth: '480px',
+  pointerEvents: 'auto',
+  transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease',
+});
+
+// タイプごとのスタイル
+const toastVariants = {
+  success: css({
+    bg: 'green.50',
+    borderColor: 'green.500',
+    color: 'green.900',
+  }),
+  error: css({
+    bg: 'red.50',
+    borderColor: 'red.500',
+    color: 'red.900',
+  }),
+  warning: css({
+    bg: 'orange.50',
+    borderColor: 'orange.500',
+    color: 'orange.900',
+  }),
+  info: css({
+    bg: 'blue.50',
+    borderColor: 'blue.500',
+    color: 'blue.900',
+  }),
+};
+
+// アイコンコンテナ
+const iconContainer = css({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 6,
+  height: 6,
+  rounded: 'full',
+  color: 'white',
+  fontSize: 'sm',
+  fontWeight: 'bold',
+  flexShrink: 0,
+});
+
+const iconVariants = {
+  success: css({ bg: 'green.600' }),
+  error: css({ bg: 'red.600' }),
+  warning: css({ bg: 'orange.600' }),
+  info: css({ bg: 'blue.600' }),
+};
+
+// コンテンツエリア
+const contentArea = css({
+  flex: 1,
+  minWidth: 0,
+});
+
+// タイトル
+const titleStyle = css({
+  fontSize: 'sm',
+  fontWeight: 'semibold',
+  mb: 1,
+});
+
+// メッセージ
+const messageStyle = css({
+  fontSize: 'sm',
+  lineHeight: 'relaxed',
+});
+
+// 閉じるボタン
+const closeButton = css({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 6,
+  height: 6,
+  p: 0,
+  border: 'none',
+  background: 'transparent',
+  cursor: 'pointer',
+  fontSize: 'lg',
+  lineHeight: 1,
+  rounded: 'sm',
+  transition: 'background-color 0.2s ease',
+  flexShrink: 0,
+  _hover: {
+    bg: 'rgba(0, 0, 0, 0.1)',
+  },
+});
+
 export const Toast: React.FC<ToastProps> = ({
   id,
   type = 'info',
@@ -50,7 +157,8 @@ export const Toast: React.FC<ToastProps> = ({
 
   // マウント時にスライドイン
   useEffect(() => {
-    setTimeout(() => setIsVisible(true), 50);
+    const timer = setTimeout(() => setIsVisible(true), 50);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleClose = useCallback(() => {
@@ -71,34 +179,6 @@ export const Toast: React.FC<ToastProps> = ({
     return () => clearTimeout(timer);
   }, [duration, handleClose]);
 
-  // タイプごとの色
-  const typeColors = {
-    success: {
-      bg: primitive.green[50],
-      border: primitive.green[500],
-      icon: primitive.green[600],
-      text: primitive.green[900],
-    },
-    error: {
-      bg: primitive.red[50],
-      border: primitive.red[500],
-      icon: primitive.red[600],
-      text: primitive.red[900],
-    },
-    warning: {
-      bg: primitive.orange[50],
-      border: primitive.orange[500],
-      icon: primitive.orange[600],
-      text: primitive.orange[900],
-    },
-    info: {
-      bg: primitive.blue[50],
-      border: primitive.blue[500],
-      icon: primitive.blue[600],
-      text: primitive.blue[900],
-    },
-  };
-
   // タイプごとのアイコン
   const icons = {
     success: '✓',
@@ -107,107 +187,55 @@ export const Toast: React.FC<ToastProps> = ({
     info: 'ℹ',
   };
 
-  const themeColor = typeColors[type];
-
   // WCAGレベルに応じたフォーカススタイル
   const focusStyles = {
     outline: `${accessibilityLevels.focus[wcagLevel].outlineWidth} solid ${accessibilityLevels.focus[wcagLevel].outline}`,
     outlineOffset: accessibilityLevels.focus[wcagLevel].outlineOffset,
   };
 
+  // 動的なスタイル（位置とアニメーション）
+  const dynamicStyle = {
+    transform: `translateY(${index * 96}px) translateX(${isVisible && !isExiting ? '0' : '400px'})`,
+    opacity: isVisible && !isExiting ? 1 : 0,
+  };
+
+  // タイプに応じたテキストカラークラス（親要素の色を継承）
+  const textColorClass = css({ color: 'inherit' });
+
   return (
     <div
       role="alert"
       aria-live="polite"
       aria-atomic="true"
-      style={{
-        position: 'fixed',
-        top: `${spacing.scale[4]}`,
-        right: spacing.scale[4],
-        transform: `translateY(${index * 96}px) translateX(${isVisible && !isExiting ? '0' : '400px'})`,
-        opacity: isVisible && !isExiting ? 1 : 0,
-        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease',
-        zIndex: 10000,
-        display: 'flex',
-        alignItems: 'flex-start',
-        gap: spacing.scale[3],
-        padding: spacing.scale[4],
-        backgroundColor: themeColor.bg,
-        border: `1px solid ${themeColor.border}`,
-        borderLeft: `4px solid ${themeColor.border}`,
-        borderRadius: radii.borderRadius.lg,
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-        minWidth: '320px',
-        maxWidth: '480px',
-        pointerEvents: 'auto',
-      }}
+      className={cx(toastBase, toastVariants[type])}
+      style={dynamicStyle}
     >
       {/* アイコン */}
       <div
         aria-hidden="true"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '24px',
-          height: '24px',
-          borderRadius: radii.borderRadius.full,
-          backgroundColor: themeColor.icon,
-          color: primitive.white,
-          fontSize: typography.fontSize.sm,
-          fontWeight: typography.fontWeight.bold,
-          flexShrink: 0,
-        }}
+        className={cx(iconContainer, iconVariants[type])}
       >
         {icons[type]}
       </div>
 
       {/* コンテンツ */}
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div className={contentArea}>
         {title && (
-          <div
-            style={{
-              fontSize: typography.fontSize.sm,
-              fontWeight: typography.fontWeight.semibold,
-              color: themeColor.text,
-              marginBottom: spacing.scale[1],
-            }}
-          >
+          <div className={cx(titleStyle, textColorClass)}>
             {title}
           </div>
         )}
-        <div
-          style={{
-            fontSize: typography.fontSize.sm,
-            color: themeColor.text,
-            lineHeight: typography.lineHeight.relaxed,
-          }}
-        >
+        <div className={cx(messageStyle, textColorClass)}>
           {message}
         </div>
       </div>
 
       {/* 閉じるボタン */}
       <button
+        type="button"
         onClick={handleClose}
         aria-label="通知を閉じる"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '24px',
-          height: '24px',
-          padding: 0,
-          border: 'none',
-          background: 'transparent',
-          color: themeColor.icon,
-          cursor: 'pointer',
-          fontSize: typography.fontSize.lg,
-          lineHeight: 1,
-          borderRadius: radii.borderRadius.sm,
-          transition: 'background-color 0.2s ease',
-          flexShrink: 0,
-        }}
+        className={cx(closeButton, textColorClass)}
         onFocus={(e) => {
           e.currentTarget.style.outline = focusStyles.outline;
           e.currentTarget.style.outlineOffset = focusStyles.outlineOffset;
@@ -215,12 +243,6 @@ export const Toast: React.FC<ToastProps> = ({
         onBlur={(e) => {
           e.currentTarget.style.outline = '';
           e.currentTarget.style.outlineOffset = '';
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = 'transparent';
         }}
       >
         ×

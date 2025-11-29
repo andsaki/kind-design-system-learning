@@ -1,33 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { spacing, typography, radii, accessibilityLevels } from "../tokens";
-import { primitive } from "../tokens/colors";
-import { useTheme } from "../theme";
-import type { WCAGLevel } from "../tokens";
+import React from "react";
+import { checkbox } from "../../../styled-system/recipes";
+import { css, cx } from "@/styled-system/css";
+import type { WCAGLevel } from "../constants/accessibility";
 
 export interface CheckboxProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
-  /** ラベルテキスト */
   label: string;
-  /** エラーメッセージ */
   error?: string;
-  /** ヘルプテキスト */
   helpText?: string;
-  /** 不確定状態 */
   indeterminate?: boolean;
-  /** WCAGアクセシビリティレベル (A/AA/AAA) @default 'AA' */
   wcagLevel?: WCAGLevel;
 }
 
-/**
- * アクセシブルなチェックボックスコンポーネント
- *
- * 機能:
- * - キーボード操作対応（Space）
- * - スクリーンリーダー対応
- * - エラー表示とaria-invalid
- * - 不確定状態（indeterminate）のサポート
- * - フォーカス表示（キーボード操作時のみ）
- */
 export const Checkbox: React.FC<CheckboxProps> = ({
   label,
   error,
@@ -36,138 +20,54 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   id,
   disabled = false,
   wcagLevel = "AA",
+  className,
   ...props
 }) => {
   const generatedId = React.useId();
   const checkboxId = id || generatedId;
   const errorId = `${checkboxId}-error`;
   const helpId = `${checkboxId}-help`;
-
-  const { colors } = useTheme();
   const checkboxRef = React.useRef<HTMLInputElement>(null);
-  const levelFocus = accessibilityLevels.focus[wcagLevel];
+  const slots = checkbox({ wcagLevel, state: error ? "error" : "default" });
 
-  // 不確定状態の管理
   React.useEffect(() => {
     if (checkboxRef.current) {
       checkboxRef.current.indeterminate = indeterminate;
     }
   }, [indeterminate]);
 
-  // キーボードフォーカスの検出
-  const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Tab") {
-        setIsKeyboardFocus(true);
-      }
-    };
-
-    const handleMouseDown = () => {
-      setIsKeyboardFocus(false);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("mousedown", handleMouseDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("mousedown", handleMouseDown);
-    };
-  }, []);
-
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: spacing.scale[2],
-      }}
-    >
-      <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+    <div className={cx(slots.root, className)}>
+      <div className={slots.control}>
         <input
           ref={checkboxRef}
           type="checkbox"
           id={checkboxId}
           disabled={disabled}
           aria-invalid={error ? true : undefined}
-          aria-describedby={
-            error
-              ? errorId
-              : helpText
-              ? helpId
-              : undefined
-          }
+          aria-describedby={error ? errorId : helpText ? helpId : undefined}
+          className={slots.input}
           {...props}
-          style={{
-            width: "20px",
-            height: "20px",
-            cursor: disabled ? "not-allowed" : "pointer",
-            accentColor: primitive.blue[500],
-            opacity: disabled ? 0.5 : 1,
-            margin: 0,
-          }}
-          onFocus={(e) => {
-            if (isKeyboardFocus) {
-              e.currentTarget.parentElement!.setAttribute("data-focused", "true");
-            }
-            props.onFocus?.(e);
-          }}
-          onBlur={(e) => {
-            e.currentTarget.parentElement!.removeAttribute("data-focused");
-            props.onBlur?.(e);
-          }}
         />
-        <style>{`
-          input[type="checkbox"] {
-            accent-color: ${primitive.blue[500]};
-          }
-          [data-focused="true"] {
-            outline: ${levelFocus.outlineWidth} solid ${levelFocus.outline};
-            outline-offset: ${levelFocus.outlineOffset};
-            border-radius: ${radii.borderRadius.sm};
-            background-color: ${levelFocus.background};
-          }
-        `}</style>
       </div>
-      <div style={{ flex: 1 }}>
+      <div className={css({ flex: 1 })}>
         <label
           htmlFor={checkboxId}
-          style={{
-            fontSize: typography.fontSize.base,
-            fontWeight: typography.fontWeight.medium,
-            color: disabled ? colors.text.disabled : primitive.gray[900],
-            cursor: disabled ? "not-allowed" : "pointer",
-            userSelect: "none",
-          }}
+          className={cx(
+            slots.label,
+            disabled && css({ cursor: "not-allowed" })
+          )}
+          data-disabled={disabled ? "true" : undefined}
         >
           {label}
         </label>
         {helpText && !error && (
-          <p
-            id={helpId}
-            style={{
-              margin: `${spacing.scale[1]} 0 0 0`,
-              fontSize: typography.fontSize.sm,
-              color: primitive.gray[600],
-              lineHeight: typography.lineHeight.normal,
-            }}
-          >
+          <p id={helpId} className={slots.helper}>
             {helpText}
           </p>
         )}
         {error && (
-          <p
-            id={errorId}
-            role="alert"
-            style={{
-              margin: `${spacing.scale[1]} 0 0 0`,
-              fontSize: typography.fontSize.sm,
-              color: colors.text.error,
-              lineHeight: typography.lineHeight.normal,
-            }}
-          >
+          <p id={errorId} role="alert" className={slots.errorText}>
             {error}
           </p>
         )}

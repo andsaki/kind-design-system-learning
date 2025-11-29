@@ -15,8 +15,9 @@ import { InfoBox } from './InfoBox';
  * - 背景スクロール防止
  * - フォーカス管理（開いた時に最初の要素へ、閉じた時に元の場所へ）
  */
-const meta = {
+const meta: Meta<typeof Modal> = {
   title: 'Design System/Modal',
+  component: Modal,
   parameters: {
     layout: 'fullscreen',
     a11y: {
@@ -44,7 +45,7 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-} satisfies Meta;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -268,9 +269,10 @@ export const WCAGLevels: Story = {
 
               <div style={{
                 padding: '1rem',
-                backgroundColor: level === 'A' ? '#eff6ff' : level === 'AA' ? '#eff6ff' : '#fefce8',
+                backgroundColor: level === 'AAA' ? '#fefce8' : '#eff6ff',
                 borderRadius: '0.5rem',
-                border: `2px solid ${level === 'A' ? '#dbeafe' : level === 'AA' ? '#3b82f6' : '#facc15'}`
+                border: `2px solid ${level === 'A' ? '#dbeafe' : level === 'AA' ? '#3b82f6' : '#facc15'}`,
+                color: level === 'AAA' ? '#111827' : '#0f172a',
               }}>
                 <h4 style={{ marginTop: 0, marginBottom: '0.5rem' }}>
                   Level {level} の特徴

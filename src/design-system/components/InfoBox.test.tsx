@@ -25,28 +25,18 @@ describe('InfoBox', () => {
   });
 
   describe('バリアント', () => {
-    it('infoバリアントが適用される（AA）', () => {
-      const { container } = render(<InfoBox variant="info">内容</InfoBox>);
-      const box = container.firstChild as HTMLElement;
-      expect(box).toHaveStyle({ backgroundColor: '#e3f2fd' });
-    });
+    it('各バリアントのクラスが適用される', () => {
+      const { container: infoContainer } = render(<InfoBox variant="info">内容</InfoBox>);
+      expect(infoContainer.firstChild).toHaveClass('info-box__root--variant_info');
 
-    it('warningバリアントが適用される（AA）', () => {
-      const { container } = render(<InfoBox variant="warning">内容</InfoBox>);
-      const box = container.firstChild as HTMLElement;
-      expect(box).toHaveStyle({ backgroundColor: '#fff3e0' });
-    });
+      const { container: warningContainer } = render(<InfoBox variant="warning">内容</InfoBox>);
+      expect(warningContainer.firstChild).toHaveClass('info-box__root--variant_warning');
 
-    it('successバリアントが適用される（AA）', () => {
-      const { container } = render(<InfoBox variant="success">内容</InfoBox>);
-      const box = container.firstChild as HTMLElement;
-      expect(box).toHaveStyle({ backgroundColor: '#e8f5e9' });
-    });
+      const { container: successContainer } = render(<InfoBox variant="success">内容</InfoBox>);
+      expect(successContainer.firstChild).toHaveClass('info-box__root--variant_success');
 
-    it('tipバリアントが適用される（AA）', () => {
-      const { container } = render(<InfoBox variant="tip">内容</InfoBox>);
-      const box = container.firstChild as HTMLElement;
-      expect(box).toHaveStyle({ backgroundColor: '#e3f2fd' });
+      const { container: tipContainer } = render(<InfoBox variant="tip">内容</InfoBox>);
+      expect(tipContainer.firstChild).toHaveClass('info-box__root--variant_tip');
     });
   });
 
@@ -94,39 +84,24 @@ describe('InfoBox', () => {
   });
 
   describe('WCAGレベル', () => {
-    it('デフォルトでAAレベルが適用される', () => {
-      const { container } = render(<InfoBox variant="info">内容</InfoBox>);
-      const box = container.firstChild as HTMLElement;
-      expect(box).toHaveStyle({
-        backgroundColor: '#e3f2fd',
-        color: '#1565c0',
-      });
-    });
+    it('各WCAGレベルのクラスが適用される', () => {
+      const { container: aaContainer } = render(<InfoBox variant="info">内容</InfoBox>);
+      expect(aaContainer.firstChild).toHaveClass('info-box__root--wcagLevel_AA');
 
-    it('レベルAが適用される', () => {
-      const { container } = render(
+      const { container: aContainer } = render(
         <InfoBox variant="info" wcagLevel="A">
           内容
         </InfoBox>
       );
-      const box = container.firstChild as HTMLElement;
-      expect(box).toHaveStyle({
-        backgroundColor: '#e3f2fd',
-        color: '#1976d2',
-      });
-    });
+      expect(aContainer.firstChild).toHaveClass('info-box__root--wcagLevel_A');
 
-    it('レベルAAAが適用される', () => {
-      const { container } = render(
+      const { container: aaaContainer } = render(
         <InfoBox variant="info" wcagLevel="AAA">
           内容
         </InfoBox>
       );
-      const box = container.firstChild as HTMLElement;
-      expect(box).toHaveStyle({
-        backgroundColor: '#e3f2fd',
-        color: '#0d47a1',
-      });
+      expect(aaaContainer.firstChild).toHaveClass('info-box__root--wcagLevel_AAA');
+      expect(aaaContainer.firstChild).toHaveClass('info-box__root--variant_info');
     });
 
     it('各バリアントでレベルAAAが正しく適用される', () => {
@@ -135,21 +110,21 @@ describe('InfoBox', () => {
           info
         </InfoBox>
       );
-      expect(infoContainer.firstChild).toHaveStyle({ color: '#0d47a1' });
+      expect(infoContainer.firstChild).toHaveClass('info-box__root--variant_info');
 
       const { container: warningContainer } = render(
         <InfoBox variant="warning" wcagLevel="AAA">
           warning
         </InfoBox>
       );
-      expect(warningContainer.firstChild).toHaveStyle({ color: '#e65100' });
+      expect(warningContainer.firstChild).toHaveClass('info-box__root--variant_warning');
 
       const { container: successContainer } = render(
         <InfoBox variant="success" wcagLevel="AAA">
           success
         </InfoBox>
       );
-      expect(successContainer.firstChild).toHaveStyle({ color: '#1b5e20' });
+      expect(successContainer.firstChild).toHaveClass('info-box__root--variant_success');
     });
   });
 });

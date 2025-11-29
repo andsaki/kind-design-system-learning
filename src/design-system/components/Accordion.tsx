@@ -1,7 +1,9 @@
 import React from 'react';
-import { colors, spacing, typography, radii, accessibilityLevels } from '../tokens';
-import type { WCAGLevel } from '../tokens';
-import './Accordion.css';
+import { accordion } from '../../../styled-system/recipes';
+import { css, cx } from '@/styled-system/css';
+import type { WCAGLevel } from '../constants/accessibility';
+
+const summaryTextClass = css({ flex: 1 });
 
 export interface AccordionProps extends React.DetailsHTMLAttributes<HTMLDetailsElement> {
   children: React.ReactNode;
@@ -29,18 +31,12 @@ export const Accordion: React.FC<AccordionProps> = ({
   wcagLevel = 'AA',
   ...props
 }) => {
-  const accordionStyles: React.CSSProperties = {
-    border: `1px solid ${colors.accordion.border}`,
-    borderRadius: radii.borderRadius.md,
-    backgroundColor: colors.accordion.bg,
-    overflow: 'hidden',
-  };
+  const slots = accordion({ wcagLevel });
 
   // wcagLevelを子コンポーネントに渡すためのContext（簡易版）
   return (
     <details
-      className={className}
-      style={accordionStyles}
+      className={cx(slots.root, className)}
       open={defaultOpen}
       data-wcag-level={wcagLevel}
       {...props}
@@ -77,8 +73,7 @@ export const AccordionSummary: React.FC<AccordionSummaryProps> = ({
     }
   }, []);
 
-  // WCAGレベルに応じたフォーカススタイルを取得
-  const levelFocus = accessibilityLevels.focus[wcagLevel];
+  const slots = accordion({ wcagLevel });
 
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -100,68 +95,30 @@ export const AccordionSummary: React.FC<AccordionSummaryProps> = ({
     };
   }, []);
 
-  const summaryStyles: React.CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: spacing.scale[3],
-    padding: `${spacing.scale[3]} ${spacing.scale[4]}`,
-    cursor: 'pointer',
-    listStyle: 'none',
-    backgroundColor: colors.accordion.bg,
-    color: colors.accordion.text,
-    fontFamily: typography.fontFamily.base,
-    fontSize: typography.fontSize.base,
-    fontWeight: typography.fontWeight.semibold,
-    lineHeight: typography.lineHeight.normal,
-    transition: 'background-color 0.2s ease',
-    outline: 'none',
-  };
-
   return (
     <summary
       ref={summaryRef}
-      className={className}
-      style={summaryStyles}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = colors.accordion.bgHover;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = colors.accordion.bg;
-      }}
+      className={cx(slots.summary, className)}
       onFocus={(e) => {
         if (isKeyboardFocus) {
-          e.currentTarget.style.backgroundColor = levelFocus.background;
-          e.currentTarget.style.color = levelFocus.text;
-          e.currentTarget.style.outline = `${levelFocus.outlineWidth} solid ${levelFocus.outline}`;
-          e.currentTarget.style.outlineOffset = levelFocus.outlineOffset;
+          e.currentTarget.setAttribute('data-focused', 'true');
         }
         props.onFocus?.(e);
       }}
       onBlur={(e) => {
-        e.currentTarget.style.backgroundColor = colors.accordion.bg;
-        e.currentTarget.style.color = colors.accordion.text;
-        e.currentTarget.style.outline = 'none';
-        e.currentTarget.style.outlineOffset = '0';
+        e.currentTarget.removeAttribute('data-focused');
         props.onBlur?.(e);
       }}
       {...props}
     >
-      <AccordionIcon />
-      <span style={{ flex: 1 }}>{children}</span>
+      <AccordionIcon className={slots.icon} />
+      <span className={summaryTextClass}>{children}</span>
     </summary>
   );
 };
 
 /** アコーディオンの開閉アイコン */
-const AccordionIcon: React.FC = () => {
-  const iconStyles: React.CSSProperties = {
-    width: '24px',
-    height: '24px',
-    flexShrink: 0,
-    color: colors.accordion.icon,
-    transition: 'transform 0.3s ease',
-  };
-
+const AccordionIcon: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <svg
       width="24"
@@ -169,9 +126,8 @@ const AccordionIcon: React.FC = () => {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={iconStyles}
       aria-hidden="true"
-      className="accordion-icon"
+      className={cx('accordion-icon', className)}
     >
       <path
         d="M7 10L12 15L17 10H7Z"
@@ -191,19 +147,11 @@ export const AccordionContent: React.FC<AccordionContentProps> = ({
   className = '',
   ...props
 }) => {
-  const contentStyles: React.CSSProperties = {
-    padding: `${spacing.scale[4]} ${spacing.scale[4]}`,
-    backgroundColor: colors.accordion.bg,
-    color: colors.accordion.text,
-    fontSize: typography.fontSize.base,
-    lineHeight: typography.lineHeight.relaxed,
-    borderTop: `1px solid ${colors.accordion.border}`,
-  };
+  const slots = accordion({});
 
   return (
     <div
-      className={className}
-      style={contentStyles}
+      className={cx(slots.content, className)}
       {...props}
     >
       {children}

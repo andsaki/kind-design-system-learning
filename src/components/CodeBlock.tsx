@@ -1,7 +1,18 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
-import { spacing, radii, colors, primitive } from '../design-system/tokens';
 import { Copy, Check } from 'lucide-react';
+import { css } from '@/styled-system/css';
+
+const tokenColorClassMap = {
+  text: css({ color: 'gray.200' }),
+  tag: css({ color: 'blue.200' }),
+  selector: css({ color: 'blue.200' }),
+  property: css({ color: 'blue.200' }),
+  string: css({ color: 'green.200' }),
+  comment: css({ color: 'gray.500' }),
+  keyword: css({ color: 'pink.200' }),
+  value: css({ color: 'orange.200' }),
+};
 
 interface CodeBlockProps {
   /**
@@ -147,31 +158,15 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     return tokens;
   };
 
-  const getTokenColor = (type: string) => {
-    switch (type) {
-      case 'tag':
-        return primitive.pink[300]; // タグ: ピンク
-      case 'string':
-        return primitive.green[300]; // 文字列: 緑
-      case 'comment':
-        return primitive.gray[500]; // コメント: グレー
-      case 'keyword':
-        return primitive.blue[300]; // キーワード: 青
-      case 'selector':
-        return primitive.pink[300]; // CSSセレクタ: ピンク
-      case 'property':
-        return primitive.blue[300]; // CSSプロパティ: 青
-      case 'value':
-        return primitive.orange[300]; // CSS値: オレンジ
-      default:
-        return primitive.gray[100]; // デフォルト: 白っぽい
-    }
-  };
-
   const renderHighlightedLine = (line: string) => {
     const tokens = highlightCode(line);
     return tokens.map((token, i) => (
-      <span key={i} style={{ color: getTokenColor(token.type) }}>
+      <span
+        key={i}
+        className={
+          tokenColorClassMap[token.type as keyof typeof tokenColorClassMap] ?? tokenColorClassMap.text
+        }
+      >
         {token.value}
       </span>
     ));
@@ -181,33 +176,39 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
     <div
       role="region"
       aria-label={ariaLabel || `${language || 'コード'}ブロック`}
-      style={{
-        borderRadius: radii.borderRadius.md,
+      className={css({
+        borderRadius: 'md',
         overflow: 'hidden',
-        border: `1px solid ${colors.border.subtle}`,
-      }}
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: 'border.subtle',
+        bg: 'gray.900',
+      })}
     >
       {/* ヘッダー */}
       {(language || showCopyButton) && (
         <div
-          style={{
+          className={css({
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: `${spacing.scale[2]} ${spacing.scale[3]}`,
-            backgroundColor: primitive.gray[800],
-            borderBottom: `1px solid ${primitive.gray[700]}`,
-          }}
+            py: 2,
+            px: 3,
+            backgroundColor: 'gray.800',
+            borderBottomWidth: '1px',
+            borderBottomStyle: 'solid',
+            borderBottomColor: 'gray.700',
+          })}
         >
           {language && (
             <span
-              style={{
-                fontSize: '12px',
+              className={css({
+                fontSize: 'xs',
                 fontWeight: 600,
-                color: primitive.gray[300],
+                color: 'gray.200',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-              }}
+                letterSpacing: '0.05em',
+              })}
             >
               {language}
             </span>
@@ -216,30 +217,28 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
             <button
               onClick={handleCopy}
               aria-label={copied ? 'コピーしました' : 'コードをコピー'}
-              style={{
+              className={css({
                 display: 'flex',
                 alignItems: 'center',
-                gap: spacing.scale[1],
-                padding: `${spacing.scale[1]} ${spacing.scale[2]}`,
-                backgroundColor: copied ? primitive.green[700] : primitive.gray[700],
-                color: primitive.white,
+                gap: 1,
+                py: 1,
+                px: 2,
+                backgroundColor: copied ? 'green.700' : 'gray.700',
+                color: 'white',
                 border: 'none',
-                borderRadius: radii.borderRadius.sm,
-                fontSize: '12px',
+                borderRadius: 'sm',
+                fontSize: 'xs',
                 fontWeight: 500,
                 cursor: 'pointer',
                 transition: 'background-color 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                if (!copied) {
-                  e.currentTarget.style.backgroundColor = primitive.gray[600];
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!copied) {
-                  e.currentTarget.style.backgroundColor = primitive.gray[700];
-                }
-              }}
+                ...(copied
+                  ? {}
+                  : {
+                      _hover: {
+                        backgroundColor: 'gray.600',
+                      },
+                    }),
+              })}
             >
               {copied ? (
                 <>
@@ -259,42 +258,45 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
 
       {/* コードブロック */}
       <div
-        style={{
-          backgroundColor: primitive.gray[900],
-          padding: spacing.scale[4],
+        className={css({
+          backgroundColor: 'gray.900',
+          padding: 4,
           overflowX: 'auto',
-        }}
+        })}
       >
         <pre
-          style={{
+          className={css({
             margin: 0,
-            fontFamily: "'Monaco', 'Menlo', 'Ubuntu Mono', monospace",
+            fontFamily: 'fonts.mono',
             fontSize: '14px',
             lineHeight: '1.6',
-          }}
+            color: 'gray.200',
+          })}
         >
           <code
-            style={{
+            className={css({
               display: 'block',
-            }}
+              backgroundColor: 'transparent !important',
+              padding: 0,
+            })}
           >
             {showLineNumbers ? (
               lines.map((line, index) => (
                 <div
                   key={index}
-                  style={{
+                  className={css({
                     display: 'flex',
-                    gap: spacing.scale[3],
-                  }}
+                    gap: 3,
+                  })}
                 >
                   <span
                     aria-hidden="true"
-                    style={{
-                      color: primitive.gray[600],
+                    className={css({
+                      color: 'gray.500',
                       userSelect: 'none',
                       minWidth: '2em',
                       textAlign: 'right',
-                    }}
+                    })}
                   >
                     {index + 1}
                   </span>
@@ -313,14 +315,16 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       {/* 説明文 */}
       {description && (
         <div
-          style={{
-            padding: spacing.scale[3],
-            backgroundColor: primitive.gray[900],
-            borderTop: `1px solid ${primitive.gray[800]}`,
-            color: primitive.gray[400],
-            fontSize: '13px',
+          className={css({
+            padding: 3,
+            backgroundColor: 'gray.900',
+            borderTopWidth: '1px',
+            borderTopStyle: 'solid',
+            borderTopColor: 'gray.800',
+            color: 'gray.300',
+            fontSize: 'sm',
             lineHeight: '1.6',
-          }}
+          })}
         >
           {description}
         </div>

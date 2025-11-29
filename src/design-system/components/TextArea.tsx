@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { colors, spacing, typography, radii, accessibilityLevels } from "../tokens";
-import type { WCAGLevel } from "../tokens";
+import { textarea as textareaRecipe } from "../../../styled-system/recipes";
+import type { WCAGLevel } from "../constants/accessibility";
+import { cx, css } from "@/styled-system/css";
 
 export interface TextAreaProps
   extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, ""> {
@@ -44,6 +45,8 @@ export const TextArea: React.FC<TextAreaProps> = ({
   value,
   defaultValue,
   onChange,
+  className,
+  style,
   ...props
 }) => {
   const generatedId = React.useId();
@@ -51,8 +54,6 @@ export const TextArea: React.FC<TextAreaProps> = ({
   const errorId = `${textareaId}-error`;
   const helpId = `${textareaId}-help`;
   const countId = `${textareaId}-count`;
-
-  const levelFocus = accessibilityLevels.focus[wcagLevel];
 
   // キーボードフォーカスの検出
   const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
@@ -91,22 +92,31 @@ export const TextArea: React.FC<TextAreaProps> = ({
     onChange?.(e);
   };
 
+  const recipeClassName = textareaRecipe({
+    state: error ? "error" : "default",
+    wcagLevel,
+  });
+
   return (
-    <div style={{ width: "100%" }}>
+    <div
+      className={css({
+        width: "100%",
+      })}
+    >
       <label
         htmlFor={textareaId}
-        style={{
+        className={css({
           display: "block",
-          marginBottom: spacing.scale[2],
-          fontSize: typography.fontSize.sm,
-          fontWeight: typography.fontWeight.medium,
-          color: disabled ? colors.text.disabled : colors.text.primary,
-        }}
+          mb: 2,
+          fontSize: "sm",
+          fontWeight: "medium",
+          color: disabled ? "contents.disabled" : "contents.primary",
+        })}
       >
         {label}
         {required && (
           <span
-            style={{ color: colors.text.error, marginLeft: spacing.scale[1] }}
+            className={css({ color: "colors.red.600", ml: 1 })}
             aria-label="必須"
           >
             *
@@ -114,7 +124,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
         )}
       </label>
 
-      <div style={{ position: "relative" }}>
+      <div className={css({ position: "relative" })}>
         <textarea
           id={textareaId}
           disabled={disabled}
@@ -135,44 +145,19 @@ export const TextArea: React.FC<TextAreaProps> = ({
               .join(" ") || undefined
           }
           {...props}
+          className={cx(recipeClassName, className)}
           style={{
-            width: "100%",
-            minHeight: "120px",
-            padding: spacing.scale[3],
-            fontSize: typography.fontSize.base,
-            lineHeight: typography.lineHeight.normal,
-            color: disabled ? colors.text.disabled : colors.text.primary,
-            backgroundColor: disabled
-              ? colors.input.bgDisabled
-              : colors.input.bg,
-            border: `1px solid ${
-              error
-                ? colors.input.borderError
-                : disabled
-                ? colors.input.bgDisabled
-                : colors.input.border
-            }`,
-            borderRadius: radii.borderRadius.md,
-            outline: "none",
             resize: "vertical",
-            transition: "border-color 0.2s, box-shadow 0.2s",
-            cursor: disabled ? "not-allowed" : "text",
-            fontFamily: "inherit",
-            ...props.style,
+            ...style,
           }}
           onFocus={(e) => {
             if (isKeyboardFocus && !disabled) {
-              e.currentTarget.style.outline = `${levelFocus.outlineWidth} solid ${levelFocus.outline}`;
-              e.currentTarget.style.outlineOffset = levelFocus.outlineOffset;
-              e.currentTarget.style.backgroundColor = levelFocus.background;
+              e.currentTarget.setAttribute("data-focused", "true");
             }
             props.onFocus?.(e);
           }}
           onBlur={(e) => {
-            e.currentTarget.style.outline = "none";
-            e.currentTarget.style.backgroundColor = disabled
-              ? colors.input.bgDisabled
-              : colors.input.bg;
+            e.currentTarget.removeAttribute("data-focused");
             props.onBlur?.(e);
           }}
           onMouseDown={() => {
@@ -184,15 +169,15 @@ export const TextArea: React.FC<TextAreaProps> = ({
       {showCount && maxLength && (
         <div
           id={countId}
-          style={{
-            marginTop: spacing.scale[1],
-            fontSize: typography.fontSize.xs,
+          className={css({
+            mt: 1,
+            fontSize: "xs",
             color:
-              charCount > maxLength
-                ? colors.text.error
-                : colors.text.secondary,
+              showCount && maxLength && charCount > maxLength
+                ? "colors.red.600"
+                : "contents.secondary",
             textAlign: "right",
-          }}
+          })}
           aria-live="polite"
         >
           {charCount} / {maxLength}
@@ -202,12 +187,12 @@ export const TextArea: React.FC<TextAreaProps> = ({
       {helpText && !error && (
         <p
           id={helpId}
-          style={{
-            margin: `${spacing.scale[1]} 0 0 0`,
-            fontSize: typography.fontSize.sm,
-            color: colors.text.secondary,
-            lineHeight: typography.lineHeight.normal,
-          }}
+          className={css({
+            mt: 1,
+            fontSize: "sm",
+            color: "contents.secondary",
+            lineHeight: "normal",
+          })}
         >
           {helpText}
         </p>
@@ -217,12 +202,12 @@ export const TextArea: React.FC<TextAreaProps> = ({
         <p
           id={errorId}
           role="alert"
-          style={{
-            margin: `${spacing.scale[1]} 0 0 0`,
-            fontSize: typography.fontSize.sm,
-            color: colors.text.error,
-            lineHeight: typography.lineHeight.normal,
-          }}
+          className={css({
+            mt: 1,
+            fontSize: "sm",
+            color: "colors.red.600",
+            lineHeight: "normal",
+          })}
         >
           {error}
         </p>

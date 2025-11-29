@@ -1,6 +1,5 @@
 import React from 'react';
-import { spacing } from '../design-system/tokens';
-import { primitive } from '../design-system/tokens/colors';
+import { css } from '@/styled-system/css';
 
 export interface SectionHeadingProps {
   /** 見出しの前に表示する絵文字 */
@@ -24,15 +23,15 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   level = 'h3',
   style = {},
 }) => {
-  const headingStyle: React.CSSProperties = {
-    color: primitive.gray[900],
-    marginBottom: spacing.scale[4],
-    ...style,
-  };
+  const headingClass = css({
+    color: 'contents.primary',
+    mb: 4,
+  });
+  const emojiClass = css({ mr: 2 });
 
   const content = (
     <>
-      {emoji && <span style={{ marginRight: spacing.scale[2] }}>{emoji}</span>}
+      {emoji && <span className={emojiClass}>{emoji}</span>}
       {children}
     </>
   );
@@ -40,12 +39,28 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   // レベルに応じて適切な要素を返す
   switch (level) {
     case 'h2':
-      return <h2 style={headingStyle}>{content}</h2>;
+      return (
+        <h2 className={headingClass} style={style}>
+          {content}
+        </h2>
+      );
     case 'h3':
-      return <h3 style={headingStyle}>{content}</h3>;
+      return (
+        <h3 className={headingClass} style={style}>
+          {content}
+        </h3>
+      );
     case 'h4':
-      return <h4 style={headingStyle}>{content}</h4>;
+      return (
+        <h4 className={headingClass} style={style}>
+          {content}
+        </h4>
+      );
     default:
-      return <h3 style={headingStyle}>{content}</h3>;
+      return (
+        <h3 className={headingClass} style={style}>
+          {content}
+        </h3>
+      );
   }
 };

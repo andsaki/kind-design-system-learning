@@ -85,7 +85,7 @@ const Input = () => (
 │   primitive.blue[500] = "#2196f3"   │  ↓ 意味を与える
 ├─────────────────────────────────────┤
 │   Semantic Tokens（意味レイヤー）     │  用途に応じた名前
-│   colors.text.primary = gray[900]   │  ↓ コンポーネントに特化
+│   colors.contents.primary = gray[900]   │  ↓ コンポーネントに特化
 ├─────────────────────────────────────┤
 │   Component Tokens（実装レイヤー）    │  コンポーネント専用の値
 │   colors.button.primary.bg = blue   │
@@ -198,10 +198,10 @@ export const button = {
 
 ```typescript
 // テキスト色
-colors.text.primary      // 主要テキスト（黒に近い）
-colors.text.secondary    // 副次的テキスト
-colors.text.link         // リンク（青）
-colors.text.error        // エラーテキスト（赤）
+colors.contents.primary      // 主要テキスト（黒に近い）
+colors.contents.secondary    // 副次的テキスト
+colors.contents.link         // リンク（青）
+colors.contents.error        // エラーテキスト（赤）
 
 // 背景色
 colors.background.default  // デフォルト背景（白）
@@ -235,9 +235,9 @@ colors.input.errorText
 
 ```typescript
 // コントラスト比の確認
-colors.text.primary   // 16.10:1 (AAA) ✅
-colors.text.secondary // 7.00:1 (AAA) ✅
-colors.text.tertiary  // 4.55:1 (AA) ✅
+colors.contents.primary   // 16.10:1 (AAA) ✅
+colors.contents.secondary // 7.00:1 (AAA) ✅
+colors.contents.tertiary  // 4.55:1 (AA) ✅
 ```
 
 ---

@@ -1,6 +1,7 @@
-import React, { useId } from 'react';
-import { colors, spacing, typography, accessibilityLevels, radii } from '../tokens';
-import type { WCAGLevel } from '../tokens';
+import React, { useId } from "react";
+import { input as inputRecipe } from "../../../styled-system/recipes";
+import type { WCAGLevel } from "../constants/accessibility";
+import { cx, css } from "@/styled-system/css";
 
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   /** ラベルテキスト */
@@ -36,6 +37,8 @@ export const Input: React.FC<InputProps> = ({
   disabled = false,
   wcagLevel = 'AA',
   id,
+  className,
+  style,
   ...props
 }) => {
   // ユニークなIDを自動生成（idが指定されていない場合）
@@ -43,82 +46,6 @@ export const Input: React.FC<InputProps> = ({
   const inputId = id || autoId;
   const errorId = `${inputId}-error`;
   const helperId = `${inputId}-helper`;
-
-  // WCAGレベルに応じたフォーカススタイルを取得
-  const levelFocus = accessibilityLevels.focus[wcagLevel];
-
-  // キーボード操作によるフォーカスかどうかを追跡
-  const [isKeyboardFocus, setIsKeyboardFocus] = React.useState(false);
-
-  // グローバルなキーボード/マウスの使用を検出
-  React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Tab') {
-        setIsKeyboardFocus(true);
-      }
-    };
-
-    const handleMouseDown = () => {
-      setIsKeyboardFocus(false);
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('mousedown', handleMouseDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('mousedown', handleMouseDown);
-    };
-  }, []);
-
-  // サイズスタイル
-  const sizeStyles: Record<string, React.CSSProperties> = {
-    sm: {
-      padding: `${spacing.input.paddingY.sm} ${spacing.input.paddingX.sm}`,
-      fontSize: typography.fontSize.sm,
-    },
-    md: {
-      padding: `${spacing.input.paddingY.md} ${spacing.input.paddingX.md}`,
-      fontSize: typography.fontSize.base,
-    },
-    lg: {
-      padding: `${spacing.input.paddingY.lg} ${spacing.input.paddingX.lg}`,
-      fontSize: typography.fontSize.lg,
-    },
-  };
-
-  // ベーススタイル
-  const inputStyles: React.CSSProperties = {
-    width: '100%',
-    fontFamily: typography.fontFamily.base,
-    borderRadius: radii.borderRadius.md,
-    border: `2px solid ${error ? colors.input.borderError : colors.input.border}`,
-    outline: 'none',
-    transition: 'all 0.2s ease-in-out',
-    backgroundColor: disabled ? colors.input.bgDisabled : colors.input.bg,
-    color: disabled ? colors.input.textDisabled : colors.input.text,
-    cursor: disabled ? 'not-allowed' : 'text',
-    ...sizeStyles[size],
-  };
-
-  const labelStyles: React.CSSProperties = {
-    display: 'block',
-    marginBottom: spacing.input.gap,
-    fontSize: typography.fontSize.sm,
-    fontWeight: typography.fontWeight.medium,
-    color: colors.input.label,
-  };
-
-  const helperTextStyles: React.CSSProperties = {
-    marginTop: spacing.input.gap,
-    fontSize: typography.fontSize.sm,
-    color: error ? colors.input.errorText : colors.input.helperText,
-    lineHeight: typography.lineHeight.normal,
-  };
-
-  const containerStyles: React.CSSProperties = {
-    marginBottom: spacing.scale[4], // 16px
-  };
 
   // aria-describedbyの値を構築
   const getAriaDescribedBy = () => {
@@ -128,15 +55,37 @@ export const Input: React.FC<InputProps> = ({
     return ids.length > 0 ? ids.join(' ') : undefined;
   };
 
+  const recipeClassName = inputRecipe({
+    size,
+    state: error ? 'error' : 'default',
+    wcagLevel,
+  });
+
   return (
-    <div style={containerStyles}>
+    <div
+      className={css({
+        mb: 4,
+      })}
+    >
       {/* ラベル: for属性でinputと関連付け */}
-      <label htmlFor={inputId} style={labelStyles}>
+      <label
+        htmlFor={inputId}
+        className={css({
+          display: 'block',
+          mb: 2,
+          fontSize: 'sm',
+          fontWeight: 'medium',
+          color: 'contents.primary',
+        })}
+      >
         {label}
         {/* 必須項目の表示 */}
         {required && (
           <span
-            style={{ color: colors.input.errorText, marginLeft: spacing.scale[1] }}
+            className={css({
+              color: 'colors.red.600',
+              ml: 1,
+            })}
             aria-label="必須"
           >
             *
@@ -152,28 +101,9 @@ export const Input: React.FC<InputProps> = ({
         aria-required={required}
         aria-invalid={!!error}
         aria-describedby={getAriaDescribedBy()}
-        style={inputStyles}
+        className={cx(recipeClassName, className)}
+        style={style}
         {...props}
-        // フォーカス時のスタイル: WCAGレベルに応じて変更
-        onFocus={(e) => {
-          if (!disabled && isKeyboardFocus) {
-            e.currentTarget.style.backgroundColor = levelFocus.background;
-            e.currentTarget.style.color = levelFocus.text;
-            e.currentTarget.style.borderColor = levelFocus.outline;
-            e.currentTarget.style.outline = `${levelFocus.outlineWidth} solid ${levelFocus.outline}`;
-            e.currentTarget.style.outlineOffset = levelFocus.outlineOffset;
-          }
-          props.onFocus?.(e);
-        }}
-        onBlur={(e) => {
-          // 元のスタイルに戻す
-          e.currentTarget.style.backgroundColor = disabled ? colors.input.bgDisabled : colors.input.bg;
-          e.currentTarget.style.color = disabled ? colors.input.textDisabled : colors.input.text;
-          e.currentTarget.style.borderColor = error ? colors.input.borderError : colors.input.border;
-          e.currentTarget.style.outline = 'none';
-          e.currentTarget.style.outlineOffset = '0';
-          props.onBlur?.(e);
-        }}
       />
 
       {/* エラーメッセージ: role="alert"で即座に読み上げ */}
@@ -182,7 +112,12 @@ export const Input: React.FC<InputProps> = ({
           id={errorId}
           role="alert"
           aria-live="polite"
-          style={helperTextStyles}
+          className={css({
+            mt: 2,
+            fontSize: 'sm',
+            color: 'colors.red.700',
+            lineHeight: 'normal',
+          })}
         >
           {error}
         </div>
@@ -190,7 +125,15 @@ export const Input: React.FC<InputProps> = ({
 
       {/* ヘルプテキスト: エラーがない場合のみ表示 */}
       {helperText && !error && (
-        <div id={helperId} style={helperTextStyles}>
+        <div
+          id={helperId}
+          className={css({
+            mt: 2,
+            fontSize: 'sm',
+            color: 'contents.secondary',
+            lineHeight: 'normal',
+          })}
+        >
           {helperText}
         </div>
       )}

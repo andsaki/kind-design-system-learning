@@ -1,36 +1,40 @@
-import type { Preview } from '@storybook/react-vite'
-import '../src/index.css'
+import type { Preview } from '@storybook/react-vite';
+import React from 'react';
+import '../src/index.css';
+import { ThemeProvider } from '../src/design-system/theme/ThemeProvider';
+
+const ThemeProviderWrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) =>
+  React.createElement(
+    ThemeProvider,
+    { defaultTheme: 'light', storageKey: 'storybook-theme', children },
+  );
 
 const preview: Preview = {
   parameters: {
     controls: {
       matchers: {
-       color: /(background|color)$/i,
-       date: /Date$/i,
+        color: /(background|color)$/i,
+        date: /Date$/i,
       },
     },
-
     a11y: {
-      // 'todo' - show a11y violations in the test UI only
-      // 'error' - fail CI on a11y violations
-      // 'off' - skip a11y checks entirely
-      test: 'todo'
+      test: 'todo',
     },
-
     backgrounds: {
       default: 'light',
       values: [
-        {
-          name: 'light',
-          value: '#ffffff',
-        },
-        {
-          name: 'dark',
-          value: '#000000',
-        },
+        { name: 'light', value: '#ffffff' },
+        { name: 'dark', value: '#000000' },
       ],
     },
   },
+  decorators: [
+    (Story) =>
+      React.createElement(
+        ThemeProviderWrapper,
+        { children: Story() },
+      ),
+  ],
 };
 
 export default preview;

@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { css } from "@/styled-system/css";
 import { Button, Input, Accordion, AccordionSummary, AccordionContent, Breadcrumbs, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, Modal } from "../design-system/components";
 import { InfoBox } from "../design-system/components/InfoBox";
-import { colors, radii, spacing, typography, icons, borders } from "../design-system/tokens";
-import { primitive } from "../design-system/tokens/colors";
+import { icons } from "../design-system/tokens/icons";
 import { SectionHeading } from "../components/SectionHeading";
 import { Tooltip } from "../components/Tooltip";
 import { CodeBlock } from "../components/CodeBlock";
@@ -13,191 +13,191 @@ export const ARIAGuide = () => {
   return (
     <section
       id="aria-guide"
-      style={{
-        marginBottom: spacing.scale[12],
-        padding: spacing.scale[6],
-        backgroundColor: colors.background.default,
-        borderRadius: radii.borderRadius.lg,
-        border: borders.default,
+      className={css({
+        marginBottom: 12,
+        padding: 6,
+        backgroundColor: "bg.primary",
+        borderRadius: "lg",
+        borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
         maxWidth: '100%',
         overflowX: 'hidden',
         boxSizing: 'border-box'
-      }}
+      })}
     >
-      <h2 style={{
+      <h2 className={css({
         marginTop: 0,
-        color: primitive.gray[900],
-        fontSize: typography.fontSize['2xl'],
+        color: "contents.primary",
+        fontSize: "2xl",
         fontWeight: 'bold',
-        borderBottom: `${borders.width.thick} solid ${primitive.pink[500]}`,
-        paddingBottom: spacing.scale[2],
-        marginBottom: spacing.scale[4],
+        borderBottomWidth: "thick", borderBottomStyle: "solid", borderBottomColor: "pink.500",
+        paddingBottom: 2,
+        marginBottom: 4,
         display: 'flex',
         alignItems: 'center',
-        gap: spacing.scale[2]
-      }}>
-        <icons.philosophy.inclusive size={28} color={primitive.pink[600]} strokeWidth={2} />
+        gap: 2
+      })}>
+        <icons.philosophy.inclusive size={28} color={"pink.600"} strokeWidth={2} />
         ARIAラベルとrole属性ガイド
       </h2>
-      <p style={{ color: primitive.gray[700], marginBottom: spacing.scale[6] }}>
+      <p className={css({ color: "contents.secondary", marginBottom: 6 })}>
         ARIA（Accessible Rich Internet Applications）は、Webアプリケーションをスクリーンリーダーなどの支援技術に対してアクセシブルにするための仕様です。
         適切なARIA属性を使用することで、視覚障害者やキーボードユーザーに対して、より良いユーザー体験を提供できます。
       </p>
 
       {/* ARIAの基本概要 */}
-      <div style={{
-        marginTop: spacing.scale[6],
-        marginBottom: spacing.scale[8],
-        padding: spacing.scale[6],
-        backgroundColor: primitive.blue[50],
-        borderRadius: radii.borderRadius.lg,
-        border: `${borders.width.base} solid ${primitive.blue[200]}`,
-      }}>
-        <h3 style={{
+      <div className={css({
+        marginTop: 6,
+        marginBottom: 8,
+        padding: 6,
+        backgroundColor: "bg.secondary",
+        borderRadius: "lg",
+        borderWidth: "base", borderStyle: "solid", borderColor: "border.default",
+      })}>
+        <h3 className={css({
           marginTop: 0,
-          marginBottom: spacing.scale[4],
-          color: primitive.blue[900],
-          fontSize: typography.fontSize.xl,
-          fontWeight: typography.fontWeight.semibold,
+          marginBottom: 4,
+          color: "contents.primary",
+          fontSize: "xl",
+          fontWeight: "semibold",
           display: 'flex',
           alignItems: 'center',
-          gap: spacing.scale[2]
-        }}>
-          <icons.concept.wcag size={24} color={primitive.blue[600]} strokeWidth={2} />
+          gap: 2
+        })}>
+          <icons.concept.wcag size={24} color={"blue.600"} strokeWidth={2} />
           ARIAの基本的な役割
         </h3>
 
-        <div style={{ display: 'grid', gap: spacing.scale[4] }}>
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.white,
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.blue[200]}`,
-          }}>
-            <h4 style={{
+        <div className={css({ display: 'grid', gap: 4 })}>
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+          })}>
+            <h4 className={css({
               marginTop: 0,
-              marginBottom: spacing.scale[2],
-              color: primitive.blue[900],
-              fontSize: typography.fontSize.base,
-              fontWeight: typography.fontWeight.semibold,
-            }}>
+              marginBottom: 2,
+              color: "contents.primary",
+              fontSize: "base",
+              fontWeight: "semibold",
+            })}>
               🎭 役割（Role）を伝える
             </h4>
-            <p style={{ margin: 0, color: primitive.gray[700], fontSize: typography.fontSize.sm, lineHeight: typography.lineHeight.relaxed }}>
-              要素が何であるかを支援技術に伝えます。例：<code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[1]} ${spacing.scale[2]}`, borderRadius: spacing.scale[2] }}>role="button"</code>、
-              <code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[1]} ${spacing.scale[2]}`, borderRadius: spacing.scale[2] }}>role="navigation"</code>など。
+            <p className={css({ margin: 0, color: "contents.secondary", fontSize: "sm", lineHeight: "relaxed" })}>
+              要素が何であるかを支援技術に伝えます。例：<code className={css({ backgroundColor: "bg.tertiary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>role="button"</code>、
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>role="navigation"</code>など。
               HTMLのセマンティック要素（<code>&lt;button&gt;</code>、<code>&lt;nav&gt;</code>）を使えば、roleは自動的に付与されます。
             </p>
           </div>
 
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.white,
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.blue[200]}`,
-          }}>
-            <h4 style={{
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+          })}>
+            <h4 className={css({
               marginTop: 0,
-              marginBottom: spacing.scale[2],
-              color: primitive.blue[900],
-              fontSize: typography.fontSize.base,
-              fontWeight: typography.fontWeight.semibold,
-            }}>
+              marginBottom: 2,
+              color: "contents.primary",
+              fontSize: "base",
+              fontWeight: "semibold",
+            })}>
               🏷️ 名前（Name）をつける
             </h4>
-            <p style={{ margin: 0, color: primitive.gray[700], fontSize: typography.fontSize.sm, lineHeight: typography.lineHeight.relaxed }}>
-              要素に読み上げられる名前を与えます。<code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[1]} ${spacing.scale[2]}`, borderRadius: spacing.scale[2] }}>aria-label</code>、
-              <code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[1]} ${spacing.scale[2]}`, borderRadius: spacing.scale[2] }}>aria-labelledby</code>などで指定します。
+            <p className={css({ margin: 0, color: "contents.secondary", fontSize: "sm", lineHeight: "relaxed" })}>
+              要素に読み上げられる名前を与えます。<code className={css({ backgroundColor: "bg.tertiary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>aria-label</code>、
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>aria-labelledby</code>などで指定します。
               「閉じるボタン」「メニューを開く」など、要素の目的を明確に伝えます。
             </p>
           </div>
 
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.white,
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.blue[200]}`,
-          }}>
-            <h4 style={{
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+          })}>
+            <h4 className={css({
               marginTop: 0,
-              marginBottom: spacing.scale[2],
-              color: primitive.blue[900],
-              fontSize: typography.fontSize.base,
-              fontWeight: typography.fontWeight.semibold,
-            }}>
+              marginBottom: 2,
+              color: "contents.primary",
+              fontSize: "base",
+              fontWeight: "semibold",
+            })}>
               📊 状態（State）を伝える
             </h4>
-            <p style={{ margin: 0, color: primitive.gray[700], fontSize: typography.fontSize.sm, lineHeight: typography.lineHeight.relaxed }}>
-              要素の現在の状態を伝えます。<code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[1]} ${spacing.scale[2]}`, borderRadius: spacing.scale[2] }}>aria-expanded="true"</code>（展開中）、
-              <code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[1]} ${spacing.scale[2]}`, borderRadius: spacing.scale[2] }}>aria-checked="false"</code>（未チェック）、
-              <code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[1]} ${spacing.scale[2]}`, borderRadius: spacing.scale[2] }}>aria-disabled="true"</code>（無効）など、
+            <p className={css({ margin: 0, color: "contents.secondary", fontSize: "sm", lineHeight: "relaxed" })}>
+              要素の現在の状態を伝えます。<code className={css({ backgroundColor: "bg.tertiary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>aria-expanded="true"</code>（展開中）、
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>aria-checked="false"</code>（未チェック）、
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>aria-disabled="true"</code>（無効）など、
               動的に変化する状態を支援技術に伝えます。
             </p>
           </div>
 
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.white,
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.blue[200]}`,
-          }}>
-            <h4 style={{
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+          })}>
+            <h4 className={css({
               marginTop: 0,
-              marginBottom: spacing.scale[2],
-              color: primitive.blue[900],
-              fontSize: typography.fontSize.base,
-              fontWeight: typography.fontWeight.semibold,
-            }}>
+              marginBottom: 2,
+              color: "contents.primary",
+              fontSize: "base",
+              fontWeight: "semibold",
+            })}>
               🔗 関係性（Relationship）を示す
             </h4>
-            <p style={{ margin: 0, color: primitive.gray[700], fontSize: typography.fontSize.sm, lineHeight: typography.lineHeight.relaxed }}>
-              要素間の関係を伝えます。<code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[1]} ${spacing.scale[2]}`, borderRadius: spacing.scale[2] }}>aria-describedby</code>（説明要素）、
-              <code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[1]} ${spacing.scale[2]}`, borderRadius: spacing.scale[2] }}>aria-controls</code>（制御する要素）、
-              <code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[1]} ${spacing.scale[2]}`, borderRadius: spacing.scale[2] }}>aria-owns</code>（所有する要素）など、
+            <p className={css({ margin: 0, color: "contents.secondary", fontSize: "sm", lineHeight: "relaxed" })}>
+              要素間の関係を伝えます。<code className={css({ backgroundColor: "bg.tertiary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>aria-describedby</code>（説明要素）、
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>aria-controls</code>（制御する要素）、
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>aria-owns</code>（所有する要素）など、
               要素同士のつながりを明確にします。
             </p>
           </div>
         </div>
 
-        <div style={{
-          marginTop: spacing.scale[4],
-          padding: spacing.scale[3],
-          backgroundColor: primitive.yellow,
-          border: `${borders.width.base} solid ${primitive.black}`,
-          borderRadius: radii.borderRadius.md,
-          fontSize: typography.fontSize.sm,
-          color: primitive.gray[900],
-        }}>
+        <div className={css({
+          marginTop: 4,
+          padding: 3,
+          backgroundColor: "bg.secondary",
+          borderWidth: "base", borderStyle: "solid", borderColor: "border.warning",
+          borderRadius: "md",
+          fontSize: "sm",
+          color: "contents.primary",
+        })}>
           <strong>💡 重要な原則:</strong> まずは<strong>セマンティックHTML</strong>（<code>&lt;button&gt;</code>、<code>&lt;nav&gt;</code>、<code>&lt;main&gt;</code>など）を使いましょう。
           ARIAは、HTMLの機能では実現できない場合の「補完」として使用します。
         </div>
       </div>
 
-      <div style={{ marginTop: spacing.scale[8] }}>
+      <div className={css({ marginTop: 8 })}>
         <SectionHeading>主要なARIA属性</SectionHeading>
 
-        <div style={{
+        <div className={css({
           display: 'grid',
-          gap: spacing.scale[4],
-          marginBottom: spacing.scale[8],
+          gap: 4,
+          marginBottom: 8,
           width: '100%',
           minWidth: 0
-        }}>
+        })}>
           {/* aria-label */}
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.pink[50],
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.pink[200]}`,
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
             minWidth: 0
-          }}>
-            <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.pink[900] }}>
-              <code style={{ backgroundColor: primitive.pink[100], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>aria-label</code>
+          })}>
+            <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>aria-label</code>
             </h4>
-            <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+            <p className={css({ color: "contents.secondary", marginTop: 0 })}>
               要素に対して、スクリーンリーダーが読み上げるラベルを指定します。視覚的なテキストがない要素に使用します。
             </p>
-            <div style={{ marginTop: spacing.scale[2] }}>
+            <div className={css({ marginTop: 2 })}>
               <CodeBlock
                 code={`<button aria-label="メニューを開く">
   <icons.menu />
@@ -206,7 +206,7 @@ export const ARIAGuide = () => {
                 showLineNumbers={false}
               />
             </div>
-            <div style={{ marginTop: spacing.scale[3], display: 'flex', gap: spacing.scale[2], alignItems: 'center', flexWrap: 'wrap' }}>
+            <div className={css({ marginTop: 3, display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' })}>
               <Button
                 aria-label="設定を開く"
                 icon={<icons.component.button size={16} />}
@@ -214,27 +214,27 @@ export const ARIAGuide = () => {
                 size="sm"
               >
               </Button>
-              <span style={{ fontSize: typography.fontSize.sm, color: primitive.gray[600] }}>
+              <span className={css({ fontSize: "sm", color: "contents.tertiary" })}>
                 ← アイコンのみのボタンに aria-label を使用
               </span>
             </div>
           </div>
 
           {/* aria-labelledby */}
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.blue[50],
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.blue[200]}`,
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
             minWidth: 0
-          }}>
-            <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.blue[900] }}>
-              <code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>aria-labelledby</code>
+          })}>
+            <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>aria-labelledby</code>
             </h4>
-            <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+            <p className={css({ color: "contents.secondary", marginTop: 0 })}>
               他の要素のIDを参照して、その要素のテキストをラベルとして使用します。複数のIDをスペース区切りで指定できます。
             </p>
-            <div style={{ marginTop: spacing.scale[2] }}>
+            <div className={css({ marginTop: 2 })}>
               <CodeBlock
                 code={`<h2 id="section-title">ユーザー設定</h2>
 <section aria-labelledby="section-title">
@@ -246,20 +246,20 @@ export const ARIAGuide = () => {
           </div>
 
           {/* aria-describedby */}
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.green[50],
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.green[200]}`,
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
             minWidth: 0
-          }}>
-            <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.green[900] }}>
-              <code style={{ backgroundColor: primitive.green[100], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>aria-describedby</code>
+          })}>
+            <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>aria-describedby</code>
             </h4>
-            <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+            <p className={css({ color: "contents.secondary", marginTop: 0 })}>
               要素の説明や補足情報を提供する他の要素のIDを参照します。エラーメッセージやヒントテキストに使用します。
             </p>
-            <div style={{ marginTop: spacing.scale[2] }}>
+            <div className={css({ marginTop: 2 })}>
               <CodeBlock
                 code={`<input
   type="password"
@@ -271,107 +271,107 @@ export const ARIAGuide = () => {
                 language="html"
               />
             </div>
-            <div style={{ marginTop: spacing.scale[3] }}>
+            <div className={css({ marginTop: 3 })}>
               <Input
                 label="パスワード"
                 type="password"
                 placeholder="パスワード"
                 aria-describedby="demo-password-hint"
               />
-              <span id="demo-password-hint" style={{
+              <span id="demo-password-hint" className={css({
                 display: 'block',
-                marginTop: spacing.scale[1],
-                fontSize: typography.fontSize.sm,
-                color: primitive.gray[600]
-              }}>
+                marginTop: 1,
+                fontSize: "sm",
+                color: "contents.tertiary"
+              })}>
                 8文字以上、英数字を含む
               </span>
             </div>
           </div>
 
           {/* aria-current */}
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.orange[50],
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.orange[200]}`,
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
             minWidth: 0
-          }}>
-            <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.orange[900] }}>
-              <code style={{ backgroundColor: primitive.orange[100], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>aria-current</code>
+          })}>
+            <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>aria-current</code>
             </h4>
-            <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+            <p className={css({ color: "contents.secondary", marginTop: 0 })}>
               現在の項目を示します。ナビゲーションやパンくずリストで使用します。
             </p>
 
-            <div style={{
-              marginTop: spacing.scale[4],
-              padding: spacing.scale[3],
-              backgroundColor: primitive.white,
-              borderRadius: radii.borderRadius.base,
-              border: `${borders.width.thin} solid ${primitive.orange[200]}`,
-            }}>
-              <h5 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.orange[900], fontSize: typography.fontSize.base }}>
+            <div className={css({
+              marginTop: 4,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+            })}>
+              <h5 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary", fontSize: "base" })}>
                 📋 aria-current の値の種類
               </h5>
-              <div style={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: typography.fontSize.sm }}>
+              <div className={css({ overflowX: 'auto' })}>
+                <table className={css({ width: '100%', borderCollapse: 'collapse', fontSize: "sm" })}>
                 <thead>
-                  <tr style={{ borderBottom: `${borders.width.base} solid ${primitive.orange[200]}` }}>
-                    <th style={{ textAlign: 'left', padding: spacing.scale[2], color: primitive.orange[900] }}>値</th>
-                    <th style={{ textAlign: 'left', padding: spacing.scale[2], color: primitive.orange[900] }}>使用場面</th>
-                    <th style={{ textAlign: 'left', padding: spacing.scale[2], color: primitive.orange[900] }}>例</th>
+                  <tr className={css({ borderBottomWidth: "base", borderBottomStyle: "solid", borderBottomColor: "border.default" })}>
+                    <th className={css({ textAlign: 'left', padding: 2, color: "contents.primary" })}>値</th>
+                    <th className={css({ textAlign: 'left', padding: 2, color: "contents.primary" })}>使用場面</th>
+                    <th className={css({ textAlign: 'left', padding: 2, color: "contents.primary" })}>例</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style={{ borderBottom: `${borders.width.thin} solid ${primitive.orange[100]}` }}>
-                    <td style={{ padding: spacing.scale[2], fontFamily: 'monospace', color: primitive.orange[800] }}>page</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[700] }}>現在表示中のページ</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[600], fontSize: typography.fontSize.xs }}>パンくずリスト、ページネーション</td>
+                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
+                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>page</td>
+                    <td className={css({ padding: 2, color: "contents.secondary" })}>現在表示中のページ</td>
+                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>パンくずリスト、ページネーション</td>
                   </tr>
-                  <tr style={{ borderBottom: `${borders.width.thin} solid ${primitive.orange[100]}` }}>
-                    <td style={{ padding: spacing.scale[2], fontFamily: 'monospace', color: primitive.orange[800] }}>step</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[700] }}>ステップ形式の現在位置</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[600], fontSize: typography.fontSize.xs }}>フォームウィザード、チュートリアル</td>
+                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
+                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>step</td>
+                    <td className={css({ padding: 2, color: "contents.secondary" })}>ステップ形式の現在位置</td>
+                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>フォームウィザード、チュートリアル</td>
                   </tr>
-                  <tr style={{ borderBottom: `${borders.width.thin} solid ${primitive.orange[100]}` }}>
-                    <td style={{ padding: spacing.scale[2], fontFamily: 'monospace', color: primitive.orange[800] }}>location</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[700] }}>視覚的にハイライトされた場所</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[600], fontSize: typography.fontSize.xs }}>フローチャート、サイトマップ</td>
+                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
+                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>location</td>
+                    <td className={css({ padding: 2, color: "contents.secondary" })}>視覚的にハイライトされた場所</td>
+                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>フローチャート、サイトマップ</td>
                   </tr>
-                  <tr style={{ borderBottom: `${borders.width.thin} solid ${primitive.orange[100]}` }}>
-                    <td style={{ padding: spacing.scale[2], fontFamily: 'monospace', color: primitive.orange[800] }}>date</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[700] }}>現在選択中の日付</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[600], fontSize: typography.fontSize.xs }}>カレンダー、日付ピッカー</td>
+                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
+                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>date</td>
+                    <td className={css({ padding: 2, color: "contents.secondary" })}>現在選択中の日付</td>
+                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>カレンダー、日付ピッカー</td>
                   </tr>
-                  <tr style={{ borderBottom: `${borders.width.thin} solid ${primitive.orange[100]}` }}>
-                    <td style={{ padding: spacing.scale[2], fontFamily: 'monospace', color: primitive.orange[800] }}>time</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[700] }}>現在選択中の時刻</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[600], fontSize: typography.fontSize.xs }}>タイムピッカー、スケジュール</td>
+                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
+                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>time</td>
+                    <td className={css({ padding: 2, color: "contents.secondary" })}>現在選択中の時刻</td>
+                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>タイムピッカー、スケジュール</td>
                   </tr>
-                  <tr style={{ borderBottom: `${borders.width.thin} solid ${primitive.orange[100]}` }}>
-                    <td style={{ padding: spacing.scale[2], fontFamily: 'monospace', color: primitive.orange[800] }}>true</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[700] }}>上記に当てはまらない現在項目</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[600], fontSize: typography.fontSize.xs }}>汎用的な「現在」の表示</td>
+                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
+                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>true</td>
+                    <td className={css({ padding: 2, color: "contents.secondary" })}>上記に当てはまらない現在項目</td>
+                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>汎用的な「現在」の表示</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: spacing.scale[2], fontFamily: 'monospace', color: primitive.orange[800] }}>false</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[700] }}>現在項目ではない（デフォルト）</td>
-                    <td style={{ padding: spacing.scale[2], color: primitive.gray[600], fontSize: typography.fontSize.xs }}>通常は省略可能</td>
+                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>false</td>
+                    <td className={css({ padding: 2, color: "contents.secondary" })}>現在項目ではない（デフォルト）</td>
+                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>通常は省略可能</td>
                   </tr>
                 </tbody>
               </table>
               </div>
             </div>
 
-            <div style={{
-              backgroundColor: primitive.white,
-              padding: spacing.scale[3],
-              borderRadius: radii.borderRadius.base,
-              marginTop: spacing.scale[3],
-              border: `${borders.width.thin} solid ${primitive.orange[200]}`,
-            }}>
-              <h5 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.orange[900], fontSize: typography.fontSize.base }}>
+            <div className={css({
+              backgroundColor: "bg.primary",
+              padding: 3,
+              borderRadius: "base",
+              marginTop: 3,
+              borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+            })}>
+              <h5 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary", fontSize: "base" })}>
                 💡 使用例：パンくずリスト
               </h5>
               <CodeBlock
@@ -384,7 +384,7 @@ export const ARIAGuide = () => {
                 language="jsx"
               />
             </div>
-            <div style={{ marginTop: spacing.scale[3] }}>
+            <div className={css({ marginTop: 3 })}>
               <Breadcrumbs>
                 <BreadcrumbList>
                   <BreadcrumbItem>
@@ -400,20 +400,20 @@ export const ARIAGuide = () => {
           </div>
 
           {/* aria-expanded */}
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.pink[50],
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.pink[200]}`,
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
             minWidth: 0
-          }}>
-            <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.pink[900] }}>
-              <code style={{ backgroundColor: primitive.pink[100], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>aria-expanded</code>
+          })}>
+            <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>aria-expanded</code>
             </h4>
-            <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+            <p className={css({ color: "contents.secondary", marginTop: 0 })}>
               要素が展開されているか折りたたまれているかを示します。アコーディオンやドロップダウンメニューで使用します。
             </p>
-            <div style={{ marginTop: spacing.scale[2] }}>
+            <div className={css({ marginTop: 2 })}>
               <CodeBlock
                 code={`<AccordionSummary
   aria-expanded={isOpen}
@@ -423,7 +423,7 @@ export const ARIAGuide = () => {
                 language="jsx"
               />
             </div>
-            <div style={{ marginTop: spacing.scale[3] }}>
+            <div className={css({ marginTop: 3 })}>
               <Accordion>
                 <AccordionSummary>
                   クリックして展開/折りたたみ（aria-expandedが自動で切り替わります）
@@ -436,20 +436,20 @@ export const ARIAGuide = () => {
           </div>
 
           {/* aria-hidden */}
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.gray[100],
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.gray[300]}`,
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.tertiary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.subtle",
             minWidth: 0
-          }}>
-            <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.gray[900] }}>
-              <code style={{ backgroundColor: primitive.gray[200], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>aria-hidden</code>
+          })}>
+            <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>aria-hidden</code>
             </h4>
-            <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+            <p className={css({ color: "contents.secondary", marginTop: 0 })}>
               要素をスクリーンリーダーから隠します。装飾的なアイコンやSVGに使用します。
             </p>
-            <div style={{ marginTop: spacing.scale[2] }}>
+            <div className={css({ marginTop: 2 })}>
               <CodeBlock
                 code={`<svg aria-hidden="true">
   <path d="..." />
@@ -462,24 +462,24 @@ export const ARIAGuide = () => {
         </div>
       </div>
 
-      <div style={{ marginTop: spacing.scale[8] }}>
+      <div className={css({ marginTop: 8 })}>
         <SectionHeading>ツールチップ（role="tooltip"）</SectionHeading>
 
-        <div style={{
-          padding: spacing.scale[4],
-          backgroundColor: primitive.pink[50],
-          borderRadius: radii.borderRadius.md,
-          border: `${borders.width.thin} solid ${primitive.pink[200]}`,
-        }}>
-          <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.pink[900] }}>
-            <code style={{ backgroundColor: primitive.pink[100], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>role="tooltip"</code>
+        <div className={css({
+          padding: 4,
+          backgroundColor: "bg.secondary",
+          borderRadius: "md",
+          borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+        })}>
+          <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+            <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>role="tooltip"</code>
           </h4>
-          <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+          <p className={css({ color: "contents.secondary", marginTop: 0 })}>
             ツールチップは、要素に関する補足情報を提供するポップアップです。aria-describedby と組み合わせて使用します。
           </p>
 
-          <InfoBox variant="tip" icon="💡" title="ツールチップのアクセシビリティ要件" style={{ marginTop: spacing.scale[3] }}>
-            <ul style={{ lineHeight: typography.lineHeight.relaxed, margin: 0, paddingLeft: spacing.scale[5] }}>
+          <InfoBox variant="tip" icon="💡" title="ツールチップのアクセシビリティ要件" className={css({ marginTop: 3 })}>
+            <ul className={css({ lineHeight: "relaxed", margin: 0, paddingLeft: 5 })}>
               <li>role="tooltip" を使用する</li>
               <li>一意のIDを持つ</li>
               <li>トリガー要素から aria-describedby で参照される</li>
@@ -489,7 +489,7 @@ export const ARIAGuide = () => {
             </ul>
           </InfoBox>
 
-          <div style={{ marginTop: spacing.scale[3] }}>
+          <div className={css({ marginTop: 3 })}>
             <CodeBlock
               code={`<Tooltip content="追加の説明テキスト" position="top">
   <button>ホバーまたはフォーカス</button>
@@ -498,17 +498,17 @@ export const ARIAGuide = () => {
             />
           </div>
 
-          <div style={{
-            marginTop: spacing.scale[4],
-            padding: spacing.scale[3],
-            backgroundColor: primitive.white,
-            borderRadius: radii.borderRadius.base,
-            border: `${borders.width.thin} solid ${primitive.pink[200]}`,
-          }}>
-            <h5 style={{ marginTop: 0, marginBottom: spacing.scale[3], color: primitive.pink[900], fontSize: typography.fontSize.base }}>
+          <div className={css({
+            marginTop: 4,
+            padding: 3,
+            backgroundColor: "bg.primary",
+            borderRadius: "base",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+          })}>
+            <h5 className={css({ marginTop: 0, marginBottom: 3, color: "contents.primary", fontSize: "base" })}>
               🎨 実例
             </h5>
-            <div style={{ display: 'flex', gap: spacing.scale[4], flexWrap: 'wrap', alignItems: 'center' }}>
+            <div className={css({ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' })}>
               <Tooltip content="これは上に表示されるツールチップです" position="top">
                 <Button variant="outline" size="sm">上</Button>
               </Tooltip>
@@ -522,37 +522,37 @@ export const ARIAGuide = () => {
                 <Button variant="outline" size="sm">右</Button>
               </Tooltip>
               <Tooltip content="このアイコンについての詳細情報" position="top">
-                <span style={{
+                <span className={css({
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   width: '24px',
                   height: '24px',
                   borderRadius: '50%',
-                  backgroundColor: primitive.pink[100],
-                  color: primitive.pink[700],
-                  fontSize: typography.fontSize.sm,
+                  backgroundColor: "bg.tertiary",
+                  color: "contents.secondary",
+                  fontSize: "sm",
                   fontWeight: 'bold',
                   cursor: 'help',
                   textDecoration: 'none',
-                }}>
+                })}>
                   ?
                 </span>
               </Tooltip>
             </div>
           </div>
 
-          <div style={{
-            marginTop: spacing.scale[3],
-            padding: spacing.scale[3],
-            backgroundColor: primitive.yellow,
-            borderRadius: radii.borderRadius.base,
-            border: `${borders.width.base} solid ${primitive.black}`,
-          }}>
-            <h5 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.gray[900], fontSize: typography.fontSize.base }}>
+          <div className={css({
+            marginTop: 3,
+            padding: 3,
+            backgroundColor: "bg.secondary",
+            borderRadius: "base",
+            borderWidth: "base", borderStyle: "solid", borderColor: "border.warning",
+          })}>
+            <h5 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary", fontSize: "base" })}>
               ⚠️ ツールチップ vs タイトル属性
             </h5>
-            <p style={{ color: primitive.gray[900], margin: 0, lineHeight: typography.lineHeight.relaxed }}>
+            <p className={css({ color: "contents.primary", margin: 0, lineHeight: "relaxed" })}>
               HTML の title 属性はアクセシビリティの観点から推奨されません。キーボードユーザーには利用できず、タッチデバイスでは表示されないためです。
               代わりに、適切に実装された aria-describedby と role="tooltip" を使用してください。
             </p>
@@ -560,27 +560,27 @@ export const ARIAGuide = () => {
         </div>
       </div>
 
-      <div style={{ marginTop: spacing.scale[8] }}>
+      <div className={css({ marginTop: 8 })}>
         <SectionHeading>主要なrole属性</SectionHeading>
 
-        <div style={{
+        <div className={css({
           display: 'grid',
-          gap: spacing.scale[4],
-        }}>
+          gap: 4,
+        })}>
           {/* role="button" */}
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.blue[50],
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.blue[200]}`,
-          }}>
-            <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.blue[900] }}>
-              <code style={{ backgroundColor: primitive.blue[100], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>role="button"</code>
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+          })}>
+            <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>role="button"</code>
             </h4>
-            <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+            <p className={css({ color: "contents.secondary", marginTop: 0 })}>
               div や span などの要素をボタンとして扱います。可能な限り &lt;button&gt; 要素を使用してください。
             </p>
-            <div style={{ marginTop: spacing.scale[2] }}>
+            <div className={css({ marginTop: 2 })}>
               <CodeBlock
                 code={`<!-- ❌ 避けるべき -->
 <div role="button" tabIndex={0}>
@@ -595,21 +595,21 @@ export const ARIAGuide = () => {
           </div>
 
           {/* role="dialog" */}
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.pink[50],
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.pink[200]}`,
-          }}>
-            <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.pink[900] }}>
-              <code style={{ backgroundColor: primitive.pink[100], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>role="dialog"</code>
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+          })}>
+            <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>role="dialog"</code>
             </h4>
-            <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+            <p className={css({ color: "contents.secondary", marginTop: 0 })}>
               モーダルダイアログを示します。aria-labelledby または aria-label と組み合わせて使用します。
             </p>
 
-            <InfoBox variant="tip" icon="💡" title="モーダルのアクセシビリティ要件" style={{ marginTop: spacing.scale[3] }}>
-              <ul style={{ lineHeight: typography.lineHeight.relaxed, margin: 0, paddingLeft: spacing.scale[5] }}>
+            <InfoBox variant="tip" icon="💡" title="モーダルのアクセシビリティ要件" className={css({ marginTop: 3 })}>
+              <ul className={css({ lineHeight: "relaxed", margin: 0, paddingLeft: 5 })}>
                 <li>role="dialog" と aria-modal="true" を使用</li>
                 <li>aria-labelledby でタイトルを参照</li>
                 <li>フォーカストラップ（Tab キーでモーダル内を循環）</li>
@@ -620,7 +620,7 @@ export const ARIAGuide = () => {
               </ul>
             </InfoBox>
 
-            <div style={{ marginTop: spacing.scale[3] }}>
+            <div className={css({ marginTop: 3 })}>
               <CodeBlock
                 code={`<Modal
   isOpen={isOpen}
@@ -633,7 +633,7 @@ export const ARIAGuide = () => {
               />
             </div>
 
-            <div style={{ marginTop: spacing.scale[3] }}>
+            <div className={css({ marginTop: 3 })}>
               <Button onClick={() => setIsModalOpen(true)} variant="primary">
                 モーダルを開く
               </Button>
@@ -652,10 +652,10 @@ export const ARIAGuide = () => {
                   </>
                 }
               >
-                <p style={{ margin: 0, color: primitive.gray[700] }}>
+                <p className={css({ margin: 0, color: "contents.secondary" })}>
                   このモーダルは以下のアクセシビリティ機能を実装しています：
                 </p>
-                <ul style={{ color: primitive.gray[700], lineHeight: typography.lineHeight.relaxed }}>
+                <ul className={css({ color: "contents.secondary", lineHeight: "relaxed" })}>
                   <li>フォーカストラップ（Tabキーでモーダル内を循環）</li>
                   <li>Escキーで閉じる</li>
                   <li>背景スクロール防止</li>
@@ -667,19 +667,19 @@ export const ARIAGuide = () => {
           </div>
 
           {/* role="navigation" */}
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.green[50],
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.green[200]}`,
-          }}>
-            <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.green[900] }}>
-              <code style={{ backgroundColor: primitive.green[100], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>role="navigation"</code>
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+          })}>
+            <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>role="navigation"</code>
             </h4>
-            <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+            <p className={css({ color: "contents.secondary", marginTop: 0 })}>
               ナビゲーションリンクのグループを示します。&lt;nav&gt; 要素を使用すれば、暗黙的にこのroleが付与されます。
             </p>
-            <div style={{ marginTop: spacing.scale[2] }}>
+            <div className={css({ marginTop: 2 })}>
               <CodeBlock
                 code={`<!-- ✅ 推奨: セマンティックHTML -->
 <nav aria-label="メインナビゲーション">
@@ -698,19 +698,19 @@ export const ARIAGuide = () => {
           </div>
 
           {/* role="alert" */}
-          <div style={{
-            padding: spacing.scale[4],
-            backgroundColor: primitive.red[50],
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.thin} solid ${primitive.red[200]}`,
-          }}>
-            <h4 style={{ marginTop: 0, marginBottom: spacing.scale[2], color: primitive.red[900] }}>
-              <code style={{ backgroundColor: primitive.red[100], padding: `${spacing.scale[2]} ${spacing.scale[4]}`, borderRadius: spacing.scale[2] }}>role="alert"</code>
+          <div className={css({
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            borderWidth: "thin", borderStyle: "solid", borderColor: "border.error",
+          })}>
+            <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
+              <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>role="alert"</code>
             </h4>
-            <p style={{ color: primitive.gray[700], marginTop: 0 }}>
+            <p className={css({ color: "contents.secondary", marginTop: 0 })}>
               重要なメッセージを即座にスクリーンリーダーに通知します。エラーメッセージや警告に使用します。
             </p>
-            <div style={{ marginTop: spacing.scale[2] }}>
+            <div className={css({ marginTop: 2 })}>
               <CodeBlock
                 code={`<div role="alert">
   エラー: フォームの送信に失敗しました
@@ -722,17 +722,17 @@ export const ARIAGuide = () => {
         </div>
       </div>
 
-      <div style={{
-        marginTop: spacing.scale[8],
-        padding: spacing.scale[4],
-        backgroundColor: primitive.yellow,
-        borderRadius: radii.borderRadius.md,
-        border: `${borders.width.base} solid ${primitive.black}`,
-      }}>
-        <h4 style={{ color: primitive.gray[900], marginTop: 0 }}>
+      <div className={css({
+        marginTop: 8,
+        padding: 4,
+        backgroundColor: "bg.secondary",
+        borderRadius: "md",
+        borderWidth: "base", borderStyle: "solid", borderColor: "border.default",
+      })}>
+        <h4 className={css({ color: "contents.primary", marginTop: 0 })}>
           💡 ARIAの第一原則
         </h4>
-        <ul style={{ color: primitive.gray[900], lineHeight: typography.lineHeight.relaxed }}>
+        <ul className={css({ color: "contents.primary", lineHeight: "relaxed", mb: 0 })}>
           <li><strong>セマンティックHTMLを優先する</strong>: 可能な限り、適切なHTML要素を使用してください</li>
           <li><strong>ARIAは最後の手段</strong>: ネイティブHTML要素で実現できない場合のみARIAを使用</li>
           <li><strong>不要なARIAは追加しない</strong>: &lt;button&gt; に role="button" は不要です</li>
@@ -741,23 +741,23 @@ export const ARIAGuide = () => {
       </div>
 
       {/* 試してみようセクション */}
-      <div style={{ marginTop: spacing.scale[8] }}>
+      <div className={css({ marginTop: 8 })}>
         <h3
-          style={{
-            fontSize: typography.fontSize.xl,
-            fontWeight: typography.fontWeight.semibold,
-            color: primitive.pink[700],
-            marginBottom: spacing.scale[4],
+          className={css({
+            fontSize: "xl",
+            fontWeight: "semibold",
+            color: "contents.secondary",
+            marginBottom: 4,
             display: "flex",
             alignItems: "center",
-            gap: spacing.scale[2],
-          }}
+            gap: 2,
+          })}
         >
-          <icons.component.button size={24} color={primitive.pink[600]} strokeWidth={2} />
+          <icons.component.button size={24} color={"pink.600"} strokeWidth={2} />
           4. インタラクティブデモ：試してみよう
         </h3>
 
-        <div style={{ display: "grid", gap: spacing.scale[6] }}>
+        <div className={css({ display: "grid", gap: 6 })}>
           {/* ARIA属性の有無を比較 */}
           <ARIAComparisonDemo />
 
@@ -769,17 +769,17 @@ export const ARIAGuide = () => {
         </div>
       </div>
 
-      <div style={{
-        marginTop: spacing.scale[6],
-        padding: spacing.scale[4],
-        backgroundColor: primitive.blue[50],
-        borderRadius: radii.borderRadius.md,
-        border: `${borders.width.thin} solid ${primitive.blue[200]}`,
-      }}>
-        <h4 style={{ color: primitive.blue[900], marginTop: 0 }}>
+      <div className={css({
+        marginTop: 6,
+        padding: 4,
+        backgroundColor: "bg.secondary",
+        borderRadius: "md",
+        borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
+      })}>
+        <h4 className={css({ color: "contents.primary", marginTop: 0 })}>
           📚 このデザインシステムで使用しているARIA属性
         </h4>
-        <ul style={{ color: primitive.blue[900], lineHeight: typography.lineHeight.relaxed }}>
+        <ul className={css({ color: "contents.primary", lineHeight: "relaxed" })}>
           <li><strong>Button</strong>: aria-busy (ローディング状態)</li>
           <li><strong>Input</strong>: aria-invalid, aria-describedby (エラー表示)</li>
           <li><strong>Modal</strong>: role="dialog", aria-modal, aria-labelledby</li>
@@ -803,15 +803,15 @@ function ARIAComparisonDemo() {
         code: '<button>\n  <XIcon />\n</button>',
         element: (
           <button
-            style={{
-              padding: spacing.scale[2],
-              border: `${borders.width.thin} solid ${primitive.gray[300]}`,
-              borderRadius: radii.borderRadius.md,
-              backgroundColor: primitive.white,
+            className={css({
+              padding: 2,
+              borderWidth: "thin", borderStyle: "solid", borderColor: "border.subtle",
+              borderRadius: "md",
+              backgroundColor: "bg.primary",
               cursor: "pointer",
-              color: primitive.gray[900],
-              fontSize: typography.fontSize.lg,
-            }}
+              color: "contents.primary",
+              fontSize: "lg",
+            })}
           >
             ✕
           </button>
@@ -824,15 +824,15 @@ function ARIAComparisonDemo() {
         element: (
           <button
             aria-label="閉じる"
-            style={{
-              padding: spacing.scale[2],
-              border: `${borders.width.thin} solid ${primitive.gray[300]}`,
-              borderRadius: radii.borderRadius.md,
-              backgroundColor: primitive.white,
+            className={css({
+              padding: 2,
+              borderWidth: "thin", borderStyle: "solid", borderColor: "border.subtle",
+              borderRadius: "md",
+              backgroundColor: "bg.primary",
               cursor: "pointer",
-              color: primitive.gray[900],
-              fontSize: typography.fontSize.lg,
-            }}
+              color: "contents.primary",
+              fontSize: "lg",
+            })}
           >
             ✕
           </button>
@@ -849,14 +849,14 @@ function ARIAComparisonDemo() {
           <div>
             <input
               type="email"
-              style={{
-                padding: spacing.scale[2],
-                border: `${borders.width.base} solid ${primitive.red[500]}`,
-                borderRadius: radii.borderRadius.md,
+              className={css({
+                padding: 2,
+                borderWidth: "base", borderStyle: "solid", borderColor: "border.error",
+                borderRadius: "md",
                 width: "100%",
-              }}
+              })}
             />
-            <span style={{ color: primitive.red[700], fontSize: typography.fontSize.sm }}>
+            <span className={css({ color: "contents.error", fontSize: "sm" })}>
               無効なメールアドレス
             </span>
           </div>
@@ -872,17 +872,17 @@ function ARIAComparisonDemo() {
               type="email"
               aria-invalid="true"
               aria-describedby="good-error-msg"
-              style={{
-                padding: spacing.scale[2],
-                border: `${borders.width.base} solid ${primitive.red[500]}`,
-                borderRadius: radii.borderRadius.md,
+              className={css({
+                padding: 2,
+                borderWidth: "base", borderStyle: "solid", borderColor: "border.error",
+                borderRadius: "md",
                 width: "100%",
-              }}
+              })}
             />
             <span
               id="good-error-msg"
               role="alert"
-              style={{ color: primitive.red[700], fontSize: typography.fontSize.sm }}
+              className={css({ color: "contents.error", fontSize: "sm" })}
             >
               無効なメールアドレス
             </span>
@@ -900,10 +900,10 @@ function ARIAComparisonDemo() {
           <a
             href="/about"
             onClick={(e) => e.preventDefault()}
-            style={{
-              color: primitive.blue[700],
+            className={css({
+              color: "contents.link",
               textDecoration: "underline",
-            }}
+            })}
           >
             詳しくはこちら
           </a>
@@ -918,10 +918,10 @@ function ARIAComparisonDemo() {
             href="/about"
             onClick={(e) => e.preventDefault()}
             aria-label="会社概要について詳しく見る"
-            style={{
-              color: primitive.blue[700],
+            className={css({
+              color: "contents.link",
               textDecoration: "underline",
-            }}
+            })}
           >
             詳しくはこちら
           </a>
@@ -936,40 +936,43 @@ function ARIAComparisonDemo() {
 
   return (
     <div
-      style={{
-        padding: spacing.scale[4],
-        backgroundColor: primitive.pink[50],
-        borderRadius: radii.borderRadius.md,
-        border: `${borders.width.thin} solid ${primitive.pink[200]}`,
+      className={css({
+        padding: 4,
+        backgroundColor: "bg.secondary",
+        borderRadius: "md",
+        borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
         minWidth: 0,
         maxWidth: '100%'
-      }}
+      })}
     >
       <h4
-        style={{
+        className={css({
           marginTop: 0,
-          fontSize: typography.fontSize.lg,
-          fontWeight: typography.fontWeight.semibold,
-          color: primitive.pink[900],
-        }}
+          fontSize: "lg",
+          fontWeight: "semibold",
+          color: "contents.primary",
+        })}
       >
         🔍 ARIA属性の効果を比較
       </h4>
 
-      <div style={{ display: "flex", gap: spacing.scale[2], marginTop: spacing.scale[3], flexWrap: "wrap" }}>
+      <div className={css({ display: "flex", gap: 2, marginTop: 3, flexWrap: "wrap" })}>
         {(Object.keys(examples) as Array<keyof typeof examples>).map((key) => (
           <button
             key={key}
             onClick={() => setSelectedExample(key)}
-            style={{
-              padding: `${spacing.scale[2]} ${spacing.scale[3]}`,
-              border: `${borders.width.base} solid ${selectedExample === key ? primitive.pink[500] : primitive.gray[300]}`,
-              borderRadius: radii.borderRadius.md,
-              backgroundColor: selectedExample === key ? primitive.pink[100] : primitive.white,
-              color: selectedExample === key ? primitive.pink[900] : primitive.gray[700],
+            className={css({
+              paddingX: 3,
+              paddingY: 2,
+              borderWidth: "base",
+              borderStyle: "solid",
+              borderColor: selectedExample === key ? "border.default" : "border.subtle",
+              borderRadius: "md",
+              backgroundColor: selectedExample === key ? "bg.secondary" : "bg.primary",
+              color: selectedExample === key ? "contents.primary" : "contents.secondary",
               cursor: "pointer",
-              fontWeight: selectedExample === key ? typography.fontWeight.semibold : typography.fontWeight.normal,
-            }}
+              fontWeight: selectedExample === key ? "semibold" : "normal",
+            })}
           >
             {examples[key].title}
           </button>
@@ -977,47 +980,47 @@ function ARIAComparisonDemo() {
       </div>
 
       <div
-        style={{
+        className={css({
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
-          gap: spacing.scale[4],
-          marginTop: spacing.scale[4],
-        }}
+          gap: 4,
+          marginTop: 4,
+        })}
       >
         {/* 悪い例 */}
         <div
-          style={{
-            padding: spacing.scale[3],
-            backgroundColor: primitive.white,
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.base} solid ${primitive.red[300]}`,
+          className={css({
+            padding: 3,
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "base", borderStyle: "solid", borderColor: "border.error",
             minWidth: 0
-          }}
+          })}
         >
           <div
-            style={{
+            className={css({
               display: "flex",
               alignItems: "center",
-              gap: spacing.scale[2],
-              marginBottom: spacing.scale[2],
-            }}
+              gap: 2,
+              marginBottom: 2,
+            })}
           >
-            <span style={{ fontSize: typography.fontSize.lg }}>❌</span>
-            <strong style={{ color: primitive.red[700] }}>ARIA属性なし</strong>
+            <span className={css({ fontSize: "lg" })}>❌</span>
+            <strong className={css({ color: "contents.error" })}>ARIA属性なし</strong>
           </div>
 
           <div
-            style={{
-              padding: spacing.scale[3],
-              backgroundColor: primitive.gray[50],
-              borderRadius: radii.borderRadius.sm,
-              marginBottom: spacing.scale[2],
-            }}
+            className={css({
+              padding: 3,
+              backgroundColor: "bg.secondary",
+              borderRadius: "sm",
+              marginBottom: 2,
+            })}
           >
             {current.bad.element}
           </div>
 
-          <div style={{ marginBottom: spacing.scale[2] }}>
+          <div className={css({ marginBottom: 2 })}>
             <CodeBlock
               code={current.bad.code}
               language="html"
@@ -1026,28 +1029,28 @@ function ARIAComparisonDemo() {
           </div>
 
           <div
-            style={{
-              padding: spacing.scale[2],
-              backgroundColor: primitive.blue[50],
-              borderRadius: radii.borderRadius.sm,
-              fontSize: typography.fontSize.sm,
-            }}
+            className={css({
+              padding: 2,
+              backgroundColor: "bg.secondary",
+              borderRadius: "sm",
+              fontSize: "sm",
+            })}
           >
-            <strong style={{ color: primitive.blue[900] }}>スクリーンリーダー:</strong>
-            <div style={{ marginTop: spacing.scale[1], color: primitive.gray[700], fontStyle: "italic" }}>
+            <strong className={css({ color: "contents.primary" })}>スクリーンリーダー:</strong>
+            <div className={css({ marginTop: 1, color: "contents.secondary", fontStyle: "italic" })}>
               "{current.bad.screenReader}"
             </div>
           </div>
 
           <div
-            style={{
-              marginTop: spacing.scale[2],
-              padding: spacing.scale[2],
-              backgroundColor: primitive.red[50],
-              borderRadius: radii.borderRadius.sm,
-              fontSize: typography.fontSize.sm,
-              color: primitive.red[900],
-            }}
+            className={css({
+              marginTop: 2,
+              padding: 2,
+              backgroundColor: "bg.secondary",
+              borderRadius: "sm",
+              fontSize: "sm",
+              color: "contents.primary",
+            })}
           >
             ⚠️ 問題: {current.bad.issue}
           </div>
@@ -1055,38 +1058,38 @@ function ARIAComparisonDemo() {
 
         {/* 良い例 */}
         <div
-          style={{
-            padding: spacing.scale[3],
-            backgroundColor: primitive.white,
-            borderRadius: radii.borderRadius.md,
-            border: `${borders.width.base} solid ${primitive.green[300]}`,
+          className={css({
+            padding: 3,
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "base", borderStyle: "solid", borderColor: "border.success",
             minWidth: 0
-          }}
+          })}
         >
           <div
-            style={{
+            className={css({
               display: "flex",
               alignItems: "center",
-              gap: spacing.scale[2],
-              marginBottom: spacing.scale[2],
-            }}
+              gap: 2,
+              marginBottom: 2,
+            })}
           >
-            <span style={{ fontSize: typography.fontSize.lg }}>✅</span>
-            <strong style={{ color: primitive.green[700] }}>ARIA属性あり</strong>
+            <span className={css({ fontSize: "lg" })}>✅</span>
+            <strong className={css({ color: "contents.success" })}>ARIA属性あり</strong>
           </div>
 
           <div
-            style={{
-              padding: spacing.scale[3],
-              backgroundColor: primitive.gray[50],
-              borderRadius: radii.borderRadius.sm,
-              marginBottom: spacing.scale[2],
-            }}
+            className={css({
+              padding: 3,
+              backgroundColor: "bg.secondary",
+              borderRadius: "sm",
+              marginBottom: 2,
+            })}
           >
             {current.good.element}
           </div>
 
-          <div style={{ marginBottom: spacing.scale[2] }}>
+          <div className={css({ marginBottom: 2 })}>
             <CodeBlock
               code={current.good.code}
               language="html"
@@ -1095,28 +1098,28 @@ function ARIAComparisonDemo() {
           </div>
 
           <div
-            style={{
-              padding: spacing.scale[2],
-              backgroundColor: primitive.blue[50],
-              borderRadius: radii.borderRadius.sm,
-              fontSize: typography.fontSize.sm,
-            }}
+            className={css({
+              padding: 2,
+              backgroundColor: "bg.secondary",
+              borderRadius: "sm",
+              fontSize: "sm",
+            })}
           >
-            <strong style={{ color: primitive.blue[900] }}>スクリーンリーダー:</strong>
-            <div style={{ marginTop: spacing.scale[1], color: primitive.gray[700], fontStyle: "italic" }}>
+            <strong className={css({ color: "contents.primary" })}>スクリーンリーダー:</strong>
+            <div className={css({ marginTop: 1, color: "contents.secondary", fontStyle: "italic" })}>
               "{current.good.screenReader}"
             </div>
           </div>
 
           <div
-            style={{
-              marginTop: spacing.scale[2],
-              padding: spacing.scale[2],
-              backgroundColor: primitive.green[50],
-              borderRadius: radii.borderRadius.sm,
-              fontSize: typography.fontSize.sm,
-              color: primitive.green[900],
-            }}
+            className={css({
+              marginTop: 2,
+              padding: 2,
+              backgroundColor: "bg.secondary",
+              borderRadius: "sm",
+              fontSize: "sm",
+              color: "contents.primary",
+            })}
           >
             ✓ 改善: {current.good.benefit}
           </div>
@@ -1154,72 +1157,72 @@ function ScreenReaderSimulator() {
 
   return (
     <div
-      style={{
-        padding: spacing.scale[4],
-        backgroundColor: primitive.blue[50],
-        borderRadius: radii.borderRadius.md,
-        border: `${borders.width.thin} solid ${primitive.blue[200]}`,
+      className={css({
+        padding: 4,
+        backgroundColor: "bg.secondary",
+        borderRadius: "md",
+        borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
         minWidth: 0,
         maxWidth: '100%'
-      }}
+      })}
     >
       <h4
-        style={{
+        className={css({
           marginTop: 0,
-          fontSize: typography.fontSize.lg,
-          fontWeight: typography.fontWeight.semibold,
-          color: primitive.blue[900],
-        }}
+          fontSize: "lg",
+          fontWeight: "semibold",
+          color: "contents.primary",
+        })}
       >
         🔊 スクリーンリーダーシミュレーター
       </h4>
 
-      <p style={{ color: primitive.gray[700], fontSize: typography.fontSize.sm }}>
+      <p className={css({ color: "contents.secondary", fontSize: "sm" })}>
         ボタンをクリックして、スクリーンリーダーがどのように読み上げるかを確認できます
       </p>
 
-      <div style={{ marginTop: spacing.scale[4], display: "flex", gap: spacing.scale[4], alignItems: "center", flexWrap: "wrap" }}>
+      <div className={css({ marginTop: 4, display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" })}>
         <button
           onClick={simulateReading}
           disabled={isReading}
           aria-label="閉じる"
-          style={{
-            padding: spacing.scale[3],
-            border: `${borders.width.base} solid ${primitive.blue[500]}`,
-            borderRadius: radii.borderRadius.md,
-            backgroundColor: primitive.white,
+          className={css({
+            padding: 3,
+            borderWidth: "base", borderStyle: "solid", borderColor: "border.default",
+            borderRadius: "md",
+            backgroundColor: "bg.primary",
             cursor: isReading ? "not-allowed" : "pointer",
-            fontSize: typography.fontSize.lg,
+            fontSize: "lg",
             opacity: isReading ? 0.6 : 1,
-            color: primitive.gray[900],
-          }}
+            color: "contents.primary",
+          })}
         >
           ✕
         </button>
 
         <div
-          style={{
+          className={css({
             flex: 1,
-            padding: spacing.scale[3],
-            backgroundColor: primitive.gray[900],
-            color: primitive.green[400],
-            borderRadius: radii.borderRadius.md,
+            padding: 3,
+            backgroundColor: "bg.primary",
+            color: "contents.success",
+            borderRadius: "md",
             minHeight: "60px",
             display: "flex",
             alignItems: "center",
-            fontSize: typography.fontSize.lg,
-            fontWeight: typography.fontWeight.semibold,
-          }}
+            fontSize: "lg",
+            fontWeight: "semibold",
+          })}
         >
           {isReading ? (
-            <span style={{ animation: "pulse 1s infinite" }}>🔊 {currentText}</span>
+            <span className={css({ animation: "pulse 1s infinite" })}>🔊 {currentText}</span>
           ) : (
-            <span style={{ color: primitive.gray[600] }}>クリックして読み上げを開始...</span>
+            <span className={css({ color: "contents.tertiary" })}>クリックして読み上げを開始...</span>
           )}
         </div>
       </div>
 
-      <div style={{ marginTop: spacing.scale[3] }}>
+      <div className={css({ marginTop: 3 })}>
         <CodeBlock
           code={`<button aria-label="閉じる">
   ✕
@@ -1250,31 +1253,31 @@ function LiveRegionDemo() {
 
   return (
     <div
-      style={{
-        padding: spacing.scale[4],
-        backgroundColor: primitive.green[50],
-        borderRadius: radii.borderRadius.md,
-        border: `${borders.width.thin} solid ${primitive.green[200]}`,
+      className={css({
+        padding: 4,
+        backgroundColor: "bg.secondary",
+        borderRadius: "md",
+        borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
         minWidth: 0,
         maxWidth: '100%'
-      }}
+      })}
     >
       <h4
-        style={{
+        className={css({
           marginTop: 0,
-          fontSize: typography.fontSize.lg,
-          fontWeight: typography.fontWeight.semibold,
-          color: primitive.green[900],
-        }}
+          fontSize: "lg",
+          fontWeight: "semibold",
+          color: "contents.primary",
+        })}
       >
         📢 aria-live デモ（動的な通知）
       </h4>
 
-      <p style={{ color: primitive.gray[700], fontSize: typography.fontSize.sm }}>
+      <p className={css({ color: "contents.secondary", fontSize: "sm" })}>
         aria-live を使うと、画面の変更をスクリーンリーダーに自動で通知できます
       </p>
 
-      <div style={{ display: "flex", gap: spacing.scale[2], marginTop: spacing.scale[3], flexWrap: "wrap" }}>
+      <div className={css({ display: "flex", gap: 2, marginTop: 3, flexWrap: "wrap" })}>
         <Button variant="primary" size="sm" onClick={() => addMessage('success')}>
           成功メッセージ
         </Button>
@@ -1289,23 +1292,23 @@ function LiveRegionDemo() {
       <div
         aria-live="polite"
         aria-atomic="true"
-        style={{
-          marginTop: spacing.scale[3],
-          padding: spacing.scale[3],
-          backgroundColor: primitive.white,
-          border: `${borders.width.base} solid ${primitive.green[300]}`,
-          borderRadius: radii.borderRadius.md,
+        className={css({
+          marginTop: 3,
+          padding: 3,
+          backgroundColor: "bg.primary",
+          borderWidth: "base", borderStyle: "solid", borderColor: "border.success",
+          borderRadius: "md",
           minHeight: "60px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: typography.fontSize.base,
-        }}
+          fontSize: "base",
+        })}
       >
-        {message || <span style={{ color: primitive.gray[500] }}>ボタンをクリックしてメッセージを表示</span>}
+        {message || <span className={css({ color: "contents.tertiary" })}>ボタンをクリックしてメッセージを表示</span>}
       </div>
 
-      <div style={{ marginTop: spacing.scale[3] }}>
+      <div className={css({ marginTop: 3 })}>
         <CodeBlock
           code={`<div
   aria-live="polite"
@@ -1321,15 +1324,15 @@ function LiveRegionDemo() {
       </div>
 
       <div
-        style={{
-          marginTop: spacing.scale[3],
-          padding: spacing.scale[2],
-          backgroundColor: primitive.yellow,
-          border: `${borders.width.base} solid ${primitive.black}`,
-          borderRadius: radii.borderRadius.sm,
-          fontSize: typography.fontSize.sm,
-          color: primitive.gray[900],
-        }}
+        className={css({
+          marginTop: 3,
+          padding: 3,
+          backgroundColor: "bg.secondary",
+          borderWidth: "base", borderStyle: "solid", borderColor: "border.default",
+          borderRadius: "md",
+          fontSize: "sm",
+          color: "contents.primary",
+        })}
       >
         <strong>💡 ヒント:</strong> メッセージが変更されると、スクリーンリーダーが自動的に読み上げます（通知回数: {messageCount}回）
       </div>

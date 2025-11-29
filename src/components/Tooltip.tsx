@@ -1,7 +1,6 @@
 import { useState, useRef, cloneElement, isValidElement } from 'react';
 import type { ReactNode, ReactElement, HTMLAttributes } from 'react';
-import { spacing } from '../design-system/tokens';
-import { primitive } from '../design-system/tokens/colors';
+import { css, cx } from '@/styled-system/css';
 
 interface TooltipProps {
   content: string;
@@ -9,6 +8,102 @@ interface TooltipProps {
   position?: 'top' | 'bottom' | 'left' | 'right';
   delay?: number;
 }
+
+// コンテナスタイル
+const containerStyle = css({
+  position: 'relative',
+  display: 'inline-block',
+});
+
+// ツールチップベーススタイル
+const tooltipBase = css({
+  position: 'absolute',
+  bg: 'gray.900',
+  color: 'white',
+  py: 2,
+  px: 3,
+  rounded: 'sm',
+  fontSize: 'sm',
+  whiteSpace: 'nowrap',
+  zIndex: 1000,
+  pointerEvents: 'none',
+  boxShadow: 'md',
+});
+
+// 位置ごとのスタイル
+const positionStyles = {
+  top: css({
+    bottom: '100%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    mb: 2,
+  }),
+  bottom: css({
+    top: '100%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    mt: 2,
+  }),
+  left: css({
+    right: '100%',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    mr: 2,
+  }),
+  right: css({
+    left: '100%',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    ml: 2,
+  }),
+};
+
+// 矢印ベーススタイル
+const arrowBase = css({
+  position: 'absolute',
+  width: 0,
+  height: 0,
+});
+
+// 矢印の位置ごとのスタイル
+const arrowPositionStyles = {
+  top: css({
+    bottom: '-6px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    borderLeft: '6px solid transparent',
+    borderRight: '6px solid transparent',
+    borderTop: '6px solid',
+    borderTopColor: 'gray.900',
+  }),
+  bottom: css({
+    top: '-6px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    borderLeft: '6px solid transparent',
+    borderRight: '6px solid transparent',
+    borderBottom: '6px solid',
+    borderBottomColor: 'gray.900',
+  }),
+  left: css({
+    right: '-6px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    borderTop: '6px solid transparent',
+    borderBottom: '6px solid transparent',
+    borderLeft: '6px solid',
+    borderLeftColor: 'gray.900',
+  }),
+  right: css({
+    left: '-6px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    borderTop: '6px solid transparent',
+    borderBottom: '6px solid transparent',
+    borderRight: '6px solid',
+    borderRightColor: 'gray.900',
+  }),
+};
 
 export const Tooltip: React.FC<TooltipProps> = ({
   content,
@@ -33,82 +128,6 @@ export const Tooltip: React.FC<TooltipProps> = ({
     setIsVisible(false);
   };
 
-  const getTooltipPosition = () => {
-    const offset = 8;
-    switch (position) {
-      case 'top':
-        return {
-          bottom: '100%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          marginBottom: `${offset}px`,
-        };
-      case 'bottom':
-        return {
-          top: '100%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          marginTop: `${offset}px`,
-        };
-      case 'left':
-        return {
-          right: '100%',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          marginRight: `${offset}px`,
-        };
-      case 'right':
-        return {
-          left: '100%',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          marginLeft: `${offset}px`,
-        };
-    }
-  };
-
-  const getArrowPosition = () => {
-    const arrowSize = 6;
-    switch (position) {
-      case 'top':
-        return {
-          bottom: `-${arrowSize}px`,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          borderLeft: `${arrowSize}px solid transparent`,
-          borderRight: `${arrowSize}px solid transparent`,
-          borderTop: `${arrowSize}px solid ${primitive.gray[900]}`,
-        };
-      case 'bottom':
-        return {
-          top: `-${arrowSize}px`,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          borderLeft: `${arrowSize}px solid transparent`,
-          borderRight: `${arrowSize}px solid transparent`,
-          borderBottom: `${arrowSize}px solid ${primitive.gray[900]}`,
-        };
-      case 'left':
-        return {
-          right: `-${arrowSize}px`,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          borderTop: `${arrowSize}px solid transparent`,
-          borderBottom: `${arrowSize}px solid transparent`,
-          borderLeft: `${arrowSize}px solid ${primitive.gray[900]}`,
-        };
-      case 'right':
-        return {
-          left: `-${arrowSize}px`,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          borderTop: `${arrowSize}px solid transparent`,
-          borderBottom: `${arrowSize}px solid transparent`,
-          borderRight: `${arrowSize}px solid ${primitive.gray[900]}`,
-        };
-    }
-  };
-
   const child = isValidElement(children)
     ? cloneElement(children as ReactElement<HTMLAttributes<HTMLElement>>, {
         'aria-describedby': isVisible ? tooltipId.current : undefined,
@@ -120,35 +139,16 @@ export const Tooltip: React.FC<TooltipProps> = ({
     : children;
 
   return (
-    <span style={{ position: 'relative', display: 'inline-block' }}>
+    <span className={containerStyle}>
       {child}
       {isVisible && (
         <span
           role="tooltip"
           id={tooltipId.current}
-          style={{
-            position: 'absolute',
-            ...getTooltipPosition(),
-            backgroundColor: primitive.gray[900],
-            color: '#ffffff',
-            padding: `${spacing.scale[2]} ${spacing.scale[3]}`,
-            borderRadius: '6px',
-            fontSize: '14px',
-            whiteSpace: 'nowrap',
-            zIndex: 1000,
-            pointerEvents: 'none',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
-          }}
+          className={cx(tooltipBase, positionStyles[position])}
         >
           {content}
-          <span
-            style={{
-              position: 'absolute',
-              width: 0,
-              height: 0,
-              ...getArrowPosition(),
-            }}
-          />
+          <span className={cx(arrowBase, arrowPositionStyles[position])} />
         </span>
       )}
     </span>

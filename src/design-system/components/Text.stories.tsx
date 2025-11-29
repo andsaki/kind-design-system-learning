@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import type { WCAGLevel } from "../constants/accessibility";
 import { Text } from "./Text";
 
 /**
@@ -45,6 +46,11 @@ const meta = {
       options: ["left", "center", "right", "justify"],
       description: "テキストの配置",
     },
+    wcagLevel: {
+      control: "select",
+      options: ["A", "AA", "AAA"],
+      description: "WCAG レベルによるテキストカラー",
+    },
     bold: {
       control: "boolean",
       description: "太字にする",
@@ -73,6 +79,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: "これは本文テキストです。",
+    wcagLevel: "AA",
   },
 };
 
@@ -526,6 +533,36 @@ export const RealWorldExample: Story = {
       <Text variant="caption" color="#6b7280">
         公開日: 2025年1月15日
       </Text>
+    </div>
+  ),
+};
+
+export const WCAGPalette: Story = {
+  args: {
+    children: "WCAG レベルごとのコントラスト比較",
+  },
+  render: () => (
+    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+      {(["A", "AA", "AAA"] as WCAGLevel[]).map((level) => (
+        <div
+          key={level}
+          style={{
+            flex: "1 1 240px",
+            padding: "1rem",
+            borderRadius: "0.75rem",
+            border: "1px solid #e5e7eb",
+            backgroundColor:
+              level === "AAA" ? "#f8fafc" : level === "AA" ? "#f0f9ff" : "#ffffff",
+          }}
+        >
+          <Text variant="h5" wcagLevel={level} style={{ marginBottom: "0.5rem" }}>
+            レベル{level}
+          </Text>
+          <Text wcagLevel={level} variant="body">
+            WCAG {level} のテキストはコントラストを調整して読みやすさを強化します。
+          </Text>
+        </div>
+      ))}
     </div>
   ),
 };

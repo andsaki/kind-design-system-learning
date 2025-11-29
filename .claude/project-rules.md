@@ -3,7 +3,7 @@
 このプロジェクトは、アクセシビリティとデザインシステムを学ぶための学習用プロジェクトです。
 以下のルールとベストプラクティスに従ってコードを記述してください。
 
-## 🎨 デザイントークンの使用
+## 🎨 Panda CSS とデザイントークンの使用
 
 ### 必須ルール
 
@@ -17,44 +17,75 @@
 <button style={{ margin: 20, borderRadius: 8 }}>
 ```
 
-**✅ 推奨: デザイントークンの使用**
+**✅ 推奨: Panda CSSの使用**
 
 ```tsx
-// OK
-import { spacing, colors, typography, radii } from './design-system/tokens';
-import { primitive } from './design-system/tokens/colors';
+// OK - css() 関数を使用
+import { css } from '@/styled-system/css';
 
-<div style={{
-  padding: spacing.scale[4],
-  color: colors.text.primary,
-  fontSize: typography.fontSize.sm
-}}>
+<div className={css({
+  padding: 4,              // spacing.scale[4]
+  color: 'contents.primary', // セマンティックトークン
+  fontSize: 'sm'           // typography.fontSize.sm
+})}>
 
-<button style={{
-  margin: spacing.scale[5],
-  borderRadius: radii.borderRadius.lg
-}}>
+// OK - レシピの使用
+import { button } from '@/styled-system/recipes';
+
+<button className={button({ variant: 'primary', size: 'md' })}>
 ```
+
+### Panda CSSの基本
+
+1. **css()関数**
+   - スタイルをオブジェクト形式で記述
+   - デザイントークンが自動補完される
+   - TypeScriptで型安全
+
+2. **レシピ (Recipes)**
+   - 再利用可能なスタイルパターン
+   - バリアント（variant, size, wcagLevel等）をサポート
+   - `panda-config/recipes/` に定義
+
+3. **セマンティックトークン**
+   - `colors.contents.primary` - テキスト色
+   - `colors.bg.primary` - 背景色
+   - `colors.border.default` - ボーダー色
+   - ダークモード対応が自動
 
 ### トークンの選択基準
 
 1. **Primitive vs Semantic**
-   - 基本的に`colors.text.primary`などのセマンティックトークンを使用
-   - 特殊な装飾や一時的な用途には`primitive.blue[500]`を使用可
+   ```tsx
+   // ✅ セマンティックトークンを使用（推奨）
+   color: 'contents.primary'
+   bg: 'bg.secondary'
+
+   // ⚠️ プリミティブカラーは特殊な場合のみ
+   color: 'blue.500'
+   ```
 
 2. **Spacingの使い分け**
-   - `spacing.scale[1-2]`: 関連する要素間（4-8px）
-   - `spacing.scale[4-6]`: セクション内の要素（16-24px）
-   - `spacing.scale[8-12]`: セクション間（32-48px）
+   ```tsx
+   gap: 2,        // 関連する要素間（8px）
+   padding: 4,    // セクション内の要素（16px）
+   margin: 8,     // セクション間（32px）
+   ```
 
 3. **Typography**
-   - 見出し: `typography.fontSize.xl` 〜 `typography.fontSize['2xl']`
-   - 本文: `typography.fontSize.base`（デフォルト16px）
-   - 補足: `typography.fontSize.sm` 〜 `typography.fontSize.xs`
+   ```tsx
+   fontSize: 'xl',    // 見出し
+   fontSize: 'base',  // 本文（16px）
+   fontSize: 'sm',    // 補足
+   ```
 
 4. **Breakpoints**
-   - ハードコードされた数値（例: `768`）は禁止
-   - 必ず`breakpointValues.md`などを使用
+   ```tsx
+   // ✅ レスポンシブ対応
+   className={css({
+     fontSize: { base: 'sm', md: 'base', lg: 'lg' }
+   })}
+   ```
 
 ## ♿ アクセシビリティ要件
 
@@ -76,17 +107,23 @@ import { primitive } from './design-system/tokens/colors';
 
 #### 2. フォーカス管理
 ```tsx
-// ✅ :focus-visibleパターンの使用
-// マウスクリック時はフォーカススタイル非表示
-// キーボード操作時のみ表示
+// ✅ Panda CSSレシピで_focusVisibleを使用
+import { button } from '@/styled-system/recipes';
 
-const [isKeyboardFocus, setIsKeyboardFocus] = useState(false);
+<button className={button({ variant: 'primary', wcagLevel: 'AA' })}>
+  // レシピ内で_focusVisibleが自動適用される
+</button>
 
-onMouseDown={() => setIsKeyboardFocus(false)}
-onKeyDown={() => setIsKeyboardFocus(true)}
-style={{
-  outline: isKeyboardFocus ? `3px solid ${colors.border.focus}` : 'none'
-}}
+// ✅ カスタムスタイルの場合
+import { css } from '@/styled-system/css';
+
+<button className={css({
+  _focusVisible: {
+    outline: '3px solid',
+    outlineColor: 'blue.500',
+    outlineOffset: '2px'
+  }
+})}>
 ```
 
 #### 3. ARIA属性
@@ -147,20 +184,18 @@ export interface ComponentProps {
   // ... 他のprops
 }
 
-// ✅ デフォルト値は'AA'
-const { wcagLevel = 'AA', ...props } = componentProps;
+// ✅ Panda CSSレシピでwcagLevelをサポート
+import { button } from '@/styled-system/recipes';
 
-// ✅ accessibilityLevelsトークンを使用
-import { accessibilityLevels } from '../tokens';
-const levelFocus = accessibilityLevels.focus[wcagLevel];
-
-// ✅ キーボードフォーカス時にレベル別スタイルを適用
-if (isKeyboardFocus) {
-  element.style.backgroundColor = levelFocus.background;
-  element.style.color = levelFocus.text;
-  element.style.outline = `${levelFocus.outlineWidth} solid ${levelFocus.outline}`;
-  element.style.outlineOffset = levelFocus.outlineOffset;
-}
+export const Button: React.FC<ButtonProps> = ({
+  variant = 'primary',
+  size = 'md',
+  wcagLevel = 'AA',  // デフォルトはAA
+  ...props
+}) => {
+  const className = button({ variant, size, wcagLevel });
+  return <button className={className} {...props} />;
+};
 ```
 
 **実装が必要なコンポーネント:**
@@ -360,21 +395,17 @@ const {
 import { useState, useEffect } from 'react';
 
 // 2. 外部ライブラリ
-import clsx from 'clsx';
+// (必要に応じて)
 
 // 3. 内部コンポーネント
 import { Button, Input } from './design-system/components';
 
-// 4. デザイントークン
-import { colors, spacing, typography } from './design-system/tokens';
-import { primitive } from './design-system/tokens/colors';
-import { breakpointValues } from './design-system/tokens/breakpoints';
+// 4. Panda CSS
+import { css, cx } from '@/styled-system/css';
+import { button } from '@/styled-system/recipes';
 
 // 5. 型定義
 import type { ButtonProps } from './types';
-
-// 6. スタイル・その他
-import './App.css';
 ```
 
 ### TypeScript型定義
@@ -412,14 +443,14 @@ const handleClick = () => { ... };
 1. **ハードコードされた値**
    ```tsx
    // ❌ 禁止
-   padding: "16px"
-   color: "#3b82f6"
-   fontSize: 14
+   <div style={{ padding: "16px", color: "#3b82f6", fontSize: 14 }}>
 
-   // ✅ 正しい
-   padding: spacing.scale[4]
-   color: primitive.blue[500]
-   fontSize: typography.fontSize.sm
+   // ✅ 正しい（Panda CSS使用）
+   <div className={css({
+     padding: 4,
+     color: 'blue.500',
+     fontSize: 'sm'
+   })}>
    ```
 
 2. **非セマンティックなHTML**
@@ -436,8 +467,13 @@ const handleClick = () => { ... };
    // ❌ 禁止: フォーカススタイルの削除
    outline: 'none'  // 代替手段なしで削除しない
 
-   // ✅ 正しい: カスタムフォーカススタイル
-   outline: isKeyboardFocus ? `3px solid ${colors.border.focus}` : 'none'
+   // ✅ 正しい: _focusVisibleを使用
+   className={css({
+     _focusVisible: {
+       outline: '3px solid',
+       outlineColor: 'blue.500'
+     }
+   })}
    ```
 
 4. **any型の使用**
@@ -619,6 +655,55 @@ export const UsageExample: Story = { /* 使用例 */ };
 - **開発効率**: 独立した環境でコンポーネントを開発
 - **デザインレビュー**: デザイナーと開発者が同じものを見て議論できる
 
+## 🤖 MCP (Model Context Protocol) Rules
+
+### TypeScript MCP
+
+#### 基本原則
+- **構文の解析にはMCPを使用すること**
+- **命名の置換に際してはMCPを使用し影響範囲を確定させること**
+
+#### 利用可能なMCP操作
+
+**1. セマンティックなファイル操作**
+- `mcp__typescript__move_file` - ファイル移動時にインポート文を自動更新
+- `mcp__typescript__move_directory` - ディレクトリ全体を移動し、すべてのインポートを更新
+
+**2. シンボル操作**
+- `mcp__typescript__rename_symbol` - プロジェクト全体でシンボルをリネーム
+- `mcp__typescript__delete_symbol` - シンボルとその参照をすべて削除
+- `mcp__typescript__find_references` - シンボルへのすべての参照を検索
+
+**3. コード分析**
+- `mcp__typescript__get_definitions` - シンボルの定義位置を取得
+- `mcp__typescript__get_diagnostics` - TypeScriptのエラーや警告を取得
+- `mcp__typescript__get_module_symbols` - モジュールのエクスポートを一覧表示
+- `mcp__typescript__get_type_in_module` / `mcp__typescript__get_type_at_symbol` - 詳細な型シグネチャを取得
+
+### Context7
+
+#### 基本原則
+1. **最新ライブラリの調査や命令を取得できる**
+2. **未知のバージョンのライブラリ等の場合 context7 を使用し、ライブラリの仕様を加味して実装を行うこと**
+
+#### 使用タイミング
+- 新しいライブラリやツールを導入する際
+- ライブラリのバージョンアップ時
+- 公式ドキュメントの最新情報が必要な場合
+- 未知のAPIやフレームワークの仕様確認
+
+### Playwright MCP
+
+#### アクセシビリティ検証
+- コンポーネントの実装後、Playwright MCPを使用してアクセシビリティ検証を実施すること
+- WCAG準拠を確認すること
+
+#### 利用可能な操作
+- `playwright_navigate` / `playwright_click` / `playwright_fill` - ブラウザ操作
+- `playwright_screenshot` - スクリーンショット取得
+- `playwright_evaluate` - JavaScript実行
+- アクセシビリティチェック（要素のaria属性、フォーカス状態の確認）
+
 ## 📚 参考資料
 
 ### 必読ドキュメント
@@ -628,29 +713,30 @@ export const UsageExample: Story = { /* 使用例 */ };
 - [Storybook Documentation](https://storybook.js.org/docs)
 - [プロジェクトREADME](../README.md)
 
-### デザイントークン一覧
+### Panda CSSトークン一覧
 
-- `spacing.scale[1-12]`: スペーシング（4px-48px）
-- `typography.fontSize.xs-2xl`: フォントサイズ（12px-24px）
-- `typography.lineHeight.tight/normal/relaxed`: 行高（1.25-1.625）
-- `colors.text/background/border`: セマンティックカラー
-- `primitive.{color}[50-900]`: プリミティブカラー
-- `radii.borderRadius.sm-xl`: ボーダー半径（2px-12px）
-- `breakpointValues.xs-2xl`: ブレークポイント（0px-1536px）
+- **Spacing**: `1-12` → 4px-48px
+- **Font Size**: `xs`, `sm`, `base`, `lg`, `xl`, `2xl`
+- **Colors**:
+  - セマンティック: `contents.primary`, `bg.primary`, `border.default`
+  - プリミティブ: `blue.500`, `gray.100`, etc.
+- **Border Radius**: `sm`, `md`, `lg`, `xl`
+- **Breakpoints**: `base`, `sm`, `md`, `lg`, `xl`, `2xl`
 
 ## ✅ チェックリスト
 
 新しいコンポーネントを作成する前に確認：
 
-- [ ] デザイントークンのみを使用（ハードコード値なし）
+- [ ] Panda CSSのみを使用（ハードコード値なし）
 - [ ] WCAG 2.1 AA準拠
 - [ ] キーボード操作対応
 - [ ] 適切なARIA属性
 - [ ] セマンティックHTML
 - [ ] TypeScript型定義
-- [ ] レスポンシブ対応
-- [ ] `:focus-visible`パターン実装
+- [ ] レスポンシブ対応（breakpoints使用）
+- [ ] `_focusVisible`パターン実装
 - [ ] Storybookストーリーの作成
+- [ ] Panda CSSレシピの作成（再利用可能なコンポーネントの場合）
 
 ---
 

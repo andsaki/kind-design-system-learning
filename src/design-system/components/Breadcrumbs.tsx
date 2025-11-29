@@ -1,6 +1,7 @@
 import React from 'react';
-import { spacing, typography, accessibilityLevels, borders } from '../tokens';
-import type { WCAGLevel } from '../tokens';
+import { breadcrumbs as breadcrumbsRecipe } from '../../../styled-system/recipes';
+import { cx } from '@/styled-system/css';
+import type { WCAGLevel } from '../constants/accessibility';
 
 // Context for passing WCAG level to child components
 const BreadcrumbsContext = React.createContext<WCAGLevel>('AA');
@@ -27,7 +28,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 
   return (
     <BreadcrumbsContext.Provider value={wcagLevel}>
-      <nav className={className} {...navProps} {...props}>
+      <nav className={cx(breadcrumbsRecipe({ wcagLevel }).root, className)} {...navProps} {...props}>
         {children}
       </nav>
     </BreadcrumbsContext.Provider>
@@ -44,8 +45,9 @@ export const BreadcrumbList: React.FC<BreadcrumbListProps> = ({
   className = '',
   ...props
 }) => {
+  const wcagLevel = React.useContext(BreadcrumbsContext);
   return (
-    <ol className={`inline ${className}`} {...props}>
+    <ol className={cx(breadcrumbsRecipe({ wcagLevel }).list, className)} {...props}>
       {children}
     </ol>
   );
@@ -64,21 +66,13 @@ export const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({
   ...props
 }) => {
   const wcagLevel = React.useContext(BreadcrumbsContext);
-  const levelColors = accessibilityLevels.breadcrumbs[wcagLevel];
-
-  const itemStyles: React.CSSProperties = {
-    display: 'inline',
-    wordBreak: 'break-word',
-    fontSize: typography.fontSize.base,
-    lineHeight: typography.lineHeight.normal,
-    color: isCurrent ? levelColors.textCurrent : levelColors.text,
-  };
+  const slots = breadcrumbsRecipe({ wcagLevel });
 
   return (
     <li
       aria-current={isCurrent ? 'page' : undefined}
-      className={className}
-      style={itemStyles}
+      className={cx(slots.item, className)}
+      data-current={isCurrent ? 'true' : 'false'}
       {...props}
     >
       {children}
@@ -99,44 +93,13 @@ export const BreadcrumbLink: React.FC<BreadcrumbLinkProps> = ({
   ...props
 }) => {
   const wcagLevel = React.useContext(BreadcrumbsContext);
-  const levelColors = accessibilityLevels.breadcrumbs[wcagLevel];
-
-  const linkStyles: React.CSSProperties = {
-    color: levelColors.link,
-    fontSize: typography.fontSize.base,
-    lineHeight: typography.lineHeight.normal,
-    textDecoration: 'underline',
-    textUnderlineOffset: spacing.scale[0.75],
-  };
+  const slots = breadcrumbsRecipe({ wcagLevel });
 
   return (
     <>
       <a
         href={href}
-        className={className}
-        style={linkStyles}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.color = levelColors.linkHover;
-          e.currentTarget.style.textDecorationThickness = spacing.scale[0.75];
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.color = levelColors.link;
-          e.currentTarget.style.textDecorationThickness = '';
-        }}
-        onFocus={(e) => {
-          e.currentTarget.style.backgroundColor = levelColors.focusBackground;
-          e.currentTarget.style.color = levelColors.link;
-          e.currentTarget.style.outline = `${borders.width.thicker} solid ${levelColors.focusOutline}`;
-          e.currentTarget.style.outlineOffset = spacing.scale[0.5];
-          e.currentTarget.style.borderRadius = spacing.scale[1];
-        }}
-        onBlur={(e) => {
-          e.currentTarget.style.backgroundColor = '';
-          e.currentTarget.style.color = levelColors.link;
-          e.currentTarget.style.outline = '';
-          e.currentTarget.style.outlineOffset = '';
-          e.currentTarget.style.borderRadius = '';
-        }}
+        className={cx(slots.link, className)}
         {...props}
       >
         {children}
@@ -155,24 +118,13 @@ export const BreadcrumbSeparator: React.FC<BreadcrumbSeparatorProps> = ({
   ...props
 }) => {
   const wcagLevel = React.useContext(BreadcrumbsContext);
-  const levelColors = accessibilityLevels.breadcrumbs[wcagLevel];
-
-  const separatorStyles: React.CSSProperties = {
-    display: 'inline',
-    color: levelColors.separator,
-  };
-
-  const svgStyles: React.CSSProperties = {
-    display: 'inline',
-    marginLeft: spacing.scale[1],
-    marginRight: spacing.scale[1],
-  };
+  const slots = breadcrumbsRecipe({ wcagLevel });
 
   return (
-    <span className={className} style={separatorStyles} {...props}>
+    <span className={cx(slots.separator, className)} {...props}>
       <svg
         aria-hidden={true}
-        style={svgStyles}
+        className={slots.icon}
         fill="none"
         height="12"
         viewBox="0 0 12 12"

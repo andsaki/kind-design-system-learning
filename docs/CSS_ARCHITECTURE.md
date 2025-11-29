@@ -98,7 +98,7 @@ main.tsx
 ### 2.1 Colors (`colors.ts`)
 ```typescript
 colors.primitive.{color}.{shade}  // 基礎色
-colors.text.{variant}              // テキスト色
+colors.contents.{variant}              // テキスト色
 colors.background.{variant}        // 背景色
 colors.border.{variant}            // ボーダー色
 colors.button.{variant}.{state}    // ボタン専用色
@@ -275,7 +275,7 @@ colors.button.primary.bg = colors.brand.primary
 ```tsx
 // Component
 const { colors } = useTheme();
-// colors.text.primary は自動的にテーマに応じた値を返す
+// colors.contents.primary は自動的にテーマに応じた値を返す
 ```
 
 ## まとめ

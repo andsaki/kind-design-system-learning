@@ -42,32 +42,28 @@ describe('Loading', () => {
       render(<Loading size="sm" />);
       const status = screen.getByRole('status');
       const svg = status.querySelector('svg');
-      expect(svg).toHaveAttribute('width', '16');
-      expect(svg).toHaveAttribute('height', '16');
+      expect(svg).toHaveClass('loading__spinner--size_sm');
     });
 
     it('md サイズでレンダリングされる', () => {
       render(<Loading size="md" />);
       const status = screen.getByRole('status');
       const svg = status.querySelector('svg');
-      expect(svg).toHaveAttribute('width', '24');
-      expect(svg).toHaveAttribute('height', '24');
+      expect(svg).toHaveClass('loading__spinner--size_md');
     });
 
     it('lg サイズでレンダリングされる', () => {
       render(<Loading size="lg" />);
       const status = screen.getByRole('status');
       const svg = status.querySelector('svg');
-      expect(svg).toHaveAttribute('width', '32');
-      expect(svg).toHaveAttribute('height', '32');
+      expect(svg).toHaveClass('loading__spinner--size_lg');
     });
 
     it('xl サイズでレンダリングされる', () => {
       render(<Loading size="xl" />);
       const status = screen.getByRole('status');
       const svg = status.querySelector('svg');
-      expect(svg).toHaveAttribute('width', '48');
-      expect(svg).toHaveAttribute('height', '48');
+      expect(svg).toHaveClass('loading__spinner--size_xl');
     });
   });
 
@@ -89,26 +85,11 @@ describe('Loading', () => {
   });
 
   describe('フルスクリーンモード', () => {
-    it('fullscreen=trueで固定配置される', () => {
+    it('fullscreen=trueでフルスクリーン用クラスが付与される', () => {
       const { container } = render(<Loading fullscreen />);
       const overlay = container.firstChild as HTMLElement;
-      expect(overlay).toHaveStyle({ position: 'fixed' });
-      expect(overlay).toHaveStyle({ top: '0' });
-      expect(overlay).toHaveStyle({ left: '0' });
-      expect(overlay).toHaveStyle({ right: '0' });
-      expect(overlay).toHaveStyle({ bottom: '0' });
-    });
-
-    it('fullscreen=trueでaria-modal属性が設定される', () => {
-      const { container } = render(<Loading fullscreen />);
-      const overlay = container.firstChild as HTMLElement;
+      expect(overlay).toHaveClass('loading__overlay');
       expect(overlay).toHaveAttribute('aria-modal', 'true');
-    });
-
-    it('fullscreen=trueでz-indexが設定される', () => {
-      const { container } = render(<Loading fullscreen />);
-      const overlay = container.firstChild as HTMLElement;
-      expect(overlay).toHaveStyle({ zIndex: '9999' });
     });
 
     it('fullscreen=falseで通常表示される', () => {
@@ -149,15 +130,13 @@ describe('InlineLoading', () => {
     it('sm サイズでレンダリングされる', () => {
       render(<InlineLoading size="sm" />);
       const svg = screen.getByRole('status');
-      expect(svg).toHaveAttribute('width', '14');
-      expect(svg).toHaveAttribute('height', '14');
+      expect(svg).toHaveClass('loading__spinner--size_inline-sm');
     });
 
     it('md サイズでレンダリングされる', () => {
       render(<InlineLoading size="md" />);
       const svg = screen.getByRole('status');
-      expect(svg).toHaveAttribute('width', '18');
-      expect(svg).toHaveAttribute('height', '18');
+      expect(svg).toHaveClass('loading__spinner--size_inline-md');
     });
   });
 
@@ -173,17 +152,4 @@ describe('InlineLoading', () => {
     });
   });
 
-  describe('インラインスタイル', () => {
-    it('display: inline-blockが設定される', () => {
-      render(<InlineLoading />);
-      const svg = screen.getByRole('status');
-      expect(svg).toHaveStyle({ display: 'inline-block' });
-    });
-
-    it('vertical-align: middleが設定される', () => {
-      render(<InlineLoading />);
-      const svg = screen.getByRole('status');
-      expect(svg).toHaveStyle({ verticalAlign: 'middle' });
-    });
-  });
 });

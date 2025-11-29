@@ -47,7 +47,7 @@ primitive.gray[900] = '#212121'
 
 ```typescript
 brand.primary = primitive.blue[500]
-text.primary = primitive.gray[900]
+contents.primary = primitive.gray[900]
 ```
 
 **使用場面**: コンポーネントトークンの定義や、汎用的なスタイリングに使用します。
@@ -182,7 +182,7 @@ export default {
     extend: {
       colors: {
         primary: colors.brand.primary,
-        'text-primary': colors.text.primary,
+        'text-primary': colors.contents.primary,
       },
       spacing: spacing.scale,
     },
@@ -201,7 +201,7 @@ export default {
 
 2. **セマンティックトークンを次に使用**
    ```typescript
-   color: ${colors.text.primary}
+   color: ${colors.contents.primary}
    ```
 
 3. **意味のある名前を使う**

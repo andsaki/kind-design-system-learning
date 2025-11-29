@@ -22,8 +22,15 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
+    alias: [
+      {
+        find: /^@\/styled-system/,
+        replacement: path.resolve(__dirname, './styled-system'),
+      },
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, './src'),
+      },
+    ],
   },
 });

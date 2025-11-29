@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { token } from '@/styled-system/tokens';
 import { Accordion, AccordionSummary, AccordionContent } from './Accordion';
 
 const meta = {
@@ -137,7 +138,7 @@ export const RichContent: Story = {
             padding: '8px 12px',
             backgroundColor: '#f3f4f6',
             borderRadius: '0.25rem',
-            fontFamily: 'monospace',
+            fontFamily: token('fonts.mono'),
             fontSize: '14px'
           }}>
             blue-500: primitive.blue[500]
@@ -154,7 +155,7 @@ export const RichContent: Story = {
             padding: '8px 12px',
             backgroundColor: '#f3f4f6',
             borderRadius: '0.25rem',
-            fontFamily: 'monospace',
+            fontFamily: token('fonts.mono'),
             fontSize: '14px'
           }}>
             brand.primary: primitive.blue[500]
@@ -171,7 +172,7 @@ export const RichContent: Story = {
             padding: '8px 12px',
             backgroundColor: '#f3f4f6',
             borderRadius: '0.25rem',
-            fontFamily: 'monospace',
+            fontFamily: token('fonts.mono'),
             fontSize: '14px'
           }}>
             button.primary.bg: brand.primary

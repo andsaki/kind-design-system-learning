@@ -91,7 +91,7 @@ onFocus={(e) => {
 // フォーカスが外れた時
 onBlur={(e) => {
   e.currentTarget.style.backgroundColor = colors.background.default;
-  e.currentTarget.style.color = colors.text.primary;
+  e.currentTarget.style.color = colors.contents.primary;
   e.currentTarget.style.borderColor = error ? colors.error : colors.neutral[200];
   e.currentTarget.style.outline = 'none';
 }}

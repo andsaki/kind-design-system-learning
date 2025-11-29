@@ -90,14 +90,14 @@ export const colors = {
 // Primary Button
 {
   backgroundColor: colors.primary[500],  // #2196f3
-  color: colors.text.inverse,            // #ffffff
+  color: colors.contents.inverse,            // #ffffff
   // コントラスト比: 4.6:1 ✅ AA準拠
 }
 
 // Secondary Button
 {
   backgroundColor: colors.neutral[200],  // #eeeeee
-  color: colors.text.primary,            // #212121
+  color: colors.contents.primary,            // #212121
   // コントラスト比: 14.6:1 ✅ AAA準拠
 }
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 import type {
   SubmitHandler,
   UseFormReturn,
@@ -7,13 +7,19 @@ import type {
   Resolver,
   FieldValues,
   DefaultValues,
-} from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Input } from './Input';
-import { Button } from './Button';
-import { spacing } from '../tokens';
-import type { WCAGLevel } from '../tokens';
+} from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Input } from "./Input";
+import { Button } from "./Button";
+import type { WCAGLevel } from "../constants/accessibility";
+import { css } from "@/styled-system/css";
+
+const formClass = css({
+  display: "flex",
+  flexDirection: "column",
+  gap: 4,
+});
 
 export interface FormFieldConfig<T> {
   /** フィールド名 */
@@ -29,7 +35,7 @@ export interface FormFieldConfig<T> {
   /** 必須かどうか */
   required?: boolean;
   /** 入力サイズ */
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
 }
 
 export interface FormProps<T extends z.ZodType<FieldValues>> {
@@ -42,9 +48,9 @@ export interface FormProps<T extends z.ZodType<FieldValues>> {
   /** 送信ボタンのテキスト @default '送信' */
   submitText?: string;
   /** 送信ボタンのバリアント @default 'primary' */
-  submitVariant?: 'primary' | 'secondary' | 'outline';
+  submitVariant?: "primary" | "secondary" | "outline";
   /** 送信ボタンのサイズ @default 'md' */
-  submitSize?: 'sm' | 'md' | 'lg';
+  submitSize?: "sm" | "md" | "lg";
   /** WCAGレベル @default 'AA' */
   wcagLevel?: WCAGLevel;
   /** デフォルト値 */
@@ -68,10 +74,10 @@ export function Form<T extends z.ZodType<FieldValues>>({
   schema,
   fields,
   onSubmit,
-  submitText = '送信',
-  submitVariant = 'primary',
-  submitSize = 'md',
-  wcagLevel = 'AA',
+  submitText = "送信",
+  submitVariant = "primary",
+  submitSize = "md",
+  wcagLevel = "AA",
   defaultValues,
   style,
   isSubmitting = false,
@@ -87,15 +93,13 @@ export function Form<T extends z.ZodType<FieldValues>>({
     defaultValues: defaultValues as DefaultValues<FormData>,
   });
 
-  const formStyle: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: spacing.scale[4],
-    ...style,
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={formStyle} noValidate>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={formClass}
+      style={style}
+      noValidate
+    >
       {fields.map((field) => {
         const error = errors[field.name];
         const errorMessage = error?.message as string | undefined;
@@ -104,7 +108,7 @@ export function Form<T extends z.ZodType<FieldValues>>({
           <Input
             key={field.name}
             label={field.label}
-            type={field.type || 'text'}
+            type={field.type || "text"}
             placeholder={field.placeholder}
             helperText={field.helperText}
             error={errorMessage}
@@ -122,7 +126,7 @@ export function Form<T extends z.ZodType<FieldValues>>({
         size={submitSize}
         wcagLevel={wcagLevel}
         isLoading={isSubmitting}
-        style={{ alignSelf: 'flex-start' }}
+        style={{ alignSelf: "flex-start" }}
       >
         {submitText}
       </Button>
@@ -154,15 +158,13 @@ export function FormWithHook<T extends FieldValues>({
   children,
   style,
 }: FormWithHookProps<T>) {
-  const formStyle: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: spacing.scale[4],
-    ...style,
-  };
-
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} style={formStyle} noValidate>
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className={formClass}
+      style={style}
+      noValidate
+    >
       {children(form)}
     </form>
   );
@@ -170,7 +172,7 @@ export function FormWithHook<T extends FieldValues>({
 
 // よく使うZodスキーマのヘルパー
 export const formSchemas = {
-  email: z.string().email('有効なメールアドレスを入力してください'),
+  email: z.string().email("有効なメールアドレスを入力してください"),
   required: (fieldName: string) => z.string().min(1, `${fieldName}は必須です`),
   minLength: (min: number, fieldName: string) =>
     z.string().min(min, `${fieldName}は${min}文字以上で入力してください`),
@@ -178,10 +180,12 @@ export const formSchemas = {
     z.string().max(max, `${fieldName}は${max}文字以内で入力してください`),
   password: z
     .string()
-    .min(8, 'パスワードは8文字以上で入力してください')
-    .regex(/[A-Z]/, 'パスワードには大文字を含めてください')
-    .regex(/[a-z]/, 'パスワードには小文字を含めてください')
-    .regex(/[0-9]/, 'パスワードには数字を含めてください'),
-  urlString: z.string().url('有効なURLを入力してください'),
-  phone: z.string().regex(/^[0-9-]+$/, '電話番号は数字とハイフンのみで入力してください'),
+    .min(8, "パスワードは8文字以上で入力してください")
+    .regex(/[A-Z]/, "パスワードには大文字を含めてください")
+    .regex(/[a-z]/, "パスワードには小文字を含めてください")
+    .regex(/[0-9]/, "パスワードには数字を含めてください"),
+  urlString: z.string().url("有効なURLを入力してください"),
+  phone: z
+    .string()
+    .regex(/^[0-9-]+$/, "電話番号は数字とハイフンのみで入力してください"),
 };

@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
-import { spacing, typography, colors, radii } from '../design-system/tokens';
-import { primitive } from '../design-system/tokens/colors';
+import { css, cx } from "@/styled-system/css";
 
 interface TocItem {
   id: string;
@@ -9,81 +7,89 @@ interface TocItem {
 
 interface TableOfContentsProps {
   items: TocItem[];
+  activeId?: string;
+  onNavigate?: (id: string) => void;
 }
 
-export const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
-  const [activeId, setActiveId] = useState<string>('');
+const navContainer = css({
+  display: { base: "none", lg: "block" },
+  position: "sticky",
+  top: 4,
+  p: 4,
+  bg: "bg.primary",
+  borderRadius: "lg",
+  borderWidth: "thin",
+  borderStyle: "solid",
+  borderColor: "border.default",
+  maxHeight: "calc(100vh - 32px)",
+  overflowY: "auto",
+});
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: '-20% 0px -70% 0px',
-      }
-    );
+const titleClass = css({
+  m: 0,
+  mb: 4,
+  fontSize: "lg",
+  fontWeight: "semibold",
+  color: "contents.primary",
+});
 
-    items.forEach((item) => {
-      const element = document.getElementById(item.id);
-      if (element) {
-        observer.observe(element);
-      }
-    });
+const listClass = css({
+  listStyle: "none",
+  m: 0,
+  p: 0,
+  display: "flex",
+  flexDirection: "column",
+  gap: 2,
+});
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [items]);
+const linkBase = css({
+  display: "block",
+  px: 3,
+  py: 2,
+  fontSize: "sm",
+  textDecoration: "none",
+  borderRadius: "base",
+  borderLeftWidth: "3px",
+  borderLeftStyle: "solid",
+  borderColor: "transparent",
+  transition: "all 0.2s ease",
+  cursor: "pointer",
+});
 
-  const handleClick = (id: string) => {
+const linkActive = css({
+  color: "contents.link",
+  bg: "bg.secondary",
+  borderColor: "contents.link",
+  fontWeight: "semibold",
+});
+
+const linkInactive = css({
+  color: "contents.primary",
+  borderColor: "contents.tertiary",
+  _hover: { bg: "bg.hover" },
+});
+
+export const TableOfContents: React.FC<TableOfContentsProps> = ({
+  items,
+  activeId,
+  onNavigate,
+}) => {
+  const handleNavigate = (id: string) => {
+    if (onNavigate) {
+      onNavigate(id);
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
-      // URLハッシュを更新
-      window.history.pushState(null, '', `#${id}`);
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.history.pushState(null, "", `#${id}`);
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
   return (
-    <nav
-      style={{
-        position: 'sticky',
-        top: spacing.scale[4],
-        padding: spacing.scale[4],
-        backgroundColor: colors.background.default,
-        borderRadius: radii.borderRadius.lg,
-        border: `1px solid ${colors.border.default}`,
-        maxHeight: 'calc(100vh - 32px)',
-        overflowY: 'auto',
-      }}
-      aria-label="目次"
-    >
-      <h2
-        style={{
-          margin: 0,
-          marginBottom: spacing.scale[4],
-          fontSize: typography.fontSize.lg,
-          fontWeight: 600,
-          color: primitive.gray[900],
-        }}
-      >
-        目次
-      </h2>
-      <ul
-        style={{
-          listStyle: 'none',
-          margin: 0,
-          padding: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: spacing.scale[2],
-        }}
-      >
+    <nav className={navContainer} aria-label="目次">
+      <h2 className={titleClass}>目次</h2>
+      <ul className={listClass}>
         {items.map((item) => {
           const isActive = activeId === item.id;
           return (
@@ -92,33 +98,9 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
                 href={`#${item.id}`}
                 onClick={(e) => {
                   e.preventDefault();
-                  handleClick(item.id);
+                  handleNavigate(item.id);
                 }}
-                style={{
-                  display: 'block',
-                  padding: `${spacing.scale[2]} ${spacing.scale[3]}`,
-                  fontSize: typography.fontSize.sm,
-                  color: isActive ? primitive.blue[700] : primitive.gray[700],
-                  textDecoration: 'none',
-                  borderRadius: radii.borderRadius.base,
-                  backgroundColor: isActive ? primitive.blue[50] : 'transparent',
-                  borderLeft: isActive
-                    ? `3px solid ${primitive.blue[500]}`
-                    : `3px solid transparent`,
-                  fontWeight: isActive ? 600 : 400,
-                  transition: 'all 0.2s ease',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.backgroundColor = primitive.gray[100];
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                  }
-                }}
+                className={cx(linkBase, isActive ? linkActive : linkInactive)}
               >
                 {item.title}
               </a>
@@ -128,4 +110,4 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
       </ul>
     </nav>
   );
-};
+}

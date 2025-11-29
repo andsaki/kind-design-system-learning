@@ -73,16 +73,10 @@ src/
 │   │   ├── ThemeProvider.tsx  # テーマプロバイダー
 │   │   └── index.ts           # テーマAPI
 │   └── tokens/                # デザイントークン
-│       ├── colors.ts          # カラーパレット（primitive + semantic）
-│       ├── spacing.ts         # スペーシングスケール（8pxグリッド）
-│       ├── typography.ts      # タイポグラフィ（rem単位）
-│       ├── radii.ts           # ボーダー半径
-│       ├── shadows.ts         # ボックスシャドウ
-│       ├── transitions.ts     # トランジション
-│       ├── breakpoints.ts     # レスポンシブブレークポイント
+
 │       ├── accessibility-levels.ts  # WCAGレベル定義
-│       ├── icons.ts           # アイコントークン（lucide-react）
-│       └── index.ts           # トークン統合エクスポート
+
+
 ├── App.tsx                     # メインアプリケーション
 └── main.tsx                    # エントリーポイント
 ```
@@ -109,7 +103,7 @@ Primitiveに意味のある名前を付けたもの。アプリ全体で再利�
 
 ```typescript
 // 例: tokens/index.ts
-colors.text.primary = primitive.gray[900]
+colors.contents.primary = primitive.gray[900]
 spacing.scale[4] = 16px
 radii.borderRadius.base = 4px
 ```
@@ -162,6 +156,12 @@ icons.concept.theme.dark; // Moon
 
 詳しくは [ADR 001: SVGアイコンライブラリの選択](./docs/adr/001-icon-library-selection.md)
 
+関連するADR:
+
+- [ADR 002: Panda CSSユーティリティの積極活用](./docs/adr/002-panda-css-utilities.md)
+
+スタイルの書き方は [docs/style-guide.md](./docs/style-guide.md) を参照してください。
+
 #### 📏 Spacing（spacing.ts）
 
 8pxグリッドシステムを採用。
@@ -195,12 +195,12 @@ primitive.orange[50] 〜 primitive.orange[900]
 primitive.pink[50] 〜 primitive.pink[900]  // 優しいテーマ用
 
 // Semantic
-colors.text.primary      // メインテキスト
+colors.contents.primary      // メインテキスト
 colors.background.default // 背景色
 colors.border.focus      // フォーカス時の境界線
 ```
 
-#### 🔤 Typography（typography.ts）
+#### 🔤 Typography（tokens/index.ts）
 
 rem単位を使用してアクセシビリティに配慮。
 
@@ -537,6 +537,9 @@ npm run build-storybook
 - [ ] reduced-motion対応（アニメーション無効化）
 - [ ] 多言語対応（i18n）
 - [ ] テーマカスタマイザー
+- [ ] Style Dictionaryとの統合検討（マルチプラットフォーム対応時）
+  - 現在はPanda CSSのトークンシステムで十分
+  - 将来的にiOS/Androidアプリ等を作る場合に検討
 
 ## 🤝 コントリビューション
 

@@ -147,7 +147,7 @@ export const button = {
   primary: {
     bg: brand.primary, // テーマカラーに連動
     bgHover: brand.primaryDark,
-    text: colors.text.inverse,
+    text: colors.contents.inverse,
   },
 };
 ```

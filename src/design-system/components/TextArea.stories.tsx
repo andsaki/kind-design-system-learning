@@ -44,6 +44,11 @@ const meta = {
       control: "number",
       description: "最大文字数",
     },
+    wcagLevel: {
+      control: "select",
+      options: ["A", "AA", "AAA"],
+      description: "WCAGレベルのフォーカス表示",
+    },
   },
 } satisfies Meta<typeof TextArea>;
 
@@ -162,11 +167,7 @@ export const Disabled: Story = {
   args: { label: "" } as any,
   render: () => (
     <div style={{ width: "400px" }}>
-      <TextArea
-        label="編集不可"
-        disabled
-        value="この内容は編集できません"
-      />
+      <TextArea label="編集不可" disabled value="この内容は編集できません" />
     </div>
   ),
 };
@@ -226,7 +227,14 @@ export const MultipleTextAreas: Story = {
     });
 
     return (
-      <div style={{ width: "500px", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+      <div
+        style={{
+          width: "500px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1.5rem",
+        }}
+      >
         <TextArea
           label="タイトル"
           placeholder="記事のタイトル"
@@ -241,7 +249,9 @@ export const MultipleTextAreas: Story = {
           maxLength={200}
           placeholder="記事の説明"
           value={values.description}
-          onChange={(e) => setValues({ ...values, description: e.target.value })}
+          onChange={(e) =>
+            setValues({ ...values, description: e.target.value })
+          }
         />
         <TextArea
           label="備考"
@@ -282,14 +292,34 @@ export const KeyboardInteraction: Story = {
           <h3 style={{ marginTop: 0, fontSize: "16px", fontWeight: "bold" }}>
             💡 操作方法
           </h3>
-          <ul style={{ margin: 0, paddingLeft: "1.5rem", fontSize: "14px", lineHeight: "1.8" }}>
-            <li><strong>Tab</strong>: 次のテキストエリアにフォーカス移動</li>
-            <li><strong>Shift + Tab</strong>: 前のテキストエリアにフォーカス移動</li>
-            <li><strong>マウスクリック</strong>: フォーカススタイルは表示されない</li>
+          <ul
+            style={{
+              margin: 0,
+              paddingLeft: "1.5rem",
+              fontSize: "14px",
+              lineHeight: "1.8",
+            }}
+          >
+            <li>
+              <strong>Tab</strong>: 次のテキストエリアにフォーカス移動
+            </li>
+            <li>
+              <strong>Shift + Tab</strong>: 前のテキストエリアにフォーカス移動
+            </li>
+            <li>
+              <strong>マウスクリック</strong>: フォーカススタイルは表示されない
+            </li>
           </ul>
         </div>
 
-        <div style={{ width: "500px", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+        <div
+          style={{
+            width: "500px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1.5rem",
+          }}
+        >
           <TextArea
             label="テキストエリア1"
             placeholder="最初のテキストエリア"
@@ -350,10 +380,18 @@ export const WCAGLevels: Story = {
         </div>
 
         <div style={{ width: "500px" }}>
-          <h3 style={{ marginBottom: "0.5rem", fontSize: "14px", fontWeight: "bold" }}>
+          <h3
+            style={{
+              marginBottom: "0.5rem",
+              fontSize: "14px",
+              fontWeight: "bold",
+            }}
+          >
             レベルA（最低限）
           </h3>
-          <p style={{ marginBottom: "1rem", fontSize: "12px", color: "#6b7280" }}>
+          <p
+            style={{ marginBottom: "1rem", fontSize: "12px", color: "#6b7280" }}
+          >
             薄いアウトラインのみ
           </p>
           <TextArea
@@ -366,10 +404,18 @@ export const WCAGLevels: Story = {
         </div>
 
         <div style={{ width: "500px" }}>
-          <h3 style={{ marginBottom: "0.5rem", fontSize: "14px", fontWeight: "bold" }}>
+          <h3
+            style={{
+              marginBottom: "0.5rem",
+              fontSize: "14px",
+              fontWeight: "bold",
+            }}
+          >
             レベルAA（推奨）⭐
           </h3>
-          <p style={{ marginBottom: "1rem", fontSize: "12px", color: "#6b7280" }}>
+          <p
+            style={{ marginBottom: "1rem", fontSize: "12px", color: "#6b7280" }}
+          >
             背景色 + 太めのアウトライン
           </p>
           <TextArea
@@ -382,10 +428,18 @@ export const WCAGLevels: Story = {
         </div>
 
         <div style={{ width: "500px" }}>
-          <h3 style={{ marginBottom: "0.5rem", fontSize: "14px", fontWeight: "bold" }}>
+          <h3
+            style={{
+              marginBottom: "0.5rem",
+              fontSize: "14px",
+              fontWeight: "bold",
+            }}
+          >
             レベルAAA（最高）
           </h3>
-          <p style={{ marginBottom: "1rem", fontSize: "12px", color: "#6b7280" }}>
+          <p
+            style={{ marginBottom: "1rem", fontSize: "12px", color: "#6b7280" }}
+          >
             黄色背景 + 黒の太いアウトライン（最も目立つ）
           </p>
           <TextArea

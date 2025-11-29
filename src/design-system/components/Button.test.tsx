@@ -20,19 +20,19 @@ describe('Button', () => {
     it('primary バリアントでレンダリングされる', () => {
       render(<Button variant="primary">Primary</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('button-primary');
+      expect(button).toHaveClass('button--variant_primary');
     });
 
     it('secondary バリアントでレンダリングされる', () => {
       render(<Button variant="secondary">Secondary</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('button-secondary');
+      expect(button).toHaveClass('button--variant_secondary');
     });
 
     it('outline バリアントでレンダリングされる', () => {
       render(<Button variant="outline">Outline</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('button-outline');
+      expect(button).toHaveClass('button--variant_outline');
     });
   });
 

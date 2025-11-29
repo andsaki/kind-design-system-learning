@@ -1,5 +1,7 @@
 import React from "react";
-import { colors, typography } from "../tokens";
+import { text as textRecipe } from "../../../styled-system/recipes";
+import { cx } from "@/styled-system/css";
+import type { WCAGLevel } from "../constants/accessibility";
 
 export interface TextProps {
   /** テキストのバリエーション */
@@ -21,6 +23,8 @@ export interface TextProps {
   color?: string;
   /** テキストの配置 */
   align?: "left" | "center" | "right" | "justify";
+  /** WCAGレベル */
+  wcagLevel?: WCAGLevel;
   /** 太字にする */
   bold?: boolean;
   /** イタリック体にする */
@@ -49,7 +53,7 @@ export interface TextProps {
 export const Text: React.FC<TextProps> = ({
   variant = "body",
   as,
-  color = colors.text.primary,
+  color,
   align = "left",
   bold = false,
   italic = false,
@@ -58,6 +62,7 @@ export const Text: React.FC<TextProps> = ({
   children,
   className,
   style: externalStyle,
+  wcagLevel = "AA",
 }) => {
   // variantに応じたデフォルトのHTML要素を決定
   const defaultElement =
@@ -80,60 +85,28 @@ export const Text: React.FC<TextProps> = ({
   // 実際に使用するHTML要素
   const Component = (as || defaultElement) as React.ElementType;
 
-  // variantに応じたタイポグラフィスタイルを取得
-  const getTypographyStyle = (): React.CSSProperties => {
-    switch (variant) {
-      case "h1":
-        return typography.heading.h1;
-      case "h2":
-        return typography.heading.h2;
-      case "h3":
-        return typography.heading.h3;
-      case "h4":
-        return typography.heading.h4;
-      case "h5":
-        return typography.heading.h5;
-      case "h6":
-        return typography.heading.h6;
-      case "body-large":
-        return typography.body.large;
-      case "body":
-        return typography.body.base;
-      case "body-small":
-        return typography.body.small;
-      case "caption":
-        return typography.textStyle.caption;
-      case "overline":
-        return typography.textStyle.overline;
-      default:
-        return typography.body.base;
-    }
-  };
-
-  const typographyStyle = getTypographyStyle();
+  const recipeClassName = textRecipe({ variant, align, wcagLevel });
 
   // スタイルの構築
+  const textDecorations = [
+    underline ? "underline" : null,
+    strikethrough ? "line-through" : null,
+  ].filter(Boolean);
+
   const styles: React.CSSProperties = {
-    ...typographyStyle,
-    color,
+    margin: 0,
+    color: color ?? "inherit",
     textAlign: align,
-    fontWeight: bold
-      ? typography.fontWeight.bold
-      : (typographyStyle.fontWeight as number),
-    fontStyle: italic ? "italic" : "normal",
-    textDecoration: underline
-      ? "underline"
-      : strikethrough
-      ? "line-through"
-      : "none",
-    margin: 0, // デフォルトのマージンをリセット
+    fontWeight: bold ? "bold" : undefined,
+    fontStyle: italic ? "italic" : undefined,
+    textDecoration: textDecorations.length ? textDecorations.join(" ") : undefined,
     ...externalStyle,
   };
 
   return React.createElement(
     Component,
     {
-      className,
+      className: cx(recipeClassName, className),
       style: styles,
     },
     children

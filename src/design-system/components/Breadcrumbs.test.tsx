@@ -87,11 +87,12 @@ describe('Breadcrumbs', () => {
       expect(screen.getByRole('link', { name: '商品一覧' })).toHaveAttribute('href', '/products');
     });
 
-    it('リンクにアンダーラインが表示される', () => {
+    it('リンクにアンダーライン用のクラスが付与される', () => {
       renderBreadcrumbs();
       const link = screen.getByRole('link', { name: 'ホーム' });
-      expect(link).toHaveStyle({ textDecoration: 'underline' });
+      expect(link).toHaveClass('breadcrumbs__link');
     });
+
   });
 
   describe('WCAGレベル', () => {
