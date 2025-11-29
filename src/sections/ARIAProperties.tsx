@@ -13,7 +13,6 @@ const sectionClass = css({
   borderStyle: "solid",
   borderColor: "border.default",
   maxW: "full",
-  overflowX: "hidden",
   boxSizing: "border-box",
 });
 
