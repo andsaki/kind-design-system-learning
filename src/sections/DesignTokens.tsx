@@ -398,7 +398,7 @@ export function DesignTokens() {
               xl (20px) - "xl"
             </div>
             <div className={css({ fontSize: "2xl", padding: 2, backgroundColor: "bg.secondary", borderRadius: "base", color: "contents.primary" })}>
-              2xl (24px) - typography.fontSize['2xl']
+              2xl (24px) - "2xl"
             </div>
           </div>
         </div>
