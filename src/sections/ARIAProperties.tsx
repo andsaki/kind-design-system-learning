@@ -1,7 +1,48 @@
 import { Button, Accordion, AccordionSummary, AccordionContent } from "../design-system/components";
 import { CodeBlock } from "../components/CodeBlock";
 import { spacing, typography, radii, icons, borders } from "../design-system/tokens";
-import { primitive } from "../design-system/tokens/colors";
+import { token } from "@/styled-system/tokens";
+
+// Primitive colors helper
+const primitive = {
+  white: '#ffffff',
+  black: '#000000',
+  yellow: '#ffeb3b',
+  gray: {
+    600: token('colors.gray.600'),
+    700: token('colors.gray.700'),
+    900: token('colors.gray.900'),
+  },
+  pink: {
+    50: token('colors.pink.50'),
+    200: token('colors.pink.200'),
+    500: token('colors.pink.500'),
+    600: token('colors.pink.600'),
+    900: token('colors.pink.900'),
+  },
+  blue: {
+    50: token('colors.blue.50'),
+    200: token('colors.blue.200'),
+    800: token('colors.blue.800'),
+    900: token('colors.blue.900'),
+  },
+  green: {
+    50: token('colors.green.50'),
+    200: token('colors.green.200'),
+    300: token('colors.green.300'),
+    900: token('colors.green.900'),
+  },
+  red: {
+    50: token('colors.red.50'),
+    200: token('colors.red.200'),
+    900: token('colors.red.900'),
+  },
+  orange: {
+    50: token('colors.orange.50'),
+    200: token('colors.orange.200'),
+    900: token('colors.orange.900'),
+  },
+};
 
 export const ARIAProperties = () => {
 
@@ -11,7 +52,7 @@ export const ARIAProperties = () => {
       style={{
         marginBottom: spacing.scale[12],
         padding: spacing.scale[6],
-        backgroundColor: primitive.white,
+        backgroundColor: '#ffffff',
         borderRadius: radii.borderRadius.lg,
         border: borders.default,
         maxWidth: '100%',

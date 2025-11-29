@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useId } from "react";
 import { css } from "@/styled-system/css";
 
 interface TocItem {
