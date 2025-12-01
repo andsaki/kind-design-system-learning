@@ -1,7 +1,82 @@
 import { css } from "@/styled-system/css";
 import { icons } from "../design-system/tokens/icons";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHeaderCell,
+  TableCell,
+} from "../design-system/components";
 
 export function ImageComparison() {
+  const recommendationRows = [
+    {
+      condition: "外部SVGファイル",
+      recommendation: '<img alt="...">',
+      reason: "シンプルで標準的",
+    },
+    {
+      condition: "インラインSVG",
+      recommendation: '<svg role="img" aria-label="...">',
+      reason: "CSSでの細かいスタイル制御が可能",
+    },
+    {
+      condition: "アイコンライブラリ使用",
+      recommendation: '<svg role="img" aria-label="...">',
+      reason: "ライブラリが生成するSVGをそのまま使える",
+    },
+    {
+      condition: "明示的にラベルを分離したい",
+      recommendation: "aria-hidden + visually-hidden",
+      reason: "コードの意図が最も明確",
+    },
+  ];
+
+  const visibilityRows: Array<{
+    method: string;
+    visual: string;
+    sr: string;
+    visualTone: "primary" | "success" | "error";
+    srTone: "primary" | "success" | "error";
+  }> = [
+    {
+      method: 'aria-hidden="true"',
+      visual: "✅ 表示される",
+      sr: "❌ 読まれない",
+      visualTone: "success",
+      srTone: "error",
+    },
+    {
+      method: "display: none",
+      visual: "❌ 非表示",
+      sr: "❌ 読まれない",
+      visualTone: "error",
+      srTone: "error",
+    },
+    {
+      method: "visually-hidden",
+      visual: "❌ 非表示",
+      sr: "✅ 読まれる",
+      visualTone: "error",
+      srTone: "success",
+    },
+  ];
+
+  const inlineCodeClass = css({
+    backgroundColor: "bg.primary",
+    px: 2,
+    py: 1,
+    borderRadius: "sm",
+    fontSize: "sm",
+  });
+
+  const toneClass = {
+    primary: css({ color: "contents.primary" }),
+    success: css({ color: "contents.success" }),
+    error: css({ color: "contents.error" }),
+  };
+
   return (
     <section
       id="image-comparison"
@@ -650,181 +725,35 @@ export function ImageComparison() {
             borderWidth: "thin",
             borderStyle: "solid",
             borderColor: "border.default",
-            overflowX: "auto",
           })}
         >
-          <table
-            className={css({
-              width: "100%",
-              borderCollapse: "collapse",
-              fontSize: "sm",
-            })}
+          <Table
+            caption="img と svg の選び方"
+            variant="striped"
+            wcagLevel="AA"
+            responsiveLabel="imgとsvgの比較表"
           >
-            <thead>
-              <tr
-                className={css({
-                  borderBottomWidth: "base",
-                  borderBottomStyle: "solid",
-                  borderBottomColor: "border.default",
-                })}
-              >
-                <th
-                  className={css({
-                    padding: 3,
-                    textAlign: "left",
-                    color: "contents.primary",
-                    fontWeight: "semibold",
-                  })}
-                >
-                  条件
-                </th>
-                <th
-                  className={css({
-                    padding: 3,
-                    textAlign: "left",
-                    color: "contents.primary",
-                    fontWeight: "semibold",
-                  })}
-                >
-                  推奨
-                </th>
-                <th
-                  className={css({
-                    padding: 3,
-                    textAlign: "left",
-                    color: "contents.primary",
-                    fontWeight: "semibold",
-                  })}
-                >
-                  理由
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                className={css({
-                  borderBottomWidth: "thin",
-                  borderBottomStyle: "solid",
-                  borderBottomColor: "border.subtle",
-                })}
-              >
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.primary",
-                  })}
-                >
-                  外部SVGファイル
-                </td>
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.primary",
-                  })}
-                >
-                  <code>&lt;img alt="..."&gt;</code>
-                </td>
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.secondary",
-                  })}
-                >
-                  シンプルで標準的
-                </td>
-              </tr>
-              <tr
-                className={css({
-                  borderBottomWidth: "thin",
-                  borderBottomStyle: "solid",
-                  borderBottomColor: "border.subtle",
-                })}
-              >
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.primary",
-                  })}
-                >
-                  インラインSVG
-                </td>
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.primary",
-                  })}
-                >
-                  <code>&lt;svg role="img" aria-label="..."&gt;</code>
-                </td>
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.secondary",
-                  })}
-                >
-                  CSSでの細かいスタイル制御が可能
-                </td>
-              </tr>
-              <tr
-                className={css({
-                  borderBottomWidth: "thin",
-                  borderBottomStyle: "solid",
-                  borderBottomColor: "border.subtle",
-                })}
-              >
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.primary",
-                  })}
-                >
-                  アイコンライブラリ使用
-                </td>
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.primary",
-                  })}
-                >
-                  <code>&lt;svg role="img" aria-label="..."&gt;</code>
-                </td>
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.secondary",
-                  })}
-                >
-                  ライブラリが生成するSVGをそのまま使える
-                </td>
-              </tr>
-              <tr>
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.primary",
-                  })}
-                >
-                  明示的にラベルを分離したい
-                </td>
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.primary",
-                  })}
-                >
-                  <code>aria-hidden + visually-hidden</code>
-                </td>
-                <td
-                  className={css({
-                    padding: 3,
-                    color: "contents.secondary",
-                  })}
-                >
-                  コードの意図が最も明確
-                </td>
-              </tr>
-            </tbody>
-          </table>
+            <TableHeader>
+              <TableRow>
+                <TableHeaderCell>条件</TableHeaderCell>
+                <TableHeaderCell>推奨</TableHeaderCell>
+                <TableHeaderCell>理由</TableHeaderCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {recommendationRows.map((row) => (
+                <TableRow key={row.condition}>
+                  <TableCell>{row.condition}</TableCell>
+                  <TableCell>
+                    <code className={inlineCodeClass}>{row.recommendation}</code>
+                  </TableCell>
+                  <TableCell className={css({ color: "contents.secondary" })}>
+                    {row.reason}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       </div>
 
@@ -1055,149 +984,38 @@ export function ImageComparison() {
           <div
             className={css({
               marginTop: 3,
-              overflowX: "auto",
             })}
           >
-            <table
-              className={css({
-                width: "100%",
-                borderCollapse: "collapse",
-                fontSize: "sm",
-              })}
+            <Table
+              caption="aria-hidden と視覚的な非表示の違い"
+              variant="striped"
+              size="sm"
+              wcagLevel="AA"
+              responsiveLabel="aria-hiddenと視覚表示の比較表"
             >
-              <thead>
-                <tr
-                  className={css({
-                    borderBottomWidth: "base",
-                    borderBottomStyle: "solid",
-                    borderBottomColor: "border.default",
-                  })}
-                >
-                  <th
-                    className={css({
-                      padding: 3,
-                      textAlign: "left",
-                      color: "contents.primary",
-                      fontWeight: "semibold",
-                    })}
-                  >
-                    方法
-                  </th>
-                  <th
-                    className={css({
-                      padding: 3,
-                      textAlign: "left",
-                      color: "contents.primary",
-                      fontWeight: "semibold",
-                    })}
-                  >
-                    視覚的に表示
-                  </th>
-                  <th
-                    className={css({
-                      padding: 3,
-                      textAlign: "left",
-                      color: "contents.primary",
-                      fontWeight: "semibold",
-                    })}
-                  >
-                    スクリーンリーダー
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  className={css({
-                    borderBottomWidth: "thin",
-                    borderBottomStyle: "solid",
-                    borderBottomColor: "border.subtle",
-                  })}
-                >
-                  <td
-                    className={css({
-                      padding: 3,
-                      color: "contents.primary",
-                    })}
-                  >
-                    <code>aria-hidden="true"</code>
-                  </td>
-                  <td
-                    className={css({
-                      padding: 3,
-                      color: "contents.success",
-                    })}
-                  >
-                    ✅ 表示される
-                  </td>
-                  <td
-                    className={css({
-                      padding: 3,
-                      color: "contents.error",
-                    })}
-                  >
-                    ❌ 読まれない
-                  </td>
-                </tr>
-                <tr
-                  className={css({
-                    borderBottomWidth: "thin",
-                    borderBottomStyle: "solid",
-                    borderBottomColor: "border.subtle",
-                  })}
-                >
-                  <td
-                    className={css({
-                      padding: 3,
-                      color: "contents.primary",
-                    })}
-                  >
-                    <code>display: none</code>
-                  </td>
-                  <td
-                    className={css({
-                      padding: 3,
-                      color: "contents.error",
-                    })}
-                  >
-                    ❌ 非表示
-                  </td>
-                  <td
-                    className={css({
-                      padding: 3,
-                      color: "contents.error",
-                    })}
-                  >
-                    ❌ 読まれない
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    className={css({
-                      padding: 3,
-                      color: "contents.primary",
-                    })}
-                  >
-                    <code>visually-hidden</code>
-                  </td>
-                  <td
-                    className={css({
-                      padding: 3,
-                      color: "contents.error",
-                    })}
-                  >
-                    ❌ 非表示
-                  </td>
-                  <td
-                    className={css({
-                      padding: 3,
-                      color: "contents.success",
-                    })}
-                  >
-                    ✅ 読まれる
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+              <TableHeader>
+                <TableRow>
+                  <TableHeaderCell>方法</TableHeaderCell>
+                  <TableHeaderCell>視覚的に表示</TableHeaderCell>
+                  <TableHeaderCell>スクリーンリーダー</TableHeaderCell>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {visibilityRows.map((row) => (
+                  <TableRow key={row.method}>
+                    <TableCell>
+                      <code className={inlineCodeClass}>{row.method}</code>
+                    </TableCell>
+                    <TableCell className={toneClass[row.visualTone]}>
+                      {row.visual}
+                    </TableCell>
+                    <TableCell className={toneClass[row.srTone]}>
+                      {row.sr}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </div>
       </div>
