@@ -12,6 +12,7 @@ import { loading } from "./panda-config/recipes/loading";
 import { infoBox } from "./panda-config/recipes/infobox";
 import { modal } from "./panda-config/recipes/modal";
 import { radio } from "./panda-config/recipes/radio";
+import { table } from "./panda-config/recipes/table";
 import { pandaSemanticColors } from "./panda-config/types/semanticTokens";
 import {
   pandaColors,
@@ -107,6 +108,9 @@ export default defineConfig({
         infoBox,
         modal,
         radio,
+      },
+      slotRecipes: {
+        table,
       },
     },
   },

@@ -1,92 +1,22 @@
 import React from "react";
-import { css, cx } from "@/styled-system/css";
+import { cx } from "@/styled-system/css";
+import { table } from "@/styled-system/recipes";
 import type { WCAGLevel } from "../constants/accessibility";
 
-const scrollContainerClass = css({
-  width: "100%",
-  overflowX: "auto",
-  borderRadius: "xl",
-  borderWidth: "thin",
-  borderStyle: "solid",
-  borderColor: "border.default",
-  backgroundColor: "bg.primary",
-  boxShadow: "xl",
-  maxWidth: "100%",
-});
-
-const nonScrollableClass = css({
-  overflowX: "visible",
-});
-
-const srOnlyClass = css({
-  position: "absolute",
+const srOnlyClass = {
+  position: "absolute" as const,
   width: "1px",
   height: "1px",
   padding: 0,
   margin: "-1px",
   overflow: "hidden",
   clip: "rect(0, 0, 0, 0)",
-  whiteSpace: "nowrap",
+  whiteSpace: "nowrap" as const,
   border: 0,
-});
-
-const headerContentClass = css({
-  display: "block",
-});
-
-const sizeConfig = {
-  sm: { paddingX: 3, paddingY: 2, fontSize: "xs", headerFontSize: "sm" },
-  md: { paddingX: 4, paddingY: 3, fontSize: "sm", headerFontSize: "sm" },
-  lg: { paddingX: 5, paddingY: 4, fontSize: "md", headerFontSize: "md" },
-} as const;
-
-const wcagTableColors: Record<
-  WCAGLevel,
-  {
-    headerBg: string;
-    headerText: string;
-    bodyText: string;
-    borderColor: string;
-    hoverBg: string;
-    stripeOdd: string;
-    stripeEven: string;
-    caption: string;
-  }
-> = {
-  A: {
-    headerBg: "bg.secondary",
-    headerText: "contents.secondary",
-    bodyText: "contents.secondary",
-    borderColor: "border.subtle",
-    hoverBg: "bg.tertiary",
-    stripeOdd: "bg.primary",
-    stripeEven: "bg.secondary",
-    caption: "contents.tertiary",
-  },
-  AA: {
-    headerBg: "bg.secondary",
-    headerText: "contents.primary",
-    bodyText: "contents.secondary",
-    borderColor: "border.default",
-    hoverBg: "blue.50",
-    stripeOdd: "bg.primary",
-    stripeEven: "bg.secondary",
-    caption: "contents.tertiary",
-  },
-  AAA: {
-    headerBg: "bg.secondary",
-    headerText: "contents.primary",
-    bodyText: "contents.primary",
-    borderColor: "border.strong",
-    hoverBg: "yellow",
-    stripeOdd: "bg.primary",
-    stripeEven: "bg.secondary",
-    caption: "contents.secondary",
-  },
 };
 
-type TableSize = keyof typeof sizeConfig;
 export type TableVariant = "simple" | "striped";
+export type TableSize = "sm" | "md" | "lg";
 
 type TableContextValue = {
   size: TableSize;
@@ -174,44 +104,20 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
       [size, variant, stickyHeader, highlightOnHover, showColumnDividers, wcagLevel],
     );
 
-    const colors = wcagTableColors[wcagLevel];
-
-    const tableClassName = css({
-      width: "100%",
-      borderCollapse: "separate",
-      borderSpacing: 0,
-      minWidth: "480px",
-      backgroundColor: "bg.primary",
-      color: "contents.primary",
-      "& tbody tr:last-of-type td": {
-        borderBottom: "none",
-      },
-      ...(variant === "striped"
-        ? {
-            "& tbody tr:nth-of-type(odd)": {
-              backgroundColor: colors.stripeOdd,
-            },
-            "& tbody tr:nth-of-type(even)": {
-              backgroundColor: colors.stripeEven,
-            },
-          }
-        : {}),
-      ...(highlightOnHover
-        ? {
-            "& tbody tr:hover": {
-              backgroundColor: colors.hoverBg,
-            },
-          }
-        : {}),
+    const classes = table({
+      size,
+      variant,
+      wcagLevel,
+      responsive,
+      stickyHeader,
+      highlightOnHover,
+      showColumnDividers,
     });
 
     return (
       <TableContext.Provider value={contextValue}>
         <div
-          className={cx(
-            scrollContainerClass,
-            responsive ? undefined : nonScrollableClass,
-          )}
+          className={classes.container}
           data-responsive={responsive ? "true" : "false"}
           role={responsive ? "region" : undefined}
           aria-label={responsive ? responsiveLabel : undefined}
@@ -219,7 +125,7 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
         >
           <table
             ref={ref}
-            className={cx(tableClassName, className)}
+            className={cx(classes.root, className)}
             data-variant={variant}
             data-size={size}
             data-sticky-header={stickyHeader ? "true" : "false"}
@@ -288,13 +194,10 @@ export const TableRow: React.FC<TableRowProps> = ({
   children,
   ...props
 }) => {
-  const rowClass = css({
-    transitionProperty: "background-color, color",
-    transitionDuration: "normal",
-  });
+  const classes = table();
 
   return (
-    <tr className={cx(rowClass, className)} {...props}>
+    <tr className={cx(classes.row, className)} {...props}>
       {children}
     </tr>
   );
@@ -305,61 +208,47 @@ export interface TableHeaderCellProps
   children: React.ReactNode;
   align?: "left" | "center" | "right";
   helpText?: React.ReactNode;
+  sortDirection?: "ascending" | "descending" | "none";
 }
 
 export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
   children,
   align = "left",
   helpText,
+  sortDirection,
   className,
   scope = "col",
   ...props
 }) => {
   const { size, stickyHeader, showColumnDividers, wcagLevel } = useTableContext();
-  const spacing = sizeConfig[size];
-  const colors = wcagTableColors[wcagLevel];
-
-  const headerClass = css({
-    textAlign: align,
-    paddingX: spacing.paddingX,
-    paddingY: spacing.paddingY,
-    fontSize: spacing.headerFontSize,
-    fontWeight: "semibold",
-    color: colors.headerText,
-    backgroundColor: colors.headerBg,
-    borderBottomWidth: "base",
-    borderBottomStyle: "solid",
-    borderBottomColor: colors.borderColor,
-    textTransform: "none",
-    position: stickyHeader ? "sticky" : undefined,
-    top: stickyHeader ? 0 : undefined,
-    zIndex: stickyHeader ? 1 : undefined,
-    boxShadow: stickyHeader ? "sm" : undefined,
-    borderRightWidth: showColumnDividers ? "thin" : undefined,
-    borderRightStyle: showColumnDividers ? "solid" : undefined,
-    borderRightColor: showColumnDividers ? colors.borderColor : undefined,
-    "&:last-of-type": {
-      borderRight: "none",
-    },
-  });
-
-  const helperTextClass = css({
-    display: "block",
-    marginTop: 1,
-    fontSize: "xs",
-    fontWeight: "normal",
-    color: "contents.tertiary",
-  });
+  const helpTextId = React.useId();
+  const classes = table({ size, wcagLevel, stickyHeader, showColumnDividers });
 
   return (
     <th
       scope={scope}
       data-align={align}
-      className={cx(headerClass, className)}
+      className={cx(classes.headerCell, className)}
+      style={{ textAlign: align }}
+      aria-sort={sortDirection}
+      aria-describedby={helpText ? helpTextId : undefined}
       {...props}
     >
-      <span className={headerContentClass}>{children}</span>
-      {helpText && <span className={helperTextClass}>{helpText}</span>}
+      <span style={{ display: "block" }}>{children}</span>
+      {helpText && (
+        <span
+          id={helpTextId}
+          style={{
+            display: "block",
+            marginTop: "0.25rem",
+            fontSize: "0.75rem",
+            fontWeight: "normal",
+            color: "var(--colors-contents-tertiary)",
+          }}
+        >
+          {helpText}
+        </span>
+      )}
     </th>
   );
 };
@@ -379,31 +268,16 @@ export const TableCell: React.FC<TableCellProps> = ({
   ...props
 }) => {
   const { size, showColumnDividers, wcagLevel } = useTableContext();
-  const spacing = sizeConfig[size];
-  const colors = wcagTableColors[wcagLevel];
-
-  const cellClass = css({
-    paddingX: spacing.paddingX,
-    paddingY: spacing.paddingY,
-    fontSize: spacing.fontSize,
-    color: colors.bodyText,
-    lineHeight: "normal",
-    borderBottomWidth: "thin",
-    borderBottomStyle: "solid",
-    borderBottomColor: colors.borderColor,
-    textAlign: isNumeric ? "right" : align,
-    borderRightWidth: showColumnDividers ? "thin" : undefined,
-    borderRightStyle: showColumnDividers ? "solid" : undefined,
-    borderRightColor: showColumnDividers ? colors.borderColor : undefined,
-    "&:last-of-type": {
-      borderRight: "none",
-    },
-  });
+  const classes = table({ size, wcagLevel, showColumnDividers });
 
   return (
     <td
       data-align={isNumeric ? "right" : align}
-      className={cx(cellClass, className)}
+      className={cx(classes.cell, className)}
+      style={{
+        textAlign: isNumeric ? "right" : align,
+        fontVariantNumeric: isNumeric ? "tabular-nums" : undefined,
+      }}
       {...props}
     >
       {children}
@@ -426,18 +300,15 @@ export const TableCaption: React.FC<TableCaptionProps> = ({
   ...props
 }) => {
   const { wcagLevel } = useTableContext();
-  const captionClass = css({
-    captionSide: placement,
-    paddingX: 4,
-    paddingY: 3,
-    fontSize: "xs",
-    color: wcagTableColors[wcagLevel].caption,
-    textAlign: "left",
-  });
+  const classes = table({ wcagLevel });
 
   return (
     <caption
-      className={cx(captionClass, srOnly ? srOnlyClass : undefined, className)}
+      className={cx(classes.caption, className)}
+      style={{
+        captionSide: placement,
+        ...(srOnly ? srOnlyClass : {}),
+      }}
       data-sr-only={srOnly ? "true" : undefined}
       {...props}
     >

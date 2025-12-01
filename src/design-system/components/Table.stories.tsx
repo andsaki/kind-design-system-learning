@@ -212,3 +212,91 @@ export const NumericData: Story = {
     </Table>
   ),
 };
+
+export const WCAGLevelA: Story = {
+  args: {
+    caption: 'WCAGレベルA - 最低限のコントラスト',
+    variant: 'simple',
+    size: 'md',
+    wcagLevel: 'A',
+  },
+  render: (args) => (
+    <Table {...args}>
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell>属性</TableHeaderCell>
+          <TableHeaderCell>役割</TableHeaderCell>
+          <TableHeaderCell>使用例</TableHeaderCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {sampleRows.map((row) => (
+          <TableRow key={row.attribute}>
+            <TableCell>{row.attribute}</TableCell>
+            <TableCell>{row.purpose}</TableCell>
+            <TableCell>{row.example}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  ),
+};
+
+export const WCAGLevelAA: Story = {
+  args: {
+    caption: 'WCAGレベルAA - 推奨コントラスト',
+    variant: 'striped',
+    size: 'md',
+    wcagLevel: 'AA',
+  },
+  render: (args) => (
+    <Table {...args}>
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell>属性</TableHeaderCell>
+          <TableHeaderCell>役割</TableHeaderCell>
+          <TableHeaderCell>使用例</TableHeaderCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {sampleRows.map((row) => (
+          <TableRow key={row.attribute}>
+            <TableCell>{row.attribute}</TableCell>
+            <TableCell>{row.purpose}</TableCell>
+            <TableCell>{row.example}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  ),
+};
+
+export const WCAGLevelAAA: Story = {
+  args: {
+    caption: 'WCAGレベルAAA - 最高コントラスト',
+    variant: 'striped',
+    size: 'md',
+    wcagLevel: 'AAA',
+    highlightOnHover: true,
+  },
+  render: (args) => (
+    <Table {...args}>
+      <TableHeader>
+        <TableRow>
+          <TableHeaderCell>属性</TableHeaderCell>
+          <TableHeaderCell>役割</TableHeaderCell>
+          <TableHeaderCell>使用例</TableHeaderCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {sampleRows.map((row) => (
+          <TableRow key={row.attribute}>
+            <TableCell>{row.attribute}</TableCell>
+            <TableCell>{row.purpose}</TableCell>
+            <TableCell>{row.example}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  ),
+};
