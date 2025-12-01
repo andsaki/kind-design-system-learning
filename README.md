@@ -63,6 +63,7 @@ src/
 │   ├── components/             # 再利用可能なコンポーネント
 │   │   ├── Button.tsx         # アクセシブルなボタン
 │   │   ├── Input.tsx          # アクセシブルな入力フィールド
+│   │   ├── Table.tsx          # データテーブル
 │   │   ├── Form.tsx           # react-hook-form統合フォーム
 │   │   ├── Modal.tsx          # モーダルダイアログ
 │   │   ├── Toast.tsx          # トースト通知
@@ -351,6 +352,60 @@ import { Input } from "./design-system/components";
   required
   wcagLevel="AAA"
 />;
+```
+
+### Table
+
+WCAG 2.1 AA/AAAのコントラストを満たすデータテーブル。
+
+**特徴:**
+
+- caption / 視覚的に非表示にするSR-onlyサポート
+- スクロール可能なコンテナーとsticky header
+- 罫線・縞模様・ホバーの切り替え
+- 数値列の右寄せ / ヘッダーの補足説明
+
+**使用例:**
+
+```tsx
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHeaderCell,
+  TableCell,
+} from "./design-system/components";
+
+<Table
+  caption="WCAGレベル別 コントラスト要件"
+  variant="striped"
+  stickyHeader
+  showColumnDividers
+  wcagLevel="AAA"
+>
+  <TableHeader>
+    <TableRow>
+      <TableHeaderCell>レベル</TableHeaderCell>
+      <TableHeaderCell align="center" helpText="通常テキスト">
+        小サイズ
+      </TableHeaderCell>
+      <TableHeaderCell align="center">大きいテキスト</TableHeaderCell>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>AA</TableCell>
+      <TableCell align="center">4.5:1 以上</TableCell>
+      <TableCell align="center">3:1 以上</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>AAA</TableCell>
+      <TableCell align="center">7:1 以上</TableCell>
+      <TableCell align="center">4.5:1 以上</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>;
 ```
 
 ### TableOfContents

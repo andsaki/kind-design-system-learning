@@ -1,0 +1,447 @@
+import React from "react";
+import { css, cx } from "@/styled-system/css";
+import type { WCAGLevel } from "../constants/accessibility";
+
+const scrollContainerClass = css({
+  width: "100%",
+  overflowX: "auto",
+  borderRadius: "xl",
+  borderWidth: "thin",
+  borderStyle: "solid",
+  borderColor: "border.default",
+  backgroundColor: "bg.primary",
+  boxShadow: "xl",
+  maxWidth: "100%",
+});
+
+const nonScrollableClass = css({
+  overflowX: "visible",
+});
+
+const srOnlyClass = css({
+  position: "absolute",
+  width: "1px",
+  height: "1px",
+  padding: 0,
+  margin: "-1px",
+  overflow: "hidden",
+  clip: "rect(0, 0, 0, 0)",
+  whiteSpace: "nowrap",
+  border: 0,
+});
+
+const headerContentClass = css({
+  display: "block",
+});
+
+const sizeConfig = {
+  sm: { paddingX: 3, paddingY: 2, fontSize: "xs", headerFontSize: "sm" },
+  md: { paddingX: 4, paddingY: 3, fontSize: "sm", headerFontSize: "sm" },
+  lg: { paddingX: 5, paddingY: 4, fontSize: "md", headerFontSize: "md" },
+} as const;
+
+const wcagTableColors: Record<
+  WCAGLevel,
+  {
+    headerBg: string;
+    headerText: string;
+    bodyText: string;
+    borderColor: string;
+    hoverBg: string;
+    stripeOdd: string;
+    stripeEven: string;
+    caption: string;
+  }
+> = {
+  A: {
+    headerBg: "bg.secondary",
+    headerText: "contents.secondary",
+    bodyText: "contents.secondary",
+    borderColor: "border.subtle",
+    hoverBg: "bg.tertiary",
+    stripeOdd: "bg.primary",
+    stripeEven: "bg.secondary",
+    caption: "contents.tertiary",
+  },
+  AA: {
+    headerBg: "bg.secondary",
+    headerText: "contents.primary",
+    bodyText: "contents.secondary",
+    borderColor: "border.default",
+    hoverBg: "blue.50",
+    stripeOdd: "bg.primary",
+    stripeEven: "bg.secondary",
+    caption: "contents.tertiary",
+  },
+  AAA: {
+    headerBg: "bg.secondary",
+    headerText: "contents.primary",
+    bodyText: "contents.primary",
+    borderColor: "border.strong",
+    hoverBg: "yellow",
+    stripeOdd: "bg.primary",
+    stripeEven: "bg.secondary",
+    caption: "contents.secondary",
+  },
+};
+
+type TableSize = keyof typeof sizeConfig;
+export type TableVariant = "simple" | "striped";
+
+type TableContextValue = {
+  size: TableSize;
+  variant: TableVariant;
+  stickyHeader: boolean;
+  highlightOnHover: boolean;
+  showColumnDividers: boolean;
+  wcagLevel: WCAGLevel;
+};
+
+const defaultContext: TableContextValue = {
+  size: "md",
+  variant: "simple",
+  stickyHeader: false,
+  highlightOnHover: true,
+  showColumnDividers: false,
+  wcagLevel: "AA",
+};
+
+const TableContext = React.createContext<TableContextValue>(defaultContext);
+const useTableContext = () => React.useContext(TableContext);
+
+export interface TableProps
+  extends React.TableHTMLAttributes<HTMLTableElement> {
+  /** 表の説明。caption要素としてレンダリングされます */
+  caption?: React.ReactNode;
+  /** captionの配置 */
+  captionPlacement?: "top" | "bottom";
+  /** 視覚的に隠すがスクリーンリーダーには読み上げるかどうか */
+  srOnlyCaption?: boolean;
+  /** テーブルのバリエーション */
+  variant?: TableVariant;
+  /** セルの密度 */
+  size?: TableSize;
+  /** ヘッダーをスクロール時に固定するか */
+  stickyHeader?: boolean;
+  /** 行ホバー時のハイライトを有効にするか */
+  highlightOnHover?: boolean;
+  /** 列の区切り線を表示するか */
+  showColumnDividers?: boolean;
+  /** WCAGコントラストレベル */
+  wcagLevel?: WCAGLevel;
+  /** 横スクロール用コンテナーのARIAラベル */
+  responsiveLabel?: string;
+  /** コンテナーをスクロール可能にするか */
+  responsive?: boolean;
+}
+
+/**
+ * WCAGを満たすアクセシブルなテーブルコンポーネント
+ *
+ * - captionとSR-onlyのサポート
+ * - sticky header / striped / hover highlight
+ * - 列の区切り線 / レスポンシブコンテナー
+ */
+export const Table = React.forwardRef<HTMLTableElement, TableProps>(
+  (
+    {
+      caption,
+      captionPlacement = "top",
+      srOnlyCaption = false,
+      variant = "simple",
+      size = "md",
+      stickyHeader = false,
+      highlightOnHover = true,
+      showColumnDividers = false,
+      wcagLevel = "AA",
+      responsiveLabel = "スクロール可能なテーブル",
+      responsive = true,
+      className,
+      children,
+      ...props
+    },
+    ref,
+  ) => {
+    const contextValue = React.useMemo(
+      () => ({
+        size,
+        variant,
+        stickyHeader,
+        highlightOnHover,
+        showColumnDividers,
+        wcagLevel,
+      }),
+      [size, variant, stickyHeader, highlightOnHover, showColumnDividers, wcagLevel],
+    );
+
+    const colors = wcagTableColors[wcagLevel];
+
+    const tableClassName = css({
+      width: "100%",
+      borderCollapse: "separate",
+      borderSpacing: 0,
+      minWidth: "480px",
+      backgroundColor: "bg.primary",
+      color: "contents.primary",
+      "& tbody tr:last-of-type td": {
+        borderBottom: "none",
+      },
+      ...(variant === "striped"
+        ? {
+            "& tbody tr:nth-of-type(odd)": {
+              backgroundColor: colors.stripeOdd,
+            },
+            "& tbody tr:nth-of-type(even)": {
+              backgroundColor: colors.stripeEven,
+            },
+          }
+        : {}),
+      ...(highlightOnHover
+        ? {
+            "& tbody tr:hover": {
+              backgroundColor: colors.hoverBg,
+            },
+          }
+        : {}),
+    });
+
+    return (
+      <TableContext.Provider value={contextValue}>
+        <div
+          className={cx(
+            scrollContainerClass,
+            responsive ? undefined : nonScrollableClass,
+          )}
+          data-responsive={responsive ? "true" : "false"}
+          role={responsive ? "region" : undefined}
+          aria-label={responsive ? responsiveLabel : undefined}
+          tabIndex={responsive ? 0 : undefined}
+        >
+          <table
+            ref={ref}
+            className={cx(tableClassName, className)}
+            data-variant={variant}
+            data-size={size}
+            data-sticky-header={stickyHeader ? "true" : "false"}
+            data-hover={highlightOnHover ? "true" : "false"}
+            data-column-dividers={showColumnDividers ? "true" : "false"}
+            data-wcag-level={wcagLevel}
+            {...props}
+          >
+            {caption && (
+              <TableCaption placement={captionPlacement} srOnly={srOnlyCaption}>
+                {caption}
+              </TableCaption>
+            )}
+            {children}
+          </table>
+        </div>
+      </TableContext.Provider>
+    );
+  },
+);
+
+Table.displayName = "Table";
+
+export interface TableSectionProps
+  extends React.HTMLAttributes<HTMLTableSectionElement> {
+  children: React.ReactNode;
+}
+
+export const TableHeader: React.FC<TableSectionProps> = ({
+  className,
+  children,
+  ...props
+}) => (
+  <thead className={className} {...props}>
+    {children}
+  </thead>
+);
+
+export const TableBody: React.FC<TableSectionProps> = ({
+  className,
+  children,
+  ...props
+}) => (
+  <tbody className={className} {...props}>
+    {children}
+  </tbody>
+);
+
+export const TableFooter: React.FC<TableSectionProps> = ({
+  className,
+  children,
+  ...props
+}) => (
+  <tfoot className={className} {...props}>
+    {children}
+  </tfoot>
+);
+
+export interface TableRowProps
+  extends React.HTMLAttributes<HTMLTableRowElement> {
+  children: React.ReactNode;
+}
+
+export const TableRow: React.FC<TableRowProps> = ({
+  className,
+  children,
+  ...props
+}) => {
+  const rowClass = css({
+    transitionProperty: "background-color, color",
+    transitionDuration: "normal",
+  });
+
+  return (
+    <tr className={cx(rowClass, className)} {...props}>
+      {children}
+    </tr>
+  );
+};
+
+export interface TableHeaderCellProps
+  extends React.ThHTMLAttributes<HTMLTableCellElement> {
+  children: React.ReactNode;
+  align?: "left" | "center" | "right";
+  helpText?: React.ReactNode;
+}
+
+export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
+  children,
+  align = "left",
+  helpText,
+  className,
+  scope = "col",
+  ...props
+}) => {
+  const { size, stickyHeader, showColumnDividers, wcagLevel } = useTableContext();
+  const spacing = sizeConfig[size];
+  const colors = wcagTableColors[wcagLevel];
+
+  const headerClass = css({
+    textAlign: align,
+    paddingX: spacing.paddingX,
+    paddingY: spacing.paddingY,
+    fontSize: spacing.headerFontSize,
+    fontWeight: "semibold",
+    color: colors.headerText,
+    backgroundColor: colors.headerBg,
+    borderBottomWidth: "base",
+    borderBottomStyle: "solid",
+    borderBottomColor: colors.borderColor,
+    textTransform: "none",
+    position: stickyHeader ? "sticky" : undefined,
+    top: stickyHeader ? 0 : undefined,
+    zIndex: stickyHeader ? 1 : undefined,
+    boxShadow: stickyHeader ? "sm" : undefined,
+    borderRightWidth: showColumnDividers ? "thin" : undefined,
+    borderRightStyle: showColumnDividers ? "solid" : undefined,
+    borderRightColor: showColumnDividers ? colors.borderColor : undefined,
+    "&:last-of-type": {
+      borderRight: "none",
+    },
+  });
+
+  const helperTextClass = css({
+    display: "block",
+    marginTop: 1,
+    fontSize: "xs",
+    fontWeight: "normal",
+    color: "contents.tertiary",
+  });
+
+  return (
+    <th
+      scope={scope}
+      data-align={align}
+      className={cx(headerClass, className)}
+      {...props}
+    >
+      <span className={headerContentClass}>{children}</span>
+      {helpText && <span className={helperTextClass}>{helpText}</span>}
+    </th>
+  );
+};
+
+export interface TableCellProps
+  extends React.TdHTMLAttributes<HTMLTableCellElement> {
+  children: React.ReactNode;
+  align?: "left" | "center" | "right";
+  isNumeric?: boolean;
+}
+
+export const TableCell: React.FC<TableCellProps> = ({
+  children,
+  align = "left",
+  isNumeric = false,
+  className,
+  ...props
+}) => {
+  const { size, showColumnDividers, wcagLevel } = useTableContext();
+  const spacing = sizeConfig[size];
+  const colors = wcagTableColors[wcagLevel];
+
+  const cellClass = css({
+    paddingX: spacing.paddingX,
+    paddingY: spacing.paddingY,
+    fontSize: spacing.fontSize,
+    color: colors.bodyText,
+    lineHeight: "normal",
+    borderBottomWidth: "thin",
+    borderBottomStyle: "solid",
+    borderBottomColor: colors.borderColor,
+    textAlign: isNumeric ? "right" : align,
+    borderRightWidth: showColumnDividers ? "thin" : undefined,
+    borderRightStyle: showColumnDividers ? "solid" : undefined,
+    borderRightColor: showColumnDividers ? colors.borderColor : undefined,
+    "&:last-of-type": {
+      borderRight: "none",
+    },
+  });
+
+  return (
+    <td
+      data-align={isNumeric ? "right" : align}
+      className={cx(cellClass, className)}
+      {...props}
+    >
+      {children}
+    </td>
+  );
+};
+
+export interface TableCaptionProps
+  extends React.HTMLAttributes<HTMLTableCaptionElement> {
+  children: React.ReactNode;
+  placement?: "top" | "bottom";
+  srOnly?: boolean;
+}
+
+export const TableCaption: React.FC<TableCaptionProps> = ({
+  children,
+  placement = "top",
+  srOnly = false,
+  className,
+  ...props
+}) => {
+  const { wcagLevel } = useTableContext();
+  const captionClass = css({
+    captionSide: placement,
+    paddingX: 4,
+    paddingY: 3,
+    fontSize: "xs",
+    color: wcagTableColors[wcagLevel].caption,
+    textAlign: "left",
+  });
+
+  return (
+    <caption
+      className={cx(captionClass, srOnly ? srOnlyClass : undefined, className)}
+      data-sr-only={srOnly ? "true" : undefined}
+      {...props}
+    >
+      {children}
+    </caption>
+  );
+};

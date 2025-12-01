@@ -27,3 +27,23 @@ export type { BreadcrumbsProps, BreadcrumbListProps, BreadcrumbItemProps, Breadc
 
 export { Dropdown } from './Dropdown';
 export type { DropdownProps, DropdownOption } from './Dropdown';
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHeaderCell,
+  TableCell,
+  TableCaption,
+} from './Table';
+export type {
+  TableProps,
+  TableSectionProps,
+  TableRowProps,
+  TableHeaderCellProps,
+  TableCellProps,
+  TableCaptionProps,
+  TableVariant,
+} from './Table';
