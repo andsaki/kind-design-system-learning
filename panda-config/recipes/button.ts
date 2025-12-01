@@ -143,7 +143,7 @@ export const button: RecipeConfig = {
         _disabled: {
           backgroundColor: "gray.300",
           borderColor: "gray.300",
-          color: "gray.500",
+          color: "gray.700",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -165,7 +165,7 @@ export const button: RecipeConfig = {
         _disabled: {
           backgroundColor: "gray.300",
           borderColor: "gray.300",
-          color: "gray.500",
+          color: "gray.700",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -187,7 +187,7 @@ export const button: RecipeConfig = {
         _disabled: {
           backgroundColor: "gray.300",
           borderColor: "gray.300",
-          color: "gray.500",
+          color: "gray.700",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -207,9 +207,9 @@ export const button: RecipeConfig = {
           borderColor: "gray.400",
         },
         _disabled: {
-          backgroundColor: "gray.100",
-          borderColor: "gray.100",
-          color: "gray.400",
+          backgroundColor: "gray.200",
+          borderColor: "gray.200",
+          color: "gray.700",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -229,9 +229,9 @@ export const button: RecipeConfig = {
           borderColor: "gray.400",
         },
         _disabled: {
-          backgroundColor: "gray.100",
-          borderColor: "gray.100",
-          color: "gray.400",
+          backgroundColor: "gray.200",
+          borderColor: "gray.200",
+          color: "gray.700",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -251,9 +251,9 @@ export const button: RecipeConfig = {
           borderColor: "gray.400",
         },
         _disabled: {
-          backgroundColor: "gray.100",
-          borderColor: "gray.100",
-          color: "gray.400",
+          backgroundColor: "gray.200",
+          borderColor: "gray.200",
+          color: "gray.700",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -275,7 +275,7 @@ export const button: RecipeConfig = {
         _disabled: {
           backgroundColor: "transparent",
           borderColor: "gray.300",
-          color: "gray.400",
+          color: "gray.600",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -297,7 +297,7 @@ export const button: RecipeConfig = {
         _disabled: {
           backgroundColor: "transparent",
           borderColor: "gray.300",
-          color: "gray.400",
+          color: "gray.600",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -319,7 +319,7 @@ export const button: RecipeConfig = {
         _disabled: {
           backgroundColor: "transparent",
           borderColor: "gray.300",
-          color: "gray.400",
+          color: "gray.600",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -347,7 +347,7 @@ export const button: RecipeConfig = {
         _disabled: {
           backgroundColor: "gray.300",
           borderColor: "gray.300",
-          color: "gray.500",
+          color: "gray.700",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -356,9 +356,9 @@ export const button: RecipeConfig = {
       variant: "danger",
       wcagLevel: "AA",
       css: {
-        backgroundColor: "red.600",
+        backgroundColor: "red.700",  // コントラスト比改善: 4.5:1以上
         color: "white",
-        borderColor: "red.600",
+        borderColor: "red.700",
         _focusVisible: {
           backgroundColor: dangerFocusStyles.AA.backgroundColor,
           outlineColor: dangerFocusStyles.AA.outlineColor,
@@ -375,7 +375,7 @@ export const button: RecipeConfig = {
         _disabled: {
           backgroundColor: "gray.300",
           borderColor: "gray.300",
-          color: "gray.500",
+          color: "gray.700",  // コントラスト比改善: 4.5:1以上
         },
       },
     },
@@ -403,7 +403,7 @@ export const button: RecipeConfig = {
         _disabled: {
           backgroundColor: "gray.300",
           borderColor: "gray.300",
-          color: "gray.500",
+          color: "gray.700",  // コントラスト比改善: 4.5:1以上
         },
       },
     },

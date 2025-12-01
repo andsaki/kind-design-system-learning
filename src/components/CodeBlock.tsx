@@ -9,7 +9,7 @@ const tokenColorClassMap = {
   selector: css({ color: 'blue.200' }),
   property: css({ color: 'blue.200' }),
   string: css({ color: 'green.200' }),
-  comment: css({ color: 'gray.500' }),
+  comment: css({ color: 'gray.400' }),  // コントラスト比改善
   keyword: css({ color: 'pink.200' }),
   value: css({ color: 'orange.200' }),
 };
@@ -292,7 +292,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
                   <span
                     aria-hidden="true"
                     className={css({
-                      color: 'gray.500',
+                      color: 'gray.400',  // コントラスト比改善
                       userSelect: 'none',
                       minWidth: '2em',
                       textAlign: 'right',

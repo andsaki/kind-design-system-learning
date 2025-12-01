@@ -23,9 +23,9 @@ import type { GetPandaSemanticToken } from "./interfaces";
 export const pandaSemanticColors: GetPandaSemanticToken<"colors"> = {
   // ブランドカラー - サイト全体で使用するプライマリカラー
   brand: {
-    primary: { value: "#2196f3" },
-    primaryLight: { value: "#64b5f6" },
-    primaryDark: { value: "#1976d2" },
+    primary: { value: "#1976d2" },  // コントラスト比改善
+    primaryLight: { value: "#1e88e5" },  // コントラスト比改善
+    primaryDark: { value: "#0d47a1" },  // コントラスト比改善
   },
 
   // 背景カラー - ライト/ダークモード対応
@@ -43,20 +43,20 @@ export const pandaSemanticColors: GetPandaSemanticToken<"colors"> = {
     primary: { value: { base: "{colors.gray.900}", _dark: "{colors.gray.100}" } },
     secondary: { value: { base: "{colors.gray.700}", _dark: "{colors.gray.200}" } },
     tertiary: { value: { base: "{colors.gray.600}", _dark: "{colors.gray.300}" } },
-    disabled: { value: { base: "{colors.gray.400}", _dark: "{colors.gray.600}" } },
+    disabled: { value: { base: "{colors.gray.600}", _dark: "{colors.gray.500}" } },  // コントラスト比改善
     inverse: { value: { base: "{colors.white}", _dark: "{colors.gray.900}" } },
-    link: { value: { base: "{colors.blue.600}", _dark: "#63b3ff" } },
-    linkHover: { value: { base: "{colors.blue.700}", _dark: "#8cc8ff" } },
-    error: { value: { base: "{colors.red.600}", _dark: "{colors.red.400}" } },
-    success: { value: { base: "{colors.green.600}", _dark: "{colors.green.400}" } },
+    link: { value: { base: "{colors.blue.700}", _dark: "#63b3ff" } },  // コントラスト比改善
+    linkHover: { value: { base: "{colors.blue.800}", _dark: "#8cc8ff" } },  // コントラスト比改善
+    error: { value: { base: "{colors.red.700}", _dark: "{colors.red.400}" } },  // コントラスト比改善
+    success: { value: { base: "{colors.green.700}", _dark: "{colors.green.400}" } },  // コントラスト比改善
     warning: { value: { base: "{colors.orange.600}", _dark: "{colors.orange.400}" } },
   },
 
   // 状態色 - 成功/警告などのアクセント
   accent: {
     primary: { value: { base: "{colors.blue.600}", _dark: "{colors.blue.400}" } },
-    success: { value: { base: "{colors.green.600}", _dark: "{colors.green.400}" } },
-    error: { value: { base: "{colors.red.600}", _dark: "{colors.red.400}" } },
+    success: { value: { base: "{colors.green.700}", _dark: "{colors.green.400}" } },  // コントラスト比改善
+    error: { value: { base: "{colors.red.700}", _dark: "{colors.red.400}" } },  // コントラスト比改善
     warn: { value: { base: "{colors.orange.600}", _dark: "{colors.orange.400}" } },
     disabled: { value: { base: "{colors.gray.400}", _dark: "{colors.gray.600}" } },
   },
@@ -87,10 +87,10 @@ export const pandaSemanticColors: GetPandaSemanticToken<"colors"> = {
   // インプットカラー - フォーム要素用
   input: {
     bg: { value: { base: "{colors.white}", _dark: "{colors.gray.800}" } },
-    bgDisabled: { value: { base: "{colors.gray.100}", _dark: "{colors.gray.700}" } },
+    bgDisabled: { value: { base: "{colors.gray.200}", _dark: "{colors.gray.700}" } },  // 背景を濃く
     text: { value: { base: "{colors.gray.900}", _dark: "{colors.gray.100}" } },
-    textDisabled: { value: { base: "{colors.gray.500}", _dark: "{colors.gray.600}" } },
-    placeholder: { value: { base: "{colors.gray.500}", _dark: "{colors.gray.500}" } },
+    textDisabled: { value: { base: "{colors.gray.700}", _dark: "{colors.gray.500}" } },  // コントラスト比改善
+    placeholder: { value: { base: "{colors.gray.600}", _dark: "{colors.gray.500}" } },  // コントラスト比改善
     border: { value: { base: "{colors.gray.300}", _dark: "{colors.gray.700}" } },
     borderHover: { value: { base: "{colors.gray.400}", _dark: "{colors.gray.600}" } },
     borderFocus: { value: "{colors.blue.500}" },

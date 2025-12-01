@@ -264,7 +264,7 @@ export default defineConfig({
       },
     },
     'input[type="checkbox"], input[type="radio"]': {
-      accentColor: "#3b82f6",
+      accentColor: "brand.primary",  // セマンティックトークンを使用
     },
     // Accordion styles
     "details[open] .accordion-icon": {

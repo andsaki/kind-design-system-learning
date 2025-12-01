@@ -14,21 +14,19 @@
 /* ライトモード */
 :root[data-theme="light"] {
   color-scheme: light;
-  color: #213547;
-  background-color: #ffffff;
+  /* Pandaのセマンティックトークンはglobalcssで適用されます */
 }
 
 /* ダークモード */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  color: #fafafa;
-  background-color: #212121;
+  /* Pandaのセマンティックトークンはglobalcssで適用されます */
 }
 
 /* チェックボックスとラジオボタンのスタイル */
 input[type="checkbox"],
 input[type="radio"] {
-  accent-color: #3b82f6;
+  accent-color: var(--colors-brand-primary);  /* Pandaトークンを使用 */
 }
 
 /* ダークモード時のフォームコントロール調整 */
@@ -40,24 +38,14 @@ input[type="radio"] {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--colors-contents-link);  /* Pandaトークンを使用 */
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--colors-contents-link-hover);  /* Pandaトークンを使用 */
 }
 
 h1 {
   font-size: 2rem;
   line-height: 1.2;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
 }
