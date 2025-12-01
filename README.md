@@ -84,7 +84,7 @@ src/
 
 ## 🎨 デザイントークンシステム
 
-Panda CSS を核に「定義 → コード生成 → 利用」のサイクルを回しています。トークンはすべて `panda-config/types/*.ts` で宣言し、`panda.config.ts` に読み込ませることで `styled-system` 配下の型安全な API に落とし込まれます。
+Panda CSS を核に「定義 → コード生成 → 利用」のサイクルを回しています。トークンはすべて `panda-config/types/*.ts` で宣言し、`panda.config.ts` に読み込ませることで `styled-system` 配下の型安全な API に落とし込まれます。導入背景や運用ルールの詳細は [ADR 002: Panda CSSユーティリティの積極活用](./docs/adr/002-panda-css-utilities.md) でまとめています。
 
 ### 3層モデル
 
@@ -187,6 +187,17 @@ export const breakpointValues = {
 
 - WCAG AA以上のコントラスト比
 - カラーブラインドネスへの配慮
+
+### カラーコントラストの実践メモ
+
+- コントラスト比は **(Lmax + 0.05) / (Lmin + 0.05)** で算出し、通常テキストは 4.5:1 以上（AA）、7:1 以上（AAA）が目標。大きなテキストは 3:1 / 4.5:1。
+- `colors.contents.*` と `colors.bg.*` は白背景基準で AA を満たす組み合わせを前提に設計しているので、基本はセマンティックトークンをそのまま使う。
+- 検証は Chrome DevTools のカラーピッカー、WebAIM Contrast Checker、axe/Lighthouse などで素早く確認できる。CI では `eslint-plugin-jsx-a11y` の `color-contrast` ルールで警告。
+
+### フォーカススタイルポリシー
+
+- すべてのインタラクティブ要素は **黄色 (#ffff00) 背景 + 黒 (#000000) アウトライン** のフォーカスリングをデフォルトにし、コントラスト比 19.56:1 で WCAG AAA を大幅に上回る視認性を確保。
+- Panda のフォーカストークン (`colors.focus.*`) を経由し、Button/Input などでは `_focusVisible` スタイルと CSS 変数で統一管理。詳細は [ADR 002](./docs/adr/002-panda-css-utilities.md) と `src/design-system/constants/accessibility.ts` を参照。
 
 ## 🧩 コンポーネント
 
