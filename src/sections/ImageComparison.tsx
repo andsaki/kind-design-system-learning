@@ -1,5 +1,5 @@
-import { css } from "@/styled-system/css";
-import { icons } from "../design-system/tokens/icons";
+import { css, cx } from "@/styled-system/css";
+import { button as buttonRecipe } from "@/styled-system/recipes";
 import {
   Table,
   TableHeader,
@@ -8,6 +8,7 @@ import {
   TableHeaderCell,
   TableCell,
 } from "../design-system/components";
+import { icons } from "../design-system/tokens/icons";
 
 export function ImageComparison() {
   const recommendationRows = [
@@ -76,6 +77,29 @@ export function ImageComparison() {
     success: css({ color: "contents.success" }),
     error: css({ color: "contents.error" }),
   };
+
+  const primaryButtonClass = buttonRecipe({ variant: "primary", size: "sm" });
+  const buttonContentClass = css({
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 2,
+    paddingLeft: 3,
+    paddingRight: 3,
+  });
+  const relativeButtonClass = css({ position: "relative" });
+  const visuallyHiddenClass = css({
+    position: "absolute",
+    width: "1px",
+    height: "1px",
+    padding: 0,
+    margin: "-1px",
+    overflow: "hidden",
+    clipPath: "inset(100%)",
+    whiteSpace: "nowrap",
+    border: 0,
+  });
+  const plusIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m-7-7h14"/></svg>`;
+  const plusIconDataUri = `data:image/svg+xml,${encodeURIComponent(plusIconSvg)}`;
 
   return (
     <section
@@ -238,26 +262,15 @@ export function ImageComparison() {
           >
             <button
               type="button"
-              className={css({
-                padding: 3,
-                backgroundColor: "brand.primary",
-                color: "white",
-                borderRadius: "base",
-                border: "none",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-                _hover: { backgroundColor: "brand.primaryDark" },
-              })}
+              className={cx(primaryButtonClass, buttonContentClass)}
             >
-              <icons.component.button
-                size={20}
-                color="white"
-                strokeWidth={2}
-                aria-hidden="true"
+              <img
+                src={plusIconDataUri}
+                alt="追加"
+                width={20}
+                height={20}
+                className={css({ display: "block" })}
               />
-              追加
             </button>
             <span className={css({ color: "contents.secondary", fontSize: "sm" })}>
               ← 実際の例（SVGアイコンを使用）
@@ -378,18 +391,7 @@ export function ImageComparison() {
           >
             <button
               type="button"
-              className={css({
-                padding: 3,
-                backgroundColor: "brand.primary",
-                color: "white",
-                borderRadius: "base",
-                border: "none",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 2,
-                _hover: { backgroundColor: "brand.primaryDark" },
-              })}
+              className={cx(primaryButtonClass, buttonContentClass)}
             >
               <svg
                 role="img"
@@ -405,7 +407,6 @@ export function ImageComparison() {
               >
                 <path d="M12 5v14m-7-7h14" />
               </svg>
-              追加
             </button>
             <span className={css({ color: "contents.secondary", fontSize: "sm" })}>
               ← 実際の例（SVGインライン）
@@ -655,14 +656,7 @@ export function ImageComparison() {
           >
             <button
               type="button"
-              style={{
-                position: "relative",
-                padding: "12px",
-                backgroundColor: "#1976d2",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
+              className={cx(primaryButtonClass, buttonContentClass, relativeButtonClass)}
             >
               <svg
                 aria-hidden="true"
@@ -670,28 +664,14 @@ export function ImageComparison() {
                 height="20"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="white"
+                stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
                 <path d="M12 5v14m-7-7h14" />
               </svg>
-              <span
-                style={{
-                  position: "absolute",
-                  width: "1px",
-                  height: "1px",
-                  padding: 0,
-                  margin: "-1px",
-                  overflow: "hidden",
-                  clipPath: "inset(100%)",
-                  whiteSpace: "nowrap",
-                  border: 0,
-                }}
-              >
-                追加
-              </span>
+              <span className={visuallyHiddenClass}>追加</span>
             </button>
             <span className={css({ color: "contents.secondary", fontSize: "sm" })}>
               ← 実際の例（visually-hidden使用）
