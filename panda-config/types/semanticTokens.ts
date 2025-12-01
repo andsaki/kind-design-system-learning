@@ -100,4 +100,41 @@ export const pandaSemanticColors: GetPandaSemanticToken<"colors"> = {
     helperText: { value: { base: "{colors.gray.600}", _dark: "{colors.gray.300}" } },
     errorText: { value: { base: "{colors.red.700}", _dark: "{colors.red.400}" } },
   },
+
+  // テーブルカラー - WCAGレベル別のコントラスト対応
+  table: {
+    // レベルA - 最低限のコントラスト
+    a: {
+      headerBg: { value: { base: "{colors.gray.200}", _dark: "{colors.gray.700}" } },
+      headerText: { value: { base: "{colors.gray.700}", _dark: "{colors.gray.100}" } },
+      bodyText: { value: { base: "{colors.gray.700}", _dark: "{colors.gray.300}" } },
+      borderColor: { value: { base: "{colors.gray.200}", _dark: "{colors.gray.800}" } },
+      hoverBg: { value: { base: "{colors.gray.100}", _dark: "{colors.gray.800}" } },
+      stripeOdd: { value: { base: "{colors.white}", _dark: "{colors.gray.900}" } },
+      stripeEven: { value: { base: "{colors.gray.50}", _dark: "{colors.gray.800}" } },
+      caption: { value: { base: "{colors.gray.600}", _dark: "{colors.gray.400}" } },
+    },
+    // レベルAA - 推奨コントラスト (4.5:1)
+    aa: {
+      headerBg: { value: { base: "{colors.gray.700}", _dark: "{colors.gray.700}" } },
+      headerText: { value: { base: "{colors.white}", _dark: "{colors.white}" } },
+      bodyText: { value: { base: "{colors.gray.900}", _dark: "{colors.gray.100}" } },
+      borderColor: { value: { base: "{colors.gray.300}", _dark: "{colors.gray.700}" } },
+      hoverBg: { value: { base: "{colors.blue.50}", _dark: "{colors.blue.900}" } },
+      stripeOdd: { value: { base: "{colors.white}", _dark: "{colors.gray.900}" } },
+      stripeEven: { value: { base: "{colors.gray.100}", _dark: "{colors.gray.800}" } },
+      caption: { value: { base: "{colors.gray.600}", _dark: "{colors.gray.300}" } },
+    },
+    // レベルAAA - 最高コントラスト (7:1)
+    aaa: {
+      headerBg: { value: { base: "{colors.gray.800}", _dark: "{colors.gray.800}" } },
+      headerText: { value: { base: "{colors.white}", _dark: "{colors.white}" } },
+      bodyText: { value: { base: "{colors.black}", _dark: "{colors.white}" } },
+      borderColor: { value: { base: "{colors.gray.400}", _dark: "{colors.gray.600}" } },
+      hoverBg: { value: { base: "{colors.yellow.100}", _dark: "{colors.yellow.900}" } },
+      stripeOdd: { value: { base: "{colors.white}", _dark: "{colors.black}" } },
+      stripeEven: { value: { base: "{colors.gray.200}", _dark: "{colors.gray.900}" } },
+      caption: { value: { base: "{colors.gray.900}", _dark: "{colors.gray.100}" } },
+    },
+  },
 };
