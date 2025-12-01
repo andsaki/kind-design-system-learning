@@ -263,6 +263,7 @@ export function ImageComparison() {
             <button
               type="button"
               className={cx(primaryButtonClass, buttonContentClass)}
+              aria-label="追加"
             >
               <img
                 src={plusIconDataUri}
@@ -392,6 +393,7 @@ export function ImageComparison() {
             <button
               type="button"
               className={cx(primaryButtonClass, buttonContentClass)}
+              aria-label="追加"
             >
               <svg
                 role="img"

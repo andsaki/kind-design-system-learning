@@ -88,7 +88,7 @@ export const TableOfContents: React.FC<TableOfContentsProps> = ({
 
   return (
     <nav className={navContainer} aria-label="目次">
-      <h2 className={titleClass}>目次</h2>
+      <p className={titleClass} role="heading" aria-level="2">目次</p>
       <ul className={listClass}>
         {items.map((item) => {
           const isActive = activeId === item.id;

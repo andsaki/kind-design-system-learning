@@ -833,9 +833,9 @@ export function ComponentDemos({
           borderStyle: "solid",
           borderColor: "border.default",
         })}>
-          <h4 className={css({ color: "contents.primary", mt: 0 })}>
+          <h3 className={css({ color: "contents.primary", mt: 0 })}>
             💡 Toastの特徴
-          </h4>
+          </h3>
           <ul className={css({ color: "contents.primary", lineHeight: "relaxed" })}>
             <li><strong>4種類のタイプ</strong>: success、error、warning、info</li>
             <li><strong>自動消去</strong>: デフォルト5秒で自動的に閉じる</li>
@@ -906,9 +906,9 @@ export function ComponentDemos({
           borderStyle: "solid",
           borderColor: "border.default",
         })}>
-          <h4 className={css({ color: "contents.primary", mt: 0 })}>
+          <h3 className={css({ color: "contents.primary", mt: 0 })}>
             💡 Modalの特徴
-          </h4>
+          </h3>
           <ul className={css({ color: "contents.primary", lineHeight: "relaxed" })}>
             <li><strong>role="dialog"</strong>: ダイアログであることを支援技術に伝える</li>
             <li><strong>aria-modal="true"</strong>: モーダルであることを明示</li>
@@ -1064,7 +1064,7 @@ export function ComponentDemos({
                 borderStyle: "solid",
                 borderColor: "border.default",
               })}>
-                <Text variant="h6" className={css({ color: "contents.primary", mb: 2 })}>
+                <Text variant="h4" className={css({ color: "contents.primary", mb: 2 })}>
                   レベルA（最低限）
                 </Text>
                 <Text variant="body-small" className={css({ color: "contents.secondary", mb: 2 })}>
@@ -1106,7 +1106,7 @@ export function ComponentDemos({
                 borderStyle: "solid",
                 borderColor: "blue.400",
               })}>
-                <Text variant="h6" className={css({ color: "blue.700", mb: 2 })}>
+                <Text variant="h4" className={css({ color: "blue.700", mb: 2 })}>
                   レベルAA（推奨）⭐
                 </Text>
                 <Text variant="body-small" className={css({ color: "contents.secondary", mb: 2 })}>
@@ -1149,7 +1149,7 @@ export function ComponentDemos({
                 borderStyle: "solid",
                 borderColor: "green.400",
               })}>
-                <Text variant="h6" className={css({ color: "green.700", mb: 2 })}>
+                <Text variant="h4" className={css({ color: "green.700", mb: 2 })}>
                   レベルAAA（最高）
                 </Text>
                 <Text variant="body-small" className={css({ color: "contents.secondary", mb: 2 })}>
