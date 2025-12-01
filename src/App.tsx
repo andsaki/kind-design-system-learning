@@ -20,6 +20,7 @@ import { ARIAGuide } from "./sections/ARIAGuide";
 import { AccessibilityFeatures } from "./sections/AccessibilityFeatures";
 import { WCAGLevels } from "./sections/WCAGLevels";
 import { DesignTokens } from "./sections/DesignTokens";
+import { ImageComparison } from "./sections/ImageComparison";
 
 const heroPrinciples = [
   {
@@ -131,6 +132,7 @@ function App() {
     { id: "accessibility-features", title: "アクセシビリティ機能" },
     { id: "wcag-levels", title: "WCAGレベルとコントラスト比" },
     { id: "design-tokens", title: "デザイントークンシステム" },
+    { id: "image-comparison", title: "ボタン内の画像比較" },
   ];
 
   const activeId = useActiveSection(tocItems);
@@ -449,6 +451,8 @@ function App() {
           <WCAGLevels />
 
           <DesignTokens />
+
+          <ImageComparison />
         </main>
       </div>
     </div>
