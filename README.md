@@ -84,154 +84,66 @@ src/
 
 ## 🎨 デザイントークンシステム
 
-### 3階層のトークン構造
+Panda CSS を核に「定義 → コード生成 → 利用」のサイクルを回しています。トークンはすべて `panda-config/types/*.ts` で宣言し、`panda.config.ts` に読み込ませることで `styled-system` 配下の型安全な API に落とし込まれます。
 
-このプロジェクトでは、保守性とスケーラビリティを高めるために3階層のトークンシステムを採用しています。
+### 3層モデル
 
-#### 1. Primitive Tokens（プリミティブトークン）
+1. **Primitive** – `panda-config/types/tokens.ts`  
+   色・余白・フォントサイズなどの数値を直接定義します。例: `colors.blue.500`, `spacing.scale[4]`, `fontSizes.base`。
 
-生の値。意味を持たない基本パーツ。
+2. **Semantic** – `panda-config/types/semanticTokens.ts`  
+   `colors.bg.primary` や `colors.border.focus` など、意味を持つ名前にマッピング。ライト/ダークで自動的に値が切り替わります。
 
-```typescript
-// 例: colors.ts
-primitive.gray[900] = "#212121";
-primitive.blue[500] = "#3b82f6";
+3. **Component** – `src/design-system/tokens/index.ts`  
+   既存の API との互換性を保つためのラッパー層。`token('colors.bg.primary')` など Panda 生成済みの値をまとめて再エクスポートしています。
+
+```ts
+import { token } from '@/styled-system/tokens';
+
+export const colors = {
+  contents: {
+    primary: token('colors.contents.primary'),
+    linkHover: token('colors.contents.linkHover'),
+  },
+  border: {
+    focus: token('colors.border.focus'),
+  },
+};
 ```
 
-#### 2. Global Tokens（グローバルトークン）⭐
+### カテゴリ別のポイント
 
-Primitiveに意味のある名前を付けたもの。アプリ全体で再利用可能。
+- **Spacing**  
+  `spacing.scale[n]` は 4px グリッド。`css({ gap: 4 })` のように数値で指定すると一貫した余白が得られます。
 
-```typescript
-// 例: tokens/index.ts
-colors.contents.primary = primitive.gray[900]
-spacing.scale[4] = 16px
-radii.borderRadius.base = 4px
-```
+- **Colors**  
+  プリミティブとセマンティックの2段構成。フォーカスリングや警告色は `colors.border.*`/`colors.contents.*` に集約し、WCAG コントラストを担保。
 
-#### 3. Component Tokens（コンポーネントトークン）
+- **Typography**  
+  rem ベースの `fontSizes`, `lineHeights`, `fontWeights` を用意。`src/design-system/constants/accessibility.ts` では WCAG の「大きいテキスト」条件を満たす最小サイズを参照できます。
 
-特定のコンポーネント専用の値。Globalトークンを組み合わせて作る。
+- **Icons** (`src/design-system/tokens/icons.ts`)  
+  lucide-react のアイコンを意味別（哲学/コンポーネント/コンセプト）に整理し、`icons.component.button` のように補完しやすくしています。
 
-```typescript
-// 例: Button.tsx
-padding: spacing.scale[3];
-borderRadius: radii.borderRadius.base;
-backgroundColor: colors.button.primary.bg;
-```
+### 運用メモ
 
-### 主なトークンカテゴリ
+- トークン値の変更は `panda-config` を更新後、`npm run prepare`（= `panda codegen`）で `styled-system` を再生成。
+- スタイルはすべて `css()` / レシピ経由でトークンを参照し、ハードコード値はプロジェクトルールで禁止。
+- `src/design-system/tokens/index.ts` のラッパーが ABI を維持するため、既存コンポーネントの import 先を張り替える必要はありません。
 
-#### 🎨 Icons（icons.ts）
+#### 📐 Breakpoints（panda-config/types/breakpoints.ts）
 
-lucide-reactを使用したアイコンシステム。
+モバイルファーストの 6 段階。Panda の `breakpoints` にそのまま渡しているため、`css({ fontSize: { base: 'sm', md: 'lg' } })` のようにオブジェクト記法で利用できます。
 
-```typescript
-// デザイン哲学
-icons.philosophy.kind; // 優しい体験（Flower2）
-icons.philosophy.inclusive; // 誰一人として置き去りにしない（HandHeart）
-icons.philosophy.pleasant; // 心地よさを感じる（Sparkles）
-icons.philosophy.scalable; // 成長し続ける（Sprout）
-
-// コンポーネント
-icons.component.button; // MousePointer2
-icons.component.input; // FileText
-icons.component.form; // ClipboardList
-icons.component.modal; // ClipboardList
-icons.component.accordion; // FolderOpen
-icons.component.toast; // Bell
-
-// コンセプト
-icons.concept.wcag; // Target
-icons.concept.designTokens; // Palette
-icons.concept.theme.light; // Sun
-icons.concept.theme.dark; // Moon
-```
-
-**なぜlucide-react？**
-
-- 見た目がかわいい（柔らかく丸みのあるデザイン）
-- アクセシビリティ親和性が高い（aria-label対応）
-- Tree-shakingで軽量（使用するアイコンのみバンドル）
-- strokeWidthをカスタマイズ可能
-
-詳しくは [ADR 001: SVGアイコンライブラリの選択](./docs/adr/001-icon-library-selection.md)
-
-関連するADR:
-
-- [ADR 002: Panda CSSユーティリティの積極活用](./docs/adr/002-panda-css-utilities.md)
-
-スタイルの書き方は [docs/style-guide.md](./docs/style-guide.md) を参照してください。
-
-#### 📏 Spacing（spacing.ts）
-
-8pxグリッドシステムを採用。
-
-```typescript
-spacing.scale[1]  = 4px   // 小さい余白
-spacing.scale[2]  = 8px
-spacing.scale[4]  = 16px  // 中程度の余白
-spacing.scale[8]  = 32px  // 大きい余白
-spacing.scale[12] = 48px  // セクション間
-```
-
-**なぜ8pxグリッド？**
-
-- 倍数で計算しやすい（2, 4でも割り切れる）
-- デザイナーとの共通言語（Figma、Sketchの標準）
-- レティナディスプレイ対応
-- 業界標準（Material Design、Ant Design等）
-
-#### 🎨 Colors（colors.ts）
-
-プリミティブカラーとセマンティックカラーの2層構造。
-
-```typescript
-// Primitive
-primitive.gray[50] 〜 primitive.gray[900]
-primitive.blue[50] 〜 primitive.blue[900]
-primitive.red[50] 〜 primitive.red[900]
-primitive.green[50] 〜 primitive.green[900]
-primitive.orange[50] 〜 primitive.orange[900]
-primitive.pink[50] 〜 primitive.pink[900]  // 優しいテーマ用
-
-// Semantic
-colors.contents.primary      // メインテキスト
-colors.background.default // 背景色
-colors.border.focus      // フォーカス時の境界線
-```
-
-#### 🔤 Typography（tokens/index.ts）
-
-rem単位を使用してアクセシビリティに配慮。
-
-```typescript
-typography.fontSize.xs   = 0.75rem  // 12px
-typography.fontSize.base = 1rem     // 16px（基準）
-typography.fontSize.xl   = 1.25rem  // 20px
-
-typography.lineHeight.tight   = 1.25   // 大見出し用
-typography.lineHeight.normal  = 1.5    // 本文用（WCAG推奨）
-typography.lineHeight.relaxed = 1.625  // 長文用
-```
-
-**なぜrem？**
-
-- ユーザーのブラウザ設定を尊重
-- アクセシビリティ向上（視覚障害者への配慮）
-- レスポンシブデザインに最適
-
-#### 📐 Breakpoints（breakpoints.ts）
-
-モバイルファースト設計のブレークポイント。
-
-```typescript
-breakpointValues.xs = 0; // スマホ（デフォルト）
-breakpointValues.sm = 640; // 大きめスマホ
-breakpointValues.md = 768; // タブレット
-breakpointValues.lg = 1024; // ノートPC
-breakpointValues.xl = 1280; // デスクトップ
-breakpointValues["2xl"] = 1536; // 大型ディスプレイ
+```ts
+export const breakpointValues = {
+  xs: 0,
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  '2xl': 1536,
+};
 ```
 
 ## ♿ アクセシビリティ機能
@@ -568,39 +480,6 @@ npm run build-storybook
 | **Breadcrumbs** | ✅ AA     | セマンティックHTML、aria-current、構造化データ対応             |
 | **Form**        | ✅ AA/AAA | 統合バリデーション、エラー管理、送信状態管理                   |
 | **CodeBlock**   | ✅ AA     | シンタックスハイライト、コピー機能、行番号表示、説明文表示     |
-
-## 📝 今後の予定
-
-### 優先度：高
-
-- [ ] **カラーパレットの刷新** - パステルカラー・低彩度の優しい配色へ
-- [ ] **マイクロインタラクション** - ホバー・クリック時の滑らかなアニメーション
-- [ ] **角丸の調整** - より大きな角丸で親しみやすいデザインに
-
-### 追加予定コンポーネント
-
-- [ ] Checkbox / Radio（ラジオボタン）
-- [ ] Tooltip（ツールチップ）
-- [ ] Tabs（タブ）
-- [ ] Select（ドロップダウン）
-- [ ] Slider（スライダー）
-- [ ] DatePicker（日付選択）
-
-### 機能強化
-
-- [ ] ダークモードの完全対応
-- [ ] reduced-motion対応（アニメーション無効化）
-- [ ] 多言語対応（i18n）
-- [ ] テーマカスタマイザー
-- [ ] Style Dictionaryとの統合検討（マルチプラットフォーム対応時）
-  - 現在はPanda CSSのトークンシステムで十分
-  - 将来的にiOS/Androidアプリ等を作る場合に検討
-
-## 🤝 コントリビューション
-
-このプロジェクトへの貢献を歓迎します！詳しくは [CONTRIBUTING.md](./CONTRIBUTING.md) をご覧ください。
-
-バグ報告や機能提案は [GitHub Issues](https://github.com/andsaki/accessibility-learning/issues) からお願いします。
 
 ## 📄 ライセンス
 

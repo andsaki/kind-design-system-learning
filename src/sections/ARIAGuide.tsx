@@ -1,6 +1,23 @@
 import { useState } from "react";
 import { css } from "@/styled-system/css";
-import { Button, Input, Accordion, AccordionSummary, AccordionContent, Breadcrumbs, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, Modal } from "../design-system/components";
+import {
+  Button,
+  Input,
+  Accordion,
+  AccordionSummary,
+  AccordionContent,
+  Breadcrumbs,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Modal,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHeaderCell,
+  TableCell,
+} from "../design-system/components";
 import { InfoBox } from "../design-system/components/InfoBox";
 import { icons } from "../design-system/tokens/icons";
 import { SectionHeading } from "../components/SectionHeading";
@@ -9,6 +26,43 @@ import { CodeBlock } from "../components/CodeBlock";
 
 export const ARIAGuide = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const ariaCurrentRows = [
+    {
+      value: "page",
+      usage: "現在表示中のページ",
+      example: "パンくずリスト、ページネーション",
+    },
+    {
+      value: "step",
+      usage: "ステップ形式の現在位置",
+      example: "フォームウィザード、チュートリアル",
+    },
+    {
+      value: "location",
+      usage: "視覚的にハイライトされた場所",
+      example: "フローチャート、サイトマップ",
+    },
+    {
+      value: "date",
+      usage: "現在選択中の日付",
+      example: "カレンダー、日付ピッカー",
+    },
+    {
+      value: "time",
+      usage: "現在選択中の時刻",
+      example: "タイムピッカー、スケジュール",
+    },
+    {
+      value: "true",
+      usage: "上記に当てはまらない現在項目",
+      example: "汎用的な「現在」の表示",
+    },
+    {
+      value: "false",
+      usage: "現在項目ではない（デフォルト）",
+      example: "通常は省略可能",
+    },
+  ];
 
   return (
     <section
@@ -314,54 +368,43 @@ export const ARIAGuide = () => {
               <h5 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary", fontSize: "base" })}>
                 📋 aria-current の値の種類
               </h5>
-              <div className={css({ overflowX: 'auto' })}>
-                <table className={css({ width: '100%', borderCollapse: 'collapse', fontSize: "sm" })}>
-                <thead>
-                  <tr className={css({ borderBottomWidth: "base", borderBottomStyle: "solid", borderBottomColor: "border.default" })}>
-                    <th className={css({ textAlign: 'left', padding: 2, color: "contents.primary" })}>値</th>
-                    <th className={css({ textAlign: 'left', padding: 2, color: "contents.primary" })}>使用場面</th>
-                    <th className={css({ textAlign: 'left', padding: 2, color: "contents.primary" })}>例</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
-                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>page</td>
-                    <td className={css({ padding: 2, color: "contents.secondary" })}>現在表示中のページ</td>
-                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>パンくずリスト、ページネーション</td>
-                  </tr>
-                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
-                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>step</td>
-                    <td className={css({ padding: 2, color: "contents.secondary" })}>ステップ形式の現在位置</td>
-                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>フォームウィザード、チュートリアル</td>
-                  </tr>
-                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
-                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>location</td>
-                    <td className={css({ padding: 2, color: "contents.secondary" })}>視覚的にハイライトされた場所</td>
-                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>フローチャート、サイトマップ</td>
-                  </tr>
-                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
-                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>date</td>
-                    <td className={css({ padding: 2, color: "contents.secondary" })}>現在選択中の日付</td>
-                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>カレンダー、日付ピッカー</td>
-                  </tr>
-                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
-                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>time</td>
-                    <td className={css({ padding: 2, color: "contents.secondary" })}>現在選択中の時刻</td>
-                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>タイムピッカー、スケジュール</td>
-                  </tr>
-                  <tr className={css({ borderBottomWidth: "thin", borderBottomStyle: "solid", borderBottomColor: "bg.tertiary" })}>
-                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>true</td>
-                    <td className={css({ padding: 2, color: "contents.secondary" })}>上記に当てはまらない現在項目</td>
-                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>汎用的な「現在」の表示</td>
-                  </tr>
-                  <tr>
-                    <td className={css({ padding: 2, fontFamily: 'fonts.mono', color: "contents.primary" })}>false</td>
-                    <td className={css({ padding: 2, color: "contents.secondary" })}>現在項目ではない（デフォルト）</td>
-                    <td className={css({ padding: 2, color: "contents.tertiary", fontSize: "xs" })}>通常は省略可能</td>
-                  </tr>
-                </tbody>
-              </table>
-              </div>
+              <Table
+                caption="aria-current の値と使用場面"
+                variant="striped"
+                size="sm"
+                wcagLevel="AA"
+                responsiveLabel="aria-currentの値一覧"
+                showColumnDividers
+              >
+                <TableHeader>
+                  <TableRow>
+                    <TableHeaderCell>値</TableHeaderCell>
+                    <TableHeaderCell>使用場面</TableHeaderCell>
+                    <TableHeaderCell>例</TableHeaderCell>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {ariaCurrentRows.map((row) => (
+                    <TableRow key={row.value}>
+                      <TableCell>
+                        <code
+                          className={css({
+                            fontFamily: "fonts.mono",
+                            fontSize: "sm",
+                            color: "contents.primary",
+                          })}
+                        >
+                          {row.value}
+                        </code>
+                      </TableCell>
+                      <TableCell>{row.usage}</TableCell>
+                      <TableCell className={css({ fontSize: "xs", color: "contents.tertiary" })}>
+                        {row.example}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
 
             <div className={css({
