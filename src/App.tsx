@@ -5,6 +5,7 @@ import { ComponentsPage } from "./pages/ComponentsPage";
 import { ARIAPropertiesPage } from "./pages/aria/ARIAPropertiesPage";
 import { ARIAGuidePage } from "./pages/aria/ARIAGuidePage";
 import { RolePresentationPage } from "./pages/aria/RolePresentationPage";
+import { FormLabelingPage } from "./pages/aria/FormLabelingPage";
 import { AccessibilityFeaturesPage } from "./pages/accessibility/AccessibilityFeaturesPage";
 import { WCAGLevelsPage } from "./pages/accessibility/WCAGLevelsPage";
 import { DesignTokensPage } from "./pages/design/DesignTokensPage";
@@ -20,6 +21,7 @@ function App() {
           <Route path="properties" element={<ARIAPropertiesPage />} />
           <Route path="guide" element={<ARIAGuidePage />} />
           <Route path="role-presentation" element={<RolePresentationPage />} />
+          <Route path="form-labeling" element={<FormLabelingPage />} />
         </Route>
         <Route path="accessibility">
           <Route path="features" element={<AccessibilityFeaturesPage />} />
