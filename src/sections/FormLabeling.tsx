@@ -821,7 +821,7 @@ export const FormLabeling = () => {
             gap: 2,
           })}
         >
-          <icons.philosophy.kind size={24} color="pink.600" strokeWidth={2} />
+          <icons.philosophy.inclusive size={24} color="pink.600" strokeWidth={2} />
           fieldset + legend + aria-invalid の組み合わせ
         </h3>
 
