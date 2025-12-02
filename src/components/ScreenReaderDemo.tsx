@@ -33,19 +33,19 @@ export const ScreenReaderDemo = ({
   return (
     <div
       className={css({
-        padding: 4,
+        padding: 6,
         backgroundColor: "bg.secondary",
         borderRadius: "md",
         borderWidth: "base",
         borderStyle: "solid",
         borderColor: "border.default",
-        marginY: 4,
+        marginY: 6,
       })}
     >
       {label && (
         <div
           className={css({
-            marginBottom: 3,
+            marginBottom: 4,
             fontSize: "sm",
             fontWeight: "semibold",
             color: "contents.secondary",
@@ -86,7 +86,7 @@ export const ScreenReaderDemo = ({
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            gap: 3,
+            gap: 4,
           })}
         >
           {description && (
@@ -96,6 +96,7 @@ export const ScreenReaderDemo = ({
                 fontSize: "sm",
                 color: "contents.secondary",
                 lineHeight: "relaxed",
+                paddingBottom: 2,
               })}
             >
               {description}
