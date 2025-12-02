@@ -4,6 +4,7 @@ import { useTheme } from "../design-system/theme";
 import { Button, Breadcrumbs, BreadcrumbList, BreadcrumbItem, BreadcrumbLink } from "../design-system/components";
 import { icons } from "../design-system/tokens/icons";
 import { Navigation } from "./Navigation";
+import { GlobalSearch } from "./GlobalSearch";
 
 export const Layout = () => {
   const { mode, toggleTheme } = useTheme();
@@ -128,6 +129,11 @@ export const Layout = () => {
               )}
             </Button>
           </div>
+        </div>
+
+        {/* グローバル検索 */}
+        <div className={css({ marginTop: 6, marginBottom: 4 })}>
+          <GlobalSearch />
         </div>
       </header>
 

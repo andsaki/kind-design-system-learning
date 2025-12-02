@@ -16,6 +16,10 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   required?: boolean;
   /** WCAGアクセシビリティレベル (A/AA/AAA) @default 'AA' */
   wcagLevel?: WCAGLevel;
+  /** クリアボタンを表示するかどうか */
+  clearable?: boolean;
+  /** クリアボタンがクリックされた時のコールバック */
+  onClear?: () => void;
 }
 
 /**
@@ -36,6 +40,9 @@ export const Input: React.FC<InputProps> = ({
   required = false,
   disabled = false,
   wcagLevel = 'AA',
+  clearable = false,
+  onClear,
+  value,
   id,
   className,
   style,
@@ -93,18 +100,66 @@ export const Input: React.FC<InputProps> = ({
         )}
       </label>
 
-      {/* 入力フィールド */}
-      <input
-        id={inputId}
-        disabled={disabled}
-        required={required}
-        aria-required={required}
-        aria-invalid={!!error}
-        aria-describedby={getAriaDescribedBy()}
-        className={cx(recipeClassName, className)}
-        style={style}
-        {...props}
-      />
+      {/* 入力フィールドのラッパー（クリアボタン用） */}
+      <div className={css({ position: 'relative' })}>
+        <input
+          id={inputId}
+          value={value}
+          disabled={disabled}
+          required={required}
+          aria-required={required}
+          aria-invalid={!!error}
+          aria-describedby={getAriaDescribedBy()}
+          className={cx(
+            recipeClassName,
+            className,
+            clearable && value ? css({ paddingRight: '40px' }) : undefined
+          )}
+          style={style}
+          {...props}
+        />
+
+        {/* クリアボタン */}
+        {clearable && value && onClear && (
+          <button
+            type="button"
+            onClick={onClear}
+            disabled={disabled}
+            aria-label="入力をクリア"
+            className={css({
+              position: 'absolute',
+              right: 2,
+              top: '50%',
+              transform: 'translateY(-50%)',
+              padding: 2,
+              backgroundColor: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              color: 'contents.secondary',
+              fontSize: 'lg',
+              lineHeight: 1,
+              borderRadius: 'sm',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              _hover: {
+                backgroundColor: 'bg.tertiary',
+                color: 'contents.primary',
+              },
+              _focus: {
+                outline: '2px solid',
+                outlineColor: 'border.focus',
+              },
+              _disabled: {
+                cursor: 'not-allowed',
+                opacity: 0.5,
+              },
+            })}
+          >
+            ✕
+          </button>
+        )}
+      </div>
 
       {/* エラーメッセージ: role="alert"で即座に読み上げ */}
       {error && (

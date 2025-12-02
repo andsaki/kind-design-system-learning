@@ -1163,16 +1163,20 @@ function ARIAComparisonDemo() {
             <strong className={css({ color: "contents.success" })}>ARIA属性あり</strong>
           </div>
 
-          <div
-            className={css({
-              padding: 3,
-              backgroundColor: "bg.secondary",
-              borderRadius: "sm",
-              marginBottom: 2,
-            })}
+          <ScreenReaderDemo
+            label="スクリーンリーダー実演"
+            description="ARIA属性が付与された要素がどのように読み上げられるか確認できます"
           >
-            {current.good.element}
-          </div>
+            <div
+              className={css({
+                padding: 3,
+                backgroundColor: "bg.secondary",
+                borderRadius: "sm",
+              })}
+            >
+              {current.good.element}
+            </div>
+          </ScreenReaderDemo>
 
           <div className={css({ marginBottom: 2 })}>
             <CodeBlock
@@ -1378,24 +1382,23 @@ function LiveRegionDemo() {
         aria-live を使うと、画面の変更をスクリーンリーダーに自動で通知できます
       </p>
 
-      <ScreenReaderDemo
-        label="スクリーンリーダー実演"
-        description="aria-live領域がどのように読み上げられるか確認できます"
-        srText={message || "通知はまだありません"}
-      >
-        <div className={css({ display: "flex", flexDirection: "column", gap: 3 })}>
-          <div className={css({ display: "flex", gap: 2, flexWrap: "wrap" })}>
-            <Button variant="primary" size="sm" onClick={() => addMessage('success')}>
-              成功メッセージ
-            </Button>
-            <Button variant="danger" size="sm" onClick={() => addMessage('error')}>
-              エラーメッセージ
-            </Button>
-            <Button variant="secondary" size="sm" onClick={() => addMessage('info')}>
-              情報メッセージ
-            </Button>
-          </div>
+      <div className={css({ display: "flex", flexDirection: "column", gap: 3 })}>
+        <div className={css({ display: "flex", gap: 2, flexWrap: "wrap" })}>
+          <Button variant="primary" size="sm" onClick={() => addMessage('success')}>
+            成功メッセージ
+          </Button>
+          <Button variant="danger" size="sm" onClick={() => addMessage('error')}>
+            エラーメッセージ
+          </Button>
+          <Button variant="secondary" size="sm" onClick={() => addMessage('info')}>
+            情報メッセージ
+          </Button>
+        </div>
 
+        <ScreenReaderDemo
+          label="スクリーンリーダー実演"
+          description="aria-live領域がどのように読み上げられるか確認できます"
+        >
           <div
             aria-live="polite"
             aria-atomic="true"
@@ -1411,18 +1414,28 @@ function LiveRegionDemo() {
               fontSize: "base",
             })}
           >
-            {message || <span className={css({ color: "contents.tertiary" })}>ボタンをクリックしてメッセージを表示</span>}
+            {message || "ボタンをクリックしてメッセージを表示"}
           </div>
-        </div>
-      </ScreenReaderDemo>
+        </ScreenReaderDemo>
+      </div>
 
       <div className={css({ marginTop: 3 })}>
         <CodeBlock
-          code={`<div
+          code={`<Button variant="primary" size="sm" onClick={() => addMessage('success')}>
+  成功メッセージ
+</Button>
+<Button variant="danger" size="sm" onClick={() => addMessage('error')}>
+  エラーメッセージ
+</Button>
+<Button variant="secondary" size="sm" onClick={() => addMessage('info')}>
+  情報メッセージ
+</Button>
+
+<div
   aria-live="polite"
   aria-atomic="true"
 >
-  {message}
+  {message || "ボタンをクリックしてメッセージを表示"}
 </div>`}
           language="jsx"
           description={`// aria-live="polite": 適切なタイミングで読み上げ
