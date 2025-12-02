@@ -302,7 +302,7 @@ export const FormLabeling = () => {
             >
               配送方法を選択
             </legend>
-            <RadioGroup name="shipping-demo" defaultValue="">
+            <RadioGroup name="shipping-demo" label="配送方法" defaultValue="">
               <Radio value="standard" label="通常配送（3-5日）" />
               <Radio value="express" label="速達配送（1-2日）" />
               <Radio value="overnight" label="翌日配送" />
@@ -476,6 +476,7 @@ export const FormLabeling = () => {
               名前
             </span>
             <Input
+              label="フルネーム"
               aria-labelledby="demo-label-1 demo-label-2"
               placeholder="山田太郎"
             />
@@ -629,6 +630,7 @@ export const FormLabeling = () => {
             </label>
             <Input
               id="demo-password"
+              label="パスワード"
               type="password"
               aria-describedby="demo-password-hint"
               placeholder="パスワードを入力"
@@ -791,6 +793,260 @@ export const FormLabeling = () => {
               language="html"
               showLineNumbers={false}
             />
+          </div>
+        </div>
+      </div>
+
+      {/* fieldset + legend + aria-invalid の実装例 */}
+      <div
+        className={css({
+          marginTop: 8,
+          padding: 6,
+          backgroundColor: "bg.secondary",
+          borderRadius: "md",
+          borderWidth: "base",
+          borderStyle: "solid",
+          borderColor: "border.default",
+        })}
+      >
+        <h3
+          className={css({
+            color: "contents.primary",
+            marginTop: 0,
+            marginBottom: 4,
+            fontSize: "xl",
+            fontWeight: "bold",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <icons.philosophy.kind size={24} color="pink.600" strokeWidth={2} />
+          fieldset + legend + aria-invalid の組み合わせ
+        </h3>
+
+        <p className={css({ color: "contents.secondary", marginBottom: 4 })}>
+          グループ化されたフォーム要素（ラジオボタンやチェックボックス）にエラー状態を適切に伝える実装例です。
+          <code className={css({ backgroundColor: "bg.primary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>
+            fieldset
+          </code>
+          全体に
+          <code className={css({ backgroundColor: "bg.primary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>
+            aria-invalid
+          </code>
+          と
+          <code className={css({ backgroundColor: "bg.primary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>
+            aria-describedby
+          </code>
+          を設定することで、グループ全体のエラー状態をスクリーンリーダーに伝えることができます。
+        </p>
+
+        {/* 実装例 */}
+        <div
+          className={css({
+            padding: 4,
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+            marginBottom: 4,
+          })}
+        >
+          <ScreenReaderDemo
+            label="スクリーンリーダー実演"
+            description="エラー状態のfieldsetがどのように読み上げられるか確認できます"
+          >
+            <fieldset
+              aria-invalid="true"
+              aria-describedby="delivery-error"
+              className={css({
+                padding: 4,
+                borderWidth: "base",
+                borderStyle: "solid",
+                borderColor: "colors.red.600",
+                borderRadius: "md",
+                backgroundColor: "colors.red.50",
+              })}
+            >
+              <legend
+                className={css({
+                  fontWeight: "bold",
+                  color: "contents.primary",
+                  paddingX: 2,
+                })}
+              >
+                配送方法を選択してください *
+              </legend>
+
+              <RadioGroup name="delivery-invalid-example" label="配送方法" defaultValue="">
+                <Radio value="standard" label="通常配送（3-5営業日）" />
+                <Radio value="express" label="速達配送（1-2営業日）" />
+                <Radio value="overnight" label="翌日配送" />
+              </RadioGroup>
+
+              <div
+                id="delivery-error"
+                role="alert"
+                aria-live="polite"
+                className={css({
+                  marginTop: 3,
+                  padding: 2,
+                  fontSize: "sm",
+                  color: "colors.red.700",
+                  backgroundColor: "colors.red.100",
+                  borderRadius: "sm",
+                  borderWidth: "thin",
+                  borderStyle: "solid",
+                  borderColor: "colors.red.300",
+                })}
+              >
+                ⚠️ 配送方法を選択してください
+              </div>
+            </fieldset>
+          </ScreenReaderDemo>
+        </div>
+
+        {/* コード例 */}
+        <div className={css({ marginTop: 4 })}>
+          <h4
+            className={css({
+              color: "contents.primary",
+              marginTop: 0,
+              marginBottom: 2,
+              fontSize: "base",
+              fontWeight: "semibold",
+            })}
+          >
+            実装コード
+          </h4>
+          <CodeBlock
+            code={`<fieldset
+  aria-invalid="true"
+  aria-describedby="delivery-error"
+  style={{
+    borderColor: 'red',
+    backgroundColor: '#fee'
+  }}
+>
+  <legend>配送方法を選択してください *</legend>
+
+  <input type="radio" id="standard" name="delivery" value="standard" />
+  <label htmlFor="standard">通常配送（3-5営業日）</label>
+
+  <input type="radio" id="express" name="delivery" value="express" />
+  <label htmlFor="express">速達配送（1-2営業日）</label>
+
+  <input type="radio" id="overnight" name="delivery" value="overnight" />
+  <label htmlFor="overnight">翌日配送</label>
+
+  <div id="delivery-error" role="alert" aria-live="polite">
+    ⚠️ 配送方法を選択してください
+  </div>
+</fieldset>
+
+{/* スクリーンリーダーの読み上げ例:
+   "配送方法を選択してください 必須 グループ 無効な入力
+    配送方法を選択してください" */}`}
+            language="jsx"
+          />
+        </div>
+
+        {/* ポイント */}
+        <InfoBox
+          variant="info"
+          title="実装のポイント"
+          className={css({ marginTop: 4 })}
+        >
+          <ul
+            className={css({
+              margin: 0,
+              paddingLeft: 5,
+              lineHeight: "relaxed",
+            })}
+          >
+            <li>
+              <strong>fieldsetにaria-invalid</strong>:
+              グループ全体がエラー状態であることを示す
+            </li>
+            <li>
+              <strong>aria-describedby</strong>:
+              エラーメッセージのIDを参照してエラー内容を伝える
+            </li>
+            <li>
+              <strong>role="alert"</strong>:
+              エラーメッセージを即座に読み上げる
+            </li>
+            <li>
+              <strong>視覚的なフィードバック</strong>:
+              赤い枠線や背景色でエラー状態を視覚的に示す
+            </li>
+            <li>
+              <strong>legendに必須マーク</strong>:
+              アスタリスク（*）で必須項目であることを明示
+            </li>
+          </ul>
+        </InfoBox>
+
+        {/* 正常状態との比較 */}
+        <div className={css({ marginTop: 4 })}>
+          <h4
+            className={css({
+              color: "contents.primary",
+              marginTop: 0,
+              marginBottom: 2,
+              fontSize: "base",
+              fontWeight: "semibold",
+            })}
+          >
+            正常状態（aria-invalid="false"）
+          </h4>
+          <div
+            className={css({
+              padding: 4,
+              backgroundColor: "bg.primary",
+              borderRadius: "md",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.default",
+            })}
+          >
+            <fieldset
+              aria-invalid="false"
+              className={css({
+                padding: 4,
+                borderWidth: "base",
+                borderStyle: "solid",
+                borderColor: "border.default",
+                borderRadius: "md",
+              })}
+            >
+              <legend
+                className={css({
+                  fontWeight: "bold",
+                  color: "contents.primary",
+                  paddingX: 2,
+                })}
+              >
+                配送方法を選択してください *
+              </legend>
+
+              <RadioGroup name="delivery-valid-example" label="配送方法" defaultValue="standard">
+                <Radio value="standard" label="通常配送（3-5営業日）" />
+                <Radio value="express" label="速達配送（1-2営業日）" />
+                <Radio value="overnight" label="翌日配送" />
+              </RadioGroup>
+
+              <p
+                className={css({
+                  marginTop: 3,
+                  fontSize: "sm",
+                  color: "contents.tertiary",
+                })}
+              >
+                選択された配送方法に応じて料金が変わります
+              </p>
+            </fieldset>
           </div>
         </div>
       </div>
