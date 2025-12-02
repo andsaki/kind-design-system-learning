@@ -14,11 +14,6 @@ const navigationItems = [
     icon: icons.component.button,
   },
   {
-    title: "Table",
-    path: "/table",
-    icon: icons.component.button,
-  },
-  {
     title: "ARIA",
     icon: icons.philosophy.inclusive,
     children: [

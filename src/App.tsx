@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { ComponentsPage } from "./pages/ComponentsPage";
-import { TablePage } from "./pages/TablePage";
 import { ARIAPropertiesPage } from "./pages/aria/ARIAPropertiesPage";
 import { ARIAGuidePage } from "./pages/aria/ARIAGuidePage";
 import { RolePresentationPage } from "./pages/aria/RolePresentationPage";
@@ -17,7 +16,6 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="components" element={<ComponentsPage />} />
-        <Route path="table" element={<TablePage />} />
         <Route path="aria">
           <Route path="properties" element={<ARIAPropertiesPage />} />
           <Route path="guide" element={<ARIAGuidePage />} />
