@@ -23,6 +23,7 @@ import { icons } from "../design-system/tokens/icons";
 import { SectionHeading } from "../components/SectionHeading";
 import { Tooltip } from "../components/Tooltip";
 import { CodeBlock } from "../components/CodeBlock";
+import { ScreenReaderDemo } from "../components/ScreenReaderDemo";
 
 export const ARIAGuide = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -253,14 +254,17 @@ export const ARIAGuide = () => {
             </p>
             <div className={css({ marginTop: 2 })}>
               <CodeBlock
-                code={`<button aria-label="メニューを開く">
-  <icons.menu />
+                code={`<button aria-label="設定を開く">
+  <SettingsIcon />
 </button>`}
                 language="html"
                 showLineNumbers={false}
               />
             </div>
-            <div className={css({ marginTop: 3, display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' })}>
+            <ScreenReaderDemo
+              label="スクリーンリーダー実演"
+              description="アイコンのみのボタンにaria-labelでラベルを追加した例です"
+            >
               <Button
                 aria-label="設定を開く"
                 icon={<icons.component.button size={16} />}
@@ -268,10 +272,7 @@ export const ARIAGuide = () => {
                 size="sm"
               >
               </Button>
-              <span className={css({ fontSize: "sm", color: "contents.tertiary" })}>
-                ← アイコンのみのボタンに aria-label を使用
-              </span>
-            </div>
+            </ScreenReaderDemo>
           </div>
 
           {/* aria-labelledby */}
@@ -290,13 +291,35 @@ export const ARIAGuide = () => {
             </p>
             <div className={css({ marginTop: 2 })}>
               <CodeBlock
-                code={`<h2 id="section-title">ユーザー設定</h2>
-<section aria-labelledby="section-title">
-  {/* セクションの内容 */}
-</section>`}
+                code={`<span id="prefix">重要な</span>
+<span id="main">お知らせ</span>
+<button aria-labelledby="prefix main">
+  詳細を見る
+</button>`}
                 language="html"
               />
             </div>
+
+            <ScreenReaderDemo
+              label="スクリーンリーダー実演"
+              description="複数の要素を参照してラベルを構成する例です"
+            >
+              <div>
+                <span id="aria-demo-prefix" className={css({ fontWeight: "bold", marginRight: 2 })}>
+                  重要な
+                </span>
+                <span id="aria-demo-main" className={css({ marginRight: 2 })}>
+                  お知らせ
+                </span>
+                <Button
+                  aria-labelledby="aria-demo-prefix aria-demo-main"
+                  variant="primary"
+                  size="sm"
+                >
+                  詳細を見る
+                </Button>
+              </div>
+            </ScreenReaderDemo>
           </div>
 
           {/* aria-describedby */}
@@ -315,7 +338,9 @@ export const ARIAGuide = () => {
             </p>
             <div className={css({ marginTop: 2 })}>
               <CodeBlock
-                code={`<input
+                code={`<label for="password">パスワード</label>
+<input
+  id="password"
   type="password"
   aria-describedby="password-hint"
 />
@@ -325,22 +350,27 @@ export const ARIAGuide = () => {
                 language="html"
               />
             </div>
-            <div className={css({ marginTop: 3 })}>
-              <Input
-                label="パスワード"
-                type="password"
-                placeholder="パスワード"
-                aria-describedby="demo-password-hint"
-              />
-              <span id="demo-password-hint" className={css({
-                display: 'block',
-                marginTop: 1,
-                fontSize: "sm",
-                color: "contents.tertiary"
-              })}>
-                8文字以上、英数字を含む
-              </span>
-            </div>
+            <ScreenReaderDemo
+              label="スクリーンリーダー実演"
+              description="aria-describedbyで補足情報を追加した例です。ラベルの後に説明文が読み上げられます"
+            >
+              <div>
+                <Input
+                  label="パスワード"
+                  type="password"
+                  placeholder="パスワード"
+                  aria-describedby="demo-password-hint"
+                />
+                <span id="demo-password-hint" className={css({
+                  display: 'block',
+                  marginTop: 1,
+                  fontSize: "sm",
+                  color: "contents.tertiary"
+                })}>
+                  8文字以上、英数字を含む
+                </span>
+              </div>
+            </ScreenReaderDemo>
           </div>
 
           {/* aria-current */}
@@ -371,7 +401,7 @@ export const ARIAGuide = () => {
               <Table
                 caption="aria-current の値と使用場面"
                 variant="striped"
-                size="sm"
+                size="md"
                 wcagLevel="AA"
                 responsiveLabel="aria-currentの値一覧"
                 showColumnDividers
@@ -1274,6 +1304,28 @@ function ScreenReaderSimulator() {
           description={`// スクリーンリーダーが読み上げる内容:
 // "ボタン" → "閉じる" → "クリック可能"`}
         />
+      </div>
+
+      <div className={css({ marginTop: 3 })}>
+        <ScreenReaderDemo
+          label="実際の音声で確認"
+          description="Web Speech APIを使って、実際にスクリーンリーダーの読み上げを聞くことができます"
+        >
+          <button
+            aria-label="閉じる"
+            className={css({
+              padding: 3,
+              borderWidth: "base", borderStyle: "solid", borderColor: "border.default",
+              borderRadius: "md",
+              backgroundColor: "bg.primary",
+              cursor: "pointer",
+              fontSize: "lg",
+              color: "contents.primary",
+            })}
+          >
+            ✕
+          </button>
+        </ScreenReaderDemo>
       </div>
     </div>
   );

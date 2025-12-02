@@ -282,7 +282,6 @@ export const FormLabeling = () => {
 
         <ScreenReaderDemo
           label="スクリーンリーダー実演"
-          srText="配送方法を選択、グループ。通常配送（3-5日）、ラジオボタン、未選択。速達配送（1-2日）、ラジオボタン、未選択。翌日配送、ラジオボタン、未選択。"
           description="fieldsetとlegendにより、グループ名が最初に読み上げられ、各ラジオボタンがグループの一部として認識されます。"
         >
           <fieldset
@@ -454,7 +453,6 @@ export const FormLabeling = () => {
 
         <ScreenReaderDemo
           label="スクリーンリーダー実演"
-          srText="ユーザー 名前、編集可能、テキスト"
           description="複数の要素（「ユーザー」と「名前」）のIDを参照して、それらのテキストを組み合わせてラベルを作成します。"
         >
           <div>
@@ -615,7 +613,6 @@ export const FormLabeling = () => {
 
         <ScreenReaderDemo
           label="スクリーンリーダー実演"
-          srText="パスワード、編集可能、パスワード、テキスト。8文字以上、英数字を含む"
           description="aria-describedbyを使って、入力フィールドにヒントテキストを関連付けます。ラベルの後に補足情報が読み上げられます。"
         >
           <div>

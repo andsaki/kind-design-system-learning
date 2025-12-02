@@ -1,13 +1,15 @@
-import { ReactNode } from "react";
+import { useRef, useState, useEffect } from "react";
+import type { ReactNode } from "react";
 import { css } from "@/styled-system/css";
 import { Button } from "../design-system/components";
 import { icons } from "../design-system/tokens/icons";
 import { useSpeech } from "../hooks/useSpeech";
+import { getAccessibleText, getFieldsetAccessibleText } from "../utils/getAccessibleText";
 
 interface ScreenReaderDemoProps {
   children: ReactNode;
-  /** スクリーンリーダーが読み上げるテキスト */
-  srText: string;
+  /** スクリーンリーダーが読み上げるテキスト（オプション、指定しない場合はDOMから自動取得） */
+  srText?: string;
   /** 説明文 */
   description?: string;
   /** 表示するコンポーネントのラベル */
@@ -21,12 +23,50 @@ export const ScreenReaderDemo = ({
   label,
 }: ScreenReaderDemoProps) => {
   const { speak, stop, isSpeaking, isSupported } = useSpeech();
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [extractedText, setExtractedText] = useState<string>("");
+
+  useEffect(() => {
+    if (!srText && contentRef.current) {
+      // DOMが完全にレンダリングされるのを待つ
+      const timer = setTimeout(() => {
+        if (!contentRef.current) return;
+
+        // DOMから実際の読み上げテキストを抽出
+        const container = contentRef.current;
+
+        // fieldsetがある場合
+        const fieldset = container.querySelector("fieldset");
+        if (fieldset) {
+          setExtractedText(getFieldsetAccessibleText(fieldset as HTMLFieldSetElement));
+          return;
+        }
+
+        // フォーム要素を探す（input, select, textarea, button）
+        const formElement = container.querySelector<HTMLElement>("input, select, textarea, button");
+        if (formElement) {
+          setExtractedText(getAccessibleText(formElement));
+          return;
+        }
+
+        // その他の要素
+        const firstChild = container.firstElementChild as HTMLElement;
+        if (firstChild) {
+          setExtractedText(getAccessibleText(firstChild));
+        }
+      }, 0);
+
+      return () => clearTimeout(timer);
+    }
+  }, [srText, children]);
+
+  const textToSpeak = srText || extractedText;
 
   const handleSpeak = () => {
     if (isSpeaking) {
       stop();
     } else {
-      speak(srText);
+      speak(textToSpeak);
     }
   };
 
@@ -67,6 +107,7 @@ export const ScreenReaderDemo = ({
       >
         {/* コンポーネント表示エリア */}
         <div
+          ref={contentRef}
           className={css({
             flex: 1,
             padding: 4,
@@ -210,7 +251,7 @@ export const ScreenReaderDemo = ({
                 borderRadius: "sm",
               })}
             >
-              "{srText}"
+              "{textToSpeak}"
             </p>
           </div>
         </div>

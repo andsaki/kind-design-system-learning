@@ -68,22 +68,37 @@ export const Radio: React.FC<RadioProps> = ({
 
 export interface RadioGroupProps {
   label: string;
+  name: string;
   children: React.ReactNode;
   error?: string;
   helpText?: string;
+  defaultValue?: string;
 }
 
 export const RadioGroup: React.FC<RadioGroupProps> = ({
   label,
+  name,
   children,
   error,
   helpText,
+  defaultValue,
 }) => {
   const groupId = React.useId();
   const errorId = `${groupId}-error`;
   const helpId = `${groupId}-help`;
 
   const describedById = error ? errorId : helpText ? helpId : undefined;
+
+  // 子要素にnameとdefaultValueを注入
+  const childrenWithProps = React.Children.map(children, (child) => {
+    if (React.isValidElement(child) && child.type === Radio) {
+      return React.cloneElement(child as React.ReactElement<RadioProps>, {
+        name,
+        defaultChecked: child.props.value === defaultValue,
+      });
+    }
+    return child;
+  });
 
   return (
     <fieldset
@@ -110,7 +125,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
         {label}
       </legend>
 
-      <div>{children}</div>
+      <div>{childrenWithProps}</div>
 
       {helpText && !error && (
         <p

@@ -355,6 +355,65 @@ const tocItems = [
 <TableOfContents items={tocItems} />;
 ```
 
+### ScreenReaderDemo
+
+スクリーンリーダーの読み上げをシミュレートする開発ツールコンポーネント。
+
+**特徴:**
+
+- **DOM自動解析**: コンポーネントからアクセシビリティ情報を自動抽出
+- **音声読み上げ**: Web Speech APIで実際の読み上げを再生
+- **視覚的フィードバック**: 読み上げテキストをリアルタイム表示
+- **完全自動**: `srText`プロップ不要、DOMから自動抽出
+
+**対応している情報:**
+
+- `aria-label` / `aria-labelledby` / `aria-describedby`
+- `<label>` 要素との関連付け
+- `<fieldset>` と `<legend>` のグループ情報
+- role属性（button, textbox, radio, checkboxなど）
+- 状態情報（checked, disabled, expandedなど）
+
+**使用例:**
+
+```tsx
+import { ScreenReaderDemo } from "./components/ScreenReaderDemo";
+
+<ScreenReaderDemo
+  label="スクリーンリーダー実演"
+  description="aria-labelledbyを使った複数要素の参照例です"
+>
+  <div>
+    <span id="label-1">ユーザー</span>
+    <span id="label-2">名前</span>
+    <input
+      aria-labelledby="label-1 label-2"
+      type="text"
+      placeholder="山田太郎"
+    />
+  </div>
+</ScreenReaderDemo>
+```
+
+**読み上げ結果例:**
+
+```
+"ユーザー 名前、編集可能、テキスト"
+```
+
+**仕組み:**
+
+1. `contentRef`でラップされた子要素のDOMを取得
+2. `getAccessibleText()`でaria属性やrole情報を解析
+3. スクリーンリーダーが実際に読み上げるテキストを構築
+4. Web Speech APIで音声合成・再生
+
+**注意点:**
+
+- 入力値（ユーザーが入力したテキスト）は読み上げ対象外（実際のスクリーンリーダーと同じ動作）
+- フォーカス時の読み上げをシミュレート（文字入力時の読み上げは非対応）
+- `fieldset`内の複数要素は順番に連結して読み上げ
+
 ## 🌓 テーマシステム
 
 ライト/ダークモード対応のテーマシステム。
