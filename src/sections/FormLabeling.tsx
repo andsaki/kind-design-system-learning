@@ -12,6 +12,7 @@ import { RadioGroup, Radio } from "../design-system/components/Radio";
 import { InfoBox } from "../design-system/components/InfoBox";
 import { icons } from "../design-system/tokens/icons";
 import { CodeBlock } from "../components/CodeBlock";
+import { ScreenReaderDemo } from "../components/ScreenReaderDemo";
 
 export const FormLabeling = () => {
   const comparisonRows = [
@@ -326,38 +327,36 @@ export const FormLabeling = () => {
           </fieldset>
         </div>
 
-        <div
-          className={css({
-            marginTop: 4,
-            padding: 3,
-            backgroundColor: "bg.secondary",
-            borderRadius: "base",
-            borderWidth: "base",
-            borderStyle: "solid",
-            borderColor: "border.success",
-          })}
+        <ScreenReaderDemo
+          label="スクリーンリーダー実演"
+          srText="配送方法を選択、グループ。通常配送（3-5日）、ラジオボタン、未選択。速達配送（1-2日）、ラジオボタン、未選択。翌日配送、ラジオボタン、未選択。"
+          description="fieldsetとlegendにより、グループ名が最初に読み上げられ、各ラジオボタンがグループの一部として認識されます。"
         >
-          <h5
+          <fieldset
             className={css({
-              marginTop: 0,
-              marginBottom: 2,
-              color: "contents.primary",
-              fontSize: "base",
+              borderWidth: "base",
+              borderStyle: "solid",
+              borderColor: "border.default",
+              borderRadius: "md",
+              padding: 4,
             })}
           >
-            ✅ スクリーンリーダーでの読み上げ
-          </h5>
-          <p
-            className={css({
-              color: "contents.primary",
-              margin: 0,
-              lineHeight: "relaxed",
-              fontStyle: "italic",
-            })}
-          >
-            "配送方法を選択、グループ。通常配送（3-5日）、ラジオボタン、未選択"
-          </p>
-        </div>
+            <legend
+              className={css({
+                color: "contents.primary",
+                fontWeight: "semibold",
+                paddingX: 2,
+              })}
+            >
+              配送方法を選択
+            </legend>
+            <RadioGroup name="shipping-demo-2" defaultValue="">
+              <Radio value="standard" label="通常配送（3-5日）" />
+              <Radio value="express" label="速達配送（1-2日）" />
+              <Radio value="overnight" label="翌日配送" />
+            </RadioGroup>
+          </fieldset>
+        </ScreenReaderDemo>
       </div>
 
       {/* aria-labelledby */}
@@ -500,51 +499,37 @@ export const FormLabeling = () => {
           />
         </div>
 
-        <div
-          className={css({
-            marginTop: 4,
-            padding: 4,
-            backgroundColor: "bg.primary",
-            borderRadius: "md",
-            borderWidth: "thin",
-            borderStyle: "solid",
-            borderColor: "border.default",
-          })}
+        <ScreenReaderDemo
+          label="スクリーンリーダー実演"
+          srText="ユーザー 名前、編集可能、テキスト"
+          description="複数の要素（「ユーザー」と「名前」）のIDを参照して、それらのテキストを組み合わせてラベルを作成します。"
         >
-          <h5
-            className={css({
-              marginTop: 0,
-              marginBottom: 3,
-              color: "contents.primary",
-              fontSize: "base",
-            })}
-          >
-            実例
-          </h5>
-          <span
-            id="demo-label-1"
-            className={css({
-              color: "contents.primary",
-              fontWeight: "semibold",
-              marginRight: 2,
-            })}
-          >
-            ユーザー
-          </span>
-          <span
-            id="demo-label-2"
-            className={css({
-              color: "contents.secondary",
-              marginRight: 2,
-            })}
-          >
-            名前
-          </span>
-          <Input
-            aria-labelledby="demo-label-1 demo-label-2"
-            placeholder="山田太郎"
-          />
-        </div>
+          <div>
+            <span
+              id="demo-label-1"
+              className={css({
+                color: "contents.primary",
+                fontWeight: "semibold",
+                marginRight: 2,
+              })}
+            >
+              ユーザー
+            </span>
+            <span
+              id="demo-label-2"
+              className={css({
+                color: "contents.secondary",
+                marginRight: 2,
+              })}
+            >
+              名前
+            </span>
+            <Input
+              aria-labelledby="demo-label-1 demo-label-2"
+              placeholder="山田太郎"
+            />
+          </div>
+        </ScreenReaderDemo>
       </div>
 
       {/* aria-describedby */}
@@ -675,27 +660,11 @@ export const FormLabeling = () => {
           />
         </div>
 
-        <div
-          className={css({
-            marginTop: 4,
-            padding: 4,
-            backgroundColor: "bg.primary",
-            borderRadius: "md",
-            borderWidth: "thin",
-            borderStyle: "solid",
-            borderColor: "border.default",
-          })}
+        <ScreenReaderDemo
+          label="スクリーンリーダー実演"
+          srText="パスワード、編集可能、パスワード、テキスト。8文字以上、英数字を含む"
+          description="aria-describedbyを使って、入力フィールドにヒントテキストを関連付けます。ラベルの後に補足情報が読み上げられます。"
         >
-          <h5
-            className={css({
-              marginTop: 0,
-              marginBottom: 3,
-              color: "contents.primary",
-              fontSize: "base",
-            })}
-          >
-            実例：ヒント付き入力フィールド
-          </h5>
           <div>
             <label
               htmlFor="demo-password"
@@ -726,7 +695,7 @@ export const FormLabeling = () => {
               8文字以上、英数字を含む
             </span>
           </div>
-        </div>
+        </ScreenReaderDemo>
 
         <div className={css({ marginTop: 4 })}>
           <h4
