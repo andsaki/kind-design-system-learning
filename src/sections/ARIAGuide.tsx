@@ -91,7 +91,7 @@ export const ARIAGuide = () => {
         alignItems: 'center',
         gap: 2
       })}>
-        <icons.philosophy.inclusive size={28} color={"pink.600"} strokeWidth={2} />
+        <icons.philosophy.inclusive size={28} color="currentColor" strokeWidth={2} />
         ARIAラベルとrole属性ガイド
       </h2>
       <p className={css({ color: "contents.secondary", marginBottom: 6 })}>

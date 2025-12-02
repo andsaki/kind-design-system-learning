@@ -76,7 +76,7 @@ export const FormLabeling = () => {
       >
         <icons.philosophy.inclusive
           size={28}
-          color={"pink.600"}
+          color="currentColor"
           strokeWidth={2}
         />
         フォームのラベリング完全ガイド
@@ -197,7 +197,7 @@ export const FormLabeling = () => {
             gap: 2,
           })}
         >
-          <icons.concept.wcag size={24} color={"blue.600"} strokeWidth={2} />
+          <icons.concept.wcag size={24} color="currentColor" strokeWidth={2} />
           fieldset と legend
         </h3>
 
@@ -336,7 +336,7 @@ export const FormLabeling = () => {
             gap: 2,
           })}
         >
-          <icons.concept.wcag size={24} color={"blue.600"} strokeWidth={2} />
+          <icons.concept.wcag size={24} color="currentColor" strokeWidth={2} />
           aria-labelledby
         </h3>
 
@@ -509,7 +509,7 @@ export const FormLabeling = () => {
             gap: 2,
           })}
         >
-          <icons.concept.wcag size={24} color={"blue.600"} strokeWidth={2} />
+          <icons.concept.wcag size={24} color="currentColor" strokeWidth={2} />
           aria-describedby
         </h3>
 
@@ -821,7 +821,7 @@ export const FormLabeling = () => {
             gap: 2,
           })}
         >
-          <icons.philosophy.inclusive size={24} color="pink.600" strokeWidth={2} />
+          <icons.philosophy.inclusive size={24} color="currentColor" strokeWidth={2} />
           fieldset + legend + aria-invalid の組み合わせ
         </h3>
 
