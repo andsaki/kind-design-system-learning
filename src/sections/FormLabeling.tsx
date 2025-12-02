@@ -319,9 +319,9 @@ export const FormLabeling = () => {
               配送方法を選択
             </legend>
             <RadioGroup name="shipping-demo" defaultValue="">
-              <Radio value="standard">通常配送（3-5日）</Radio>
-              <Radio value="express">速達配送（1-2日）</Radio>
-              <Radio value="overnight">翌日配送</Radio>
+              <Radio value="standard" label="通常配送（3-5日）" />
+              <Radio value="express" label="速達配送（1-2日）" />
+              <Radio value="overnight" label="翌日配送" />
             </RadioGroup>
           </fieldset>
         </div>
