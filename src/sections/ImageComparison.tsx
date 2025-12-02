@@ -971,9 +971,10 @@ export function ImageComparison() {
             <Table
               caption="aria-hidden と視覚的な非表示の違い"
               variant="striped"
-              size="sm"
+              size="md"
               wcagLevel="AA"
               responsiveLabel="aria-hiddenと視覚表示の比較表"
+              showColumnDividers
             >
               <TableHeader>
                 <TableRow>

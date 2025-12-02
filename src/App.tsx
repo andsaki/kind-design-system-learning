@@ -23,6 +23,7 @@ import { useTheme } from "./design-system/theme";
 import { ComponentDemos } from "./sections/ComponentDemos";
 import { ARIAProperties } from "./sections/ARIAProperties";
 import { ARIAGuide } from "./sections/ARIAGuide";
+import { RolePresentation } from "./sections/RolePresentation";
 import { AccessibilityFeatures } from "./sections/AccessibilityFeatures";
 import { WCAGLevels } from "./sections/WCAGLevels";
 import { DesignTokens } from "./sections/DesignTokens";
@@ -182,6 +183,7 @@ function App() {
     { id: "table-component", title: "Tableコンポーネント" },
     { id: "aria-properties", title: "WAI-ARIA主要プロパティ" },
     { id: "aria-guide", title: "ARIAラベルとrole属性" },
+    { id: "role-presentation", title: "role=\"presentation\"" },
     { id: "accessibility-features", title: "アクセシビリティ機能" },
     { id: "wcag-levels", title: "WCAGレベルとコントラスト比" },
     { id: "design-tokens", title: "デザイントークンシステム" },
@@ -636,6 +638,8 @@ function App() {
           <ARIAProperties />
 
           <ARIAGuide />
+
+          <RolePresentation />
 
           <AccessibilityFeatures />
 
