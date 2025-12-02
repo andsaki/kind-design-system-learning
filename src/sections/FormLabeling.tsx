@@ -1051,6 +1051,319 @@ export const FormLabeling = () => {
         </div>
       </div>
 
+      {/* 高度な組み合わせ例 */}
+      <div
+        className={css({
+          marginTop: 8,
+          padding: 6,
+          backgroundColor: "bg.secondary",
+          borderRadius: "md",
+          borderWidth: "base",
+          borderStyle: "solid",
+          borderColor: "border.default",
+        })}
+      >
+        <h3
+          className={css({
+            color: "contents.primary",
+            marginTop: 0,
+            marginBottom: 4,
+            fontSize: "xl",
+            fontWeight: "bold",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <icons.philosophy.inclusive size={24} color="currentColor" strokeWidth={2} />
+          高度な組み合わせ：RadioGroup + すべてのARIA属性
+        </h3>
+
+        <p className={css({ color: "contents.secondary", marginBottom: 4 })}>
+          <code className={css({ backgroundColor: "bg.primary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>
+            aria-labelledby
+          </code>
+          、
+          <code className={css({ backgroundColor: "bg.primary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>
+            aria-describedby
+          </code>
+          、
+          <code className={css({ backgroundColor: "bg.primary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>
+            aria-invalid
+          </code>
+          、
+          <code className={css({ backgroundColor: "bg.primary", paddingY: 1, paddingX: 2, borderRadius: "sm" })}>
+            role="radiogroup"
+          </code>
+          をすべて組み合わせた実践的な例です。
+        </p>
+
+        {/* 実装例 */}
+        <div
+          className={css({
+            padding: 4,
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+            marginBottom: 4,
+          })}
+        >
+          <ScreenReaderDemo
+            label="スクリーンリーダー実演"
+            description="すべてのARIA属性を組み合わせることで、グループの名前、説明、エラー状態がすべてスクリーンリーダーに伝わります"
+          >
+            <div>
+              {/* グループのタイトルと説明 */}
+              <h4
+                id="payment-method-title"
+                className={css({
+                  fontSize: "base",
+                  fontWeight: "bold",
+                  color: "contents.primary",
+                  marginTop: 0,
+                  marginBottom: 2,
+                })}
+              >
+                お支払い方法 *
+              </h4>
+              <p
+                id="payment-method-description"
+                className={css({
+                  fontSize: "sm",
+                  color: "contents.secondary",
+                  marginBottom: 3,
+                })}
+              >
+                ご希望のお支払い方法を選択してください。選択後、詳細情報の入力画面に進みます。
+              </p>
+
+              {/* RadioGroup with all ARIA attributes */}
+              <div
+                role="radiogroup"
+                aria-labelledby="payment-method-title"
+                aria-describedby="payment-method-description payment-method-error"
+                aria-invalid="true"
+                aria-required="true"
+                className={css({
+                  padding: 4,
+                  borderWidth: "base",
+                  borderStyle: "solid",
+                  borderColor: "colors.red.600",
+                  borderRadius: "md",
+                  backgroundColor: "colors.red.50",
+                })}
+              >
+                <RadioGroup name="payment-advanced-example" label="お支払い方法" defaultValue="">
+                  <Radio value="credit" label="クレジットカード（手数料無料）" />
+                  <Radio value="bank" label="銀行振込（手数料 ¥200）" />
+                  <Radio value="convenience" label="コンビニ決済（手数料 ¥150）" />
+                  <Radio value="cod" label="代金引換（手数料 ¥300）" />
+                </RadioGroup>
+
+                {/* エラーメッセージ */}
+                <div
+                  id="payment-method-error"
+                  role="alert"
+                  aria-live="polite"
+                  className={css({
+                    marginTop: 3,
+                    padding: 2,
+                    fontSize: "sm",
+                    color: "colors.red.700",
+                    backgroundColor: "colors.red.100",
+                    borderRadius: "sm",
+                    borderWidth: "thin",
+                    borderStyle: "solid",
+                    borderColor: "colors.red.300",
+                  })}
+                >
+                  ⚠️ お支払い方法を選択してください
+                </div>
+              </div>
+            </div>
+          </ScreenReaderDemo>
+        </div>
+
+        {/* コード例 */}
+        <div className={css({ marginTop: 4 })}>
+          <h4
+            className={css({
+              color: "contents.primary",
+              marginTop: 0,
+              marginBottom: 2,
+              fontSize: "base",
+              fontWeight: "semibold",
+            })}
+          >
+            実装コード
+          </h4>
+          <CodeBlock
+            code={`<!-- グループのタイトルと説明 -->
+<h4 id="payment-method-title">お支払い方法 *</h4>
+<p id="payment-method-description">
+  ご希望のお支払い方法を選択してください。
+  選択後、詳細情報の入力画面に進みます。
+</p>
+
+<!-- RadioGroup with all ARIA attributes -->
+<div
+  role="radiogroup"
+  aria-labelledby="payment-method-title"
+  aria-describedby="payment-method-description payment-method-error"
+  aria-invalid="true"
+  aria-required="true"
+>
+  <input type="radio" id="credit" name="payment" value="credit" />
+  <label htmlFor="credit">クレジットカード（手数料無料）</label>
+
+  <input type="radio" id="bank" name="payment" value="bank" />
+  <label htmlFor="bank">銀行振込（手数料 ¥200）</label>
+
+  <input type="radio" id="convenience" name="payment" value="convenience" />
+  <label htmlFor="convenience">コンビニ決済（手数料 ¥150）</label>
+
+  <input type="radio" id="cod" name="payment" value="cod" />
+  <label htmlFor="cod">代金引換（手数料 ¥300）</label>
+
+  <!-- エラーメッセージ -->
+  <div id="payment-method-error" role="alert" aria-live="polite">
+    ⚠️ お支払い方法を選択してください
+  </div>
+</div>
+
+<!-- スクリーンリーダーの読み上げ例:
+     "お支払い方法 必須 ラジオグループ 無効な入力
+      ご希望のお支払い方法を選択してください。選択後、詳細情報の入力画面に進みます。
+      お支払い方法を選択してください" -->`}
+            language="html"
+          />
+        </div>
+
+        {/* 各属性の役割 */}
+        <InfoBox
+          variant="info"
+          title="各ARIA属性の役割"
+          className={css({ marginTop: 4 })}
+        >
+          <ul
+            className={css({
+              margin: 0,
+              paddingLeft: 5,
+              lineHeight: "relaxed",
+            })}
+          >
+            <li>
+              <strong>role="radiogroup"</strong>:
+              ラジオボタンのグループであることを明示
+            </li>
+            <li>
+              <strong>aria-labelledby</strong>:
+              グループの名前を指定（"お支払い方法 *"）
+            </li>
+            <li>
+              <strong>aria-describedby</strong>:
+              グループの説明とエラーメッセージを関連付け（複数ID指定）
+            </li>
+            <li>
+              <strong>aria-invalid="true"</strong>:
+              グループ全体がエラー状態であることを示す
+            </li>
+            <li>
+              <strong>aria-required="true"</strong>:
+              必須項目であることを明示
+            </li>
+            <li>
+              <strong>role="alert" + aria-live="polite"</strong>:
+              エラーメッセージをスクリーンリーダーに即座に通知
+            </li>
+          </ul>
+        </InfoBox>
+
+        {/* 正常状態との比較 */}
+        <div className={css({ marginTop: 4 })}>
+          <h4
+            className={css({
+              color: "contents.primary",
+              marginTop: 0,
+              marginBottom: 2,
+              fontSize: "base",
+              fontWeight: "semibold",
+            })}
+          >
+            正常状態（aria-invalid="false"）
+          </h4>
+          <div
+            className={css({
+              padding: 4,
+              backgroundColor: "bg.primary",
+              borderRadius: "md",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.default",
+            })}
+          >
+            <div>
+              <h4
+                id="payment-method-title-valid"
+                className={css({
+                  fontSize: "base",
+                  fontWeight: "bold",
+                  color: "contents.primary",
+                  marginTop: 0,
+                  marginBottom: 2,
+                })}
+              >
+                お支払い方法 *
+              </h4>
+              <p
+                id="payment-method-description-valid"
+                className={css({
+                  fontSize: "sm",
+                  color: "contents.secondary",
+                  marginBottom: 3,
+                })}
+              >
+                ご希望のお支払い方法を選択してください。選択後、詳細情報の入力画面に進みます。
+              </p>
+
+              <div
+                role="radiogroup"
+                aria-labelledby="payment-method-title-valid"
+                aria-describedby="payment-method-description-valid"
+                aria-invalid="false"
+                aria-required="true"
+                className={css({
+                  padding: 4,
+                  borderWidth: "base",
+                  borderStyle: "solid",
+                  borderColor: "border.default",
+                  borderRadius: "md",
+                })}
+              >
+                <RadioGroup name="payment-valid-example" label="お支払い方法" defaultValue="credit">
+                  <Radio value="credit" label="クレジットカード（手数料無料）" />
+                  <Radio value="bank" label="銀行振込（手数料 ¥200）" />
+                  <Radio value="convenience" label="コンビニ決済（手数料 ¥150）" />
+                  <Radio value="cod" label="代金引換（手数料 ¥300）" />
+                </RadioGroup>
+
+                <p
+                  className={css({
+                    marginTop: 3,
+                    fontSize: "sm",
+                    color: "colors.green.700",
+                  })}
+                >
+                  ✓ クレジットカードが選択されています
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* まとめ */}
       <div
         className={css({
@@ -1083,11 +1396,19 @@ export const FormLabeling = () => {
           </li>
           <li>
             <strong>aria-describedby</strong>:
-            補足情報やエラーメッセージを関連付け
+            補足情報やエラーメッセージを関連付け（複数ID指定可能）
+          </li>
+          <li>
+            <strong>role="radiogroup"</strong>:
+            ラジオボタングループの明示的な役割指定
+          </li>
+          <li>
+            <strong>aria-invalid</strong>:
+            エラー状態の明示（個別要素にもグループ全体にも使用可能）
           </li>
           <li>
             <strong>組み合わせ使用</strong>:
-            これらの手法は組み合わせて使用可能
+            これらの手法は組み合わせて使用可能で、より豊富な情報をスクリーンリーダーに提供
           </li>
           <li>
             <strong>優先順位</strong>: aria-labelledby &gt; aria-label &gt;
