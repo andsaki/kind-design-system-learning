@@ -1,8 +1,10 @@
+import { useId, useState } from "react";
 import { Button, Accordion, AccordionSummary, AccordionContent } from "../design-system/components";
 import { CodeBlock } from "../components/CodeBlock";
 import { icons } from "../design-system/tokens";
 import { css, cx } from "@/styled-system/css";
 import { token } from "@/styled-system/tokens";
+import { ScreenReaderDemo } from "../components/ScreenReaderDemo";
 
 const sectionClass = css({
   mb: 12,
@@ -238,24 +240,6 @@ const paragraphClass = css({
   mb: 3,
 });
 
-const demoContainerClass = css({
-  mt: 4,
-  display: "flex",
-  flexDirection: "column",
-  gap: 2,
-  alignItems: "flex-start",
-  md: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 3,
-  },
-});
-
-const demoLabelClass = css({
-  fontSize: "sm",
-  color: "contents.secondary",
-});
-
 const tipBoxClass = css({
   p: 3,
   bg: {
@@ -385,6 +369,17 @@ const emojiClass = css({
 });
 
 export const ARIAProperties = () => {
+  const [isExpandedDemoOpen, setIsExpandedDemoOpen] = useState(false);
+  const labelledbyBaseId = useId();
+  const describedbyBaseId = useId();
+  const expandedBaseId = useId();
+
+  const labelledbyPrefixId = `${labelledbyBaseId}-prefix`;
+  const labelledbyMainId = `${labelledbyBaseId}-main`;
+  const describedbyInputId = `${describedbyBaseId}-input`;
+  const describedbyHintId = `${describedbyBaseId}-hint`;
+  const describedbyErrorId = `${describedbyBaseId}-error`;
+  const expandedPanelId = `${expandedBaseId}-content`;
 
   return (
     <section
@@ -433,16 +428,28 @@ export const ARIAProperties = () => {
               description="スクリーンリーダーの読み上げ: 「閉じる ボタン」"
             />
 
-            <div className={demoContainerClass}>
-              <Button
-                aria-label="設定を開く"
-                icon={<icons.component.button size={16} />}
-                variant="outline"
-                size="sm"
-              />
-              <span className={demoLabelClass}>
-                ← aria-label="設定を開く" を使用
-              </span>
+            <div className={css({ mt: 4 })}>
+              <ScreenReaderDemo
+                label="スクリーンリーダー実演"
+                description="aria-labelでアイコンボタンにラベルを付与した例です"
+              >
+                <Button
+                  aria-label="設定を開く"
+                  icon={<icons.component.button size={16} />}
+                  variant="outline"
+                  size="sm"
+                />
+              </ScreenReaderDemo>
+              <p
+                className={css({
+                  margin: 0,
+                  marginTop: 2,
+                  fontSize: "sm",
+                  color: "contents.secondary",
+                })}
+              >
+                アイコンのみのボタンは aria-label で目的を伝えます
+              </p>
             </div>
           </div>
 
@@ -469,6 +476,40 @@ export const ARIAProperties = () => {
               language="html"
               description="モーダルのタイトル参照、セクション見出しとの関連付けに使用"
             />
+
+            <div className={css({ mt: 4 })}>
+              <ScreenReaderDemo
+                label="スクリーンリーダー実演"
+                description="複数の要素を参照してボタンのラベルを構成しています"
+              >
+                <div
+                  className={css({
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 3,
+                  })}
+                >
+                  <div className={css({ display: "flex", gap: 2 })}>
+                    <span
+                      id={labelledbyPrefixId}
+                      className={css({ fontWeight: "bold" })}
+                    >
+                      重要な
+                    </span>
+                    <span id={labelledbyMainId}>
+                      お知らせ
+                    </span>
+                  </div>
+                  <Button
+                    aria-labelledby={`${labelledbyPrefixId} ${labelledbyMainId}`}
+                    variant="primary"
+                    size="sm"
+                  >
+                    詳細を見る
+                  </Button>
+                </div>
+              </ScreenReaderDemo>
+            </div>
           </div>
 
           <div className={tipBoxClass}>
@@ -617,6 +658,67 @@ export const ARIAProperties = () => {
 </span>`}
               language="html"
             />
+
+            <div className={css({ mt: 4 })}>
+              <ScreenReaderDemo
+                label="スクリーンリーダー実演"
+                description="aria-describedbyでヘルプテキストとエラーを関連付けた入力欄です"
+              >
+                <div
+                  className={css({
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                  })}
+                >
+                  <label
+                    htmlFor={describedbyInputId}
+                    className={css({
+                      fontWeight: "semibold",
+                      color: "contents.primary",
+                    })}
+                  >
+                    メールアドレス
+                  </label>
+                  <input
+                    id={describedbyInputId}
+                    type="email"
+                    aria-invalid="true"
+                    aria-describedby={`${describedbyHintId} ${describedbyErrorId}`}
+                    className={css({
+                      paddingY: 2,
+                      paddingX: 3,
+                      borderRadius: "sm",
+                      borderWidth: "thin",
+                      borderStyle: "solid",
+                      borderColor: "border.default",
+                      fontSize: "sm",
+                    })}
+                    placeholder="example@example.com"
+                  />
+                  <span
+                    id={describedbyHintId}
+                    className={css({
+                      fontSize: "sm",
+                      color: "contents.secondary",
+                    })}
+                  >
+                    会社のメールアドレスを入力してください
+                  </span>
+                  <span
+                    id={describedbyErrorId}
+                    role="alert"
+                    className={css({
+                      fontSize: "sm",
+                      color: "contents.error",
+                      fontWeight: "semibold",
+                    })}
+                  >
+                    無効なメールアドレスです
+                  </span>
+                </div>
+              </ScreenReaderDemo>
+            </div>
           </div>
 
           {/* スクリーンリーダーの読み上げ比較 */}
@@ -687,6 +789,73 @@ export const ARIAProperties = () => {
 </div>`}
               language="tsx"
             />
+
+            <div className={css({ mt: 4 })}>
+              <ScreenReaderDemo
+                label="スクリーンリーダー実演"
+                description="aria-expandedでボタンの展開状態を伝えるシンプルな例です"
+                srText={`詳細設定 ボタン ${
+                  isExpandedDemoOpen ? "展開されています" : "折りたたまれています"
+                }`}
+              >
+                <div
+                  className={css({
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 3,
+                  })}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={isExpandedDemoOpen}
+                    aria-controls={expandedPanelId}
+                    onClick={() => setIsExpandedDemoOpen((prev) => !prev)}
+                    className={css({
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                      paddingY: 3,
+                      paddingX: 4,
+                      borderRadius: "md",
+                      borderWidth: "thin",
+                      borderStyle: "solid",
+                      borderColor: "border.default",
+                      backgroundColor: "bg.primary",
+                      fontSize: "sm",
+                      fontWeight: "semibold",
+                    })}
+                  >
+                    <span>詳細設定</span>
+                    <span aria-hidden="true">
+                      {isExpandedDemoOpen ? "▲" : "▼"}
+                    </span>
+                  </button>
+                  <div
+                    id={expandedPanelId}
+                    className={css({
+                      borderWidth: "thin",
+                      borderStyle: "solid",
+                      borderColor: "border.default",
+                      borderRadius: "md",
+                      padding: 3,
+                      backgroundColor: "bg.secondary",
+                    })}
+                    hidden={!isExpandedDemoOpen}
+                  >
+                    <p
+                      className={css({
+                        margin: 0,
+                        fontSize: "sm",
+                        color: "contents.secondary",
+                      })}
+                    >
+                      ここに追加の設定内容が表示されます。
+                    </p>
+                  </div>
+                </div>
+              </ScreenReaderDemo>
+            </div>
 
             <div className={infoBoxOrangeClass}>
               <strong className={css({ color: { base: token("colors.orange.900"), _dark: token("colors.orange.100") } })}>値の種類:</strong>

@@ -853,12 +853,38 @@ export const ARIAGuide = () => {
           📚 このデザインシステムで使用しているARIA属性
         </h4>
         <ul className={css({ color: "contents.primary", lineHeight: "relaxed" })}>
-          <li><strong>Button</strong>: aria-busy (ローディング状態)</li>
-          <li><strong>Input</strong>: aria-invalid, aria-describedby (エラー表示)</li>
-          <li><strong>Modal</strong>: role="dialog", aria-modal, aria-labelledby</li>
-          <li><strong>Accordion</strong>: aria-expanded, aria-controls</li>
-          <li><strong>Breadcrumbs</strong>: aria-label, aria-current</li>
-          <li><strong>Toast</strong>: role="alert", role="status"</li>
+          <li>
+            <strong>Button</strong>: <code>aria-busy</code> / <code>aria-disabled</code> でロード状態を伝達、
+            スピナーには <code>role="status"</code>、装飾アイコンは <code>aria-hidden</code>
+          </li>
+          <li>
+            <strong>Input / TextArea</strong>: <code>aria-required</code>、<code>aria-invalid</code>、
+            <code>aria-describedby</code>、エラー表示は <code>role="alert"</code> + <code>aria-live="polite"</code>
+          </li>
+          <li>
+            <strong>Select / Dropdown</strong>: <code>aria-haspopup="listbox"</code>、<code>aria-expanded</code>、
+            <code>aria-labelledby</code>、各オプションに <code>role="option"</code> と <code>aria-selected</code>
+          </li>
+          <li>
+            <strong>Modal</strong>: <code>role="dialog"</code>、<code>aria-modal="true"</code>、
+            <code>aria-labelledby</code> / <code>aria-describedby</code> でタイトルと本文を関連付け
+          </li>
+          <li>
+            <strong>Accordion</strong>: トリガーに <code>aria-expanded</code> と <code>aria-controls</code>、
+            パネルに <code>id</code> を付与して状態を同期
+          </li>
+          <li>
+            <strong>Breadcrumbs</strong>: ナビゲーションに <code>aria-label</code>、
+            現在ページに <code>aria-current="page"</code>、区切りアイコンは <code>aria-hidden</code>
+          </li>
+          <li>
+            <strong>Toast / 通知</strong>: <code>role="alert"</code>、<code>aria-live="polite"</code>、
+            <code>aria-atomic="true"</code>、閉じるボタンは <code>aria-label</code> 付き
+          </li>
+          <li>
+            <strong>Loading</strong>: <code>role="status"</code> ＋ <code>aria-live="polite"</code> で進捗を共有、
+            ラベルのないスピナーは <code>aria-label</code> で補足
+          </li>
         </ul>
       </div>
     </section>
@@ -1103,20 +1129,6 @@ function ARIAComparisonDemo() {
 
           <div
             className={css({
-              padding: 2,
-              backgroundColor: "bg.secondary",
-              borderRadius: "sm",
-              fontSize: "sm",
-            })}
-          >
-            <strong className={css({ color: "contents.primary" })}>スクリーンリーダー:</strong>
-            <div className={css({ marginTop: 1, color: "contents.secondary", fontStyle: "italic" })}>
-              "{current.bad.screenReader}"
-            </div>
-          </div>
-
-          <div
-            className={css({
               marginTop: 2,
               padding: 2,
               backgroundColor: "bg.secondary",
@@ -1172,20 +1184,6 @@ function ARIAComparisonDemo() {
 
           <div
             className={css({
-              padding: 2,
-              backgroundColor: "bg.secondary",
-              borderRadius: "sm",
-              fontSize: "sm",
-            })}
-          >
-            <strong className={css({ color: "contents.primary" })}>スクリーンリーダー:</strong>
-            <div className={css({ marginTop: 1, color: "contents.secondary", fontStyle: "italic" })}>
-              "{current.good.screenReader}"
-            </div>
-          </div>
-
-          <div
-            className={css({
               marginTop: 2,
               padding: 2,
               backgroundColor: "bg.secondary",
@@ -1198,35 +1196,88 @@ function ARIAComparisonDemo() {
           </div>
         </div>
       </div>
+
+      <div
+        className={css({
+          marginTop: 6,
+          display: "flex",
+          flexDirection: "column",
+          gap: 4,
+        })}
+      >
+        <ScreenReaderDemo
+          label="スクリーンリーダー実演（ARIAなし）"
+          description={`${current.title} / 想定読み上げ`}
+          srText={current.bad.screenReader}
+        >
+          <div
+            className={css({
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "md",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.default",
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            })}
+          >
+            <strong className={css({ color: "contents.primary" })}>
+              ARIA属性なし
+            </strong>
+            <p
+              className={css({
+                margin: 0,
+                fontSize: "sm",
+                color: "contents.secondary",
+              })}
+            >
+              このカードの例をスクリーンリーダーで再生（読み上げは右側のパネルで確認できます）
+            </p>
+          </div>
+        </ScreenReaderDemo>
+
+        <ScreenReaderDemo
+          label="スクリーンリーダー実演（ARIAあり）"
+          description={`${current.title} / 想定読み上げ`}
+          srText={current.good.screenReader}
+        >
+          <div
+            className={css({
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "md",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.default",
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            })}
+          >
+            <strong className={css({ color: "contents.primary" })}>
+              ARIA属性あり
+            </strong>
+            <p
+              className={css({
+                margin: 0,
+                fontSize: "sm",
+                color: "contents.secondary",
+              })}
+            >
+              改善後の読み上げを体験できます
+            </p>
+          </div>
+        </ScreenReaderDemo>
+      </div>
     </div>
   );
 }
 
 // スクリーンリーダーシミュレーター
 function ScreenReaderSimulator() {
-  const [isReading, setIsReading] = useState(false);
-  const [currentText, setCurrentText] = useState("");
-
-  const simulateReading = () => {
-    setIsReading(true);
-    const texts = [
-      "ボタン",
-      "閉じる",
-      "クリック可能",
-    ];
-
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < texts.length) {
-        setCurrentText(texts[index]);
-        index++;
-      } else {
-        clearInterval(interval);
-        setIsReading(false);
-        setCurrentText("");
-      }
-    }, 800);
-  };
+  const readingSequence = ["ボタン", "閉じる", "クリック可能"];
 
   return (
     <div
@@ -1251,48 +1302,24 @@ function ScreenReaderSimulator() {
       </h4>
 
       <p className={css({ color: "contents.secondary", fontSize: "sm" })}>
-        ボタンをクリックして、スクリーンリーダーがどのように読み上げるかを確認できます
+        代表的な「閉じる」ボタンを例に、スクリーンリーダーが
+        {readingSequence.join(" → ")} の順で案内する様子を音声で確認できます。
       </p>
 
-      <div className={css({ marginTop: 4, display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap" })}>
-        <button
-          onClick={simulateReading}
-          disabled={isReading}
-          aria-label="閉じる"
-          className={css({
-            padding: 3,
-            borderWidth: "base", borderStyle: "solid", borderColor: "border.default",
-            borderRadius: "md",
-            backgroundColor: "bg.primary",
-            cursor: isReading ? "not-allowed" : "pointer",
-            fontSize: "lg",
-            opacity: isReading ? 0.6 : 1,
-            color: "contents.primary",
-          })}
+      <div className={css({ marginTop: 4 })}>
+        <ScreenReaderDemo
+          label="実際の音声で確認"
+          description='スクリーンリーダーの読み上げ例（"ボタン" → "閉じる" → "クリック可能"）をWeb Speech APIで再生できます'
+          srText={readingSequence.join(" ")}
         >
-          ✕
-        </button>
-
-        <div
-          className={css({
-            flex: 1,
-            padding: 3,
-            backgroundColor: "bg.primary",
-            color: "contents.success",
-            borderRadius: "md",
-            minHeight: "60px",
-            display: "flex",
-            alignItems: "center",
-            fontSize: "lg",
-            fontWeight: "semibold",
-          })}
-        >
-          {isReading ? (
-            <span className={css({ animation: "pulse 1s infinite" })}>🔊 {currentText}</span>
-          ) : (
-            <span className={css({ color: "contents.tertiary" })}>クリックして読み上げを開始...</span>
-          )}
-        </div>
+          <Button
+            aria-label="閉じる"
+            variant="outline"
+            size="sm"
+          >
+            ✕
+          </Button>
+        </ScreenReaderDemo>
       </div>
 
       <div className={css({ marginTop: 3 })}>
@@ -1306,27 +1333,6 @@ function ScreenReaderSimulator() {
         />
       </div>
 
-      <div className={css({ marginTop: 3 })}>
-        <ScreenReaderDemo
-          label="実際の音声で確認"
-          description="Web Speech APIを使って、実際にスクリーンリーダーの読み上げを聞くことができます"
-        >
-          <button
-            aria-label="閉じる"
-            className={css({
-              padding: 3,
-              borderWidth: "base", borderStyle: "solid", borderColor: "border.default",
-              borderRadius: "md",
-              backgroundColor: "bg.primary",
-              cursor: "pointer",
-              fontSize: "lg",
-              color: "contents.primary",
-            })}
-          >
-            ✕
-          </button>
-        </ScreenReaderDemo>
-      </div>
     </div>
   );
 }
@@ -1372,36 +1378,43 @@ function LiveRegionDemo() {
         aria-live を使うと、画面の変更をスクリーンリーダーに自動で通知できます
       </p>
 
-      <div className={css({ display: "flex", gap: 2, marginTop: 3, flexWrap: "wrap" })}>
-        <Button variant="primary" size="sm" onClick={() => addMessage('success')}>
-          成功メッセージ
-        </Button>
-        <Button variant="danger" size="sm" onClick={() => addMessage('error')}>
-          エラーメッセージ
-        </Button>
-        <Button variant="secondary" size="sm" onClick={() => addMessage('info')}>
-          情報メッセージ
-        </Button>
-      </div>
-
-      <div
-        aria-live="polite"
-        aria-atomic="true"
-        className={css({
-          marginTop: 3,
-          padding: 3,
-          backgroundColor: "bg.primary",
-          borderWidth: "base", borderStyle: "solid", borderColor: "border.success",
-          borderRadius: "md",
-          minHeight: "60px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "base",
-        })}
+      <ScreenReaderDemo
+        label="スクリーンリーダー実演"
+        description="aria-live領域がどのように読み上げられるか確認できます"
+        srText={message || "通知はまだありません"}
       >
-        {message || <span className={css({ color: "contents.tertiary" })}>ボタンをクリックしてメッセージを表示</span>}
-      </div>
+        <div className={css({ display: "flex", flexDirection: "column", gap: 3 })}>
+          <div className={css({ display: "flex", gap: 2, flexWrap: "wrap" })}>
+            <Button variant="primary" size="sm" onClick={() => addMessage('success')}>
+              成功メッセージ
+            </Button>
+            <Button variant="danger" size="sm" onClick={() => addMessage('error')}>
+              エラーメッセージ
+            </Button>
+            <Button variant="secondary" size="sm" onClick={() => addMessage('info')}>
+              情報メッセージ
+            </Button>
+          </div>
+
+          <div
+            aria-live="polite"
+            aria-atomic="true"
+            className={css({
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderWidth: "base", borderStyle: "solid", borderColor: "border.success",
+              borderRadius: "md",
+              minHeight: "60px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "base",
+            })}
+          >
+            {message || <span className={css({ color: "contents.tertiary" })}>ボタンをクリックしてメッセージを表示</span>}
+          </div>
+        </div>
+      </ScreenReaderDemo>
 
       <div className={css({ marginTop: 3 })}>
         <CodeBlock
