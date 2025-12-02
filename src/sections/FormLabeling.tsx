@@ -7,10 +7,8 @@ import {
   TableHeaderCell,
   TableCell,
   Input,
-  Checkbox,
-  RadioGroup,
-  Radio,
 } from "../design-system/components";
+import { RadioGroup, Radio } from "../design-system/components/Radio";
 import { InfoBox } from "../design-system/components/InfoBox";
 import { icons } from "../design-system/tokens/icons";
 import { CodeBlock } from "../components/CodeBlock";
