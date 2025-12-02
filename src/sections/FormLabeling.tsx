@@ -280,53 +280,6 @@ export const FormLabeling = () => {
           />
         </div>
 
-        <div
-          className={css({
-            marginTop: 4,
-            padding: 4,
-            backgroundColor: "bg.primary",
-            borderRadius: "md",
-            borderWidth: "thin",
-            borderStyle: "solid",
-            borderColor: "border.default",
-          })}
-        >
-          <h5
-            className={css({
-              marginTop: 0,
-              marginBottom: 3,
-              color: "contents.primary",
-              fontSize: "base",
-            })}
-          >
-            実例：ラジオボタングループ
-          </h5>
-          <fieldset
-            className={css({
-              borderWidth: "base",
-              borderStyle: "solid",
-              borderColor: "border.default",
-              borderRadius: "md",
-              padding: 4,
-            })}
-          >
-            <legend
-              className={css({
-                color: "contents.primary",
-                fontWeight: "semibold",
-                paddingX: 2,
-              })}
-            >
-              配送方法を選択
-            </legend>
-            <RadioGroup name="shipping-demo" defaultValue="">
-              <Radio value="standard" label="通常配送（3-5日）" />
-              <Radio value="express" label="速達配送（1-2日）" />
-              <Radio value="overnight" label="翌日配送" />
-            </RadioGroup>
-          </fieldset>
-        </div>
-
         <ScreenReaderDemo
           label="スクリーンリーダー実演"
           srText="配送方法を選択、グループ。通常配送（3-5日）、ラジオボタン、未選択。速達配送（1-2日）、ラジオボタン、未選択。翌日配送、ラジオボタン、未選択。"
@@ -350,7 +303,7 @@ export const FormLabeling = () => {
             >
               配送方法を選択
             </legend>
-            <RadioGroup name="shipping-demo-2" defaultValue="">
+            <RadioGroup name="shipping-demo" defaultValue="">
               <Radio value="standard" label="通常配送（3-5日）" />
               <Radio value="express" label="速達配送（1-2日）" />
               <Radio value="overnight" label="翌日配送" />
