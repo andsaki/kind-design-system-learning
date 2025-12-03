@@ -13,6 +13,7 @@ import { AccessibilityFeaturesPage } from "./pages/accessibility/AccessibilityFe
 import { WCAGLevelsPage } from "./pages/accessibility/WCAGLevelsPage";
 import { DesignTokensPage } from "./pages/design/DesignTokensPage";
 import { ImageComparisonPage } from "./pages/design/ImageComparisonPage";
+import { HueWheelPage } from "./pages/design/HueWheelPage";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="design">
           <Route path="tokens" element={<DesignTokensPage />} />
           <Route path="image-comparison" element={<ImageComparisonPage />} />
+          <Route path="hue-wheel" element={<HueWheelPage />} />
         </Route>
       </Route>
     </Routes>

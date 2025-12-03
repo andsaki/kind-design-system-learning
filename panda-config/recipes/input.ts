@@ -1,26 +1,27 @@
 import type { RecipeConfig } from "@pandacss/dev";
+import { CSS_VARS } from "./constants";
 
 const focusVars = {
   A: {
-    "--focus-bg": "transparent",
-    "--focus-text": "#000000",
-    "--focus-outline": "#64b5f6", // blue.300
-    "--focus-outline-width": "0.125rem",
-    "--focus-outline-offset": "0",
+    [CSS_VARS.FOCUS.BG]: "transparent",
+    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE]: "{colors.blue.300}",
+    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.thin}",
+    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "0",
   },
   AA: {
-    "--focus-bg": "#e3f2fd", // blue.50
-    "--focus-text": "#212121", // gray.900
-    "--focus-outline": "#1976d2", // blue.700
-    "--focus-outline-width": "0.1875rem",
-    "--focus-outline-offset": "0.125rem",
+    [CSS_VARS.FOCUS.BG]: "{colors.blue.50}",
+    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE]: "{colors.blue.700}",
+    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.base}",
+    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "{spacing.0.5}",
   },
   AAA: {
-    "--focus-bg": "#ffff00", // yellow
-    "--focus-text": "#000000",
-    "--focus-outline": "#000000", // black
-    "--focus-outline-width": "0.25rem",
-    "--focus-outline-offset": "0.125rem",
+    [CSS_VARS.FOCUS.BG]: "{colors.yellow.400}",
+    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.thick}",
+    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "{spacing.0.5}",
   },
 } as const;
 

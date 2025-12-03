@@ -4,7 +4,6 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -14,19 +13,21 @@
 /* ライトモード */
 :root[data-theme="light"] {
   color-scheme: light;
+
   /* Pandaのセマンティックトークンはglobalcssで適用されます */
 }
 
 /* ダークモード */
 :root[data-theme="dark"] {
   color-scheme: dark;
+
   /* Pandaのセマンティックトークンはglobalcssで適用されます */
 }
 
 /* チェックボックスとラジオボタンのスタイル */
 input[type="checkbox"],
 input[type="radio"] {
-  accent-color: var(--colors-brand-primary);  /* Pandaトークンを使用 */
+  accent-color: var(--colors-brand-primary); /* Pandaトークンを使用 */
 }
 
 /* ダークモード時のフォームコントロール調整 */
@@ -38,14 +39,21 @@ input[type="radio"] {
 
 a {
   font-weight: 500;
-  color: var(--colors-contents-link);  /* Pandaトークンを使用 */
+  color: var(--colors-contents-link); /* Pandaトークンを使用 */
   text-decoration: inherit;
 }
-a:hover {
-  color: var(--colors-contents-link-hover);  /* Pandaトークンを使用 */
+
+a:hover,
+a:focus {
+  color: var(--colors-contents-link-hover); /* Pandaトークンを使用 */
+}
+
+a:focus-visible {
+  outline: 2px solid var(--colors-brand-primary);
+  outline-offset: 2px;
 }
 
 h1 {
   font-size: 2rem;
-  line-height: 1.2;
+  line-height: 1.5;
 }

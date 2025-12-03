@@ -40,6 +40,7 @@ const navigationItems = [
     children: [
       { title: "デザイントークン", path: "/design/tokens" },
       { title: "画像比較", path: "/design/image-comparison" },
+      { title: "色相環", path: "/design/hue-wheel" },
     ],
   },
 ];

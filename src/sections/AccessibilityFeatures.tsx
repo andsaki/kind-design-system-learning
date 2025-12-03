@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+import { useState } from "react";
 import { css, cx } from "@/styled-system/css";
 
 const sectionClass = css({
@@ -114,11 +114,12 @@ export function AccessibilityFeatures() {
   const [zoomLevel, setZoomLevel] = useState(1);
   const zoomPercent = Math.round(zoomLevel * 100);
 
-  const handleZoomChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleZoomChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setZoomLevel(parseFloat(event.target.value));
   };
 
   return (
+    <>
     <section
       id="accessibility-features"
       className={cx("accessibility-features", sectionClass)}
@@ -200,6 +201,8 @@ export function AccessibilityFeatures() {
           </div>
         </div>
       </div>
+
     </section>
+    </>
   );
 }

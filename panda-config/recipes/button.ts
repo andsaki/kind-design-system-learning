@@ -1,44 +1,51 @@
 import type { RecipeConfig } from "@pandacss/dev";
+import { CSS_VARS } from "./constants";
 
-const focusStyles = {
+const focusVars = {
   A: {
-    backgroundColor: "transparent",
-    outlineColor: "blue.300",
-    outlineWidth: "0.125rem",
-    outlineOffset: "0",
+    [CSS_VARS.FOCUS.BG]: "transparent",
+    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE]: "{colors.blue.300}",
+    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.thin}",
+    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "0",
   },
   AA: {
-    backgroundColor: "blue.50",
-    outlineColor: "blue.700",
-    outlineWidth: "0.1875rem",
-    outlineOffset: "0.125rem",
+    [CSS_VARS.FOCUS.BG]: "{colors.blue.50}",
+    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE]: "{colors.blue.700}",
+    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.base}",
+    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "{spacing.0.5}",
   },
   AAA: {
-    backgroundColor: "yellow",
-    outlineColor: "black",
-    outlineWidth: "0.25rem",
-    outlineOffset: "0.125rem",
+    [CSS_VARS.FOCUS.BG]: "{colors.yellow.400}",
+    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.thick}",
+    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "{spacing.0.5}",
   },
 } as const;
 
-const dangerFocusStyles = {
+const dangerFocusVars = {
   A: {
-    backgroundColor: "transparent",
-    outlineColor: "red.300",
-    outlineWidth: "0.125rem",
-    outlineOffset: "0",
+    [CSS_VARS.FOCUS.BG]: "transparent",
+    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE]: "{colors.red.300}",
+    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.thin}",
+    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "0",
   },
   AA: {
-    backgroundColor: "red.50",
-    outlineColor: "red.700",
-    outlineWidth: "0.1875rem",
-    outlineOffset: "0.125rem",
+    [CSS_VARS.FOCUS.BG]: "{colors.red.50}",
+    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE]: "{colors.red.700}",
+    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.base}",
+    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "{spacing.0.5}",
   },
   AAA: {
-    backgroundColor: "yellow",
-    outlineColor: "black",
-    outlineWidth: "0.25rem",
-    outlineOffset: "0.125rem",
+    [CSS_VARS.FOCUS.BG]: "{colors.yellow.400}",
+    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE]: "{colors.gray.900}",
+    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.thick}",
+    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "{spacing.0.5}",
   },
 } as const;
 
@@ -100,26 +107,17 @@ export const button: RecipeConfig = {
     wcagLevel: {
       A: {
         _focusVisible: {
-          backgroundColor: focusStyles.A.backgroundColor,
-          outlineColor: focusStyles.A.outlineColor,
-          outlineWidth: focusStyles.A.outlineWidth,
-          outlineOffset: focusStyles.A.outlineOffset,
+          ...focusVars.A,
         },
       },
       AA: {
         _focusVisible: {
-          backgroundColor: focusStyles.AA.backgroundColor,
-          outlineColor: focusStyles.AA.outlineColor,
-          outlineWidth: focusStyles.AA.outlineWidth,
-          outlineOffset: focusStyles.AA.outlineOffset,
+          ...focusVars.AA,
         },
       },
       AAA: {
         _focusVisible: {
-          backgroundColor: focusStyles.AAA.backgroundColor,
-          outlineColor: focusStyles.AAA.outlineColor,
-          outlineWidth: focusStyles.AAA.outlineWidth,
-          outlineOffset: focusStyles.AAA.outlineOffset,
+          ...focusVars.AAA,
         },
       },
     },
@@ -332,10 +330,7 @@ export const button: RecipeConfig = {
         color: "white",
         borderColor: "red.400",
         _focusVisible: {
-          backgroundColor: dangerFocusStyles.A.backgroundColor,
-          outlineColor: dangerFocusStyles.A.outlineColor,
-          outlineWidth: dangerFocusStyles.A.outlineWidth,
-          outlineOffset: dangerFocusStyles.A.outlineOffset,
+          ...dangerFocusVars.A,
         },
         _hover: {
           _disabled: {
@@ -360,10 +355,7 @@ export const button: RecipeConfig = {
         color: "white",
         borderColor: "red.700",
         _focusVisible: {
-          backgroundColor: dangerFocusStyles.AA.backgroundColor,
-          outlineColor: dangerFocusStyles.AA.outlineColor,
-          outlineWidth: dangerFocusStyles.AA.outlineWidth,
-          outlineOffset: dangerFocusStyles.AA.outlineOffset,
+          ...dangerFocusVars.AA,
         },
         _hover: {
           _disabled: {
@@ -388,10 +380,7 @@ export const button: RecipeConfig = {
         color: "white",
         borderColor: "red.800",
         _focusVisible: {
-          backgroundColor: dangerFocusStyles.AAA.backgroundColor,
-          outlineColor: dangerFocusStyles.AAA.outlineColor,
-          outlineWidth: dangerFocusStyles.AAA.outlineWidth,
-          outlineOffset: dangerFocusStyles.AAA.outlineOffset,
+          ...dangerFocusVars.AAA,
         },
         _hover: {
           _disabled: {

@@ -7,6 +7,9 @@ export type { InputProps } from './Input';
 export { Select } from './Select';
 export type { SelectProps } from './Select';
 
+export { ColorPicker } from './ColorPicker';
+export type { ColorPickerProps } from './ColorPicker';
+
 export { Accordion, AccordionSummary, AccordionContent } from './Accordion';
 export type { AccordionProps, AccordionSummaryProps, AccordionContentProps } from './Accordion';
 

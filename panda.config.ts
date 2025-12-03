@@ -13,6 +13,8 @@ import { infoBox } from "./panda-config/recipes/infobox";
 import { modal } from "./panda-config/recipes/modal";
 import { radio } from "./panda-config/recipes/radio";
 import { table } from "./panda-config/recipes/table";
+import { colorpicker } from "./panda-config/recipes/colorpicker";
+import { CSS_VARS } from "./panda-config/recipes/constants";
 import { pandaSemanticColors } from "./panda-config/types/semanticTokens";
 import {
   pandaColors,
@@ -108,6 +110,7 @@ export default defineConfig({
         infoBox,
         modal,
         radio,
+        colorpicker,
       },
       slotRecipes: {
         table,
@@ -197,6 +200,9 @@ export default defineConfig({
       ],
       modal: [{ size: ["sm", "md", "lg"], wcagLevel: ["A", "AA", "AAA"] }],
       radio: [{ wcagLevel: ["A", "AA", "AAA"], state: ["default", "error"] }],
+      colorpicker: [
+        { size: ["sm", "md", "lg"], wcagLevel: ["A", "AA", "AAA"] },
+      ],
     },
   },
 
@@ -282,38 +288,36 @@ export default defineConfig({
     },
     // Button focus state management (keyboard focus only)
     "button[data-focused]": {
-      backgroundColor: "var(--focus-bg) !important",
-      outline:
-        "var(--focus-outline-width) solid var(--focus-outline) !important",
-      outlineOffset: "var(--focus-outline-offset) !important",
+      backgroundColor: `var(${CSS_VARS.FOCUS.BG}) !important`,
+      outline: `var(${CSS_VARS.FOCUS.OUTLINE_WIDTH}) solid var(${CSS_VARS.FOCUS.OUTLINE}) !important`,
+      outlineOffset: `var(${CSS_VARS.FOCUS.OUTLINE_OFFSET}) !important`,
     },
     "button[data-focused]:not([data-focus-text-inherit])": {
-      color: "var(--focus-text) !important",
+      color: `var(${CSS_VARS.FOCUS.TEXT}) !important`,
     },
     "button[data-focused]:hover": {
-      backgroundColor: "var(--focus-bg) !important",
+      backgroundColor: `var(${CSS_VARS.FOCUS.BG}) !important`,
     },
     "button[data-focused]:hover:not([data-focus-text-inherit])": {
-      color: "var(--focus-text) !important",
+      color: `var(${CSS_VARS.FOCUS.TEXT}) !important`,
     },
     "input[data-focused], textarea[data-focused]": {
-      backgroundColor: "var(--focus-bg) !important",
-      color: "var(--focus-text) !important",
-      borderColor: "var(--focus-outline) !important",
-      outline:
-        "var(--focus-outline-width) solid var(--focus-outline) !important",
-      outlineOffset: "var(--focus-outline-offset) !important",
+      backgroundColor: `var(${CSS_VARS.FOCUS.BG}) !important`,
+      color: `var(${CSS_VARS.FOCUS.TEXT}) !important`,
+      borderColor: `var(${CSS_VARS.FOCUS.OUTLINE}) !important`,
+      outline: `var(${CSS_VARS.FOCUS.OUTLINE_WIDTH}) solid var(${CSS_VARS.FOCUS.OUTLINE}) !important`,
+      outlineOffset: `var(${CSS_VARS.FOCUS.OUTLINE_OFFSET}) !important`,
     },
     "input[data-focused]:not([data-focus-text-inherit]), textarea[data-focused]:not([data-focus-text-inherit])":
       {
-        color: "var(--focus-text) !important",
+        color: `var(${CSS_VARS.FOCUS.TEXT}) !important`,
       },
     "input[data-focused]:hover, textarea[data-focused]:hover": {
-      backgroundColor: "var(--focus-bg) !important",
+      backgroundColor: `var(${CSS_VARS.FOCUS.BG}) !important`,
     },
     "input[data-focused]:hover:not([data-focus-text-inherit]), textarea[data-focused]:hover:not([data-focus-text-inherit])":
       {
-        color: "var(--focus-text) !important",
+        color: `var(${CSS_VARS.FOCUS.TEXT}) !important`,
       },
   },
 });
