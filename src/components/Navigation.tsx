@@ -21,6 +21,7 @@ const navigationItems = [
       { title: "ラベルとrole属性", path: "/aria/guide" },
       { title: "APG (Authoring Practices)", path: "/aria/apg" },
       { title: "ステートプロパティ", path: "/aria/states" },
+      { title: "Input type属性", path: "/aria/input-types" },
       { title: 'role="presentation"', path: "/aria/role-presentation" },
       { title: "フォームラベリング", path: "/aria/form-labeling" },
     ],
