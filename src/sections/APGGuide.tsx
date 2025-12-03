@@ -9,7 +9,7 @@ const headingStyle = css({
   fontSize: '1.5rem',
   fontWeight: 'bold',
   marginBottom: '1rem',
-  color: 'purple.700',
+  color: 'contents.primary',
 });
 
 const subHeadingStyle = css({
@@ -17,13 +17,14 @@ const subHeadingStyle = css({
   fontWeight: 'bold',
   marginTop: '1.5rem',
   marginBottom: '0.75rem',
-  color: 'purple.600',
+  color: 'contents.primary',
 });
 
 const listStyle = css({
   marginLeft: '1.5rem',
   marginTop: '0.5rem',
   listStyleType: 'disc',
+  color: 'contents.primary',
 });
 
 const listItemStyle = css({
@@ -31,13 +32,14 @@ const listItemStyle = css({
 });
 
 const codeBlockStyle = css({
-  backgroundColor: 'gray.100',
+  backgroundColor: 'bg.secondary',
   padding: '1rem',
   borderRadius: 'md',
   marginTop: '1rem',
   fontFamily: 'monospace',
   fontSize: '0.9rem',
   overflow: 'auto',
+  color: 'contents.primary',
 });
 
 const iconStyle = css({
@@ -47,10 +49,10 @@ const iconStyle = css({
 });
 
 const linkStyle = css({
-  color: 'blue.600',
+  color: 'contents.link',
   textDecoration: 'underline',
   _hover: {
-    color: 'blue.800',
+    opacity: 0.8,
   },
 });
 
@@ -64,7 +66,7 @@ export function APGGuide() {
           fontSize: '2.5rem',
           fontWeight: 'bold',
           marginBottom: '2rem',
-          color: 'purple.800',
+          color: 'contents.primary',
         })}
       >
         <BookIcon className={iconStyle} size={40} color="currentColor" strokeWidth={2} />
@@ -115,8 +117,8 @@ export function APGGuide() {
       <section className={sectionStyle}>
         <h2 className={headingStyle}>提供されるデザインパターン例</h2>
         <div className={css({ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginTop: '1rem' })}>
-          <div className={css({ padding: '1rem', backgroundColor: 'purple.50', borderRadius: 'md' })}>
-            <p className={css({ fontWeight: 'bold', marginBottom: '0.5rem', color: 'purple.700' })}>基本的なコンポーネント</p>
+          <div className={css({ padding: '1rem', backgroundColor: 'bg.secondary', borderRadius: 'md', borderWidth: 'thin', borderStyle: 'solid', borderColor: 'border.default' })}>
+            <p className={css({ fontWeight: 'bold', marginBottom: '0.5rem', color: 'contents.primary' })}>基本的なコンポーネント</p>
             <ul className={listStyle}>
               <li className={listItemStyle}>Accordion（アコーディオン）</li>
               <li className={listItemStyle}>Alert（アラート）</li>
@@ -125,8 +127,8 @@ export function APGGuide() {
               <li className={listItemStyle}>Radio Group（ラジオグループ）</li>
             </ul>
           </div>
-          <div className={css({ padding: '1rem', backgroundColor: 'purple.50', borderRadius: 'md' })}>
-            <p className={css({ fontWeight: 'bold', marginBottom: '0.5rem', color: 'purple.700' })}>複雑なコンポーネント</p>
+          <div className={css({ padding: '1rem', backgroundColor: 'bg.secondary', borderRadius: 'md', borderWidth: 'thin', borderStyle: 'solid', borderColor: 'border.default' })}>
+            <p className={css({ fontWeight: 'bold', marginBottom: '0.5rem', color: 'contents.primary' })}>複雑なコンポーネント</p>
             <ul className={listStyle}>
               <li className={listItemStyle}>Combobox（コンボボックス）</li>
               <li className={listItemStyle}>Dialog（モーダル）</li>
