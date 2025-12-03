@@ -14,8 +14,6 @@ interface HueWheelProps {
   foregroundLightness?: number;
   /** 背景色の明度（0-100） */
   backgroundLightness?: number;
-  /** コントラスト比 */
-  contrastRatio?: number;
 }
 
 export const HueWheel = ({
@@ -25,7 +23,6 @@ export const HueWheel = ({
   contrastMode = false,
   foregroundLightness = 15,
   backgroundLightness = 95,
-  contrastRatio = 0
 }: HueWheelProps) => {
   const [hue, setHue] = useState(initialHue);
   const [isDragging, setIsDragging] = useState(false);

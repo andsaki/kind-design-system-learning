@@ -170,7 +170,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
         data-open={isOpen}
       >
         <div className={css({ mt: 12 })}>
-          <p className={headingClass} role="heading" aria-level="2">目次</p>
+          <p className={headingClass} role="heading" aria-level={2}>目次</p>
           <ul className={drawerList}>
             {items.map((item) => {
               const isActive = activeId === item.id;

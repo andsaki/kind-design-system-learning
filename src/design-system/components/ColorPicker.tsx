@@ -3,14 +3,16 @@ import { css, cx } from "@/styled-system/css";
 import { colorpicker } from "@/styled-system/recipes";
 import type { RecipeVariantProps } from "@/styled-system/types";
 
-export interface ColorPickerProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size">,
-    RecipeVariantProps<typeof colorpicker> {
-  label: string;
-  helperText?: string;
-  error?: string;
-  showValueLabel?: boolean;
-}
+export type ColorPickerProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "type" | "size"
+> &
+  RecipeVariantProps<typeof colorpicker> & {
+    label: string;
+    helperText?: string;
+    error?: string;
+    showValueLabel?: boolean;
+  };
 
 const containerClass = css({
   mb: 4,
