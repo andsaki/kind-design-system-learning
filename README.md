@@ -152,6 +152,23 @@ export const breakpointValues = {
 
 このプロジェクトのコンポーネントは、WCAG 2.1 レベルAA/AAAに準拠しています。
 
+### 📱 `meta viewport` 設定
+
+ドキュメントの `<head>` では次のタグを使用し、モバイルでも余白やフォーカスインジケーターを意図した倍率で表示できるようにしています。
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+```
+
+- `width=device-width`  
+  CSSピクセル幅を端末の物理解像度に合わせ、ズームされすぎた初期表示を防ぎます。  
+- `initial-scale=1.0`  
+  初期ズームを100%に固定し、Typographyトークンのサイズ感を設計通りに保ちます。  
+- `maximum-scale=5.0` / `user-scalable=yes`  
+  ユーザーが最大5倍までピンチズームできるよう許可し、視認性の配慮とWCAG 1.4.4（テキストのサイズ変更）への対応を両立します。  
+
+`maximum-scale` を過度に低く抑えたり `user-scalable=no` にすると、ズームが必要なユーザーの操作を奪ってしまうため、アクセシビリティガイドラインでは推奨されません。本設定は視覚拡大を妨げず、レイアウト崩れも起きにくいバランスを狙っています。
+
 #### コントラスト比の基準
 
 | レベル    | 通常テキスト | 大きいテキスト | 用途             |
