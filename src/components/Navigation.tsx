@@ -19,6 +19,7 @@ const navigationItems = [
     children: [
       { title: "主要プロパティ", path: "/aria/properties" },
       { title: "ラベルとrole属性", path: "/aria/guide" },
+      { title: "APG (Authoring Practices)", path: "/aria/apg" },
       { title: 'role="presentation"', path: "/aria/role-presentation" },
       { title: "フォームラベリング", path: "/aria/form-labeling" },
     ],
