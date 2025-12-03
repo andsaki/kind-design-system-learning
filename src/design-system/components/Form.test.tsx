@@ -192,6 +192,47 @@ describe('Form', () => {
     });
   });
 
+  describe('アクセシビリティの関連付け', () => {
+    it('ヘルプテキストがaria-describedbyで紐づく', () => {
+      const schema = z.object({ email: z.string().email('有効なメールアドレスを入力してください') });
+      render(
+        <Form
+          schema={schema}
+          fields={[
+            {
+              name: 'email',
+              label: 'メールアドレス',
+              type: 'email',
+              helperText: 'example@domain.com の形式で入力してください',
+            },
+          ]}
+          onSubmit={vi.fn()}
+        />
+      );
+
+      const emailInput = screen.getByLabelText('メールアドレス');
+      const describedBy = emailInput.getAttribute('aria-describedby');
+      expect(describedBy).toBeTruthy();
+      expect(document.getElementById(describedBy!)).toHaveTextContent(
+        'example@domain.com の形式で入力してください'
+      );
+    });
+
+    it('バリデーションエラー時はエラーメッセージがaria-describedbyに切り替わる', async () => {
+      const user = userEvent.setup();
+      render(<Form schema={mockSchema} fields={mockFields} onSubmit={vi.fn()} />);
+
+      await user.click(screen.getByRole('button', { name: '送信' }));
+      const nameErrorNode = await screen.findByText('名前は必須です');
+      expect(nameErrorNode).toHaveAttribute('role', 'alert');
+
+      const nameInput = screen.getByLabelText(/名前/);
+      const describedBy = nameInput.getAttribute('aria-describedby');
+      expect(describedBy).toBeTruthy();
+      expect(document.getElementById(describedBy!)).toHaveTextContent('名前は必須です');
+    });
+  });
+
   describe('フィールドサイズ', () => {
     it('フィールドサイズが適用される', () => {
       const fieldsWithSize = [

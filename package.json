@@ -6,6 +6,7 @@
   "scripts": {
     "prepare": "panda codegen",
     "dev": "panda --watch & vite",
+    "dev:vite": "vite --host 127.0.0.1 --port 4173",
     "build": "panda codegen && tsc -b && vite build",
     "lint": "eslint . && npm run lint:css",
     "lint:css": "stylelint \"src/**/*.{css,pcss,scss}\" --allow-empty-input",
@@ -13,6 +14,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
+    "test:playwright": "playwright test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "deploy-storybook": "storybook build && touch storybook-static/.nojekyll"
@@ -27,6 +29,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
     "@axe-core/react": "^4.11.0",
     "@chromatic-com/storybook": "^4.1.1",
     "@eslint/js": "^9.36.0",
