@@ -1,9 +1,7 @@
-import React, { useEffect, useRef } from 'react';
-import type { ReactNode } from 'react';
-import { modal as modalRecipe } from '../../../styled-system/recipes';
-import { css, cx } from '@/styled-system/css';
-import { accessibilityLevels } from '../constants/accessibility';
-import type { WCAGLevel } from '../constants/accessibility';
+import React, { useEffect, useRef } from "react";
+import type { ReactNode } from "react";
+import { modal as modalRecipe } from "../../../styled-system/recipes";
+import type { WCAGLevel } from "../constants/accessibility";
 
 export interface ModalProps {
   isOpen: boolean;
@@ -11,7 +9,7 @@ export interface ModalProps {
   title: string;
   children: ReactNode;
   footer?: ReactNode;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   wcagLevel?: WCAGLevel;
 }
 
@@ -21,115 +19,87 @@ export const Modal: React.FC<ModalProps> = ({
   title,
   children,
   footer,
-  size = 'md',
-  wcagLevel = 'AA',
+  size = "md",
+  wcagLevel = "AA",
 }) => {
-  const dialogRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
     if (isOpen) {
       previousActiveElement.current = document.activeElement as HTMLElement;
+      dialog.showModal();
+      document.body.style.overflow = "hidden";
+
+      // タイトルにフォーカス
+      const title = dialog.querySelector('[id="modal-title"]') as HTMLElement;
+      if (title) {
+        title.focus();
+      }
+    } else if (dialog.open) {
+      // openがtrueの時だけclose()を呼ぶ
+      dialog.close();
+      document.body.style.overflow = "";
+
+      // 元の要素にフォーカスを戻す
+      if (previousActiveElement.current) {
+        previousActiveElement.current.focus();
+      }
     }
   }, [isOpen]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
 
-    document.body.style.overflow = 'hidden';
+    const handleClose = () => {
+      onClose();
+    };
 
-    const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    focusableElements?.[0]?.focus();
+    const handleBackdropClick = (e: MouseEvent) => {
+      const rect = dialog.getBoundingClientRect();
+      const isInDialog =
+        rect.top <= e.clientY &&
+        e.clientY <= rect.top + rect.height &&
+        rect.left <= e.clientX &&
+        e.clientX <= rect.left + rect.width;
 
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (!isInDialog) {
         onClose();
       }
     };
 
-    const handleTab = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return;
-
-      const elements = dialogRef.current?.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      if (!elements || elements.length === 0) return;
-
-      const firstElement = elements[0];
-      const lastElement = elements[elements.length - 1];
-
-      if (e.shiftKey) {
-        if (document.activeElement === firstElement) {
-          e.preventDefault();
-          lastElement.focus();
-        }
-      } else {
-        if (document.activeElement === lastElement) {
-          e.preventDefault();
-          firstElement.focus();
-        }
-      }
-    };
-
-    document.addEventListener('keydown', handleEscape);
-    document.addEventListener('keydown', handleTab);
+    dialog.addEventListener("close", handleClose);
+    dialog.addEventListener("click", handleBackdropClick);
 
     return () => {
-      document.body.style.overflow = '';
-      document.removeEventListener('keydown', handleEscape);
-      document.removeEventListener('keydown', handleTab);
-      previousActiveElement.current?.focus();
+      dialog.removeEventListener("close", handleClose);
+      dialog.removeEventListener("click", handleBackdropClick);
     };
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
+  }, [onClose]);
 
   const slots = modalRecipe({ size, wcagLevel });
-  const focusStyles = {
-    outline: `${accessibilityLevels.focus[wcagLevel].outlineWidth} solid ${accessibilityLevels.focus[wcagLevel].outline}`,
-    outlineOffset: accessibilityLevels.focus[wcagLevel].outlineOffset,
-  };
 
   return (
-    <div
-      role="presentation"
-      className={slots.overlay}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <div
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
-        className={slots.dialog}
-      >
-        <div className={slots.header}>
-          <h2 id="modal-title" className={slots.title}>
-            {title}
-          </h2>
-          <button
-            type="button"
-            onClick={onClose}
-            className={cx(
-              slots.closeButton,
-              css({
-                fontSize: 'lg',
-                lineHeight: '1',
-              })
-            )}
-            style={focusStyles}
-            aria-label="モーダルを閉じる"
-          >
-            ✕
-          </button>
-        </div>
-        <div className={slots.body}>{children}</div>
-        {footer && <div className={slots.footer}>{footer}</div>}
+    <dialog ref={dialogRef} aria-labelledby="modal-title" aria-modal="true" className={slots.dialog}>
+      <div className={slots.header}>
+        <h2 id="modal-title" className={slots.title} tabIndex={-1}>
+          {title}
+        </h2>
+        <button
+          type="button"
+          onClick={onClose}
+          className={slots.closeButton}
+          aria-label="モーダルを閉じる"
+        >
+          ✕
+        </button>
       </div>
-    </div>
+      <div className={slots.body}>{children}</div>
+      {footer && <div className={slots.footer}>{footer}</div>}
+    </dialog>
   );
 };

@@ -23,8 +23,20 @@ export const modal: SlotRecipeConfig = {
       borderRadius: "lg",
       boxShadow:
         "0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)",
-      display: "flex",
       flexDirection: "column",
+      border: "none",
+      padding: 0,
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      margin: 0,
+      "&[open]": {
+        display: "flex",
+      },
+      "&::backdrop": {
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+      },
     },
     header: {
       px: 6,
@@ -40,6 +52,12 @@ export const modal: SlotRecipeConfig = {
       fontSize: "xl",
       fontWeight: "semibold",
       color: "contents.primary",
+      flex: 1,
+      outline: "none",
+      _focusVisible: {
+        outline: "2px solid {colors.blue.500}",
+        outlineOffset: "4px",
+      },
     },
     body: {
       px: 6,
@@ -100,6 +118,12 @@ export const modal: SlotRecipeConfig = {
         body: {
           color: "contents.primary",
         },
+        closeButton: {
+          _focusVisible: {
+            outline: "0.125rem solid {colors.blue.300}",
+            outlineOffset: "0",
+          },
+        },
       },
       AA: {
         dialog: {
@@ -111,6 +135,13 @@ export const modal: SlotRecipeConfig = {
         },
         body: {
           color: "contents.primary",
+        },
+        closeButton: {
+          _focusVisible: {
+            outline: "0.1875rem solid {colors.blue.700}",
+            outlineOffset: "0.125rem",
+            backgroundColor: "blue.50",
+          },
         },
       },
       AAA: {
@@ -124,6 +155,13 @@ export const modal: SlotRecipeConfig = {
         },
         body: {
           color: "contents.primary",
+        },
+        closeButton: {
+          _focusVisible: {
+            outline: "0.25rem solid {colors.black}",
+            outlineOffset: "0.125rem",
+            backgroundColor: "yellow",
+          },
         },
       },
     },

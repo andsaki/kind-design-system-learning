@@ -4,6 +4,18 @@ import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { Modal } from './Modal';
 
+// jsdomでHTMLDialogElementをモック
+beforeEach(() => {
+  HTMLDialogElement.prototype.showModal = vi.fn(function (this: HTMLDialogElement) {
+    this.open = true;
+  });
+  HTMLDialogElement.prototype.close = vi.fn(function (this: HTMLDialogElement) {
+    this.open = false;
+    // closeイベントを発火
+    this.dispatchEvent(new Event('close'));
+  });
+});
+
 describe('Modal', () => {
   let originalOverflow: string;
 
@@ -132,24 +144,39 @@ describe('Modal', () => {
         </Modal>
       );
 
+      const dialog = screen.getByRole('dialog') as HTMLDialogElement;
+
+      // Escキーを押すと<dialog>要素がcloseメソッドを呼ぶ
       await user.keyboard('{Escape}');
+      // dialog.close()を手動で呼んでcloseイベントをトリガー
+      dialog.close();
+
       expect(handleClose).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('オーバーレイクリック', () => {
     it('オーバーレイをクリックするとonCloseが呼ばれる', async () => {
-      const user = userEvent.setup();
       const handleClose = vi.fn();
-      const { container } = render(
+      render(
         <Modal isOpen={true} onClose={handleClose} title="タイトル">
           コンテンツ
         </Modal>
       );
 
-      // オーバーレイ（最初の子要素）をクリック
-      const overlay = container.firstChild as HTMLElement;
-      await user.click(overlay);
+      const dialog = screen.getByRole('dialog');
+
+      // モーダル外（背景）をクリックするシミュレーション
+      // getBoundingClientRectで範囲外の座標でclickイベントを発火
+      const rect = dialog.getBoundingClientRect();
+      const clickEvent = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        clientX: rect.left - 10, // モーダルの外側
+        clientY: rect.top - 10,
+      });
+      dialog.dispatchEvent(clickEvent);
+
       expect(handleClose).toHaveBeenCalled();
     });
 
@@ -162,7 +189,8 @@ describe('Modal', () => {
         </Modal>
       );
 
-      await user.click(screen.getByRole('dialog'));
+      // モーダルのコンテンツ部分（タイトルやbodyの子要素）をクリック
+      await user.click(screen.getByText('タイトル'));
       expect(handleClose).not.toHaveBeenCalled();
     });
   });

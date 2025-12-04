@@ -7,6 +7,7 @@ import { Loading, InlineLoading } from "../design-system/components/Loading";
 import { InfoBox } from "../design-system/components/InfoBox";
 import { icons } from "../design-system/tokens/icons";
 import { SectionHeading } from "../components/SectionHeading";
+import { ScreenReaderDemo } from "../components/ScreenReaderDemo";
 import { z } from "zod";
 import { useState } from "react";
 import { css, cx } from "@/styled-system/css";
@@ -859,10 +860,16 @@ export function ComponentDemos({
           モーダルダイアログは、ユーザーの注意を特定のタスクに集中させるために使用します。
         </p>
 
-        <div className={css({ mt: 6, display: "flex", gap: 3, flexWrap: "wrap" })}>
-          <Button variant="primary" onClick={() => setIsModalOpen(true)}>
-            モーダルを開く
-          </Button>
+        <div className={css({ mt: 6 })}>
+          <ScreenReaderDemo
+            label="モーダルを開くボタン"
+            description="モーダルを開くボタンとモーダル内の要素を順番に読み上げます"
+            srText="モーダルを開く ボタン。ダイアログ、モーダルの例。モーダルの例 見出し レベル2。モーダルを閉じる ボタン。これはモーダルダイアログの例です。試してみてください: Tab キーでフォーカスを移動（モーダル内を循環）。Esc キーでモーダルを閉じる。背景をクリックしてモーダルを閉じる。キャンセル ボタン。保存 ボタン。"
+          >
+            <Button variant="primary" onClick={() => setIsModalOpen(true)}>
+              モーダルを開く
+            </Button>
+          </ScreenReaderDemo>
         </div>
 
         <Modal

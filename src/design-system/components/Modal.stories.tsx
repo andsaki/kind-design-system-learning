@@ -4,6 +4,7 @@ import { Modal } from './Modal';
 import { Button } from './Button';
 import { Input } from './Input';
 import { InfoBox } from './InfoBox';
+import { ScreenReaderDemo } from '../../components/ScreenReaderDemo';
 
 /**
  * アクセシブルなモーダルダイアログコンポーネント
@@ -384,6 +385,80 @@ export const LongContent: Story = {
           </div>
         </Modal>
       </>
+    );
+  },
+};
+
+/**
+ * スクリーンリーダーのデモ
+ *
+ * スクリーンリーダーがモーダルをどのように読み上げるかを確認できます。
+ * - `role="dialog"` と `aria-modal="true"` により、スクリーンリーダーはモーダルであることを認識
+ * - `aria-labelledby` によりタイトルとの関連付けを読み上げ
+ * - フォーカス管理により、モーダル内の要素を順番に読み上げ
+ */
+export const ScreenReaderExample: Story = {
+  render: () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <ScreenReaderDemo
+          label="基本的なモーダル"
+          description="モーダルを開くボタンとモーダルの読み上げを確認できます"
+          srText="通知設定 ボタン"
+        >
+          <Button onClick={() => setIsOpen(true)}>通知設定</Button>
+        </ScreenReaderDemo>
+
+        <Modal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          title="通知設定"
+          size="md"
+          footer={
+            <>
+              <Button variant="outline" onClick={() => setIsOpen(false)}>
+                キャンセル
+              </Button>
+              <Button variant="primary" onClick={() => setIsOpen(false)}>
+                保存
+              </Button>
+            </>
+          }
+        >
+          <p style={{ margin: 0, lineHeight: 1.6 }}>
+            プッシュ通知を有効にすると、重要なお知らせをリアルタイムで受け取ることができます。
+          </p>
+        </Modal>
+
+        {isOpen && (
+          <div style={{ marginTop: '2rem' }}>
+            <InfoBox variant="info" icon="🎙️" title="スクリーンリーダーの読み上げ">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <p style={{ margin: 0, fontFamily: 'monospace', fontSize: '14px', lineHeight: 1.6 }}>
+                  1. "ダイアログ、通知設定"
+                </p>
+                <p style={{ margin: 0, fontFamily: 'monospace', fontSize: '14px', lineHeight: 1.6 }}>
+                  2. "通知設定 見出し レベル2"
+                </p>
+                <p style={{ margin: 0, fontFamily: 'monospace', fontSize: '14px', lineHeight: 1.6 }}>
+                  3. "モーダルを閉じる ボタン"
+                </p>
+                <p style={{ margin: 0, fontFamily: 'monospace', fontSize: '14px', lineHeight: 1.6 }}>
+                  4. "プッシュ通知を有効にすると、重要なお知らせをリアルタイムで受け取ることができます。"
+                </p>
+                <p style={{ margin: 0, fontFamily: 'monospace', fontSize: '14px', lineHeight: 1.6 }}>
+                  5. "キャンセル ボタン"
+                </p>
+                <p style={{ margin: 0, fontFamily: 'monospace', fontSize: '14px', lineHeight: 1.6 }}>
+                  6. "保存 ボタン"
+                </p>
+              </div>
+            </InfoBox>
+          </div>
+        )}
+      </div>
     );
   },
 };
