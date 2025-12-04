@@ -11,6 +11,25 @@ import { InfoBox } from "../design-system/components/InfoBox";
 import { icons } from "../design-system/tokens/icons";
 import { CodeBlock } from "../components/CodeBlock";
 
+// 検索用メタデータ
+export const searchMetadata = {
+  title: 'role="presentation"',
+  path: "/aria/role-presentation",
+  headings: [
+    "概要",
+    "主な用途",
+    "使用例",
+    "注意点",
+    "ベストプラクティス"
+  ],
+  keywords: [
+    "role", "presentation", "none", "プレゼンテーション", "装飾", "セマンティクス",
+    "意味を取り除く", "支援技術", "スクリーンリーダー", "装飾的な画像",
+    "レイアウト用のテーブル", "視覚的なリスト", "ARIA", "アクセシビリティ",
+    "要素が支援技術に対して", "意味を持たない装飾的な要素"
+  ]
+};
+
 export const RolePresentation = () => {
   const useCaseRows = [
     {

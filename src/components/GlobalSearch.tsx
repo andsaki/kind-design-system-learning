@@ -1,62 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Fuse from "fuse.js";
 import { css } from "@/styled-system/css";
 import { Input } from "../design-system/components";
 import { icons } from "../design-system/tokens/icons";
-
-// 検索可能なページの定義
-const searchablePages = [
-  {
-    title: "ホーム",
-    path: "/",
-    keywords: "home ホーム トップ デザインシステム アクセシビリティ"
-  },
-  {
-    title: "コンポーネント",
-    path: "/components",
-    keywords: "components コンポーネント button input modal table form"
-  },
-  {
-    title: "主要プロパティ",
-    path: "/aria/properties",
-    keywords: "aria properties プロパティ 属性"
-  },
-  {
-    title: "ラベルとrole属性",
-    path: "/aria/guide",
-    keywords: "aria label role ラベル 属性 aria-label aria-labelledby aria-describedby aria-current aria-expanded aria-hidden aria-live aria-atomic polite assertive tooltip dialog navigation button alert modal スクリーンリーダー"
-  },
-  {
-    title: "role=\"presentation\"",
-    path: "/aria/role-presentation",
-    keywords: "role presentation プレゼンテーション 装飾"
-  },
-  {
-    title: "フォームラベリング",
-    path: "/aria/form-labeling",
-    keywords: "form labeling フォーム ラベル input label fieldset legend"
-  },
-  {
-    title: "機能一覧",
-    path: "/accessibility/features",
-    keywords: "accessibility features アクセシビリティ 機能 キーボード focus フォーカス screen reader"
-  },
-  {
-    title: "WCAGレベル",
-    path: "/accessibility/wcag-levels",
-    keywords: "wcag level レベル A AA AAA ガイドライン"
-  },
-  {
-    title: "デザイントークン",
-    path: "/design/tokens",
-    keywords: "design token デザイン トークン color 色 spacing font"
-  },
-  {
-    title: "画像比較",
-    path: "/design/image-comparison",
-    keywords: "image comparison 画像 比較 alt テキスト"
-  }
-];
+import { searchIndex } from "../utils/searchIndex";
 
 interface GlobalSearchProps {
   onClose?: () => void;
@@ -64,23 +12,37 @@ interface GlobalSearchProps {
 
 export const GlobalSearch = ({ onClose }: GlobalSearchProps) => {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState(searchablePages);
+  const [results, setResults] = useState(searchIndex);
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Fuse.js インスタンスをメモ化
+  const fuse = useMemo(
+    () =>
+      new Fuse(searchIndex, {
+        keys: [
+          { name: "title", weight: 3 },      // タイトルに最も重み付け
+          { name: "headings", weight: 2 },   // 見出しに次に重み付け
+          { name: "content", weight: 1 }     // 本文は通常の重み
+        ],
+        threshold: 0.3,                      // 0.0 = 完全一致, 1.0 = すべてマッチ
+        includeScore: true,
+        minMatchCharLength: 2,               // 最低2文字でマッチ
+        ignoreLocation: true,                // 位置を無視して全体から検索
+      }),
+    []
+  );
+
   useEffect(() => {
     if (!query.trim()) {
-      setResults(searchablePages);
+      setResults(searchIndex);
       return;
     }
 
-    const lowerQuery = query.toLowerCase();
-    const filtered = searchablePages.filter((page) =>
-      page.title.toLowerCase().includes(lowerQuery) ||
-      page.keywords.toLowerCase().includes(lowerQuery)
-    );
-    setResults(filtered);
-  }, [query]);
+    // Fuse.js で検索
+    const searchResults = fuse.search(query);
+    setResults(searchResults.map((result) => result.item));
+  }, [query, fuse]);
 
   const handleNavigate = (path: string) => {
     navigate(path);
@@ -90,7 +52,7 @@ export const GlobalSearch = ({ onClose }: GlobalSearchProps) => {
 
   const handleClear = () => {
     setQuery("");
-    setResults(searchablePages);
+    setResults(searchIndex);
   };
 
   return (
