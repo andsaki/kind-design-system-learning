@@ -425,6 +425,1451 @@ export function ImageComparison() {
             color: "contents.primary",
             fontSize: "xl",
             fontWeight: "semibold",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <span aria-hidden="true">📚</span>
+          画像の5つの分類とalt属性の書き方
+        </h3>
+        <div
+          className={css({
+            marginTop: 4,
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "base",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+          })}
+        >
+          <p
+            className={css({
+              marginTop: 0,
+              marginBottom: 4,
+              lineHeight: "relaxed",
+              color: "contents.primary",
+            })}
+          >
+            W3Cのガイドラインでは、画像を以下の5つに分類しています。
+            それぞれの目的に応じて、適切なalt属性の書き方が異なります。
+          </p>
+
+          <Table
+            caption="画像の分類とalt属性の指針"
+            variant="striped"
+            highlightOnHover
+            wcagLevel="AA"
+          >
+            <TableHeader>
+              <TableRow>
+                <TableHeaderCell>分類</TableHeaderCell>
+                <TableHeaderCell>説明</TableHeaderCell>
+                <TableHeaderCell>alt属性の書き方</TableHeaderCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <strong className={css({ color: "contents.primary" })}>
+                    1. 情報を提供する画像
+                  </strong>
+                </TableCell>
+                <TableCell>
+                  コンテンツの一部として情報を伝える画像
+                  <br />
+                  <span className={css({ fontSize: "sm", color: "contents.secondary" })}>
+                    例: 写真、イラスト、アイコン
+                  </span>
+                </TableCell>
+                <TableCell>
+                  画像の内容を簡潔に説明
+                  <br />
+                  <code className={inlineCodeClass}>alt="桜の花びら"</code>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <strong className={css({ color: "contents.primary" })}>
+                    2. 装飾画像
+                  </strong>
+                </TableCell>
+                <TableCell>
+                  視覚的な装飾のみで情報を提供しない画像
+                  <br />
+                  <span className={css({ fontSize: "sm", color: "contents.secondary" })}>
+                    例: 背景、区切り線、装飾パターン
+                  </span>
+                </TableCell>
+                <TableCell>
+                  空のalt属性
+                  <br />
+                  <code className={inlineCodeClass}>alt=""</code>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <strong className={css({ color: "contents.primary" })}>
+                    3. 機能を持つ画像
+                  </strong>
+                </TableCell>
+                <TableCell>
+                  ボタンやリンクとして機能する画像
+                  <br />
+                  <span className={css({ fontSize: "sm", color: "contents.secondary" })}>
+                    例: アイコンボタン、ロゴリンク
+                  </span>
+                </TableCell>
+                <TableCell>
+                  機能・動作を説明
+                  <br />
+                  <code className={inlineCodeClass}>alt="検索"</code>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <strong className={css({ color: "contents.primary" })}>
+                    4. 文字画像
+                  </strong>
+                </TableCell>
+                <TableCell>
+                  テキストを画像化したもの
+                  <br />
+                  <span className={css({ fontSize: "sm", color: "contents.secondary" })}>
+                    例: ロゴ、見出し画像
+                  </span>
+                </TableCell>
+                <TableCell>
+                  画像内のテキストをそのまま記述
+                  <br />
+                  <code className={inlineCodeClass}>alt="株式会社ABC"</code>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <strong className={css({ color: "contents.primary" })}>
+                    5. 複雑な画像
+                  </strong>
+                </TableCell>
+                <TableCell>
+                  詳細な情報を含む画像
+                  <br />
+                  <span className={css({ fontSize: "sm", color: "contents.secondary" })}>
+                    例: グラフ、図表、地図
+                  </span>
+                </TableCell>
+                <TableCell>
+                  概要をaltに、詳細を別途提供
+                  <br />
+                  <code className={inlineCodeClass}>alt="売上推移"</code>
+                  <br />
+                  <code className={inlineCodeClass}>aria-describedby="..."</code>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+
+      <div className={css({ marginTop: 8 })}>
+        <h3
+          className={css({
+            marginTop: 0,
+            marginBottom: 4,
+            color: "contents.primary",
+            fontSize: "xl",
+            fontWeight: "semibold",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <span aria-hidden="true">1️⃣</span>
+          情報を提供する画像
+        </h3>
+        <div
+          className={css({
+            marginTop: 4,
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "base",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+          })}
+        >
+          <p
+            className={css({
+              marginTop: 0,
+              marginBottom: 3,
+              lineHeight: "relaxed",
+              color: "contents.primary",
+            })}
+          >
+            コンテンツの一部として情報を伝える画像です。
+            画像が見えないユーザーにも同じ情報が伝わるように、<strong>画像の内容を具体的に説明</strong>します。
+          </p>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.success",
+            })}
+          >
+            <strong className={css({ color: "contents.success" })}>
+              ✅ 良い例
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- 商品画像 -->
+<img src="product.jpg" alt="ワイヤレスヘッドホン XM-100 ブラック" />
+
+<!-- プロフィール写真 -->
+<img src="avatar.jpg" alt="山田太郎のプロフィール写真" />
+
+<!-- アイコン（意味を持つ） -->
+<img src="alert.svg" alt="注意" />
+重要なお知らせがあります`}
+              </code>
+            </pre>
+          </div>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.error",
+            })}
+          >
+            <strong className={css({ color: "contents.error" })}>
+              ❌ 悪い例
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- ファイル名をそのまま -->
+<img src="product_001.jpg" alt="product_001.jpg" />
+
+<!-- 一般的すぎる -->
+<img src="avatar.jpg" alt="画像" />
+
+<!-- 不要な接頭辞 -->
+<img src="alert.svg" alt="アイコン：注意" />
+<!-- スクリーンリーダーが「画像 アイコン：注意」と冗長に読む -->`}
+              </code>
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <div className={css({ marginTop: 8 })}>
+        <h3
+          className={css({
+            marginTop: 0,
+            marginBottom: 4,
+            color: "contents.primary",
+            fontSize: "xl",
+            fontWeight: "semibold",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <span aria-hidden="true">2️⃣</span>
+          装飾画像
+        </h3>
+        <div
+          className={css({
+            marginTop: 4,
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "base",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+          })}
+        >
+          <p
+            className={css({
+              marginTop: 0,
+              marginBottom: 3,
+              lineHeight: "relaxed",
+              color: "contents.primary",
+            })}
+          >
+            視覚的な装飾のみで情報を提供しない画像です。
+            <code>alt=""</code>（空のalt属性）を設定して、スクリーンリーダーが読み飛ばすようにします。
+          </p>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.success",
+            })}
+          >
+            <strong className={css({ color: "contents.success" })}>
+              ✅ 良い例
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- 装飾パターン -->
+<img src="pattern.png" alt="" />
+
+<!-- テキストラベルと一緒のアイコン -->
+<button>
+  <img src="save.svg" alt="" />
+  保存
+</button>
+
+<!-- リストの装飾アイコン -->
+<ul>
+  <li>
+    <img src="check.svg" alt="" />
+    完了しました
+  </li>
+</ul>`}
+              </code>
+            </pre>
+          </div>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.info",
+            })}
+          >
+            <p
+              className={css({
+                marginTop: 0,
+                marginBottom: 2,
+                fontWeight: "bold",
+                color: "contents.primary",
+              })}
+            >
+              💡 判断基準
+            </p>
+            <p
+              className={css({
+                marginTop: 0,
+                marginBottom: 0,
+                fontSize: "sm",
+                lineHeight: "relaxed",
+                color: "contents.secondary",
+              })}
+            >
+              「この画像が表示されなかったら、ページの内容は理解できなくなる？」
+              <br />
+              <strong>NO</strong> → 装飾画像。<code>alt=""</code>を使用
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className={css({ marginTop: 8 })}>
+        <h3
+          className={css({
+            marginTop: 0,
+            marginBottom: 4,
+            color: "contents.primary",
+            fontSize: "xl",
+            fontWeight: "semibold",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <span aria-hidden="true">3️⃣</span>
+          機能を持つ画像
+        </h3>
+        <div
+          className={css({
+            marginTop: 4,
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "base",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+          })}
+        >
+          <p
+            className={css({
+              marginTop: 0,
+              marginBottom: 3,
+              lineHeight: "relaxed",
+              color: "contents.primary",
+            })}
+          >
+            ボタンやリンクとして機能する画像です。
+            画像の見た目ではなく、<strong>クリックしたときの動作や行き先</strong>を説明します。
+          </p>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.success",
+            })}
+          >
+            <strong className={css({ color: "contents.success" })}>
+              ✅ 良い例
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- アイコンボタン（動作を説明） -->
+<button>
+  <img src="search.svg" alt="検索" />
+</button>
+
+<!-- ロゴリンク（行き先を説明） -->
+<a href="/">
+  <img src="logo.png" alt="ホームに戻る" />
+</a>
+
+<!-- 削除ボタン -->
+<button>
+  <img src="trash.svg" alt="削除" />
+</button>`}
+              </code>
+            </pre>
+          </div>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.error",
+            })}
+          >
+            <strong className={css({ color: "contents.error" })}>
+              ❌ 悪い例
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- 見た目を説明（動作が不明） -->
+<button>
+  <img src="magnifier.svg" alt="虫眼鏡アイコン" />
+</button>
+
+<!-- 会社名のみ（行き先が不明） -->
+<a href="/">
+  <img src="logo.png" alt="株式会社ABC" />
+</a>`}
+              </code>
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <div className={css({ marginTop: 8 })}>
+        <h3
+          className={css({
+            marginTop: 0,
+            marginBottom: 4,
+            color: "contents.primary",
+            fontSize: "xl",
+            fontWeight: "semibold",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <span aria-hidden="true">4️⃣</span>
+          文字画像
+        </h3>
+        <div
+          className={css({
+            marginTop: 4,
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "base",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+          })}
+        >
+          <p
+            className={css({
+              marginTop: 0,
+              marginBottom: 3,
+              lineHeight: "relaxed",
+              color: "contents.primary",
+            })}
+          >
+            テキストを画像化したものです。
+            <strong>画像内のテキストをそのまま</strong>alt属性に記述します。
+          </p>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.success",
+            })}
+          >
+            <strong className={css({ color: "contents.success" })}>
+              ✅ 良い例
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- 会社ロゴ -->
+<img src="company-logo.png" alt="株式会社ABC" />
+
+<!-- 見出し画像 -->
+<img src="heading.png" alt="新商品のご案内" />
+
+<!-- バナー -->
+<img src="banner.png" alt="期間限定セール 最大50%OFF" />`}
+              </code>
+            </pre>
+          </div>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.warning",
+            })}
+          >
+            <p
+              className={css({
+                marginTop: 0,
+                marginBottom: 2,
+                fontWeight: "bold",
+                color: "contents.primary",
+              })}
+            >
+              ⚠️ 注意
+            </p>
+            <p
+              className={css({
+                marginTop: 0,
+                marginBottom: 0,
+                fontSize: "sm",
+                lineHeight: "relaxed",
+                color: "contents.secondary",
+              })}
+            >
+              できるだけ<strong>画像ではなくHTMLテキストを使用</strong>することが推奨されます。
+              テキストは拡大表示、カラー変更、翻訳などが可能だからです。
+              <br />
+              特別なフォントやデザインが必要な場合のみ、画像を使用してください。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className={css({ marginTop: 8 })}>
+        <h3
+          className={css({
+            marginTop: 0,
+            marginBottom: 4,
+            color: "contents.primary",
+            fontSize: "xl",
+            fontWeight: "semibold",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <span aria-hidden="true">5️⃣</span>
+          複雑な画像（グラフや図表）
+        </h3>
+        <div
+          className={css({
+            marginTop: 4,
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "base",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+          })}
+        >
+          <p
+            className={css({
+              marginTop: 0,
+              marginBottom: 3,
+              lineHeight: "relaxed",
+              color: "contents.primary",
+            })}
+          >
+            グラフ、図表、地図など、詳細な情報を含む画像です。
+            <strong>alt属性には概要を記述</strong>し、<strong>詳細な説明は別途提供</strong>します。
+          </p>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.success",
+            })}
+          >
+            <strong className={css({ color: "contents.success" })}>
+              ✅ 良い例: aria-describedbyを使用
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<img
+  src="sales-chart.png"
+  alt="2024年月別売上推移グラフ"
+  aria-describedby="chart-description"
+/>
+<div id="chart-description">
+  <p>2024年1月から12月までの月別売上推移を示す棒グラフです。</p>
+  <ul>
+    <li>1月: 100万円</li>
+    <li>2月: 120万円</li>
+    <li>3月: 150万円</li>
+    <li>...</li>
+    <li>12月: 300万円</li>
+  </ul>
+  <p>全体として右肩上がりの傾向が見られます。</p>
+</div>`}
+              </code>
+            </pre>
+          </div>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.success",
+            })}
+          >
+            <strong className={css({ color: "contents.success" })}>
+              ✅ 良い例: longdescを使用（非推奨だが互換性のため）
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<img
+  src="chart.png"
+  alt="売上推移グラフ"
+  longdesc="chart-details.html"
+/>
+
+<!-- または、詳細ページへのリンクを提供 -->
+<img src="chart.png" alt="売上推移グラフ" />
+<a href="chart-details.html">グラフの詳細説明</a>`}
+              </code>
+            </pre>
+          </div>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.info",
+            })}
+          >
+            <p
+              className={css({
+                marginTop: 0,
+                marginBottom: 2,
+                fontWeight: "bold",
+                color: "contents.primary",
+              })}
+            >
+              💡 ベストプラクティス
+            </p>
+            <ul
+              className={css({
+                marginY: 2,
+                paddingLeft: 6,
+                lineHeight: "relaxed",
+                color: "contents.primary",
+              })}
+            >
+              <li>alt属性には画像の種類と主題を簡潔に記述</li>
+              <li>詳細な説明は<code>aria-describedby</code>で関連付ける</li>
+              <li>数値データはテーブル形式でも提供する</li>
+              <li>可能であれば、画像の代わりにHTMLとCSSで図表を作成</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className={css({ marginTop: 8 })}>
+        <h3
+          className={css({
+            marginTop: 0,
+            marginBottom: 4,
+            color: "contents.primary",
+            fontSize: "xl",
+            fontWeight: "semibold",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <span aria-hidden="true">📝</span>
+          alt属性を書くときの考え方
+        </h3>
+        <div
+          className={css({
+            marginTop: 4,
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "base",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+          })}
+        >
+          <p
+            className={css({
+              marginTop: 0,
+              marginBottom: 3,
+              lineHeight: "relaxed",
+              color: "contents.primary",
+            })}
+          >
+            alt属性やaria-labelには、画像が伝える<strong>意味や目的</strong>を設定することが重要です。
+            単にファイル名や「画像」といった説明ではなく、ユーザーが理解できる文言を使いましょう。
+          </p>
+
+          <div
+            className={css({
+              marginTop: 4,
+              marginBottom: 4,
+              padding: 4,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.info",
+            })}
+          >
+            <h4
+              className={css({
+                marginTop: 0,
+                marginBottom: 2,
+                color: "contents.primary",
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+              })}
+            >
+              <span aria-hidden="true">📞</span>
+              考え方のヒント: 電話越しに伝えるイメージ
+            </h4>
+            <p
+              className={css({
+                marginTop: 0,
+                marginBottom: 2,
+                lineHeight: "relaxed",
+                color: "contents.primary",
+              })}
+            >
+              alt属性を書くときは、<strong>「電話越しの相手に、この画像の内容を説明する」</strong>
+              と考えるとわかりやすくなります。
+            </p>
+            <div
+              className={css({
+                marginTop: 3,
+                padding: 3,
+                backgroundColor: "bg.secondary",
+                borderRadius: "sm",
+                fontSize: "sm",
+                lineHeight: "relaxed",
+                color: "contents.secondary",
+              })}
+            >
+              <p className={css({ marginTop: 0, marginBottom: 2 })}>
+                例えば、友人に電話で「このページにはこんな画像があるよ」と伝えるとき、
+                あなたは何と言いますか？
+              </p>
+              <ul
+                className={css({
+                  marginY: 2,
+                  paddingLeft: 6,
+                  color: "contents.primary",
+                })}
+              >
+                <li>
+                  <span className={css({ color: "contents.error" })}>❌</span> 「icon_add.pngっていう画像があるよ」
+                </li>
+                <li>
+                  <span className={css({ color: "contents.error" })}>❌</span> 「画像があるよ」
+                </li>
+                <li>
+                  <span className={css({ color: "contents.success" })}>✅</span> 「タスクを追加するボタンがあるよ」
+                </li>
+              </ul>
+              <p className={css({ marginBottom: 0 })}>
+                スクリーンリーダーのユーザーも、まさに同じ情報が必要です。
+                ファイル名ではなく、<strong>画像が伝えようとしている内容</strong>を説明しましょう。
+              </p>
+            </div>
+          </div>
+
+          <div
+            className={css({
+              marginTop: 4,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.error",
+            })}
+          >
+            <strong className={css({ color: "contents.error" })}>
+              ❌ 悪い例: 意味のない説明
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- ファイル名をそのまま使用 -->
+<img src="icon_add.png" alt="icon_add.png" />
+
+<!-- 一般的すぎる説明 -->
+<img src="profile.jpg" alt="画像" />
+<img src="chart.png" alt="アイコン" />
+
+<!-- 説明が不足 -->
+<button>
+  <img src="save.svg" alt="保存" />
+  <!-- 何を保存するのか不明 -->
+</button>`}
+              </code>
+            </pre>
+          </div>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.success",
+            })}
+          >
+            <strong className={css({ color: "contents.success" })}>
+              ✅ 良い例: 意味のある説明
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- 画像の内容を具体的に説明 -->
+<img src="profile.jpg" alt="山田太郎のプロフィール写真" />
+
+<!-- グラフの内容を説明 -->
+<img src="chart.png" alt="2024年の売上推移グラフ。1月から12月まで右肩上がり" />
+
+<!-- ボタンの動作を明確に -->
+<button>
+  <img src="save.svg" alt="変更内容を保存" />
+</button>
+
+<!-- SVGでも同様 -->
+<button>
+  <svg role="img" aria-label="コメントを削除">
+    <path d="..." />
+  </svg>
+</button>`}
+              </code>
+            </pre>
+          </div>
+
+          <h4
+            className={css({
+              marginTop: 4,
+              marginBottom: 2,
+              color: "contents.primary",
+            })}
+          >
+            alt属性を書くときのポイント
+          </h4>
+          <ul
+            className={css({
+              marginY: 2,
+              paddingLeft: 6,
+              lineHeight: "relaxed",
+              color: "contents.primary",
+            })}
+          >
+            <li>
+              <strong>画像が伝える情報や目的を記述</strong>
+              <br />
+              ファイル名ではなく、画像の内容や意図を説明する
+            </li>
+            <li>
+              <strong>文脈を考慮した説明</strong>
+              <br />
+              同じ画像でも、使われる場所によって適切な説明は変わる
+            </li>
+            <li>
+              <strong>「画像」「アイコン」などの接頭辞は不要</strong>
+              <br />
+              スクリーンリーダーが自動的に「画像」と読み上げるため
+            </li>
+            <li>
+              <strong>装飾目的の画像は空のaltを使用</strong>
+              <br />
+              <code>alt=""</code>または<code>aria-hidden="true"</code>
+            </li>
+            <li>
+              <strong>複雑な画像は詳細な説明を別途提供</strong>
+              <br />
+              グラフやダイアグラムは<code>aria-describedby</code>で詳細説明を関連付ける
+            </li>
+          </ul>
+
+          <h4
+            className={css({
+              marginTop: 4,
+              marginBottom: 2,
+              color: "contents.primary",
+            })}
+          >
+            実例: 状況に応じた説明
+          </h4>
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.default",
+            })}
+          >
+            <pre
+              className={css({
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- 検索結果の商品画像 -->
+<img src="product.jpg" alt="ワイヤレスヘッドホン XM-100 ブラック" />
+
+<!-- ニュース記事のサムネイル -->
+<img src="news.jpg" alt="東京タワーをバックに満開の桜" />
+
+<!-- エラーメッセージのアイコン -->
+<div role="alert">
+  <svg role="img" aria-label="エラー">
+    <path d="..." />
+  </svg>
+  入力内容に誤りがあります
+</div>
+
+<!-- ステータスバッジ（装飾的なのでaria-hidden） -->
+<div>
+  <svg aria-hidden="true">
+    <circle fill="green" />
+  </svg>
+  <span>オンライン</span>
+  <!-- 「オンライン」というテキストが既にあるので、アイコンは装飾 -->
+</div>`}
+              </code>
+            </pre>
+          </div>
+        </div>
+      </div>
+
+      <div className={css({ marginTop: 8 })}>
+        <h3
+          className={css({
+            marginTop: 0,
+            marginBottom: 4,
+            color: "contents.primary",
+            fontSize: "xl",
+            fontWeight: "semibold",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <span aria-hidden="true">🎨</span>
+          装飾画像には <code>alt=""</code>
+        </h3>
+        <div
+          className={css({
+            marginTop: 4,
+            padding: 4,
+            backgroundColor: "bg.secondary",
+            borderRadius: "base",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+          })}
+        >
+          <p
+            className={css({
+              marginTop: 0,
+              marginBottom: 3,
+              lineHeight: "relaxed",
+              color: "contents.primary",
+            })}
+          >
+            情報を伝えない純粋な装飾目的の画像には、<code>alt=""</code>（空のalt属性）を設定します。
+            これにより、スクリーンリーダーがその画像を読み飛ばし、ユーザー体験がスムーズになります。
+          </p>
+
+          <h4
+            className={css({
+              marginTop: 4,
+              marginBottom: 2,
+              color: "contents.primary",
+            })}
+          >
+            装飾画像とは？
+          </h4>
+          <ul
+            className={css({
+              marginY: 2,
+              paddingLeft: 6,
+              lineHeight: "relaxed",
+              color: "contents.primary",
+            })}
+          >
+            <li>ページの見た目を良くするための背景画像やパターン</li>
+            <li>テキストラベルと一緒に使われる補助的なアイコン</li>
+            <li>区切り線や装飾的なグラフィック</li>
+            <li>周囲のテキストで既に説明されている内容の画像</li>
+          </ul>
+
+          <div
+            className={css({
+              marginTop: 4,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.success",
+            })}
+          >
+            <strong className={css({ color: "contents.success" })}>
+              ✅ 正しい装飾画像の扱い
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- 空のalt属性 -->
+<img src="decorative-border.png" alt="" />
+
+<!-- テキストラベルがあるボタン -->
+<button>
+  <svg aria-hidden="true">
+    <path d="..." />
+  </svg>
+  保存
+</button>
+<!-- 読み上げ: "保存 ボタン" -->
+
+<!-- 背景装飾 -->
+<div style="background-image: url('pattern.png')">
+  <!-- CSSの背景画像は自動的にスクリーンリーダーから隠れる -->
+</div>
+
+<!-- リストアイコン（既にテキストで説明済み） -->
+<ul>
+  <li>
+    <img src="checkmark.svg" alt="" />
+    タスクが完了しました
+  </li>
+</ul>
+<!-- 読み上げ: "タスクが完了しました" -->`}
+              </code>
+            </pre>
+          </div>
+
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.error",
+            })}
+          >
+            <strong className={css({ color: "contents.error" })}>
+              ❌ よくある間違い
+            </strong>
+            <pre
+              className={css({
+                marginTop: 2,
+                padding: 3,
+                backgroundColor: "bg.tertiary",
+                borderRadius: "sm",
+                overflow: "auto",
+                fontSize: "sm",
+                color: "contents.primary",
+              })}
+            >
+              <code>
+                {`<!-- alt属性を省略 -->
+<img src="decorative.png" />
+<!-- スクリーンリーダーがファイル名を読み上げてしまう -->
+
+<!-- 不要な説明 -->
+<button>
+  <img src="save.svg" alt="保存アイコン" />
+  保存
+</button>
+<!-- 読み上げ: "保存アイコン 保存 ボタン" →冗長 -->
+
+<!-- "装飾"という説明 -->
+<img src="border.png" alt="装飾" />
+<!-- 読み上げ: "装飾 画像" →不要な情報 -->`}
+              </code>
+            </pre>
+            <p
+              className={css({
+                marginTop: 2,
+                marginBottom: 0,
+                fontSize: "sm",
+                color: "contents.secondary",
+                lineHeight: "relaxed",
+              })}
+            >
+              装飾画像には<code>alt=""</code>を設定することで、スクリーンリーダーが完全に無視します。
+              <code>alt="装飾"</code>のように説明を入れると、かえってノイズになります。
+            </p>
+          </div>
+
+          <h4
+            className={css({
+              marginTop: 4,
+              marginBottom: 2,
+              color: "contents.primary",
+            })}
+          >
+            判断のポイント: 装飾か意味のある画像か？
+          </h4>
+          <div
+            className={css({
+              marginTop: 3,
+              padding: 3,
+              backgroundColor: "bg.primary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.info",
+            })}
+          >
+            <p
+              className={css({
+                marginTop: 0,
+                marginBottom: 2,
+                lineHeight: "relaxed",
+                color: "contents.primary",
+              })}
+            >
+              迷ったときは、次の質問を自分に問いかけてみましょう：
+            </p>
+            <div
+              className={css({
+                padding: 3,
+                backgroundColor: "bg.secondary",
+                borderRadius: "sm",
+                fontSize: "sm",
+                lineHeight: "relaxed",
+              })}
+            >
+              <p
+                className={css({
+                  marginTop: 0,
+                  marginBottom: 2,
+                  fontWeight: "bold",
+                  color: "contents.primary",
+                })}
+              >
+                「この画像が表示されなかったら、ページの内容は理解できなくなる？」
+              </p>
+              <ul
+                className={css({
+                  marginY: 2,
+                  paddingLeft: 6,
+                  color: "contents.primary",
+                })}
+              >
+                <li>
+                  <strong>YES</strong> → 意味のある画像。具体的なalt属性が必要
+                </li>
+                <li>
+                  <strong>NO</strong> → 装飾画像。<code>alt=""</code>または<code>aria-hidden="true"</code>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <h4
+            className={css({
+              marginTop: 4,
+              marginBottom: 2,
+              color: "contents.primary",
+            })}
+          >
+            実例で比較
+          </h4>
+          <div
+            className={css({
+              display: "grid",
+              gridTemplateColumns: { base: "1fr", md: "1fr 1fr" },
+              gap: 3,
+              marginTop: 3,
+            })}
+          >
+            <div
+              className={css({
+                padding: 3,
+                backgroundColor: "bg.primary",
+                borderRadius: "base",
+                borderWidth: "thin",
+                borderStyle: "solid",
+                borderColor: "border.default",
+              })}
+            >
+              <strong className={css({ color: "contents.primary" })}>
+                意味のある画像
+              </strong>
+              <pre
+                className={css({
+                  marginTop: 2,
+                  padding: 2,
+                  backgroundColor: "bg.tertiary",
+                  borderRadius: "sm",
+                  overflow: "auto",
+                  fontSize: "xs",
+                  color: "contents.primary",
+                })}
+              >
+                <code>
+                  {`<!-- 商品画像 -->
+<img
+  src="product.jpg"
+  alt="無線イヤホン"
+/>
+
+<!-- 警告アイコン -->
+<img
+  src="warning.svg"
+  alt="警告"
+/>`}
+                </code>
+              </pre>
+            </div>
+
+            <div
+              className={css({
+                padding: 3,
+                backgroundColor: "bg.primary",
+                borderRadius: "base",
+                borderWidth: "thin",
+                borderStyle: "solid",
+                borderColor: "border.default",
+              })}
+            >
+              <strong className={css({ color: "contents.primary" })}>
+                装飾画像
+              </strong>
+              <pre
+                className={css({
+                  marginTop: 2,
+                  padding: 2,
+                  backgroundColor: "bg.tertiary",
+                  borderRadius: "sm",
+                  overflow: "auto",
+                  fontSize: "xs",
+                  color: "contents.primary",
+                })}
+              >
+                <code>
+                  {`<!-- 背景パターン -->
+<img
+  src="pattern.png"
+  alt=""
+/>
+
+<!-- テキスト付きアイコン -->
+<img
+  src="warning.svg"
+  alt=""
+/>
+警告: 入力エラー`}
+                </code>
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={css({ marginTop: 8 })}>
+        <h3
+          className={css({
+            marginTop: 0,
+            marginBottom: 4,
+            color: "contents.primary",
+            fontSize: "xl",
+            fontWeight: "semibold",
           })}
         >
           C. <code>aria-hidden="true"</code> + visually-hidden を使う場合
