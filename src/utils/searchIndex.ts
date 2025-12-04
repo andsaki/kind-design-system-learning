@@ -37,5 +37,16 @@ export const searchIndex: SearchableContent[] = [
       "ベストプラクティス"
     ],
     "content": "概要 主な用途 使用例 注意点 ベストプラクティス role presentation none プレゼンテーション 装飾 セマンティクス 意味を取り除く 支援技術 スクリーンリーダー 装飾的な画像 レイアウト用のテーブル 視覚的なリスト ARIA アクセシビリティ 要素が支援技術に対して 意味を持たない装飾的な要素"
+  },
+  {
+    "title": "モーションとアニメーション",
+    "path": "/accessibility/motion",
+    "headings": [
+      "アニメーションの必要性を検討する",
+      "prefers-reduced-motionに対応する",
+      "ユーザーコントロールを提供する",
+      "安全なアニメーションガイドライン"
+    ],
+    "content": "アニメーションの必要性を検討する prefers-reduced-motionに対応する ユーザーコントロールを提供する 安全なアニメーションガイドライン モーション アニメーション prefers-reduced-motion 前庭障害 てんかん ADHD 視差効果 自動再生 一時停止 ユーザーコントロール アニメーションの必要性 回避方法 アクセシビリティ"
   }
 ];

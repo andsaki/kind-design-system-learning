@@ -11,6 +11,7 @@ import { RolePresentationPage } from "./pages/aria/RolePresentationPage";
 import { FormLabelingPage } from "./pages/aria/FormLabelingPage";
 import { AccessibilityFeaturesPage } from "./pages/accessibility/AccessibilityFeaturesPage";
 import { WCAGLevelsPage } from "./pages/accessibility/WCAGLevelsPage";
+import { MotionAccessibilityPage } from "./pages/accessibility/MotionAccessibilityPage";
 import { DesignTokensPage } from "./pages/design/DesignTokensPage";
 import { ImageComparisonPage } from "./pages/design/ImageComparisonPage";
 import { HueWheelPage } from "./pages/design/HueWheelPage";
@@ -33,6 +34,7 @@ function App() {
         <Route path="accessibility">
           <Route path="features" element={<AccessibilityFeaturesPage />} />
           <Route path="wcag-levels" element={<WCAGLevelsPage />} />
+          <Route path="motion" element={<MotionAccessibilityPage />} />
         </Route>
         <Route path="design">
           <Route path="tokens" element={<DesignTokensPage />} />

@@ -32,6 +32,7 @@ const navigationItems = [
     children: [
       { title: "機能一覧", path: "/accessibility/features" },
       { title: "WCAGレベル", path: "/accessibility/wcag-levels" },
+      { title: "モーションとアニメーション", path: "/accessibility/motion" },
     ],
   },
   {

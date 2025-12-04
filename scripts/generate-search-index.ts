@@ -24,6 +24,7 @@ interface SearchMetadata {
 const sectionFiles = [
   '../src/sections/ImageComparison.tsx',
   '../src/sections/RolePresentation.tsx',
+  '../src/sections/MotionAccessibility.tsx',
   '../src/sections/ARIAGuide.tsx',
   '../src/sections/FormLabeling.tsx',
   '../src/sections/ARIAProperties.tsx',
