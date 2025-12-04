@@ -140,7 +140,10 @@ export const modal: SlotRecipeConfig = {
           _focusVisible: {
             outline: "0.1875rem solid {colors.blue.700}",
             outlineOffset: "0.125rem",
-            backgroundColor: "blue.50",
+            backgroundColor: {
+              base: "blue.50",
+              _dark: "blue.900",
+            },
           },
         },
       },
@@ -160,7 +163,10 @@ export const modal: SlotRecipeConfig = {
           _focusVisible: {
             outline: "0.25rem solid {colors.black}",
             outlineOffset: "0.125rem",
-            backgroundColor: "yellow",
+            backgroundColor: {
+              base: "yellow.100",
+              _dark: "yellow.900",
+            },
           },
         },
       },
