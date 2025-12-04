@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { css } from '../../styled-system/css';
 import { icons } from '../design-system/tokens/icons';
 import { CodeBlock } from '../components/CodeBlock';
-import { Input, Button } from '../design-system/components';
+import { Input, Button, Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell } from '../design-system/components';
 import { ScreenReaderDemo } from '../components/ScreenReaderDemo';
 
 const sectionStyle = css({
@@ -513,34 +513,6 @@ return (
   );
 };
 
-const tableStyle = css({
-  width: '100%',
-  borderCollapse: 'collapse',
-  marginTop: '1rem',
-  borderWidth: 'thin',
-  borderStyle: 'solid',
-  borderColor: 'border.default',
-});
-
-const thStyle = css({
-  padding: '0.75rem',
-  textAlign: 'left',
-  backgroundColor: 'bg.secondary',
-  borderWidth: 'thin',
-  borderStyle: 'solid',
-  borderColor: 'border.default',
-  fontWeight: 'bold',
-  color: 'contents.primary',
-});
-
-const tdStyle = css({
-  padding: '0.75rem',
-  borderWidth: 'thin',
-  borderStyle: 'solid',
-  borderColor: 'border.default',
-  color: 'contents.primary',
-});
-
 const iconStyle = css({
   display: 'inline',
   verticalAlign: 'middle',
@@ -975,54 +947,58 @@ export function InputTypes() {
 
       <section className={sectionStyle}>
         <h2 className={headingStyle}>比較表</h2>
-        <table className={tableStyle}>
-          <thead>
-            <tr>
-              <th className={thStyle}>type</th>
-              <th className={thStyle}>用途</th>
-              <th className={thStyle}>モバイルキーボード</th>
-              <th className={thStyle}>自動検証</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className={tdStyle}><code className={codeStyle}>text</code></td>
-              <td className={tdStyle}>一般的なテキスト</td>
-              <td className={tdStyle}>標準キーボード</td>
-              <td className={tdStyle}>なし</td>
-            </tr>
-            <tr>
-              <td className={tdStyle}><code className={codeStyle}>email</code></td>
-              <td className={tdStyle}>メールアドレス</td>
-              <td className={tdStyle}>@キー付き</td>
-              <td className={tdStyle}>メール形式</td>
-            </tr>
-            <tr>
-              <td className={tdStyle}><code className={codeStyle}>search</code></td>
-              <td className={tdStyle}>検索クエリ</td>
-              <td className={tdStyle}>検索ボタン付き</td>
-              <td className={tdStyle}>なし</td>
-            </tr>
-            <tr>
-              <td className={tdStyle}><code className={codeStyle}>tel</code></td>
-              <td className={tdStyle}>電話番号</td>
-              <td className={tdStyle}>数字キーボード</td>
-              <td className={tdStyle}>なし</td>
-            </tr>
-            <tr>
-              <td className={tdStyle}><code className={codeStyle}>url</code></td>
-              <td className={tdStyle}>URL</td>
-              <td className={tdStyle}>/ と .com キー付き</td>
-              <td className={tdStyle}>URL形式</td>
-            </tr>
-            <tr>
-              <td className={tdStyle}><code className={codeStyle}>number</code></td>
-              <td className={tdStyle}>数値</td>
-              <td className={tdStyle}>数字キーボード</td>
-              <td className={tdStyle}>数値・範囲</td>
-            </tr>
-          </tbody>
-        </table>
+        <Table
+          caption="Input要素のtype属性による違い"
+          variant="striped"
+          highlightOnHover
+        >
+          <TableHeader>
+            <TableRow>
+              <TableHeaderCell>type</TableHeaderCell>
+              <TableHeaderCell>用途</TableHeaderCell>
+              <TableHeaderCell>モバイルキーボード</TableHeaderCell>
+              <TableHeaderCell>自動検証</TableHeaderCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell><code className={codeStyle}>text</code></TableCell>
+              <TableCell>一般的なテキスト</TableCell>
+              <TableCell>標準キーボード</TableCell>
+              <TableCell>なし</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell><code className={codeStyle}>email</code></TableCell>
+              <TableCell>メールアドレス</TableCell>
+              <TableCell>@キー付き</TableCell>
+              <TableCell>メール形式</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell><code className={codeStyle}>search</code></TableCell>
+              <TableCell>検索クエリ</TableCell>
+              <TableCell>検索ボタン付き</TableCell>
+              <TableCell>なし</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell><code className={codeStyle}>tel</code></TableCell>
+              <TableCell>電話番号</TableCell>
+              <TableCell>数字キーボード</TableCell>
+              <TableCell>なし</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell><code className={codeStyle}>url</code></TableCell>
+              <TableCell>URL</TableCell>
+              <TableCell>/ と .com キー付き</TableCell>
+              <TableCell>URL形式</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell><code className={codeStyle}>number</code></TableCell>
+              <TableCell>数値</TableCell>
+              <TableCell>数字キーボード</TableCell>
+              <TableCell>数値・範囲</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </section>
 
       <section className={sectionStyle}>
