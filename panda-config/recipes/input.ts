@@ -1,27 +1,32 @@
 import type { RecipeConfig } from "@pandacss/dev";
-import { CSS_VARS } from "./constants";
 
-const focusVars = {
+const focusStyles = {
   A: {
-    [CSS_VARS.FOCUS.BG]: "transparent",
-    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
-    [CSS_VARS.FOCUS.OUTLINE]: "{colors.blue.300}",
-    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.thin}",
-    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "0",
+    _focusVisible: {
+      backgroundColor: "transparent",
+      color: "gray.900",
+      outlineColor: "blue.300",
+      outlineWidth: "thin",
+      outlineOffset: "0",
+    },
   },
   AA: {
-    [CSS_VARS.FOCUS.BG]: "{colors.blue.50}",
-    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
-    [CSS_VARS.FOCUS.OUTLINE]: "{colors.blue.700}",
-    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.base}",
-    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "{spacing.0.5}",
+    _focusVisible: {
+      backgroundColor: "blue.50",
+      color: "gray.900",
+      outlineColor: "blue.700",
+      outlineWidth: "base",
+      outlineOffset: "0.5",
+    },
   },
   AAA: {
-    [CSS_VARS.FOCUS.BG]: "{colors.yellow.400}",
-    [CSS_VARS.FOCUS.TEXT]: "{colors.gray.900}",
-    [CSS_VARS.FOCUS.OUTLINE]: "{colors.gray.900}",
-    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.thick}",
-    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "{spacing.0.5}",
+    _focusVisible: {
+      backgroundColor: "yellow.400",
+      color: "gray.900",
+      outlineColor: "gray.900",
+      outlineWidth: "thick",
+      outlineOffset: "0.5",
+    },
   },
 } as const;
 
@@ -75,9 +80,9 @@ export const input: RecipeConfig = {
       },
     },
     wcagLevel: {
-      A: focusVars.A,
-      AA: focusVars.AA,
-      AAA: focusVars.AAA,
+      A: focusStyles.A,
+      AA: focusStyles.AA,
+      AAA: focusStyles.AAA,
     },
   },
   defaultVariants: {

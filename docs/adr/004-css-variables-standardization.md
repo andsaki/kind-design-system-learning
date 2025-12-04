@@ -2,7 +2,11 @@
 
 ## ステータス
 
-承認済み (Accepted) - 2025-12-04
+**廃止 (Deprecated) - 2025-12-05**
+
+以前のステータス: 承認済み (Accepted) - 2025-12-04
+
+> **注意**: この設計判断は見直されました。CSS変数を使わず、直接スタイルを指定する方式に戻しました。詳細は「廃止の理由」セクションを参照してください。
 
 ## コンテキスト
 
@@ -310,8 +314,89 @@ npm run prepare
 - [CSS Custom Properties (MDN)](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
 - [WCAG 2.1 - Focus Visible](https://www.w3.org/WAI/WCAG21/Understanding/focus-visible.html)
 
+## 廃止の理由
+
+この設計判断は2025-12-05に見直され、廃止されました。
+
+### 問題点
+
+1. **冗長性**: CSS変数を宣言してから`var()`で参照する二重の記述が冗長
+2. **複雑性**: computed property nameと変数参照の両方を理解する必要がある
+3. **実用性の欠如**: 実行時にCSS変数を動的に変更する要件がなかった
+4. **デバッグの困難さ**: ブラウザDevToolsでスタイルを追跡する際にCSS変数が邪魔になる
+
+### 新しいアプローチ
+
+CSS変数を使わず、直接Pandaトークンを指定する方式に戻しました：
+
+```typescript
+const focusStyles = {
+  A: {
+    _focusVisible: {
+      backgroundColor: "transparent",
+      color: "gray.900",
+      outlineColor: "blue.300",
+      outlineWidth: "thin",
+      outlineOffset: "0",
+    },
+  },
+  AA: {
+    _focusVisible: {
+      backgroundColor: "blue.50",
+      color: "gray.900",
+      outlineColor: "blue.700",
+      outlineWidth: "base",
+      outlineOffset: "0.5",
+    },
+  },
+  AAA: {
+    _focusVisible: {
+      backgroundColor: "yellow.400",
+      color: "gray.900",
+      outlineColor: "gray.900",
+      outlineWidth: "thick",
+      outlineOffset: "0.5",
+    },
+  },
+} as const;
+
+// 使用時
+wcagLevel: {
+  A: {
+    _focusVisible: focusStyles.A._focusVisible,
+  },
+  AA: {
+    _focusVisible: focusStyles.AA._focusVisible,
+  },
+  AAA: {
+    _focusVisible: focusStyles.AAA._focusVisible,
+  },
+},
+```
+
+### メリット
+
+- ✅ シンプルで理解しやすい
+- ✅ Pandaトークンを直接使用（`"blue.300"`, `"base"`など）
+- ✅ TypeScriptの型チェックが効く
+- ✅ デバッグが容易（ブラウザDevToolsで直接値が見える）
+- ✅ 冗長性がない（一度定義するだけ）
+
+### デメリット
+
+- ⚠️ 実行時の動的変更はできない（しかし、この要件はなかった）
+
+### 変更したファイル（2025-12-05）
+
+- `panda-config/recipes/button.ts` - CSS変数を削除、直接スタイル指定に変更
+- `panda-config/recipes/input.ts` - CSS変数を削除、直接スタイル指定に変更
+- `panda-config/recipes/textarea.ts` - CSS変数を削除、直接スタイル指定に変更
+- `panda-config/recipes/colorpicker.ts` - CSS変数を削除、直接スタイル指定に変更
+- `panda-config/recipes/constants.ts` - 削除予定（もはや使用されていない）
+
 ## 更新履歴
 
+- 2025-12-05: 設計判断を廃止（CSS変数を削除し、直接スタイル指定に変更）
 - 2025-12-04: 初版作成・承認（CSS変数の統一とデザイントークン化）
 
 ---

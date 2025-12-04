@@ -1,21 +1,29 @@
 import type { RecipeConfig } from "@pandacss/dev";
-import { CSS_VARS } from "./constants";
 
-const focusVars = {
+const focusStyles = {
   A: {
-    [CSS_VARS.FOCUS.OUTLINE]: "{colors.blue.300}",
-    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.thin}",
-    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "0",
+    _focusVisible: {
+      outlineColor: "blue.300",
+      outlineWidth: "thin",
+      outlineOffset: "0",
+      outlineStyle: "solid",
+    },
   },
   AA: {
-    [CSS_VARS.FOCUS.OUTLINE]: "{colors.blue.700}",
-    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.base}",
-    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "{spacing.0.5}",
+    _focusVisible: {
+      outlineColor: "blue.700",
+      outlineWidth: "base",
+      outlineOffset: "0.5",
+      outlineStyle: "solid",
+    },
   },
   AAA: {
-    [CSS_VARS.FOCUS.OUTLINE]: "{colors.gray.900}",
-    [CSS_VARS.FOCUS.OUTLINE_WIDTH]: "{borderWidths.thick}",
-    [CSS_VARS.FOCUS.OUTLINE_OFFSET]: "{spacing.0.5}",
+    _focusVisible: {
+      outlineColor: "gray.900",
+      outlineWidth: "thick",
+      outlineOffset: "0.5",
+      outlineStyle: "solid",
+    },
   },
 } as const;
 
@@ -35,12 +43,6 @@ export const colorpicker: RecipeConfig = {
     cursor: "pointer",
     transition: "outline-color 0.2s ease",
     outline: "2px solid transparent",
-    _focusVisible: {
-      outlineColor: `var(${CSS_VARS.FOCUS.OUTLINE})`,
-      outlineWidth: `var(${CSS_VARS.FOCUS.OUTLINE_WIDTH})`,
-      outlineOffset: `var(${CSS_VARS.FOCUS.OUTLINE_OFFSET})`,
-      outlineStyle: "solid",
-    },
     _disabled: {
       cursor: "not-allowed",
       opacity: 0.5,
@@ -71,9 +73,9 @@ export const colorpicker: RecipeConfig = {
       },
     },
     wcagLevel: {
-      A: focusVars.A,
-      AA: focusVars.AA,
-      AAA: focusVars.AAA,
+      A: focusStyles.A,
+      AA: focusStyles.AA,
+      AAA: focusStyles.AAA,
     },
   },
   defaultVariants: {
