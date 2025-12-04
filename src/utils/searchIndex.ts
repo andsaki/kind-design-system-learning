@@ -10,7 +10,7 @@ export interface SearchableContent {
 
 export const searchIndex: SearchableContent[] = [
   {
-    "title": "画像比較・フォーム検証・モーション",
+    "title": "画像比較とalt属性",
     "path": "/design/image-comparison",
     "headings": [
       "ボタン内の画像比較: img vs svg",
@@ -22,11 +22,9 @@ export const searchIndex: SearchableContent[] = [
       "複雑な画像（グラフや図表）",
       "alt属性を書くときの考え方",
       "装飾画像には alt=\"\"",
-      "aria-hiddenとは",
-      "フォームの検証: pattern属性",
-      "モーションアニメーション: 必要性の検討と回避方法"
+      "aria-hiddenとは"
     ],
-    "content": "ボタン内の画像比較: img vs svg 画像の5つの分類とalt属性の書き方 情報を提供する画像 装飾画像 機能を持つ画像 文字画像 複雑な画像（グラフや図表） alt属性を書くときの考え方 装飾画像には alt=\"\" aria-hiddenとは フォームの検証: pattern属性 モーションアニメーション: 必要性の検討と回避方法 画像 img svg alt属性 aria-label aria-hidden visually-hidden ボタン 装飾画像 情報を提供する画像 機能を持つ画像 文字画像 複雑な画像 グラフ 図表 aria-describedby 適切なラベル ラベルを提供 フォーム検証 pattern属性 正規表現 バリデーション title aria-invalid 郵便番号 電話番号 ユーザー名 カタカナ inputmode モーションアニメーション prefers-reduced-motion 前庭障害 てんかん ADHD 視差効果 自動再生 一時停止 ユーザーコントロール アニメーションの必要性 回避方法"
+    "content": "ボタン内の画像比較: img vs svg 画像の5つの分類とalt属性の書き方 情報を提供する画像 装飾画像 機能を持つ画像 文字画像 複雑な画像（グラフや図表） alt属性を書くときの考え方 装飾画像には alt=\"\" aria-hiddenとは 画像 img svg alt属性 aria-label aria-hidden visually-hidden ボタン 装飾画像 情報を提供する画像 機能を持つ画像 文字画像 複雑な画像 グラフ 図表 aria-describedby 適切なラベル ラベルを提供 画像比較"
   },
   {
     "title": "role=",
