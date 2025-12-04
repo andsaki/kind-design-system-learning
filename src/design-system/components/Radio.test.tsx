@@ -273,5 +273,29 @@ describe('RadioGroup', () => {
       expect(creditRadio).not.toBeChecked();
       expect(bankRadio).toBeChecked();
     });
+
+    it('defaultValueで指定したラジオがデフォルト選択される', () => {
+      render(
+        <RadioGroup label="色を選択" defaultValue="red">
+          <Radio label="赤" value="red" />
+          <Radio label="青" value="blue" />
+        </RadioGroup>
+      );
+      expect(screen.getByRole('radio', { name: '赤' })).toBeChecked();
+      expect(screen.getByRole('radio', { name: '青' })).not.toBeChecked();
+    });
+
+    it('nameを指定しなくてもグループ内のラジオは同じname属性になる', () => {
+      render(
+        <RadioGroup label="サイズを選択">
+          <Radio label="S" value="s" />
+          <Radio label="M" value="m" />
+        </RadioGroup>
+      );
+      const radios = screen.getAllByRole('radio');
+      const uniqueNames = Array.from(new Set(radios.map((radio) => radio.getAttribute('name'))));
+      expect(uniqueNames).toHaveLength(1);
+      expect(uniqueNames[0]).toBeTruthy();
+    });
   });
 });

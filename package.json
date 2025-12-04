@@ -15,6 +15,7 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "test:playwright": "playwright test",
+    "test:playwright:storybook": "playwright test -c playwright.storybook.config.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "deploy-storybook": "storybook build && touch storybook-static/.nojekyll"

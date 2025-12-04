@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useState } from 'react';
 import { Modal } from './Modal';
 
 describe('Modal', () => {
@@ -296,6 +297,75 @@ describe('Modal', () => {
       expect(screen.getByText('段落1')).toBeInTheDocument();
       expect(screen.getByText('段落2')).toBeInTheDocument();
       expect(screen.getByText('ボタン')).toBeInTheDocument();
+    });
+  });
+
+  describe('フォーカス管理', () => {
+    it('初回フォーカスとTabキーでフォーカストラップが機能する', async () => {
+      const user = userEvent.setup();
+      render(
+        <Modal
+          isOpen={true}
+          onClose={vi.fn()}
+          title="タイトル"
+          footer={<button>OK</button>}
+        >
+          <button>本文ボタン</button>
+        </Modal>
+      );
+
+      const closeButton = screen.getByRole('button', { name: 'モーダルを閉じる' });
+      const bodyButton = screen.getByRole('button', { name: '本文ボタン' });
+      const footerButton = screen.getByRole('button', { name: 'OK' });
+
+      expect(closeButton).toHaveFocus();
+
+      await user.tab();
+      expect(bodyButton).toHaveFocus();
+
+      await user.tab();
+      expect(footerButton).toHaveFocus();
+
+      await user.tab();
+      expect(closeButton).toHaveFocus();
+
+      await user.tab({ shift: true });
+      expect(footerButton).toHaveFocus();
+    });
+
+    it('モーダルを閉じると元のフォーカス要素に戻る', async () => {
+      const user = userEvent.setup();
+
+      const Wrapper = () => {
+        const [open, setOpen] = useState(false);
+        return (
+          <>
+            <button onClick={() => setOpen(true)}>モーダルを開く</button>
+            <Modal
+              isOpen={open}
+              onClose={() => setOpen(false)}
+              title="タイトル"
+              footer={<button>閉じる</button>}
+            >
+              コンテンツ
+            </Modal>
+          </>
+        );
+      };
+
+      render(<Wrapper />);
+      const triggerButton = screen.getByRole('button', { name: 'モーダルを開く' });
+      triggerButton.focus();
+      await user.click(triggerButton);
+
+      const closeButton = await screen.findByRole('button', { name: 'モーダルを閉じる' });
+      expect(closeButton).toHaveFocus();
+
+      await user.click(closeButton);
+      await waitFor(() => {
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+        expect(triggerButton).toHaveFocus();
+      });
     });
   });
 });

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { ColorPicker } from "./ColorPicker";
 
 describe("ColorPicker", () => {
@@ -44,6 +45,15 @@ describe("ColorPicker", () => {
     expect(screen.getByRole("alert")).toHaveTextContent("無効な値です");
   });
 
+  it("エラー優先でaria-describedbyがエラー要素を参照する", () => {
+    render(<ColorPicker label="brand" helperText="説明" error="エラー" />);
+    const input = screen.getByLabelText("brand");
+    const describedBy = input.getAttribute("aria-describedby");
+    expect(describedBy).toBeTruthy();
+    expect(document.getElementById(describedBy!)).toHaveTextContent("エラー");
+    expect(screen.queryByText("説明")).not.toBeInTheDocument();
+  });
+
   it("disabled属性が機能する", () => {
     render(<ColorPicker label="固定色" disabled />);
     const input = screen.getByLabelText("固定色");
@@ -55,5 +65,31 @@ describe("ColorPicker", () => {
       <ColorPicker label="隠し値" value="#112233" showValueLabel={false} />
     );
     expect(screen.queryByText("#112233")).not.toBeInTheDocument();
+  });
+
+  it("必須マークがレンダリングされ aria-required が設定される", () => {
+    render(<ColorPicker label="必須色" required />);
+    const label = screen.getByText("必須色");
+    expect(label.closest("label")?.querySelector('[aria-label="必須"]')).toBeTruthy();
+    const input = screen.getByLabelText(/必須色/);
+    expect(input).toHaveAttribute("aria-required", "true");
+  });
+
+  it("値バッジは変更時にライブリージョンとして読み上げられる", async () => {
+    const user = userEvent.setup();
+    render(<ColorPicker label="ライブ" defaultValue="#000000" />);
+    const badge = screen.getByText("#000000");
+    expect(badge).toHaveAttribute("aria-live", "polite");
+
+    const input = screen.getByLabelText("ライブ");
+    await user.click(input);
+    fireEvent.change(input, { target: { value: "#ff00ff" } });
+    expect(screen.getByText("#FF00FF")).toBeInTheDocument();
+  });
+
+  it("サイズとWCAGレベルのバリアントが適用できる", () => {
+    render(<ColorPicker label="Variant" size="lg" wcagLevel="AAA" />);
+    const input = screen.getByLabelText("Variant");
+    expect(input.className).toContain("colorpicker");
   });
 });
