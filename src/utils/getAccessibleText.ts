@@ -4,6 +4,7 @@
 export const getAccessibleText = (element: HTMLElement): string => {
   // aria-hiddenで隠されている場合は空文字
   if (element.getAttribute("aria-hidden") === "true") {
+    // 視覚的な装飾のみの要素は読み上げ対象から除外
     return "";
   }
 
@@ -180,6 +181,7 @@ const getStateText = (element: HTMLElement): string => {
 const getVisibleText = (element: Element | null): string => {
   if (!element) return "";
   if (element instanceof HTMLElement && element.getAttribute("aria-hidden") === "true") {
+    // 装飾目的のノードは無視してテキストを連結
     return "";
   }
 

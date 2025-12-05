@@ -1,7 +1,8 @@
-import { sva } from "@/styled-system/css";
+import type { SlotRecipeConfig } from "@pandacss/dev";
 
-export const tooltipRecipe = sva({
+export const tooltip: SlotRecipeConfig = {
   className: "tooltip",
+  description: "Tooltip component",
   slots: ["root", "content", "arrow"],
   base: {
     root: {
@@ -9,7 +10,7 @@ export const tooltipRecipe = sva({
       display: "inline-block",
     },
     content: {
-      position: "absolute",
+      position: "fixed",
       backgroundColor: "gray.900",
       color: "white",
       paddingY: 2,
@@ -30,12 +31,6 @@ export const tooltipRecipe = sva({
   variants: {
     position: {
       top: {
-        content: {
-          bottom: "100%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          marginBottom: 2,
-        },
         arrow: {
           bottom: "-6px",
           left: "50%",
@@ -47,12 +42,6 @@ export const tooltipRecipe = sva({
         },
       },
       bottom: {
-        content: {
-          top: "100%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          marginTop: 2,
-        },
         arrow: {
           top: "-6px",
           left: "50%",
@@ -64,12 +53,6 @@ export const tooltipRecipe = sva({
         },
       },
       left: {
-        content: {
-          right: "100%",
-          top: "50%",
-          transform: "translateY(-50%)",
-          marginRight: 2,
-        },
         arrow: {
           right: "-6px",
           top: "50%",
@@ -81,12 +64,6 @@ export const tooltipRecipe = sva({
         },
       },
       right: {
-        content: {
-          left: "100%",
-          top: "50%",
-          transform: "translateY(-50%)",
-          marginLeft: 2,
-        },
         arrow: {
           left: "-6px",
           top: "50%",
@@ -102,4 +79,4 @@ export const tooltipRecipe = sva({
   defaultVariants: {
     position: "top",
   },
-});
+};

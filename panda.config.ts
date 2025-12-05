@@ -14,6 +14,7 @@ import { modal } from "./panda-config/recipes/modal";
 import { radio } from "./panda-config/recipes/radio";
 import { table } from "./panda-config/recipes/table";
 import { colorpicker } from "./panda-config/recipes/colorpicker";
+import { tooltip } from "./panda-config/recipes/tooltip";
 import { carousel } from "./panda-config/recipes/carousel";
 import { CSS_VARS } from "./panda-config/recipes/constants";
 import { pandaSemanticColors } from "./panda-config/types/semanticTokens";
@@ -116,6 +117,7 @@ export default defineConfig({
       slotRecipes: {
         table,
         carousel,
+        tooltip,
       },
     },
   },

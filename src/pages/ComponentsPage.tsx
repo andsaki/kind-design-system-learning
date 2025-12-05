@@ -232,6 +232,7 @@ export const ComponentsPage = () => {
                 <Tooltip content="4桁ごとにスペースを入れると読みやすい形式になります" position="top">
                   <span
                     aria-hidden="true"
+                    // 視覚的なヒント用のためスクリーンリーダーには伝えない
                     className={css({
                       display: "inline-flex",
                       alignItems: "center",
@@ -352,7 +353,7 @@ export const ComponentsPage = () => {
             mb: 0,
           })}
         >
-          より詳細な例や実装のデモは「ARIA ガイド &gt; ツールチップ」セクションで確認できます。
+          より詳細な例や実装のデモは、このコンポーネントページ内のツールチップセクションですべて確認できるようまとめています。
         </p>
       </section>
 
