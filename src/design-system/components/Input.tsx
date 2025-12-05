@@ -20,6 +20,8 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   clearable?: boolean;
   /** クリアボタンがクリックされた時のコールバック */
   onClear?: () => void;
+  /** aria-description属性の値 (VoiceOverで自動読み上げされる) */
+  'aria-description'?: string;
 }
 
 /**
@@ -53,12 +55,18 @@ export const Input: React.FC<InputProps> = ({
   const inputId = id || autoId;
   const errorId = `${inputId}-error`;
   const helperId = `${inputId}-helper`;
+  const {
+    'aria-describedby': arbitraryHelperId,
+    'aria-description': ariaDescription,
+    ...restProps
+  } = props;
 
   // aria-describedbyの値を構築
   const getAriaDescribedBy = () => {
     const ids: string[] = [];
     if (error) ids.push(errorId);
     if (helperText && !error) ids.push(helperId);
+    if (arbitraryHelperId) ids.push(arbitraryHelperId);
     return ids.length > 0 ? ids.join(' ') : undefined;
   };
 
@@ -103,6 +111,7 @@ export const Input: React.FC<InputProps> = ({
       {/* 入力フィールドのラッパー（クリアボタン用） */}
       <div className={css({ position: 'relative' })}>
         <input
+          {...restProps}
           id={inputId}
           value={value}
           disabled={disabled}
@@ -110,13 +119,13 @@ export const Input: React.FC<InputProps> = ({
           aria-required={required}
           aria-invalid={!!error}
           aria-describedby={getAriaDescribedBy()}
+          aria-description={ariaDescription}
           className={cx(
             recipeClassName,
             className,
             clearable && value ? css({ paddingRight: '40px' }) : undefined
           )}
           style={style}
-          {...props}
         />
 
         {/* クリアボタン */}

@@ -68,19 +68,25 @@ export const getAccessibleText = (element: HTMLElement): string => {
     text += `、${roleText}`;
   }
 
-  // aria-describedbyの内容を追加
-  const ariaDescribedby = element.getAttribute("aria-describedby");
-  if (ariaDescribedby) {
-    const ids = ariaDescribedby.split(" ");
-    const descriptions = ids
-      .map((id) => {
-        const el = document.getElementById(id);
-        return el ? el.textContent?.trim() || "" : "";
-      })
-      .filter(Boolean)
-      .join("。");
-    if (descriptions) {
-      text += `。${descriptions}`;
+  // aria-descriptionの内容を追加（優先）
+  const ariaDescription = element.getAttribute("aria-description");
+  if (ariaDescription) {
+    text += `。${ariaDescription}`;
+  } else {
+    // aria-describedbyの内容を追加（aria-descriptionがない場合）
+    const ariaDescribedby = element.getAttribute("aria-describedby");
+    if (ariaDescribedby) {
+      const ids = ariaDescribedby.split(" ");
+      const descriptions = ids
+        .map((id) => {
+          const el = document.getElementById(id);
+          return el ? el.textContent?.trim() || "" : "";
+        })
+        .filter(Boolean)
+        .join("。");
+      if (descriptions) {
+        text += `。${descriptions}`;
+      }
     }
   }
 

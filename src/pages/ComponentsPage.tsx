@@ -1,6 +1,17 @@
 import { useState, useId } from "react";
 import { css } from "@/styled-system/css";
-import { useToast, Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell, Button, Tooltip, Input } from "../design-system/components";
+import {
+  useToast,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHeaderCell,
+  TableCell,
+  Button,
+  Tooltip,
+  Input,
+} from "../design-system/components";
 import { ScreenReaderDemo } from "../components/ScreenReaderDemo";
 import { InfoBox } from "../design-system/components/InfoBox";
 import { SectionHeading } from "../components/SectionHeading";
@@ -53,12 +64,29 @@ const tableUsageHighlights = [
   },
 ];
 
+const tooltipUsageHighlights = [
+  {
+    title: "実装のベストプラクティス",
+    description:
+      "role='tooltip' と一意のIDを付与し、トリガー要素からaria-describedbyで参照。ホバーとキーボードフォーカス両方で表示し、300ms以内の遅延制御を行います。",
+  },
+  {
+    title: "スクリーンリーダー対応",
+    description:
+      "NVDA/JAWSでは自動読み上げされますが、VoiceOverでは初回フォーカス時に読まれません。重要な情報はhelperTextとして常時表示することを推奨します。",
+  },
+  {
+    title: "使用上の注意",
+    description:
+      "補足情報のみに使用し、重要な説明はDOM上に常時表示。title属性は使わず、aria-describedby + role='tooltip' またはhelperTextを採用してください。",
+  },
+];
+
 export const ComponentsPage = () => {
   const { success, error, warning, info } = useToast();
   const [count, setCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const tooltipHintId = useId();
   const tooltipInputId = useId();
 
   const [formData, setFormData] = useState({
@@ -132,72 +160,107 @@ export const ComponentsPage = () => {
           mb: { base: 10, md: 16 },
           p: { base: 4, md: 6 },
           borderRadius: "2xl",
-          bg: "bg.primary",
+          bg: "bg.secondary",
+          boxShadow: "2xl",
           borderWidth: "thin",
           borderStyle: "solid",
-          borderColor: "border.subtle",
-          boxShadow: "lg",
+          borderColor: "border.default",
         })}
       >
-        <SectionHeading emoji="💬" level="h2">
-          ツールチップの扱い
-        </SectionHeading>
-        <p
+        <div
           className={css({
-            color: "contents.secondary",
-            fontSize: "md",
-            lineHeight: "relaxed",
-            m: 0,
+            display: "flex",
+            flexDirection: "column",
+            gap: 3,
+            mb: 6,
           })}
         >
-          design system には Tooltip コンポーネントがありますが、アクセシビリティ観点では「補足情報を添える場合のみ」使用します。
-          重要な説明は DOM 上に常時表示し、このセクションでは ARIA ガイドの知見をまとめています。
-        </p>
+          <span
+            className={css({
+              fontSize: "sm",
+              color: "contents.tertiary",
+              letterSpacing: "widest",
+              textTransform: "uppercase",
+            })}
+          >
+            Tooltip component
+          </span>
+          <h2
+            className={css({
+              fontSize: { base: "2xl", md: "3xl" },
+              m: 0,
+              color: "contents.primary",
+            })}
+          >
+            補足情報を効果的に伝えるツールチップ
+          </h2>
+          <p
+            className={css({
+              fontSize: "md",
+              color: "contents.secondary",
+              lineHeight: "relaxed",
+              maxW: "720px",
+            })}
+          >
+            <code
+              className={css({
+                backgroundColor: "bg.primary",
+                px: 2,
+                py: 1,
+                borderRadius: "sm",
+                borderWidth: "thin",
+                borderColor: "border.subtle",
+                fontSize: "sm",
+              })}
+            >
+              Tooltip
+            </code>{" "}
+            コンポーネントはアクセシビリティ観点では「補足情報を添える場合のみ」使用します。
+            重要な説明は DOM 上に常時表示し、スクリーンリーダー間の挙動の違いにも配慮した実装が必要です。
+          </p>
+        </div>
+
         <div
           className={css({
             display: "grid",
-            gridTemplateColumns: { base: "1fr", md: "repeat(2, 1fr)" },
+            gridTemplateColumns: { base: "1fr", md: "repeat(3, 1fr)" },
             gap: 4,
-            mt: 4,
+            mb: 6,
           })}
         >
-          <InfoBox variant="tip" icon="💡" title="実装時のチェックリスト">
-            <ul className={css({ m: 0, pl: 5, lineHeight: "relaxed" })}>
-              <li>role="tooltip" を付与し、一意の ID を持たせる</li>
-              <li>トリガー要素から aria-describedby で参照する</li>
-              <li>ホバーだけでなくキーボードフォーカスでも表示する</li>
-              <li>約 300ms 以内の遅延制御と視認しやすい位置調整を行う</li>
-            </ul>
-          </InfoBox>
-          <InfoBox variant="warning" icon="⚠️" title="重要情報には使わない">
-            <ul className={css({ m: 0, pl: 5, lineHeight: "relaxed" })}>
-              <li>スクリーンリーダーで aria-describedby が読まれない場合がある</li>
-              <li>ホバー前提 UI はキーボード・タッチ操作で発見しづらい</li>
-              <li>表示条件が曖昧で、利用者が情報の存在に気づけないことがある</li>
-            </ul>
-            <p className={css({ m: 0, mt: 2, lineHeight: "relaxed" })}>
-              重要な説明はテキストとして常時表示し、ツールチップは補足情報の重複提示に留めます。
-            </p>
-          </InfoBox>
-        </div>
-        <InfoBox
-          variant="warning"
-          icon="🚫"
-          title="title 属性の活用は不可"
-          className={css({ mt: 4 })}
-        >
-          <p className={css({ m: 0, lineHeight: "relaxed" })}>
-            HTML の <code>title</code> 属性はキーボードユーザーやタッチ端末では表示されず、支援技術でも確実に読まれません。
-            aria-describedby と role="tooltip" を組み合わせた実装、もしくは常時表示の説明文を採用してください。
-          </p>
-        </InfoBox>
-        <div className={css({ mt: 4 })}>
-          <CodeBlock
-            language="jsx"
-            code={`<Tooltip content="追加の説明テキスト" position="top">
-  <button>ホバーまたはフォーカス</button>
-</Tooltip>`}
-          />
+          {tooltipUsageHighlights.map((item) => (
+            <div
+              key={item.title}
+              className={css({
+                p: 4,
+                bg: "bg.primary",
+                borderRadius: "xl",
+                borderWidth: "thin",
+                borderColor: "border.subtle",
+                minHeight: "150px",
+              })}
+            >
+              <h3
+                className={css({
+                  m: 0,
+                  fontSize: "lg",
+                  color: "contents.primary",
+                })}
+              >
+                {item.title}
+              </h3>
+              <p
+                className={css({
+                  fontSize: "sm",
+                  color: "contents.secondary",
+                  lineHeight: "relaxed",
+                  mt: 2,
+                })}
+              >
+                {item.description}
+              </p>
+            </div>
+          ))}
         </div>
         <div
           className={css({
@@ -212,27 +275,48 @@ export const ComponentsPage = () => {
             gap: 3,
           })}
         >
-          <h3 className={css({ m: 0, color: "contents.primary", fontSize: "lg" })}>
+          <h3
+            className={css({ m: 0, color: "contents.primary", fontSize: "lg" })}
+          >
             フォームと aria-describedby の実演
           </h3>
-          <p className={css({ m: 0, color: "contents.secondary", fontSize: "sm" })}>
-            入力欄は <code>aria-describedby</code> でヒントテキストと結びつけ、同じ内容をツールチップでも重複表示しています。
+          <p
+            className={css({
+              m: 0,
+              color: "contents.secondary",
+              fontSize: "sm",
+            })}
+          >
+            入力欄は <code>aria-describedby</code>{" "}
+            でヒントテキストと結びつけ、同じ内容をツールチップでも重複表示しています。
             下の読み上げデモから、スクリーンリーダーが説明をどう取得するかを確認できます。
           </p>
           <ScreenReaderDemo
             label="スクリーンリーダーの読み上げ"
-            description="フォーカスすると『カード番号』→ヒントテキストの順で読み上げられ、ツールチップは視覚的な補助に留まります。"
+            description="aria-describedby による説明文の提供。VoiceOverでは VO+Shift+H でヘルプテキストを読めます（初回フォーカス時は自動読み上げされません）。NVDA/JAWSでは自動読み上げされます。"
           >
-            <div className={css({ display: "flex", flexDirection: "column", gap: 2 })}>
-              <label
-                htmlFor={tooltipInputId}
-                className={css({ fontWeight: "medium", display: "flex", alignItems: "center", gap: 2 })}
+            <div
+              className={css({
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+              })}
+            >
+              <div
+                className={css({
+                  fontWeight: "medium",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                })}
+                aria-hidden="true"
               >
-                カード番号
-                <Tooltip content="4桁ごとにスペースを入れると読みやすい形式になります" position="top">
+                <span>カード番号</span>
+                <Tooltip
+                  content="4桁ごとにスペースを入れると読みやすい形式になります"
+                  position="top"
+                >
                   <span
-                    aria-hidden="true"
-                    // 視覚的なヒント用のためスクリーンリーダーには伝えない
                     className={css({
                       display: "inline-flex",
                       alignItems: "center",
@@ -250,15 +334,13 @@ export const ComponentsPage = () => {
                     i
                   </span>
                 </Tooltip>
-              </label>
+              </div>
               <Input
+                label="カード番号"
                 id={tooltipInputId}
                 placeholder="1234 5678 9012 3456"
-                aria-describedby={tooltipHintId}
+                helperText="4桁ごとにスペースを入れると読みやすい形式になります。セキュリティコードとカード番号は別送メールで共有されます。入力後は Tab で次のフィールドへ移動してください。"
               />
-              <p id={tooltipHintId} className={css({ m: 0, fontSize: "sm", color: "contents.secondary" })}>
-                セキュリティコードとカード番号は別送メールで共有されます。入力後は <code>Tab</code> で次のフィールドへ移動してください。
-              </p>
             </div>
           </ScreenReaderDemo>
           <CodeBlock
@@ -302,28 +384,43 @@ export const ComponentsPage = () => {
               alignItems: "center",
             })}
           >
-            <Tooltip content="これは上に表示されるツールチップです" position="top">
+            <Tooltip
+              content="これは上に表示されるツールチップです"
+              position="top"
+            >
               <Button variant="outline" size="sm">
                 上
               </Button>
             </Tooltip>
-            <Tooltip content="これは下に表示されるツールチップです" position="bottom">
+            <Tooltip
+              content="これは下に表示されるツールチップです"
+              position="bottom"
+            >
               <Button variant="outline" size="sm">
                 下
               </Button>
             </Tooltip>
-            <Tooltip content="これは左に表示されるツールチップです" position="left">
+            <Tooltip
+              content="これは左に表示されるツールチップです"
+              position="left"
+            >
               <Button variant="outline" size="sm">
                 左
               </Button>
             </Tooltip>
-            <Tooltip content="これは右に表示されるツールチップです" position="right">
+            <Tooltip
+              content="これは右に表示されるツールチップです"
+              position="right"
+            >
               <Button variant="outline" size="sm">
                 右
               </Button>
             </Tooltip>
             <Tooltip content="このアイコンについての詳細情報" position="top">
               <span
+                role="button"
+                tabIndex={0}
+                aria-label="このアイコンについての詳細情報"
                 className={css({
                   display: "inline-flex",
                   alignItems: "center",
