@@ -274,7 +274,8 @@ export const ComponentsPage = () => {
           >
             入力欄は <code>aria-describedby</code>{" "}
             でヒントテキストと結びつけ、同じ内容をツールチップでも重複表示しています。
-            下の読み上げデモから、スクリーンリーダーが説明をどう取得するかを確認できます。
+            VoiceOver (macOS) では入力欄にフォーカスした後 <strong>Control + Option + Shift + H</strong>{" "}
+            でヘルプテキスト（aria-describedby）を読めます。NVDA/JAWS では初回フォーカス時に自動読み上げされます。
           </p>
           <ScreenReaderDemo
             label="スクリーンリーダーの読み上げ"
@@ -302,6 +303,7 @@ export const ComponentsPage = () => {
                   position="top"
                 >
                   <span
+                    aria-hidden="true"
                     className={css({
                       display: "inline-flex",
                       alignItems: "center",
