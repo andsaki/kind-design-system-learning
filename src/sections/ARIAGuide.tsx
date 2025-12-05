@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { css } from "@/styled-system/css";
 import {
   Button,
@@ -848,6 +848,9 @@ export const ARIAGuide = () => {
 
           {/* 動的なaria-live */}
           <LiveRegionDemo />
+
+          {/* アクセシブルなカルーセル */}
+          <AccessibleCarousel />
         </div>
       </div>
 
@@ -2304,6 +2307,607 @@ function LiveRegionDemo() {
         })}
       >
         <strong>💡 ヒント:</strong> メッセージが変更されると、スクリーンリーダーが自動的に読み上げます（通知回数: {messageCount}回）
+      </div>
+    </div>
+  );
+}
+
+// アクセシブルなカルーセル
+function AccessibleCarousel() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const slides = [
+    {
+      id: 1,
+      title: "スライド 1",
+      description: "美しい風景の写真",
+      image: "🏔️",
+    },
+    {
+      id: 2,
+      title: "スライド 2",
+      description: "都市の夜景",
+      image: "🌃",
+    },
+    {
+      id: 3,
+      title: "スライド 3",
+      description: "自然の中の小道",
+      image: "🌲",
+    },
+    {
+      id: 4,
+      title: "スライド 4",
+      description: "夕焼けのビーチ",
+      image: "🌅",
+    },
+  ];
+
+  const totalSlides = slides.length;
+
+  // 自動再生
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isPlaying, totalSlides]);
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  const goToPrevious = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
+
+  const goToNext = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  // キーボード操作
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    switch (e.key) {
+      case "ArrowLeft":
+        e.preventDefault();
+        goToPrevious();
+        break;
+      case "ArrowRight":
+        e.preventDefault();
+        goToNext();
+        break;
+      case "Home":
+        e.preventDefault();
+        goToSlide(0);
+        break;
+      case "End":
+        e.preventDefault();
+        goToSlide(totalSlides - 1);
+        break;
+    }
+  };
+
+  // タッチ操作
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      goToNext();
+    } else if (isRightSwipe) {
+      goToPrevious();
+    }
+  };
+
+  return (
+    <div
+      className={css({
+        padding: 4,
+        backgroundColor: "bg.secondary",
+        borderRadius: "md",
+        borderWidth: "thin",
+        borderStyle: "solid",
+        borderColor: "border.default",
+        display: "flex",
+        flexDirection: "column",
+        gap: 4,
+      })}
+    >
+      <div>
+        <h4
+          className={css({
+            marginTop: 0,
+            marginBottom: 2,
+            fontSize: "xl",
+            fontWeight: "bold",
+            color: "contents.primary",
+          })}
+        >
+          🎠 アクセシブルなカルーセル
+        </h4>
+        <p className={css({ color: "contents.secondary", fontSize: "sm", margin: 0 })}>
+          キーボード操作、スクリーンリーダー対応、自動再生制御など、
+          アクセシビリティに配慮したカルーセルの実装例です。
+        </p>
+      </div>
+
+      {/* カルーセル本体 */}
+      <div
+        ref={carouselRef}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="画像カルーセル"
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        className={css({
+          position: "relative",
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderStyle: "solid",
+          borderColor: "border.default",
+          overflow: "hidden",
+          outline: "none",
+          "&:focus-visible": {
+            borderColor: "border.focus",
+            boxShadow: "0 0 0 3px rgba(59, 130, 246, 0.1)",
+          },
+        })}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        {/* スライドコンテナ */}
+        <div
+          className={css({
+            display: "flex",
+            transition: "transform 0.5s ease-in-out",
+          })}
+          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+        >
+          {slides.map((slide, index) => (
+            <div
+              key={slide.id}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${index + 1} / ${totalSlides}`}
+              aria-hidden={index !== currentSlide}
+              className={css({
+                minWidth: "100%",
+                padding: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 3,
+              })}
+            >
+              <div className={css({ fontSize: "6xl" })}>{slide.image}</div>
+              <h5
+                className={css({
+                  margin: 0,
+                  fontSize: "xl",
+                  fontWeight: "semibold",
+                  color: "contents.primary",
+                })}
+              >
+                {slide.title}
+              </h5>
+              <p
+                className={css({
+                  margin: 0,
+                  fontSize: "sm",
+                  color: "contents.secondary",
+                })}
+              >
+                {slide.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* 前へボタン */}
+        <button
+          onClick={goToPrevious}
+          aria-label="前のスライドへ"
+          className={css({
+            position: "absolute",
+            top: "50%",
+            left: 2,
+            transform: "translateY(-50%)",
+            backgroundColor: "bg.primary",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+            borderRadius: "full",
+            width: "40px",
+            height: "40px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            fontSize: "xl",
+            color: "contents.primary",
+            opacity: 0.9,
+            transition: "opacity 0.2s",
+            "&:hover": {
+              opacity: 1,
+              backgroundColor: "bg.secondary",
+            },
+            "&:focus-visible": {
+              outline: "2px solid",
+              outlineColor: "border.focus",
+              outlineOffset: "2px",
+            },
+          })}
+        >
+          ←
+        </button>
+
+        {/* 次へボタン */}
+        <button
+          onClick={goToNext}
+          aria-label="次のスライドへ"
+          className={css({
+            position: "absolute",
+            top: "50%",
+            right: 2,
+            transform: "translateY(-50%)",
+            backgroundColor: "bg.primary",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+            borderRadius: "full",
+            width: "40px",
+            height: "40px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            fontSize: "xl",
+            color: "contents.primary",
+            opacity: 0.9,
+            transition: "opacity 0.2s",
+            "&:hover": {
+              opacity: 1,
+              backgroundColor: "bg.secondary",
+            },
+            "&:focus-visible": {
+              outline: "2px solid",
+              outlineColor: "border.focus",
+              outlineOffset: "2px",
+            },
+          })}
+        >
+          →
+        </button>
+      </div>
+
+      {/* コントロールパネル */}
+      <div
+        className={css({
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 3,
+          flexWrap: "wrap",
+        })}
+      >
+        {/* インジケーター */}
+        <div
+          role="group"
+          aria-label="スライドインジケーター"
+          className={css({
+            display: "flex",
+            gap: 2,
+            alignItems: "center",
+          })}
+        >
+          {slides.map((slide, index) => (
+            <button
+              key={slide.id}
+              onClick={() => goToSlide(index)}
+              aria-label={`スライド ${index + 1} へ移動`}
+              aria-current={index === currentSlide ? "true" : undefined}
+              className={css({
+                width: "12px",
+                height: "12px",
+                borderRadius: "full",
+                borderWidth: "thin",
+                borderStyle: "solid",
+                borderColor: "border.default",
+                backgroundColor: index === currentSlide ? "blue.500" : "bg.tertiary",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                "&:hover": {
+                  transform: "scale(1.2)",
+                },
+                "&:focus-visible": {
+                  outline: "2px solid",
+                  outlineColor: "border.focus",
+                  outlineOffset: "2px",
+                },
+              })}
+            />
+          ))}
+        </div>
+
+        {/* 再生/一時停止ボタン */}
+        <Button
+          onClick={togglePlayPause}
+          variant="outline"
+          size="sm"
+          aria-label={isPlaying ? "自動再生を一時停止" : "自動再生を開始"}
+        >
+          {isPlaying ? "⏸️ 一時停止" : "▶️ 再生"}
+        </Button>
+      </div>
+
+      {/* 現在のスライド情報（aria-live） */}
+      <div
+        aria-live="polite"
+        aria-atomic="false"
+        className={css({
+          padding: 3,
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderStyle: "solid",
+          borderColor: "border.default",
+          fontSize: "sm",
+          color: "contents.secondary",
+          textAlign: "center",
+        })}
+      >
+        スライド {currentSlide + 1} / {totalSlides}: {slides[currentSlide].title}
+      </div>
+
+      {/* アクセシビリティ要件 */}
+      <div
+        className={css({
+          padding: 4,
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderStyle: "solid",
+          borderColor: "border.default",
+        })}
+      >
+        <h5
+          className={css({
+            marginTop: 0,
+            marginBottom: 3,
+            color: "contents.primary",
+            fontSize: "lg",
+            fontWeight: "semibold",
+          })}
+        >
+          ✅ 実装されているアクセシビリティ機能
+        </h5>
+
+        <div className={css({ display: "grid", gap: 3 })}>
+          <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md" })}>
+            <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>
+              ⌨️ キーボード操作
+            </strong>
+            <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+              <li><kbd>←</kbd> / <kbd>→</kbd>: 前後のスライドへ移動</li>
+              <li><kbd>Home</kbd>: 最初のスライドへ</li>
+              <li><kbd>End</kbd>: 最後のスライドへ</li>
+              <li><kbd>Tab</kbd>: インジケーターやボタンへフォーカス移動</li>
+            </ul>
+          </div>
+
+          <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md" })}>
+            <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>
+              🏷️ ARIA属性
+            </strong>
+            <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+              <li><code>role="region"</code> + <code>aria-roledescription="carousel"</code>: カルーセル領域を明示</li>
+              <li><code>aria-label</code>: カルーセルの目的を説明</li>
+              <li><code>role="group"</code> + <code>aria-roledescription="slide"</code>: 各スライドを識別</li>
+              <li><code>aria-label="n / total"</code>: スライドの位置情報</li>
+              <li><code>aria-hidden</code>: 非表示スライドをスクリーンリーダーから隠す</li>
+              <li><code>aria-current="true"</code>: 現在のインジケーターを示す</li>
+            </ul>
+          </div>
+
+          <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md" })}>
+            <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>
+              📢 ライブリージョン
+            </strong>
+            <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+              <li><code>aria-live="polite"</code>: スライド変更を通知</li>
+              <li><code>aria-atomic="false"</code>: 変更部分のみを読み上げ</li>
+              <li>スライド番号とタイトルを自動読み上げ</li>
+            </ul>
+          </div>
+
+          <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md" })}>
+            <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>
+              🎮 ユーザー制御
+            </strong>
+            <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+              <li>自動再生の再生/一時停止ボタン</li>
+              <li>明確なラベル付きナビゲーションボタン</li>
+              <li>タッチ/スワイプ操作対応</li>
+              <li>フォーカスインジケーターの明示</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* コード例 */}
+      <CodeBlock
+        language="tsx"
+        code={`// カルーセルのコンテナ
+<div
+  ref={carouselRef}
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="画像カルーセル"
+  onKeyDown={handleKeyDown}
+  tabIndex={0}
+>
+  {/* スライド */}
+  {slides.map((slide, index) => (
+    <div
+      key={slide.id}
+      role="group"
+      aria-roledescription="slide"
+      aria-label={\`\${index + 1} / \${totalSlides}\`}
+      aria-hidden={index !== currentSlide}
+    >
+      {slide.content}
+    </div>
+  ))}
+
+  {/* ナビゲーションボタン */}
+  <button
+    onClick={goToPrevious}
+    aria-label="前のスライドへ"
+  >
+    ←
+  </button>
+  <button
+    onClick={goToNext}
+    aria-label="次のスライドへ"
+  >
+    →
+  </button>
+</div>
+
+{/* インジケーター */}
+<div role="group" aria-label="スライドインジケーター">
+  {slides.map((slide, index) => (
+    <button
+      key={slide.id}
+      onClick={() => goToSlide(index)}
+      aria-label={\`スライド \${index + 1} へ移動\`}
+      aria-current={index === currentSlide ? "true" : undefined}
+    />
+  ))}
+</div>
+
+{/* ライブリージョン */}
+<div aria-live="polite" aria-atomic="false">
+  スライド {currentSlide + 1} / {totalSlides}: {slides[currentSlide].title}
+</div>
+
+{/* 自動再生コントロール */}
+<button
+  onClick={togglePlayPause}
+  aria-label={isPlaying ? "自動再生を一時停止" : "自動再生を開始"}
+>
+  {isPlaying ? "⏸️ 一時停止" : "▶️ 再生"}
+</button>`}
+        description="// カルーセルの基本構造とARIA属性の実装例"
+      />
+
+      {/* ベストプラクティス */}
+      <div
+        className={css({
+          padding: 3,
+          backgroundColor: "bg.secondary",
+          borderWidth: "base",
+          borderStyle: "solid",
+          borderColor: "border.warning",
+          borderRadius: "md",
+        })}
+      >
+        <h5
+          className={css({
+            marginTop: 0,
+            marginBottom: 2,
+            color: "contents.primary",
+            fontSize: "base",
+            fontWeight: "semibold",
+          })}
+        >
+          💡 カルーセルのベストプラクティス
+        </h5>
+        <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.primary", lineHeight: "relaxed" })}>
+          <li>自動再生はデフォルトでオフにし、ユーザーが制御できるようにする</li>
+          <li>自動再生中でもキーボード操作で即座に停止できるようにする</li>
+          <li>非表示のスライドには <code>aria-hidden="true"</code> を付ける</li>
+          <li>各スライドに意味のある <code>aria-label</code> を付ける</li>
+          <li>ナビゲーションボタンには明確なラベルを付ける</li>
+          <li>インジケーターで現在位置を視覚的・音声的に示す</li>
+          <li>タッチデバイスでもスワイプ操作を可能にする</li>
+          <li>フォーカスインジケーターを明確に表示する</li>
+          <li>スライド変更時は <code>aria-live</code> で通知する</li>
+        </ul>
+      </div>
+
+      {/* 参考リンク */}
+      <div
+        className={css({
+          padding: 3,
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderStyle: "solid",
+          borderColor: "border.default",
+        })}
+      >
+        <h5
+          className={css({
+            marginTop: 0,
+            marginBottom: 2,
+            color: "contents.primary",
+            fontSize: "base",
+            fontWeight: "semibold",
+          })}
+        >
+          📚 参考資料
+        </h5>
+        <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+          <li>
+            <a
+              href="https://www.w3.org/WAI/ARIA/apg/patterns/carousel/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={css({ color: "contents.link", textDecoration: "underline" })}
+            >
+              W3C ARIA Authoring Practices - Carousel Pattern
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.w3.org/WAI/tutorials/carousels/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={css({ color: "contents.link", textDecoration: "underline" })}
+            >
+              W3C Web Accessibility Tutorials - Carousels
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   );
