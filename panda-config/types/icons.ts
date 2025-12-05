@@ -24,6 +24,8 @@ import {
   Palette,        // 🎨 Design Tokens
   Rainbow,        // 🌈 デザイン哲学
   List,           // 📋 Dropdown
+  Info,           // ℹ️ Tooltip/Info
+  Table2,         // 📊 Table
 
   // その他
   Moon,
@@ -55,6 +57,8 @@ export const component = {
   breadcrumbs: Navigation,
   navigation: Navigation,
   dropdown: List,
+  info: Info,
+  table: Table2,
 } as const;
 
 /**
