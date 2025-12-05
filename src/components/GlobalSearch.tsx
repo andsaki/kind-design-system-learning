@@ -55,6 +55,12 @@ export const GlobalSearch = ({ onClose }: GlobalSearchProps) => {
     setResults(searchIndex);
   };
 
+  const searchStatusText = query
+    ? results.length > 0
+      ? `${results.length}件の結果`
+      : "一致するページが見つかりません"
+    : "キーワードを入力して検索を開始できます";
+
   return (
     <div className={css({ width: "100%", maxWidth: "600px" })}>
       <Input
@@ -67,21 +73,20 @@ export const GlobalSearch = ({ onClose }: GlobalSearchProps) => {
         aria-describedby="search-help"
       />
 
-      {query && (
-        <p
-          id="search-help"
-          className={css({
-            marginTop: 2,
-            fontSize: "sm",
-            color: "contents.tertiary"
-          })}
-        >
-          {results.length}件の結果
-        </p>
-      )}
+      <p
+        id="search-help"
+        className={css({
+          marginTop: 2,
+          fontSize: "sm",
+          color: "contents.tertiary"
+        })}
+        aria-live="polite"
+      >
+        {searchStatusText}
+      </p>
 
       {query && results.length > 0 && (
-        <div
+        <ul
           className={css({
             marginTop: 4,
             padding: 3,
@@ -91,58 +96,60 @@ export const GlobalSearch = ({ onClose }: GlobalSearchProps) => {
             borderStyle: "solid",
             borderColor: "border.default",
             maxHeight: "400px",
-            overflowY: "auto"
+            overflowY: "auto",
+            listStyle: "none",
+            m: 0
           })}
-          role="list"
           aria-label="検索結果"
         >
           {results.map((page) => (
-            <button
-              key={page.path}
-              onClick={() => handleNavigate(page.path)}
-              className={css({
-                width: "100%",
-                padding: 3,
-                textAlign: "left",
-                backgroundColor: location.pathname === page.path ? "bg.tertiary" : "transparent",
-                borderRadius: "sm",
-                cursor: "pointer",
-                transition: "background-color 0.2s",
-                borderWidth: "0",
-                color: "contents.primary",
-                _hover: {
-                  backgroundColor: "bg.tertiary"
-                },
-                _focus: {
-                  outline: "2px solid",
-                  outlineColor: "border.focus",
-                  outlineOffset: "2px"
-                }
-              })}
-              role="listitem"
-            >
-              <div className={css({ display: "flex", alignItems: "center", gap: 2 })}>
-                <icons.component.button
-                  size={16}
-                  aria-hidden="true"
-                  className={css({ flexShrink: 0 })}
-                />
-                <span className={css({ fontWeight: "semibold" })}>
-                  {page.title}
-                </span>
-              </div>
-              <div
+            <li key={page.path}>
+              <button
+                onClick={() => handleNavigate(page.path)}
                 className={css({
-                  fontSize: "xs",
-                  color: "contents.tertiary",
-                  marginTop: 1
+                  width: "100%",
+                  padding: 3,
+                  textAlign: "left",
+                  backgroundColor:
+                    location.pathname === page.path ? "bg.tertiary" : "transparent",
+                  borderRadius: "sm",
+                  cursor: "pointer",
+                  transition: "background-color 0.2s",
+                  borderWidth: "0",
+                  color: "contents.primary",
+                  _hover: {
+                    backgroundColor: "bg.tertiary"
+                  },
+                  _focus: {
+                    outline: "2px solid",
+                    outlineColor: "border.focus",
+                    outlineOffset: "2px"
+                  }
                 })}
               >
-                {page.path}
-              </div>
-            </button>
+                <div className={css({ display: "flex", alignItems: "center", gap: 2 })}>
+                  <icons.component.button
+                    size={16}
+                    aria-hidden="true"
+                    className={css({ flexShrink: 0 })}
+                  />
+                  <span className={css({ fontWeight: "semibold" })}>
+                    {page.title}
+                  </span>
+                </div>
+                <div
+                  className={css({
+                    fontSize: "xs",
+                    color: "contents.tertiary",
+                    marginTop: 1
+                  })}
+                >
+                  {page.path}
+                </div>
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
 
       {query && results.length === 0 && (

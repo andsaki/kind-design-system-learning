@@ -13,13 +13,6 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-interface SearchMetadata {
-  title: string;
-  path: string;
-  headings: string[];
-  keywords: string[];
-}
-
 // 検索対象のセクションファイル
 const sectionFiles = [
   '../src/sections/ImageComparison.tsx',

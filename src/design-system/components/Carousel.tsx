@@ -31,7 +31,7 @@ export interface CarouselProps {
  * キーボード操作、スクリーンリーダー対応、タッチジェスチャー、自動再生制御を実装。
  *
  * @features
- * - ⌨️ キーボード操作: ←/→（前後移動）、Home/End（最初/最後）
+ * - ⌨️ キーボード操作: 前へ/次へボタンとインジケーターで完全に操作可能
  * - 📱 タッチ操作: 左右スワイプでスライド切り替え
  * - 🔊 スクリーンリーダー対応: ARIA属性による適切な情報提供
  * - 🎮 自動再生制御: ユーザーが制御できる再生/一時停止
@@ -101,35 +101,6 @@ export function Carousel({
   };
 
   /**
-   * ⌨️ キーボード操作
-   *
-   * - ← / →: 前後のスライドへ移動
-   * - Home: 最初のスライドへ
-   * - End: 最後のスライドへ
-   * - Tab: インジケーターやボタンへフォーカス移動
-   */
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    switch (e.key) {
-      case "ArrowLeft": // ←: 前のスライドへ
-        e.preventDefault();
-        goToPrevious();
-        break;
-      case "ArrowRight": // →: 次のスライドへ
-        e.preventDefault();
-        goToNext();
-        break;
-      case "Home": // Home: 最初のスライドへ
-        e.preventDefault();
-        goToSlide(0);
-        break;
-      case "End": // End: 最後のスライドへ
-        e.preventDefault();
-        goToSlide(totalSlides - 1);
-        break;
-    }
-  };
-
-  /**
    * 📱 タッチ操作（スワイプジェスチャー）
    *
    * - 左スワイプ（→方向）: 次のスライドへ
@@ -177,8 +148,6 @@ export function Carousel({
         role="region"
         aria-roledescription={ariaRoleDescription}
         aria-label={ariaLabel}
-        onKeyDown={handleKeyDown}
-        tabIndex={0}
         className={css({
           position: "relative",
           backgroundColor: "bg.primary",

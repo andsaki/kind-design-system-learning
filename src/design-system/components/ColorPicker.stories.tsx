@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
+import type { ComponentProps } from "react";
 import { ColorPicker } from "./ColorPicker";
 
 const meta = {
@@ -38,6 +39,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const ControlledColorPicker = (props: ComponentProps<typeof ColorPicker>) => {
+  const [color, setColor] = useState(props.value?.toString() ?? "#1d4ed8");
+  return (
+    <ColorPicker
+      {...props}
+      value={color}
+      onChange={(event) => setColor(event.target.value)}
+    />
+  );
+};
+
 export const Default: Story = {
   args: {
     label: "ブランドカラー",
@@ -50,17 +62,12 @@ export const Controlled: Story = {
   args: {
     label: "アクセントカラー",
   },
-  render: (args) => {
-    const [color, setColor] = useState("#1d4ed8");
-    return (
-      <ColorPicker
-        {...args}
-        value={color}
-        onChange={(event) => setColor(event.target.value)}
-        helperText="値は state にバインドされています"
-      />
-    );
-  },
+  render: (args) => (
+    <ControlledColorPicker
+      {...args}
+      helperText="値は state にバインドされています"
+    />
+  ),
 };
 
 export const WithError: Story = {

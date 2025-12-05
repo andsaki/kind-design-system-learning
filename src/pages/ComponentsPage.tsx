@@ -13,8 +13,6 @@ import {
   Input,
 } from "../design-system/components";
 import { ScreenReaderDemo } from "../components/ScreenReaderDemo";
-import { InfoBox } from "../design-system/components/InfoBox";
-import { SectionHeading } from "../components/SectionHeading";
 import { CodeBlock } from "../components/CodeBlock";
 import { ComponentDemos } from "../sections/ComponentDemos";
 
@@ -426,10 +424,10 @@ export const ComponentsPage = () => {
               </Button>
             </Tooltip>
             <Tooltip content="このアイコンについての詳細情報" position="top">
-              <span
-                role="button"
-                tabIndex={0}
+              <button
+                type="button"
                 aria-label="このアイコンについての詳細情報"
+                onClick={() => alert("アイコンの補足情報です")}
                 className={css({
                   display: "inline-flex",
                   alignItems: "center",
@@ -443,10 +441,11 @@ export const ComponentsPage = () => {
                   fontWeight: "bold",
                   cursor: "help",
                   textDecoration: "none",
+                  border: "none",
                 })}
               >
                 ?
-              </span>
+              </button>
             </Tooltip>
             <a
               href="https://www.w3.org/WAI/ARIA/apg/"

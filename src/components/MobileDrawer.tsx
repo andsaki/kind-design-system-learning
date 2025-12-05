@@ -161,8 +161,16 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   return (
     <>
       <div
-        aria-hidden="true"
+        role="button"
+        tabIndex={0}
+        aria-label="背景をクリックしてドロワーを閉じる"
         onClick={onClose}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            onClose();
+          }
+        }}
         className={overlayClass}
         data-open={isOpen}
       />

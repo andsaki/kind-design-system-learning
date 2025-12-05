@@ -20,8 +20,6 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   clearable?: boolean;
   /** クリアボタンがクリックされた時のコールバック */
   onClear?: () => void;
-  /** aria-description属性の値 (VoiceOverで自動読み上げされる) */
-  'aria-description'?: string;
 }
 
 /**
@@ -57,7 +55,6 @@ export const Input: React.FC<InputProps> = ({
   const helperId = `${inputId}-helper`;
   const {
     'aria-describedby': arbitraryHelperId,
-    'aria-description': ariaDescription,
     ...restProps
   } = props;
 
@@ -119,7 +116,6 @@ export const Input: React.FC<InputProps> = ({
           aria-required={required}
           aria-invalid={!!error}
           aria-describedby={getAriaDescribedBy()}
-          aria-description={ariaDescription}
           className={cx(
             recipeClassName,
             className,

@@ -99,6 +99,32 @@ const DrawerWithButton = () => {
   );
 };
 
+const LongListDemo = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  const drawerId = useId();
+  const longItems = Array.from({ length: 20 }, (_, i) => ({
+    id: `section-${i + 1}`,
+    title: `セクション ${i + 1}`,
+  }));
+
+  return (
+    <div style={{ minHeight: '100vh' }}>
+      <HamburgerButton
+        isOpen={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+        controlsId={drawerId}
+      />
+      <MobileDrawer
+        drawerId={drawerId}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        items={longItems}
+        activeId="section-10"
+      />
+    </div>
+  );
+};
+
 export const Default: Story = {
   args: {
     isOpen: false,
@@ -158,31 +184,7 @@ export const LongList: Story = {
     })),
     activeId: 'section-10',
   },
-  render: () => {
-    const [isOpen, setIsOpen] = useState(true);
-    const drawerId = useId();
-    const longItems = Array.from({ length: 20 }, (_, i) => ({
-      id: `section-${i + 1}`,
-      title: `セクション ${i + 1}`,
-    }));
-
-    return (
-      <div style={{ minHeight: '100vh' }}>
-        <HamburgerButton
-          isOpen={isOpen}
-          onClick={() => setIsOpen(!isOpen)}
-          controlsId={drawerId}
-        />
-        <MobileDrawer
-          drawerId={drawerId}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          items={longItems}
-          activeId="section-10"
-        />
-      </div>
-    );
-  },
+  render: () => <LongListDemo />,
   parameters: {
     docs: {
       description: {
