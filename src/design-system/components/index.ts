@@ -53,3 +53,6 @@ export type {
 
 export { Carousel } from './Carousel';
 export type { CarouselProps, CarouselSlide } from './Carousel';
+
+export { Tooltip } from './Tooltip';
+export type { TooltipProps } from './Tooltip';

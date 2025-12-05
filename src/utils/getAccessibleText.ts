@@ -36,7 +36,7 @@ export const getAccessibleText = (element: HTMLElement): string => {
     if (id) {
       const label = document.querySelector(`label[for="${id}"]`);
       if (label) {
-        text += label.textContent?.trim() || "";
+        text += getVisibleText(label).trim();
       }
     }
 
@@ -58,7 +58,7 @@ export const getAccessibleText = (element: HTMLElement): string => {
 
   // その他の要素はtextContentを使用
   if (!text) {
-    text = element.textContent?.trim() || "";
+    text = getVisibleText(element).trim();
   }
 
   // role情報を追加
@@ -175,6 +175,24 @@ const getStateText = (element: HTMLElement): string => {
   }
 
   return states.join("、");
+};
+
+const getVisibleText = (element: Element | null): string => {
+  if (!element) return "";
+  if (element instanceof HTMLElement && element.getAttribute("aria-hidden") === "true") {
+    return "";
+  }
+
+  let text = "";
+  element.childNodes.forEach((node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      text += node.textContent ?? "";
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      text += getVisibleText(node as Element);
+    }
+  });
+
+  return text;
 };
 
 /**

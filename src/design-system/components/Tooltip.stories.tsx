@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Tooltip } from './Tooltip';
 
 const meta = {
-  title: 'Components/Tooltip',
+  title: 'Design System/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',
@@ -61,7 +61,7 @@ export const Right: Story = {
 export const WithDelay: Story = {
   args: { label: "" } as any,
   render: () => (
-    <Tooltip content="500ms後に表示されます" delay={500}>
+    <Tooltip content="500ms後に表示されます" delay={500} mouseDelay={500}>
       <span style={{ textDecoration: 'underline dotted', cursor: 'help' }}>遅延表示</span>
     </Tooltip>
   ),
@@ -70,7 +70,7 @@ export const WithDelay: Story = {
 export const NoDelay: Story = {
   args: { label: "" } as any,
   render: () => (
-    <Tooltip content="すぐに表示されます" delay={0}>
+    <Tooltip content="すぐに表示されます" delay={0} mouseDelay={0}>
       <span style={{ textDecoration: 'underline dotted', cursor: 'help' }}>即座に表示</span>
     </Tooltip>
   ),

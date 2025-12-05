@@ -21,7 +21,6 @@ import {
 import { InfoBox } from "../design-system/components/InfoBox";
 import { icons } from "../design-system/tokens/icons";
 import { SectionHeading } from "../components/SectionHeading";
-import { Tooltip } from "../components/Tooltip";
 import { CodeBlock } from "../components/CodeBlock";
 import { ScreenReaderDemo } from "../components/ScreenReaderDemo";
 
@@ -531,104 +530,6 @@ export const ARIAGuide = () => {
                 language="html"
               />
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={css({ marginTop: 8 })}>
-        <SectionHeading>ツールチップ（role="tooltip"）</SectionHeading>
-
-        <div className={css({
-          padding: 4,
-          backgroundColor: "bg.secondary",
-          borderRadius: "md",
-          borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
-        })}>
-          <h4 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary" })}>
-            <code className={css({ backgroundColor: "bg.tertiary", paddingY: 2, paddingX: 4, borderRadius: "sm" })}>role="tooltip"</code>
-          </h4>
-          <p className={css({ color: "contents.secondary", marginTop: 0 })}>
-            ツールチップは、要素に関する補足情報を提供するポップアップです。aria-describedby と組み合わせて使用します。
-          </p>
-
-          <InfoBox variant="tip" icon="💡" title="ツールチップのアクセシビリティ要件" className={css({ marginTop: 3 })}>
-            <ul className={css({ lineHeight: "relaxed", margin: 0, paddingLeft: 5 })}>
-              <li>role="tooltip" を使用する</li>
-              <li>一意のIDを持つ</li>
-              <li>トリガー要素から aria-describedby で参照される</li>
-              <li>キーボードフォーカスとマウスホバーの両方に対応</li>
-              <li>適切な遅延時間を設定（推奨：300ms）</li>
-              <li>視覚的に明確なポジショニング</li>
-            </ul>
-          </InfoBox>
-
-          <div className={css({ marginTop: 3 })}>
-            <CodeBlock
-              code={`<Tooltip content="追加の説明テキスト" position="top">
-  <button>ホバーまたはフォーカス</button>
-</Tooltip>`}
-              language="jsx"
-            />
-          </div>
-
-          <div className={css({
-            marginTop: 4,
-            padding: 3,
-            backgroundColor: "bg.primary",
-            borderRadius: "base",
-            borderWidth: "thin", borderStyle: "solid", borderColor: "border.default",
-          })}>
-            <h5 className={css({ marginTop: 0, marginBottom: 3, color: "contents.primary", fontSize: "base" })}>
-              🎨 実例
-            </h5>
-            <div className={css({ display: 'flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' })}>
-              <Tooltip content="これは上に表示されるツールチップです" position="top">
-                <Button variant="outline" size="sm">上</Button>
-              </Tooltip>
-              <Tooltip content="これは下に表示されるツールチップです" position="bottom">
-                <Button variant="outline" size="sm">下</Button>
-              </Tooltip>
-              <Tooltip content="これは左に表示されるツールチップです" position="left">
-                <Button variant="outline" size="sm">左</Button>
-              </Tooltip>
-              <Tooltip content="これは右に表示されるツールチップです" position="right">
-                <Button variant="outline" size="sm">右</Button>
-              </Tooltip>
-              <Tooltip content="このアイコンについての詳細情報" position="top">
-                <span className={css({
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  backgroundColor: "bg.tertiary",
-                  color: "contents.secondary",
-                  fontSize: "sm",
-                  fontWeight: 'bold',
-                  cursor: 'help',
-                  textDecoration: 'none',
-                })}>
-                  ?
-                </span>
-              </Tooltip>
-            </div>
-          </div>
-
-          <div className={css({
-            marginTop: 3,
-            padding: 3,
-            backgroundColor: "bg.secondary",
-            borderRadius: "base",
-            borderWidth: "base", borderStyle: "solid", borderColor: "border.warning",
-          })}>
-            <h5 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary", fontSize: "base" })}>
-              ⚠️ ツールチップ vs タイトル属性
-            </h5>
-            <p className={css({ color: "contents.primary", margin: 0, lineHeight: "relaxed" })}>
-              HTML の title 属性はアクセシビリティの観点から推奨されません。キーボードユーザーには利用できず、タッチデバイスでは表示されないためです。
-              代わりに、適切に実装された aria-describedby と role="tooltip" を使用してください。
-            </p>
           </div>
         </div>
       </div>
@@ -2308,4 +2209,3 @@ function LiveRegionDemo() {
     </div>
   );
 }
-
