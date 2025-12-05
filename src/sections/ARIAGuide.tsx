@@ -840,6 +840,9 @@ export const ARIAGuide = () => {
           {/* aria-live まとめ */}
           <AriaLiveSummary />
 
+          {/* aria-live / atomic / alert / log / status / progressbar 総合まとめ */}
+          <LiveRegionComprehensiveGuide />
+
           {/* Notification API デモ */}
           <NotificationDemo />
 
@@ -1440,6 +1443,603 @@ function AriaLiveSummary() {
             <li>必要ならボタンラベルなどで文脈も伝える（例: 「成功メッセージを追加」）。</li>
           </ul>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function LiveRegionComprehensiveGuide() {
+  const [progress, setProgress] = useState(0);
+  const [logMessages, setLogMessages] = useState<string[]>([]);
+
+  const startProgress = () => {
+    setProgress(0);
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 500);
+  };
+
+  const addLogMessage = () => {
+    const time = new Date().toLocaleTimeString('ja-JP');
+    setLogMessages((prev) => [...prev, `[${time}] 新しいメッセージが追加されました`]);
+  };
+
+  return (
+    <div
+      className={css({
+        padding: 4,
+        backgroundColor: "bg.secondary",
+        borderRadius: "md",
+        borderWidth: "thin",
+        borderStyle: "solid",
+        borderColor: "border.default",
+        display: "flex",
+        flexDirection: "column",
+        gap: 4,
+      })}
+    >
+      <div>
+        <h4
+          className={css({
+            marginTop: 0,
+            marginBottom: 2,
+            fontSize: "xl",
+            fontWeight: "bold",
+            color: "contents.primary",
+          })}
+        >
+          📊 ライブリージョン完全ガイド
+        </h4>
+        <p className={css({ color: "contents.secondary", fontSize: "sm", margin: 0 })}>
+          動的なコンテンツ変更をスクリーンリーダーに通知するためのARIA属性とroleの使い分けを理解しましょう。
+        </p>
+      </div>
+
+      {/* aria-live 属性 */}
+      <div
+        className={css({
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderColor: "border.default",
+          borderStyle: "solid",
+          p: 4,
+        })}
+      >
+        <h5 className={css({ marginTop: 0, marginBottom: 3, color: "contents.primary", fontSize: "lg", fontWeight: "semibold" })}>
+          🔔 aria-live 属性
+        </h5>
+
+        <div className={css({ display: "grid", gap: 3 })}>
+          <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md" })}>
+            <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>
+              <code>aria-live="off"</code>（デフォルト）
+            </strong>
+            <p className={css({ margin: 0, color: "contents.secondary", fontSize: "sm" })}>
+              変更を通知しません。通常のコンテンツに使用します。
+            </p>
+          </div>
+
+          <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md" })}>
+            <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>
+              <code>aria-live="polite"</code>
+            </strong>
+            <p className={css({ margin: 0, color: "contents.secondary", fontSize: "sm" })}>
+              ユーザーの操作が落ち着いたタイミングで変更を通知します。ほとんどの場合はこれを使用します。
+            </p>
+            <div className={css({ marginTop: 2, fontSize: "xs", color: "contents.tertiary" })}>
+              使用例: ステータスメッセージ、フォームエラー、検索結果の更新
+            </div>
+          </div>
+
+          <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md" })}>
+            <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>
+              <code>aria-live="assertive"</code>
+            </strong>
+            <p className={css({ margin: 0, color: "contents.secondary", fontSize: "sm" })}>
+              即座に読み上げを中断して変更を通知します。緊急時のみ使用してください。
+            </p>
+            <div className={css({ marginTop: 2, fontSize: "xs", color: "contents.tertiary" })}>
+              使用例: 重大なエラー、セキュリティ警告、タイムアウト通知
+            </div>
+          </div>
+        </div>
+
+        <CodeBlock
+          code={`<div aria-live="polite">
+  {statusMessage}
+</div>
+
+<div aria-live="assertive">
+  {criticalAlert}
+</div>`}
+          language="jsx"
+          description="// polite: ユーザー操作後に通知
+// assertive: 即座に通知（緊急時のみ）"
+        />
+      </div>
+
+      {/* aria-atomic 属性 */}
+      <div
+        className={css({
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderColor: "border.default",
+          borderStyle: "solid",
+          p: 4,
+        })}
+      >
+        <h5 className={css({ marginTop: 0, marginBottom: 3, color: "contents.primary", fontSize: "lg", fontWeight: "semibold" })}>
+          ⚛️ aria-atomic 属性
+        </h5>
+
+        <div className={css({ display: "grid", gap: 3 })}>
+          <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md" })}>
+            <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>
+              <code>aria-atomic="false"</code>（デフォルト）
+            </strong>
+            <p className={css({ margin: 0, color: "contents.secondary", fontSize: "sm" })}>
+              変更された部分のみを読み上げます。
+            </p>
+            <div className={css({ marginTop: 2, fontSize: "xs", color: "contents.tertiary" })}>
+              例: 「新しいメッセージ」だけが読まれる
+            </div>
+          </div>
+
+          <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md" })}>
+            <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>
+              <code>aria-atomic="true"</code>
+            </strong>
+            <p className={css({ margin: 0, color: "contents.secondary", fontSize: "sm" })}>
+              領域全体を最初から読み上げます。文脈が必要な場合に使用します。
+            </p>
+            <div className={css({ marginTop: 2, fontSize: "xs", color: "contents.tertiary" })}>
+              例: 「件名: お知らせ 新しいメッセージ」全体が読まれる
+            </div>
+          </div>
+        </div>
+
+        <CodeBlock
+          code={`{/* 変更部分のみ通知 */}
+<div aria-live="polite" aria-atomic="false">
+  <span>件名: {subject}</span>
+  <span>{message}</span>  {/* ← この部分だけ読まれる */}
+</div>
+
+{/* 領域全体を通知 */}
+<div aria-live="polite" aria-atomic="true">
+  <span>件名: {subject}</span>
+  <span>{message}</span>  {/* ← 全体が読まれる */}
+</div>`}
+          language="jsx"
+          description="// atomic=false: 変更部分のみ
+// atomic=true: 領域全体（文脈が必要な場合）"
+        />
+      </div>
+
+      {/* role="alert" */}
+      <div
+        className={css({
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderColor: "border.error",
+          borderStyle: "solid",
+          p: 4,
+        })}
+      >
+        <h5 className={css({ marginTop: 0, marginBottom: 3, color: "contents.primary", fontSize: "lg", fontWeight: "semibold" })}>
+          🚨 role="alert"
+        </h5>
+
+        <p className={css({ margin: 0, marginBottom: 3, color: "contents.secondary", fontSize: "sm" })}>
+          重要な、時間的制約のあるメッセージを伝えます。<strong>暗黙的に aria-live="assertive" と aria-atomic="true" を持ちます。</strong>
+        </p>
+
+        <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md", marginBottom: 3 })}>
+          <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>使用場面</strong>
+          <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+            <li>フォームのバリデーションエラー</li>
+            <li>重要なシステムメッセージ</li>
+            <li>セッションタイムアウト警告</li>
+            <li>接続エラー通知</li>
+          </ul>
+        </div>
+
+        <CodeBlock
+          code={`<div role="alert">
+  エラー: ユーザー名は必須です
+</div>
+
+{/* 以下と等価 */}
+<div
+  aria-live="assertive"
+  aria-atomic="true"
+>
+  エラー: ユーザー名は必須です
+</div>`}
+          language="jsx"
+          description="// role=alert は即座に全体を読み上げる"
+        />
+      </div>
+
+      {/* role="status" */}
+      <div
+        className={css({
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderColor: "border.default",
+          borderStyle: "solid",
+          p: 4,
+        })}
+      >
+        <h5 className={css({ marginTop: 0, marginBottom: 3, color: "contents.primary", fontSize: "lg", fontWeight: "semibold" })}>
+          ℹ️ role="status"
+        </h5>
+
+        <p className={css({ margin: 0, marginBottom: 3, color: "contents.secondary", fontSize: "sm" })}>
+          ユーザーへのアドバイザリー情報を伝えます。<strong>暗黙的に aria-live="polite" と aria-atomic="true" を持ちます。</strong>
+        </p>
+
+        <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md", marginBottom: 3 })}>
+          <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>使用場面</strong>
+          <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+            <li>ローディング状態（「読み込み中...」）</li>
+            <li>成功メッセージ（「保存しました」）</li>
+            <li>検索結果の件数（「25件見つかりました」）</li>
+            <li>進捗状況の説明</li>
+          </ul>
+        </div>
+
+        <CodeBlock
+          code={`<div role="status">
+  <Spinner />
+  読み込み中...
+</div>
+
+<div role="status">
+  保存しました
+</div>
+
+{/* 以下と等価 */}
+<div
+  aria-live="polite"
+  aria-atomic="true"
+>
+  保存しました
+</div>`}
+          language="jsx"
+          description="// role=status は適切なタイミングで全体を読み上げる"
+        />
+      </div>
+
+      {/* role="log" */}
+      <div
+        className={css({
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderColor: "border.default",
+          borderStyle: "solid",
+          p: 4,
+        })}
+      >
+        <h5 className={css({ marginTop: 0, marginBottom: 3, color: "contents.primary", fontSize: "lg", fontWeight: "semibold" })}>
+          📝 role="log"
+        </h5>
+
+        <p className={css({ margin: 0, marginBottom: 3, color: "contents.secondary", fontSize: "sm" })}>
+          新しい情報が追加され、古い情報が消える可能性があるログを表します。<strong>暗黙的に aria-live="polite" を持ちます。</strong>
+        </p>
+
+        <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md", marginBottom: 3 })}>
+          <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>使用場面</strong>
+          <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+            <li>チャットメッセージの履歴</li>
+            <li>ゲームのイベントログ</li>
+            <li>システムログ表示</li>
+            <li>履歴や更新フィード</li>
+          </ul>
+        </div>
+
+        <div className={css({ marginBottom: 3 })}>
+          <Button onClick={addLogMessage} variant="outline" size="sm">
+            ログメッセージを追加
+          </Button>
+        </div>
+
+        <div
+          role="log"
+          aria-label="イベントログ"
+          className={css({
+            padding: 3,
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            maxHeight: "150px",
+            overflowY: "auto",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+          })}
+        >
+          {logMessages.length === 0 ? (
+            <p className={css({ margin: 0, color: "contents.tertiary", fontSize: "sm" })}>
+              ログはまだありません
+            </p>
+          ) : (
+            logMessages.map((msg, index) => (
+              <div
+                key={index}
+                className={css({
+                  padding: 2,
+                  fontSize: "sm",
+                  color: "contents.secondary",
+                  borderBottomWidth: index < logMessages.length - 1 ? "thin" : "0",
+                  borderBottomStyle: "solid",
+                  borderBottomColor: "border.subtle",
+                })}
+              >
+                {msg}
+              </div>
+            ))
+          )}
+        </div>
+
+        <CodeBlock
+          code={`<div role="log" aria-label="チャットログ">
+  {messages.map((msg) => (
+    <div key={msg.id}>{msg.text}</div>
+  ))}
+</div>
+
+{/* 以下と等価 */}
+<div
+  aria-live="polite"
+  aria-label="チャットログ"
+>
+  {messages.map((msg) => (
+    <div key={msg.id}>{msg.text}</div>
+  ))}
+</div>`}
+          language="jsx"
+          description="// role=log は新しい項目が追加されると通知する"
+        />
+      </div>
+
+      {/* role="progressbar" */}
+      <div
+        className={css({
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderColor: "border.default",
+          borderStyle: "solid",
+          p: 4,
+        })}
+      >
+        <h5 className={css({ marginTop: 0, marginBottom: 3, color: "contents.primary", fontSize: "lg", fontWeight: "semibold" })}>
+          📊 role="progressbar"
+        </h5>
+
+        <p className={css({ margin: 0, marginBottom: 3, color: "contents.secondary", fontSize: "sm" })}>
+          長時間かかるタスクの進捗状況を表示します。必ず <code>aria-valuenow</code>、<code>aria-valuemin</code>、<code>aria-valuemax</code> を指定します。
+        </p>
+
+        <div className={css({ padding: 3, backgroundColor: "bg.secondary", borderRadius: "md", marginBottom: 3 })}>
+          <strong className={css({ color: "contents.primary", display: "block", marginBottom: 2 })}>必須属性</strong>
+          <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+            <li><code>aria-valuenow</code>: 現在の値（例: 50）</li>
+            <li><code>aria-valuemin</code>: 最小値（通常 0）</li>
+            <li><code>aria-valuemax</code>: 最大値（通常 100）</li>
+            <li><code>aria-label</code> または <code>aria-labelledby</code>: 進捗バーの説明</li>
+          </ul>
+        </div>
+
+        <div className={css({ marginBottom: 3 })}>
+          <Button onClick={startProgress} variant="primary" size="sm">
+            進捗開始
+          </Button>
+        </div>
+
+        <div
+          role="progressbar"
+          aria-label="ファイルアップロードの進捗"
+          aria-valuenow={progress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          className={css({
+            width: "100%",
+            height: "30px",
+            backgroundColor: "bg.secondary",
+            borderRadius: "md",
+            overflow: "hidden",
+            position: "relative",
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+          })}
+        >
+          <div
+            className={css({
+              height: "100%",
+              backgroundColor: "blue.500",
+              transition: "width 0.3s ease",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+              fontSize: "sm",
+              fontWeight: "semibold",
+            })}
+            style={{ width: `${progress}%` }}
+          >
+            {progress}%
+          </div>
+        </div>
+
+        <CodeBlock
+          code={`<div
+  role="progressbar"
+  aria-label="ファイルアップロードの進捗"
+  aria-valuenow={progress}
+  aria-valuemin={0}
+  aria-valuemax={100}
+>
+  <div style={{ width: \`\${progress}%\` }}>
+    {progress}%
+  </div>
+</div>
+
+{/* 不確定な進捗（完了時間不明） */}
+<div
+  role="progressbar"
+  aria-label="処理中"
+  aria-valuetext="処理中..."
+>
+  <Spinner />
+</div>`}
+          language="jsx"
+          description="// progressbar: aria-valuenow で進捗を数値で伝える
+// 不確定な場合は aria-valuetext を使用"
+        />
+      </div>
+
+      {/* まとめ表 */}
+      <div
+        className={css({
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderColor: "border.default",
+          borderStyle: "solid",
+          p: 4,
+        })}
+      >
+        <h5 className={css({ marginTop: 0, marginBottom: 3, color: "contents.primary", fontSize: "lg", fontWeight: "semibold" })}>
+          📋 クイックリファレンス
+        </h5>
+
+        <div className={css({ overflowX: "auto" })}>
+          <table className={css({ width: "100%", borderCollapse: "collapse", fontSize: "sm" })}>
+            <thead>
+              <tr className={css({ backgroundColor: "bg.secondary" })}>
+                <th className={css({ padding: 2, textAlign: "left", borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>Role / 属性</th>
+                <th className={css({ padding: 2, textAlign: "left", borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>暗黙の動作</th>
+                <th className={css({ padding: 2, textAlign: "left", borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>使用場面</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  <code>aria-live="polite"</code>
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  適切なタイミングで通知
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  ステータス、検索結果
+                </td>
+              </tr>
+              <tr className={css({ backgroundColor: "bg.secondary" })}>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  <code>aria-live="assertive"</code>
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  即座に通知
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  緊急エラー、警告
+                </td>
+              </tr>
+              <tr>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  <code>aria-atomic="true"</code>
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  領域全体を読み上げ
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  文脈が必要な場合
+                </td>
+              </tr>
+              <tr className={css({ backgroundColor: "bg.secondary" })}>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  <code>role="alert"</code>
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  assertive + atomic
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  エラー、重要通知
+                </td>
+              </tr>
+              <tr>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  <code>role="status"</code>
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  polite + atomic
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  ローディング、成功通知
+                </td>
+              </tr>
+              <tr className={css({ backgroundColor: "bg.secondary" })}>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  <code>role="log"</code>
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  polite（新規追加時）
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  チャット、履歴、ログ
+                </td>
+              </tr>
+              <tr>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  <code>role="progressbar"</code>
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  valuenow を通知
+                </td>
+                <td className={css({ padding: 2, borderWidth: "thin", borderStyle: "solid", borderColor: "border.default" })}>
+                  アップロード、処理進捗
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* ベストプラクティス */}
+      <div
+        className={css({
+          padding: 3,
+          backgroundColor: "bg.secondary",
+          borderWidth: "base",
+          borderStyle: "solid",
+          borderColor: "border.warning",
+          borderRadius: "md",
+        })}
+      >
+        <h5 className={css({ marginTop: 0, marginBottom: 2, color: "contents.primary", fontSize: "base", fontWeight: "semibold" })}>
+          💡 ベストプラクティス
+        </h5>
+        <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.primary", lineHeight: "relaxed" })}>
+          <li>ほとんどの場合は <code>role="status"</code> または <code>role="alert"</code> で十分</li>
+          <li><code>aria-live="assertive"</code> は本当に緊急な場合のみ使用</li>
+          <li>頻繁に更新される領域では <code>aria-atomic="false"</code> を検討</li>
+          <li>進捗バーには必ず <code>aria-label</code> で説明を追加</li>
+          <li>ログには <code>aria-label</code> でログの種類を明示</li>
+        </ul>
       </div>
     </div>
   );
