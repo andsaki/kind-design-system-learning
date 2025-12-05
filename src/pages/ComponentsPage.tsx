@@ -78,7 +78,7 @@ const tooltipUsageHighlights = [
   {
     title: "使用上の注意",
     description:
-      "補足情報のみに使用し、重要な説明はDOM上に常時表示。title属性は使わず、aria-describedby + role='tooltip' またはhelperTextを採用してください。",
+      "補足情報のみに使用し、重要な説明はDOM上に常時表示。基本はaria-describedby + role='tooltip' またはhelperTextで届け、最小限の保険としてaタグにはtitle属性にも同じ説明を入れてポインター/長押し環境でも拾えるようにします。",
   },
 ];
 
@@ -216,7 +216,8 @@ export const ComponentsPage = () => {
               Tooltip
             </code>{" "}
             コンポーネントはアクセシビリティ観点では「補足情報を添える場合のみ」使用します。
-            重要な説明は DOM 上に常時表示し、スクリーンリーダー間の挙動の違いにも配慮した実装が必要です。
+            重要な説明は DOM
+            上に常時表示し、スクリーンリーダー間の挙動の違いにも配慮した実装が必要です。
           </p>
         </div>
 
@@ -352,7 +353,15 @@ export const ComponentsPage = () => {
   </Tooltip>
 </label>
 <input id="card-number" aria-describedby="card-hint" />
-<p id="card-hint">セキュリティコードとカード番号は別送メールで共有されます。</p>`}
+<p id="card-hint">セキュリティコードとカード番号は別送メールで共有されます。</p>
+
+<a
+  href="https://www.w3.org/WAI/ARIA/apg/"
+  title="リンク先の概要をtitleにも複製し、長押し操作でも確認できるようにします"
+  rel="noreferrer"
+>
+  ARIA ベストプラクティスを見る
+</a>`}
           />
         </div>
         <div
@@ -439,6 +448,27 @@ export const ComponentsPage = () => {
                 ?
               </span>
             </Tooltip>
+            <a
+              href="https://www.w3.org/WAI/ARIA/apg/"
+              target="_blank"
+              rel="noreferrer"
+              title="ヒントをtitle属性にも複製しておくと、長押し/ポインター環境でも最低限確認できます"
+              className={css({
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 2,
+                paddingInline: 3,
+                paddingBlock: 2,
+                borderRadius: "full",
+                backgroundColor: "bg.tertiary",
+                color: "contents.link",
+                fontSize: "sm",
+                textDecoration: "none",
+                fontWeight: "medium",
+              })}
+            >
+              ARIAベストプラクティス
+            </a>
           </div>
         </div>
         <p
@@ -450,7 +480,7 @@ export const ComponentsPage = () => {
             mb: 0,
           })}
         >
-          より詳細な例や実装のデモは、このコンポーネントページ内のツールチップセクションですべて確認できるようまとめています。
+          より詳細な例や実装のデモは、このコンポーネントページ内のツールチップセクションですべて確認できるようまとめています。上の「ARIAベストプラクティス」リンクは、ツールチップを使わず title 属性だけで補足を届ける最低限のフォールバック例です。
         </p>
       </section>
 
