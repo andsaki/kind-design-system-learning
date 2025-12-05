@@ -571,6 +571,7 @@ export const ComponentsPage = () => {
             ))}
           </TableBody>
         </Table>
+        </div>
       </section>
     </>
   );
