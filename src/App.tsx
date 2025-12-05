@@ -9,6 +9,7 @@ import { ARIAStatesPage } from "./pages/aria/ARIAStatesPage";
 import { InputTypesPage } from "./pages/aria/InputTypesPage";
 import { RolePresentationPage } from "./pages/aria/RolePresentationPage";
 import { FormLabelingPage } from "./pages/aria/FormLabelingPage";
+import { TabIndexDemoPage } from "./pages/aria/TabIndexDemoPage";
 import { AccessibilityFeaturesPage } from "./pages/accessibility/AccessibilityFeaturesPage";
 import { WCAGLevelsPage } from "./pages/accessibility/WCAGLevelsPage";
 import { MotionAccessibilityPage } from "./pages/accessibility/MotionAccessibilityPage";
@@ -25,15 +26,16 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="components" element={<ComponentsPage />} />
-        <Route path="aria">
-          <Route path="properties" element={<ARIAPropertiesPage />} />
-          <Route path="guide" element={<ARIAGuidePage />} />
-          <Route path="apg" element={<APGGuidePage />} />
-          <Route path="states" element={<ARIAStatesPage />} />
-          <Route path="input-types" element={<InputTypesPage />} />
-          <Route path="role-presentation" element={<RolePresentationPage />} />
-          <Route path="form-labeling" element={<FormLabelingPage />} />
-        </Route>
+          <Route path="aria">
+            <Route path="properties" element={<ARIAPropertiesPage />} />
+            <Route path="guide" element={<ARIAGuidePage />} />
+            <Route path="apg" element={<APGGuidePage />} />
+            <Route path="states" element={<ARIAStatesPage />} />
+            <Route path="input-types" element={<InputTypesPage />} />
+            <Route path="role-presentation" element={<RolePresentationPage />} />
+            <Route path="form-labeling" element={<FormLabelingPage />} />
+            <Route path="tabindex" element={<TabIndexDemoPage />} />
+          </Route>
         <Route path="accessibility">
           <Route path="features" element={<AccessibilityFeaturesPage />} />
           <Route path="wcag-levels" element={<WCAGLevelsPage />} />

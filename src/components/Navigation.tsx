@@ -24,6 +24,7 @@ const navigationItems = [
       { title: "Input type属性", path: "/aria/input-types" },
       { title: 'role="presentation"', path: "/aria/role-presentation" },
       { title: "フォームラベリング", path: "/aria/form-labeling" },
+      { title: "tabIndexデモ", path: "/aria/tabindex" },
     ],
   },
   {
