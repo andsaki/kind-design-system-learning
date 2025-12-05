@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { css } from "@/styled-system/css";
 import {
   Button,
@@ -837,6 +837,12 @@ export const ARIAGuide = () => {
           {/* スクリーンリーダーシミュレーター */}
           <ScreenReaderSimulator />
 
+          {/* aria-live まとめ */}
+          <AriaLiveSummary />
+
+          {/* Notification API デモ */}
+          <NotificationDemo />
+
           {/* 動的なaria-live */}
           <LiveRegionDemo />
         </div>
@@ -1337,6 +1343,248 @@ function ScreenReaderSimulator() {
         />
       </div>
 
+    </div>
+  );
+}
+
+function AriaLiveSummary() {
+  return (
+    <div
+      className={css({
+        padding: 4,
+        backgroundColor: "bg.secondary",
+        borderRadius: "md",
+        borderWidth: "thin",
+        borderStyle: "solid",
+        borderColor: "border.default",
+        display: "flex",
+        flexDirection: "column",
+        gap: 3,
+      })}
+    >
+      <div>
+        <h4
+          className={css({
+            marginTop: 0,
+            marginBottom: 2,
+            fontSize: "lg",
+            fontWeight: "semibold",
+            color: "contents.primary",
+          })}
+        >
+          🧭 aria-liveの使い所ガイド
+        </h4>
+        <p className={css({ color: "contents.secondary", fontSize: "sm", margin: 0 })}>
+          動的なテキスト変更をスクリーンリーダーに自動通知する仕組みです。DOMを書き換えるだけで読み上げられるので、
+          メッセージ領域は小さく保ち、必要な場面だけに限定しましょう。
+        </p>
+      </div>
+
+      <div
+        className={css({
+          display: "grid",
+          gap: 3,
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+        })}
+      >
+        <div
+          className={css({
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "thin",
+            borderColor: "border.default",
+            borderStyle: "solid",
+            p: 3,
+          })}
+        >
+          <strong className={css({ color: "contents.primary" })}>優先度の選択</strong>
+          <ul className={css({ mt: 2, color: "contents.secondary", lineHeight: "relaxed" })}>
+            <li><code>aria-live="polite"</code>: 通常はこちら。操作が落ち着いたら読み上げ。</li>
+            <li><code>aria-live="assertive"</code>: 緊急時のみ。現在の読み上げを中断します。</li>
+            <li><code>aria-atomic="true"</code> を足すと領域全体を再読させられます。</li>
+          </ul>
+        </div>
+
+        <div
+          className={css({
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "thin",
+            borderColor: "border.default",
+            borderStyle: "solid",
+            p: 3,
+          })}
+        >
+          <strong className={css({ color: "contents.primary" })}>代表的な組み合わせ</strong>
+          <ul className={css({ mt: 2, color: "contents.secondary", lineHeight: "relaxed" })}>
+            <li><code>role="status"</code> + polite: ローディング表示（<code>&lt;Loading /&gt;</code>）。</li>
+            <li><code>role="alert"</code> + polite: フォームエラーやトースト（<code>&lt;Input /&gt;</code>, <code>&lt;Toast /&gt;</code>）。</li>
+            <li>表示のみの装飾には付けず、動的に書き換える領域に限定。</li>
+          </ul>
+        </div>
+
+        <div
+          className={css({
+            backgroundColor: "bg.primary",
+            borderRadius: "md",
+            borderWidth: "thin",
+            borderColor: "border.default",
+            borderStyle: "solid",
+            p: 3,
+          })}
+        >
+          <strong className={css({ color: "contents.primary" })}>実装チェックリスト</strong>
+          <ul className={css({ mt: 2, color: "contents.secondary", lineHeight: "relaxed" })}>
+            <li>メッセージはJavaScriptで更新し、空の状態も用意する。</li>
+            <li>頻繁な更新は避け、必要最低限のテキストのみを挿入。</li>
+            <li>必要ならボタンラベルなどで文脈も伝える（例: 「成功メッセージを追加」）。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NotificationDemo() {
+  const [isSupported, setIsSupported] = useState(false);
+  const [permission, setPermission] = useState<NotificationPermission>("default");
+  const [status, setStatus] = useState("ブラウザの対応状況を確認しています…");
+
+  useEffect(() => {
+    const available =
+      typeof window !== "undefined" && "Notification" in window;
+    setIsSupported(available);
+    if (available) {
+      setPermission(Notification.permission);
+      setStatus("通知の許可状態を確認し、必要ならリクエストしてください。");
+    } else {
+      setStatus("このブラウザは Notification API をサポートしていません。");
+    }
+  }, []);
+
+  const handleRequestPermission = async () => {
+    if (!isSupported) return;
+    const result = await Notification.requestPermission();
+    setPermission(result);
+    setStatus(
+      result === "granted"
+        ? "通知が許可されました！下のボタンからテスト通知を送信できます。"
+        : result === "denied"
+          ? "通知は拒否されました。ブラウザ設定から再度許可してください。"
+          : "ユーザーの判断待ちです。"
+    );
+  };
+
+  const handleSendNotification = () => {
+    if (!isSupported || permission !== "granted") {
+      setStatus("通知を送信するには、まず許可を「許可」にしてください。");
+      return;
+    }
+
+    const notification = new Notification("Notification API デモ", {
+      body: "Accessibility Guide から送信されたテスト通知です。",
+      tag: "a11y-notification-demo",
+      data: { url: window.location.href },
+    });
+
+    notification.onclick = () => {
+      window.focus?.();
+      notification.close();
+    };
+
+    setStatus("テスト通知を送信しました。ブラウザの通知センターを確認してください。");
+  };
+
+  return (
+    <div
+      className={css({
+        padding: 4,
+        backgroundColor: "bg.secondary",
+        borderRadius: "md",
+        borderWidth: "thin",
+        borderStyle: "solid",
+        borderColor: "border.default",
+        display: "flex",
+        flexDirection: "column",
+        gap: 3,
+      })}
+    >
+      <div>
+        <h4
+          className={css({
+            marginTop: 0,
+            fontSize: "lg",
+            fontWeight: "semibold",
+            color: "contents.primary",
+          })}
+        >
+          🔔 Notification API デモ
+        </h4>
+        <p className={css({ color: "contents.secondary", fontSize: "sm", marginBottom: 0 })}>
+          ブラウザのネイティブ通知を呼び出す基本的な流れを試せます。必ずユーザー操作とセットで許可をリクエストしましょう。
+        </p>
+      </div>
+
+      <div className={css({ display: "flex", flexWrap: "wrap", gap: 3 })}>
+        <Button onClick={handleRequestPermission} variant="outline">
+          許可をリクエスト
+        </Button>
+        <Button onClick={handleSendNotification} variant="primary">
+          テスト通知を送信
+        </Button>
+        <div
+          className={css({
+            fontSize: "sm",
+            color: "contents.secondary",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          })}
+        >
+          <span>サポート状況:</span>
+          <span className={css({ fontWeight: "semibold", color: isSupported ? "contents.success" : "contents.error" })}>
+            {isSupported ? "利用可能" : "未対応"}
+          </span>
+          <span>/ 許可状態: {permission}</span>
+        </div>
+      </div>
+
+      <p
+        className={css({
+          margin: 0,
+          padding: 3,
+          borderRadius: "md",
+          backgroundColor: "bg.primary",
+          borderWidth: "thin",
+          borderStyle: "solid",
+          borderColor: "border.default",
+          color: "contents.secondary",
+        })}
+        aria-live="polite"
+      >
+        {status}
+      </p>
+
+      <CodeBlock
+        language="ts"
+        code={`if ("Notification" in window) {
+  const permission = await Notification.requestPermission();
+  if (permission === "granted") {
+    const notification = new Notification("タイトル", {
+      body: "本文テキスト",
+      tag: "sample-demo",
+      data: { url: location.href },
+    });
+    notification.onclick = () => {
+      window.focus();
+      notification.close();
+    };
+  }
+}`}
+        description={`// Notification.requestPermission(): ユーザー操作とセットで呼び出す
+// 許可済みになったら new Notification(...) で通知を生成
+// Service Worker では registration.showNotification() を利用`}
+      />
     </div>
   );
 }
