@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MobileDrawer } from './MobileDrawer';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { HamburgerButton } from './HamburgerButton';
 
 const meta = {
@@ -31,6 +31,10 @@ const meta = {
       control: 'text',
       description: '現在アクティブなセクションのID',
     },
+    drawerId: {
+      control: 'text',
+      description: '制御対象のID（ハンバーガーボタンのaria-controlsと連携）',
+    },
   },
 } satisfies Meta<typeof MobileDrawer>;
 
@@ -49,11 +53,17 @@ const mockItems = [
 const DrawerWithButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeId, setActiveId] = useState('section-1');
+  const drawerId = useId();
 
   return (
     <div style={{ minHeight: '100vh', padding: '20px' }}>
-      <HamburgerButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+      <HamburgerButton
+        isOpen={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+        controlsId={drawerId}
+      />
       <MobileDrawer
+        drawerId={drawerId}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         items={mockItems}
@@ -150,6 +160,7 @@ export const LongList: Story = {
   },
   render: () => {
     const [isOpen, setIsOpen] = useState(true);
+    const drawerId = useId();
     const longItems = Array.from({ length: 20 }, (_, i) => ({
       id: `section-${i + 1}`,
       title: `セクション ${i + 1}`,
@@ -157,8 +168,13 @@ export const LongList: Story = {
 
     return (
       <div style={{ minHeight: '100vh' }}>
-        <HamburgerButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+        <HamburgerButton
+          isOpen={isOpen}
+          onClick={() => setIsOpen(!isOpen)}
+          controlsId={drawerId}
+        />
         <MobileDrawer
+          drawerId={drawerId}
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           items={longItems}

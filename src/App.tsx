@@ -16,6 +16,9 @@ import { DesignTokensPage } from "./pages/design/DesignTokensPage";
 import { ImageComparisonPage } from "./pages/design/ImageComparisonPage";
 import { HueWheelPage } from "./pages/design/HueWheelPage";
 
+// まとめ: モバイルナビでは HamburgerButton.controlsId と MobileDrawer.drawerId を共有し、
+// aria-controls で制御対象を結びつけることで支援技術に開閉先を伝える。
+// Storybook でも同パターンを解説しているため、実装時はこの接続を崩さないこと。
 function App() {
   return (
     <Routes>

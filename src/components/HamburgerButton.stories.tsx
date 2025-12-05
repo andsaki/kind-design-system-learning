@@ -23,6 +23,10 @@ const meta = {
       action: 'clicked',
       description: 'クリック時のコールバック関数',
     },
+    controlsId: {
+      control: 'text',
+      description: 'aria-controlsで関連付ける要素のID',
+    },
   },
 } satisfies Meta<typeof HamburgerButton>;
 

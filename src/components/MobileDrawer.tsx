@@ -11,6 +11,7 @@ interface MobileDrawerProps {
   onClose: () => void;
   items: TocItem[];
   activeId: string;
+  drawerId?: string;
 }
 
 const overlayClass = css({
@@ -96,9 +97,13 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   onClose,
   items,
   activeId,
+  drawerId,
 }) => {
   const drawerRef = useRef<HTMLDivElement>(null);
   const headingId = useId();
+  const generatedDrawerId = useId();
+  // ハンバーガーボタンの aria-controls と同期させるため、安定した ID を用意
+  const resolvedDrawerId = drawerId ?? generatedDrawerId;
   const previouslyFocusedElement = useRef<HTMLElement | null>(null);
 
   // ドロワーが開いているときはスクロールを無効化
@@ -163,6 +168,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
       />
 
       <nav
+        id={resolvedDrawerId}
         role="dialog"
         aria-labelledby={headingId}
         aria-modal="true"

@@ -3,6 +3,7 @@ import { css } from '@/styled-system/css';
 interface HamburgerButtonProps {
   isOpen: boolean;
   onClick: () => void;
+  controlsId?: string;
 }
 
 const buttonContainer = css({
@@ -32,13 +33,19 @@ const barBase = css({
   transition: 'all 0.3s ease',
 });
 
-export const HamburgerButton: React.FC<HamburgerButtonProps> = ({ isOpen, onClick }) => {
+export const HamburgerButton: React.FC<HamburgerButtonProps> = ({
+  isOpen,
+  onClick,
+  controlsId,
+}) => {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label={isOpen ? '目次を閉じる' : '目次を開く'}
       aria-expanded={isOpen}
+      // aria-controls で関連ドロワーを明示し、支援技術に制御対象を伝える
+      aria-controls={controlsId}
       className={buttonContainer}
     >
       <div
