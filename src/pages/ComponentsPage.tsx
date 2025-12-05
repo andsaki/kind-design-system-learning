@@ -15,6 +15,8 @@ import {
 import { ScreenReaderDemo } from "../components/ScreenReaderDemo";
 import { CodeBlock } from "../components/CodeBlock";
 import { ComponentDemos } from "../sections/ComponentDemos";
+import { SectionHeading } from "../components/SectionHeading";
+import { icons } from "../design-system/tokens/icons";
 
 const tableUsageRows = [
   {
@@ -154,89 +156,69 @@ export const ComponentsPage = () => {
       <section
         id="tooltip-guidance"
         className={css({
-          mt: { base: 10, md: 16 },
-          mb: { base: 10, md: 16 },
-          p: { base: 4, md: 6 },
-          borderRadius: "2xl",
-          bg: "bg.secondary",
-          boxShadow: "2xl",
+          mb: 12,
+          p: 6,
+          bg: "bg.primary",
+          rounded: "lg",
           borderWidth: "thin",
           borderStyle: "solid",
           borderColor: "border.default",
+          maxW: "full",
+          overflowX: "hidden",
+          boxSizing: "border-box",
         })}
       >
-        <div
+        <h2
           className={css({
+            mt: 0,
+            color: "contents.primary",
+            fontSize: "2xl",
+            fontWeight: "bold",
+            borderBottomWidth: "thick",
+            borderBottomStyle: "solid",
+            borderBottomColor: "blue.500",
+            pb: 2,
+            mb: 4,
             display: "flex",
-            flexDirection: "column",
-            gap: 3,
-            mb: 6,
+            alignItems: "center",
+            gap: 2,
           })}
         >
-          <span
-            className={css({
-              fontSize: "sm",
-              color: "contents.tertiary",
-              letterSpacing: "widest",
-              textTransform: "uppercase",
-            })}
-          >
-            Tooltip component
-          </span>
-          <h2
-            className={css({
-              fontSize: { base: "2xl", md: "3xl" },
-              m: 0,
-              color: "contents.primary",
-            })}
-          >
-            補足情報を効果的に伝えるツールチップ
-          </h2>
-          <p
-            className={css({
-              fontSize: "md",
-              color: "contents.secondary",
-              lineHeight: "relaxed",
-              maxW: "720px",
-            })}
-          >
-            <code
-              className={css({
-                backgroundColor: "bg.primary",
-                px: 2,
-                py: 1,
-                borderRadius: "sm",
-                borderWidth: "thin",
-                borderColor: "border.subtle",
-                fontSize: "sm",
-              })}
-            >
-              Tooltip
-            </code>{" "}
-            コンポーネントはアクセシビリティ観点では「補足情報を添える場合のみ」使用します。
-            重要な説明は DOM
-            上に常時表示し、スクリーンリーダー間の挙動の違いにも配慮した実装が必要です。
-          </p>
-        </div>
-
-        <div
+          <icons.component.info size={28} className={css({ color: "blue.600" })} strokeWidth={2} />
+          Tooltip コンポーネント
+        </h2>
+        <p
           className={css({
-            display: "grid",
-            gridTemplateColumns: { base: "1fr", md: "repeat(3, 1fr)" },
-            gap: 4,
+            color: "contents.primary",
+            mt: 0,
             mb: 6,
           })}
         >
+          ツールチップ（Tooltip）は、補足情報を効果的に伝えるUIコンポーネントです。
+          アクセシビリティ観点では「補足情報を添える場合のみ」使用します。
+          重要な説明はDOM上に常時表示し、スクリーンリーダー間の挙動の違いにも配慮した実装が必要です。
+        </p>
+
+        <div className={css({ mt: 6 })}>
+          <SectionHeading>実装ガイドライン</SectionHeading>
+          <div
+            className={css({
+              display: "grid",
+              gridTemplateColumns: { base: "1fr", md: "repeat(3, 1fr)" },
+              gap: 4,
+              mb: 6,
+            })}
+          >
           {tooltipUsageHighlights.map((item) => (
             <div
               key={item.title}
               className={css({
                 p: 4,
-                bg: "bg.primary",
-                borderRadius: "xl",
+                bg: "bg.tertiary",
+                borderRadius: "base",
                 borderWidth: "thin",
-                borderColor: "border.subtle",
-                minHeight: "150px",
+                borderStyle: "solid",
+                borderColor: "border.default",
               })}
             >
               <h3
@@ -260,22 +242,26 @@ export const ComponentsPage = () => {
               </p>
             </div>
           ))}
+          </div>
         </div>
-        <div
-          className={css({
-            mt: 4,
-            p: 4,
-            borderRadius: "lg",
-            bg: "bg.secondary",
-            borderWidth: "thin",
-            borderStyle: "solid",
-            borderColor: "border.default",
-            display: "grid",
-            gap: 3,
-          })}
-        >
+
+        <div className={css({ mt: 6 })}>
+          <SectionHeading>実装例</SectionHeading>
+          <div
+            className={css({
+              mt: 4,
+              p: 4,
+              borderRadius: "base",
+              bg: "bg.tertiary",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.default",
+              display: "grid",
+              gap: 3,
+            })}
+          >
           <h3
-            className={css({ m: 0, color: "contents.primary", fontSize: "lg" })}
+            className={css({ m: 0, mb: 3, color: "contents.primary", fontSize: "lg", fontWeight: "bold" })}
           >
             フォームと aria-describedby の実演
           </h3>
@@ -361,28 +347,22 @@ export const ComponentsPage = () => {
   ARIA ベストプラクティスを見る
 </a>`}
           />
+          </div>
         </div>
-        <div
-          className={css({
-            mt: 4,
-            p: 4,
-            backgroundColor: "bg.primary",
-            borderRadius: "base",
-            borderWidth: "thin",
-            borderStyle: "solid",
-            borderColor: "border.default",
-          })}
-        >
-          <h3
+
+        <div className={css({ mt: 6 })}>
+          <SectionHeading>ポジション別のデモ</SectionHeading>
+          <div
             className={css({
-              m: 0,
-              mb: 3,
-              fontSize: "lg",
-              color: "contents.primary",
+              mt: 4,
+              p: 4,
+              backgroundColor: "bg.tertiary",
+              borderRadius: "base",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.default",
             })}
           >
-            🎨 実例
-          </h3>
           <div
             className={css({
               display: "flex",
@@ -469,109 +449,78 @@ export const ComponentsPage = () => {
               ARIAベストプラクティス
             </a>
           </div>
+          </div>
         </div>
-        <p
-          className={css({
-            color: "contents.secondary",
-            fontSize: "sm",
-            lineHeight: "relaxed",
-            mt: 3,
-            mb: 0,
-          })}
-        >
-          より詳細な例や実装のデモは、このコンポーネントページ内のツールチップセクションですべて確認できるようまとめています。上の「ARIAベストプラクティス」リンクは、ツールチップを使わず title 属性だけで補足を届ける最低限のフォールバック例です。
-        </p>
       </section>
 
       <section
         id="table-component"
         className={css({
-          mt: { base: 10, md: 16 },
-          mb: { base: 10, md: 16 },
-          p: { base: 4, md: 6 },
-          borderRadius: "2xl",
-          bg: "bg.secondary",
-          boxShadow: "2xl",
+          mb: 12,
+          p: 6,
+          bg: "bg.primary",
+          rounded: "lg",
           borderWidth: "thin",
           borderStyle: "solid",
           borderColor: "border.default",
+          maxW: "full",
+          overflowX: "hidden",
+          boxSizing: "border-box",
         })}
       >
-        <div
+        <h2
           className={css({
+            mt: 0,
+            color: "contents.primary",
+            fontSize: "2xl",
+            fontWeight: "bold",
+            borderBottomWidth: "thick",
+            borderBottomStyle: "solid",
+            borderBottomColor: "blue.500",
+            pb: 2,
+            mb: 4,
             display: "flex",
-            flexDirection: "column",
-            gap: 3,
-            mb: 6,
+            alignItems: "center",
+            gap: 2,
           })}
         >
-          <span
-            className={css({
-              fontSize: "sm",
-              color: "contents.tertiary",
-              letterSpacing: "widest",
-              textTransform: "uppercase",
-            })}
-          >
-            Table component
-          </span>
-          <h2
-            className={css({
-              fontSize: { base: "2xl", md: "3xl" },
-              m: 0,
-              color: "contents.primary",
-            })}
-          >
-            データの比較を迷わせないテーブルの使い方
-          </h2>
-          <p
-            className={css({
-              fontSize: "md",
-              color: "contents.secondary",
-              lineHeight: "relaxed",
-              maxW: "720px",
-            })}
-          >
-            <code
-              className={css({
-                backgroundColor: "bg.primary",
-                px: 2,
-                py: 1,
-                borderRadius: "sm",
-                borderWidth: "thin",
-                borderColor: "border.subtle",
-                fontSize: "sm",
-              })}
-            >
-              Table
-            </code>{" "}
-            コンポーネントは、captionやsticky headerを含めてWCAG
-            AA/AAAを満たす状態を簡単に構築できます。
-            下記の表ではユースケース別に props
-            とアクセシビリティのポイントをまとめています。
-          </p>
-        </div>
-
-        <div
+          <icons.component.table size={28} className={css({ color: "blue.600" })} strokeWidth={2} />
+          Table コンポーネント
+        </h2>
+        <p
           className={css({
-            display: "grid",
-            gridTemplateColumns: { base: "1fr", md: "repeat(3, 1fr)" },
-            gap: 4,
+            color: "contents.primary",
+            mt: 0,
             mb: 6,
           })}
         >
-          {tableUsageHighlights.map((item) => (
-            <div
-              key={item.title}
-              className={css({
-                p: 4,
-                bg: "bg.primary",
-                borderRadius: "xl",
-                borderWidth: "thin",
-                borderColor: "border.subtle",
-                minHeight: "150px",
-              })}
-            >
+          テーブル（Table）コンポーネントは、データの比較を迷わせない表組みを実現します。
+          captionやsticky headerを含めてWCAG AA/AAAを満たす状態を簡単に構築できます。
+          下記の表ではユースケース別に props とアクセシビリティのポイントをまとめています。
+        </p>
+
+        <div className={css({ mt: 6 })}>
+          <SectionHeading>主な機能</SectionHeading>
+          <div
+            className={css({
+              display: "grid",
+              gridTemplateColumns: { base: "1fr", md: "repeat(3, 1fr)" },
+              gap: 4,
+              mb: 6,
+            })}
+          >
+            {tableUsageHighlights.map((item) => (
+              <div
+                key={item.title}
+                className={css({
+                  p: 4,
+                  bg: "bg.tertiary",
+                  borderRadius: "base",
+                  borderWidth: "thin",
+                  borderStyle: "solid",
+                  borderColor: "border.default",
+                })}
+              >
               <h3
                 className={css({
                   m: 0,
@@ -593,9 +542,12 @@ export const ComponentsPage = () => {
               </p>
             </div>
           ))}
+          </div>
         </div>
 
-        <Table
+        <div className={css({ mt: 6 })}>
+          <SectionHeading>ユースケース別の実装例</SectionHeading>
+          <Table
           caption="TableコンポーネントのPropsとユースケース"
           variant="striped"
           showColumnDividers
