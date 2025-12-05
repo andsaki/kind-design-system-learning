@@ -50,3 +50,6 @@ export type {
   TableCaptionProps,
   TableVariant,
 } from './Table';
+
+export { Carousel } from './Carousel';
+export type { CarouselProps, CarouselSlide } from './Carousel';

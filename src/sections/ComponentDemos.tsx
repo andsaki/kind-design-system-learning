@@ -1,4 +1,4 @@
-import { Button, Input, Select, Form, Accordion, AccordionSummary, AccordionContent, Modal, Breadcrumbs, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, formSchemas, Dropdown } from "../design-system/components";
+import { Button, Input, Select, Form, Accordion, AccordionSummary, AccordionContent, Modal, Breadcrumbs, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, formSchemas, Dropdown, Carousel } from "../design-system/components";
 import { Text } from "../design-system/components/Text";
 import { TextArea } from "../design-system/components/TextArea";
 import { Checkbox } from "../design-system/components/Checkbox";
@@ -8,6 +8,7 @@ import { InfoBox } from "../design-system/components/InfoBox";
 import { icons } from "../design-system/tokens/icons";
 import { SectionHeading } from "../components/SectionHeading";
 import { ScreenReaderDemo } from "../components/ScreenReaderDemo";
+import { CodeBlock } from "../components/CodeBlock";
 import { z } from "zod";
 import { useState } from "react";
 import { css, cx } from "@/styled-system/css";
@@ -511,6 +512,13 @@ export function ComponentDemos({
             <li><strong>SVGアニメーション</strong>: 滑らかな回転アニメーション</li>
           </ul>
         </InfoBox>
+      </section>
+
+      <section
+        id="carousel-component"
+        className={sectionStyle}
+      >
+        <CarouselSection />
       </section>
 
       <section
@@ -1584,6 +1592,256 @@ function LoadingSection() {
           ローディングを表示（3秒間）
         </Button>
         {isLoading && <Loading fullscreen label="データを読み込んでいます..." />}
+      </div>
+    </>
+  );
+}
+
+// Carousel Section Component
+function CarouselSection() {
+  return (
+    <>
+      <h2 className={sectionHeading}>
+        🎠 Carousel（カルーセル）
+      </h2>
+      <p className={sectionDescription}>
+        キーボード操作、スクリーンリーダー対応、自動再生制御など、
+        アクセシビリティに配慮したカルーセルコンポーネント
+      </p>
+
+      <div className={css({ mt: 6 })}>
+        <Carousel
+          slides={[
+            {
+              id: 1,
+              title: "スライド 1",
+              description: "美しい風景の写真",
+              content: (
+                <div className={css({ textAlign: "center", width: "100%" })}>
+                  <div className={css({ fontSize: "6xl" })}>🏔️</div>
+                  <h5 className={css({ margin: 0, fontSize: "xl", fontWeight: "semibold", color: "contents.primary" })}>
+                    スライド 1
+                  </h5>
+                  <p className={css({ margin: 0, fontSize: "sm", color: "contents.secondary" })}>
+                    美しい風景の写真
+                  </p>
+                </div>
+              ),
+            },
+            {
+              id: 2,
+              title: "スライド 2",
+              description: "都市の夜景",
+              content: (
+                <div className={css({ textAlign: "center", width: "100%" })}>
+                  <div className={css({ fontSize: "6xl" })}>🌃</div>
+                  <h5 className={css({ margin: 0, fontSize: "xl", fontWeight: "semibold", color: "contents.primary" })}>
+                    スライド 2
+                  </h5>
+                  <p className={css({ margin: 0, fontSize: "sm", color: "contents.secondary" })}>
+                    都市の夜景
+                  </p>
+                </div>
+              ),
+            },
+            {
+              id: 3,
+              title: "スライド 3",
+              description: "自然の中の小道",
+              content: (
+                <div className={css({ textAlign: "center", width: "100%" })}>
+                  <div className={css({ fontSize: "6xl" })}>🌲</div>
+                  <h5 className={css({ margin: 0, fontSize: "xl", fontWeight: "semibold", color: "contents.primary" })}>
+                    スライド 3
+                  </h5>
+                  <p className={css({ margin: 0, fontSize: "sm", color: "contents.secondary" })}>
+                    自然の中の小道
+                  </p>
+                </div>
+              ),
+            },
+            {
+              id: 4,
+              title: "スライド 4",
+              description: "夕焼けのビーチ",
+              content: (
+                <div className={css({ textAlign: "center", width: "100%" })}>
+                  <div className={css({ fontSize: "6xl" })}>🌅</div>
+                  <h5 className={css({ margin: 0, fontSize: "xl", fontWeight: "semibold", color: "contents.primary" })}>
+                    スライド 4
+                  </h5>
+                  <p className={css({ margin: 0, fontSize: "sm", color: "contents.secondary" })}>
+                    夕焼けのビーチ
+                  </p>
+                </div>
+              ),
+            },
+          ]}
+          ariaLabel="画像カルーセル"
+        />
+      </div>
+
+      <div className={css({ mt: 6 })}>
+        <h4 className={css({ fontSize: "lg", fontWeight: "semibold", color: "contents.primary", mb: 3 })}>
+          ✅ アクセシビリティ機能
+        </h4>
+        <div className={css({ display: "grid", gap: 3 })}>
+          <InfoBox variant="info" title="⌨️ キーボード操作">
+            <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+              <li><kbd>←</kbd> / <kbd>→</kbd>: 前後のスライドへ移動</li>
+              <li><kbd>Home</kbd>: 最初のスライドへ</li>
+              <li><kbd>End</kbd>: 最後のスライドへ</li>
+              <li><kbd>Tab</kbd>: インジケーターやボタンへフォーカス移動</li>
+            </ul>
+          </InfoBox>
+
+          <InfoBox variant="info" title="🏷️ ARIA属性">
+            <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+              <li><code>role="region"</code> + <code>aria-roledescription="carousel"</code>: カルーセル領域を明示</li>
+              <li><code>aria-label</code>: カルーセルの目的を説明</li>
+              <li><code>role="group"</code> + <code>aria-roledescription="slide"</code>: 各スライドを識別</li>
+              <li><code>aria-label="n / total"</code>: スライドの位置情報</li>
+              <li><code>aria-hidden="true"</code> + <code>tabindex="-1"</code>: 非表示スライドをスクリーンリーダーとTab順序から除外</li>
+              <li><code>aria-current="true"</code>: 現在のインジケーターを示す</li>
+            </ul>
+          </InfoBox>
+
+          <InfoBox variant="info" title="📢 ライブリージョン">
+            <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+              <li><code>aria-live="polite"</code>: スライド変更を通知</li>
+              <li><code>aria-atomic="false"</code>: 変更部分のみを読み上げ</li>
+              <li>スライド番号とタイトルを自動読み上げ</li>
+            </ul>
+          </InfoBox>
+
+          <InfoBox variant="info" title="🎮 ユーザー制御">
+            <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+              <li>自動再生の再生/一時停止ボタン</li>
+              <li>明確なラベル付きナビゲーションボタン</li>
+              <li>タッチ/スワイプ操作対応</li>
+              <li>フォーカスインジケーターの明示</li>
+            </ul>
+          </InfoBox>
+
+          <InfoBox variant="info" title="🖼️ 画像のはみ出し対策">
+            <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+              <li><code>overflow: hidden</code>: カルーセル本体からはみ出さない</li>
+              <li><code>maxWidth: 100%</code>: スライドとコンテンツの幅を制限</li>
+              <li><code>img</code> 要素に <code>object-fit: contain</code>: 画像をボックス内に収める</li>
+              <li><code>slideHeight</code> / <code>aspectRatio</code>: 高さを制御してレイアウト崩れを防ぐ</li>
+            </ul>
+          </InfoBox>
+
+          <InfoBox variant="success" title="✨ tabindex=&quot;-1&quot; が嬉しい理由">
+            <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+              <li><strong>キーボードユーザー体験向上</strong>: 非表示スライド内のボタン・リンクにTabで到達しない → 混乱を防ぐ</li>
+              <li><strong>フォーカストラップ回避</strong>: スライド4枚 × ボタン2個 = 8個のボタンを全て辿る必要がない</li>
+              <li><strong>論理的なTab順序</strong>: 表示中の要素だけにフォーカスが当たり、自然な操作フロー</li>
+              <li><strong>aria-hidden補完</strong>: スクリーンリーダーだけでなく、キーボード操作も一貫性を持つ</li>
+              <li><strong>例</strong>: 4枚スライドで各スライドに3つのリンク → tabindex無しだと12個全てにTab可能、ありだと3個だけ</li>
+            </ul>
+          </InfoBox>
+        </div>
+      </div>
+
+      <div className={css({ mt: 6 })}>
+        <CodeBlock
+          language="tsx"
+          code={`import { Carousel } from "../design-system/components";
+
+// 基本的な使用例
+<Carousel
+  slides={[
+    {
+      id: 1,
+      title: "スライド 1",
+      content: <div>スライドコンテンツ</div>,
+    },
+    {
+      id: 2,
+      title: "スライド 2",
+      content: <div>スライドコンテンツ</div>,
+    },
+  ]}
+  ariaLabel="画像カルーセル"
+/>
+
+// 自動再生を有効化
+<Carousel
+  slides={slides}
+  autoPlay={true}
+  autoPlayInterval={5000}
+  ariaLabel="プロダクトカルーセル"
+/>
+
+// 画像用カルーセル（高さ・アスペクト比を指定）
+<Carousel
+  slides={slides}
+  slideHeight={400}
+  aspectRatio="16/9"
+  ariaLabel="画像ギャラリー"
+/>
+
+// 画像がはみ出さない例
+<Carousel
+  slides={[
+    {
+      id: 1,
+      title: "商品写真",
+      content: <img src="/product.jpg" alt="商品名" />,
+    },
+  ]}
+  slideHeight={500}
+  ariaLabel="商品カルーセル"
+/>`}
+          description="// カルーセルコンポーネントの使用例"
+        />
+      </div>
+
+      <div className={css({ mt: 6 })}>
+        <InfoBox variant="warning" title="💡 ベストプラクティス">
+          <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.primary", lineHeight: "relaxed" })}>
+            <li>自動再生はデフォルトでオフにし、ユーザーが制御できるようにする</li>
+            <li>自動再生中でもキーボード操作で即座に停止できるようにする</li>
+            <li>非表示のスライドには <code>aria-hidden="true"</code> と <code>tabindex="-1"</code> を付ける</li>
+            <li>各スライドに意味のある <code>aria-label</code> を付ける</li>
+            <li>ナビゲーションボタンには明確なラベルを付ける</li>
+            <li>インジケーターで現在位置を視覚的・音声的に示す</li>
+            <li>タッチデバイスでもスワイプ操作を可能にする</li>
+            <li>フォーカスインジケーターを明確に表示する</li>
+            <li>スライド変更時は <code>aria-live</code> で通知する</li>
+            <li><strong>画像を使用する場合:</strong> <code>slideHeight</code> や <code>aspectRatio</code> を指定して、画像がはみ出さないようにする</li>
+            <li><strong>画像のalt属性:</strong> 必ず適切な代替テキストを提供する</li>
+          </ul>
+        </InfoBox>
+      </div>
+
+      <div className={css({ mt: 6 })}>
+        <h4 className={css({ fontSize: "lg", fontWeight: "semibold", color: "contents.primary", mb: 3 })}>
+          📚 参考資料
+        </h4>
+        <ul className={css({ margin: 0, paddingLeft: 5, color: "contents.secondary", lineHeight: "relaxed" })}>
+          <li>
+            <a
+              href="https://www.w3.org/WAI/ARIA/apg/patterns/carousel/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={css({ color: "contents.link", textDecoration: "underline" })}
+            >
+              W3C ARIA Authoring Practices - Carousel Pattern
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.w3.org/WAI/tutorials/carousels/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={css({ color: "contents.link", textDecoration: "underline" })}
+            >
+              W3C Web Accessibility Tutorials - Carousels
+            </a>
+          </li>
+        </ul>
       </div>
     </>
   );
