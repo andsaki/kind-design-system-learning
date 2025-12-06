@@ -1,0 +1,10 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      run: volta run npm run lint
+
+pre-push:
+  commands:
+    axe-storybook:
+      run: volta run npm run test:playwright:storybook

@@ -52,6 +52,21 @@ npm run storybook
 # → http://localhost:6006 で確認
 ```
 
+### Git hooks (Lefthook)
+
+コミット/プッシュ前に自動で lint ＆ axe 検証を走らせるために [Lefthook](https://github.com/evilmartians/lefthook) を導入しています。
+
+```bash
+# Git 2.31 以上が必要です
+volta run npx lefthook install
+
+# 手動実行（例）
+volta run npx lefthook run pre-commit
+```
+
+- `pre-commit` で `npm run lint` (ESLint + Stylelint) が走ります
+- `pre-push` で `npm run test:playwright:storybook` (Storybook + axe-core) が走ります
+
 ### その他のコマンド
 
 ```bash

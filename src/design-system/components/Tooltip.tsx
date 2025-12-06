@@ -232,8 +232,12 @@ export const Tooltip: React.FC<TooltipProps> = ({
           if (event.defaultPrevented) {
             return;
           }
-          const nextTarget = event.relatedTarget as Node | null;
-          if (nextTarget && tooltipContentRef.current?.contains(nextTarget)) {
+          const nextTarget = event.relatedTarget;
+          // jsdom の relatedTarget は Node 以外になることがあるので guard
+          if (
+            nextTarget instanceof Node &&
+            tooltipContentRef.current?.contains(nextTarget)
+          ) {
             return;
           }
           changeVisibility(false, "mouse");
@@ -279,8 +283,12 @@ export const Tooltip: React.FC<TooltipProps> = ({
               changeVisibility(true, "mouse", { immediate: true });
             }}
             onMouseLeave={(event: ReactMouseEvent<HTMLSpanElement>) => {
-              const nextTarget = event.relatedTarget as Node | null;
-              if (nextTarget && containerRef.current?.contains(nextTarget)) {
+              const nextTarget = event.relatedTarget;
+              // jsdom の relatedTarget は Node 以外になることがあるので guard
+              if (
+                nextTarget instanceof Node &&
+                containerRef.current?.contains(nextTarget)
+              ) {
                 return;
               }
               changeVisibility(false, "mouse");

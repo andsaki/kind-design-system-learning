@@ -1,18 +1,21 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Tooltip } from './Tooltip';
 
+const focusElement = async (element: HTMLElement) => {
+  await act(async () => {
+    element.focus();
+  });
+};
+
+const blurElement = async (element: HTMLElement) => {
+  await act(async () => {
+    element.blur();
+  });
+};
+
 describe('Tooltip', () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-    vi.useRealTimers();
-  });
-
   describe('基本的なレンダリング', () => {
     it('子要素がレンダリングされる', () => {
       render(
@@ -37,7 +40,7 @@ describe('Tooltip', () => {
     it('マウスホバー時にツールチップが表示される', async () => {
       const user = userEvent.setup({ delay: null });
       render(
-        <Tooltip content="ヘルプテキスト" mouseDelay={100}>
+        <Tooltip content="ヘルプテキスト" mouseDelay={50}>
           <button>ボタン</button>
         </Tooltip>
       );
@@ -45,7 +48,7 @@ describe('Tooltip', () => {
       const button = screen.getByRole('button');
       await user.hover(button);
 
-      vi.advanceTimersByTime(100);
+      expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
 
       await waitFor(() => {
         expect(screen.getByRole('tooltip')).toBeInTheDocument();
@@ -55,21 +58,19 @@ describe('Tooltip', () => {
     it('マウスアウト時にツールチップが非表示になる', async () => {
       const user = userEvent.setup({ delay: null });
       render(
-        <Tooltip content="ヘルプテキスト" mouseDelay={100}>
+        <Tooltip content="ヘルプテキスト" mouseDelay={50}>
           <button>ボタン</button>
         </Tooltip>
       );
 
       const button = screen.getByRole('button');
       await user.hover(button);
-      vi.advanceTimersByTime(100);
 
       await waitFor(() => {
         expect(screen.getByRole('tooltip')).toBeInTheDocument();
       });
 
       await user.unhover(button);
-      vi.advanceTimersByTime(100);
 
       await waitFor(() => {
         expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
@@ -86,7 +87,7 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       await waitFor(() => {
         expect(screen.getByRole('tooltip')).toBeInTheDocument();
@@ -101,13 +102,13 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       await waitFor(() => {
         expect(screen.getByRole('tooltip')).toBeInTheDocument();
       });
 
-      button.blur();
+      await blurElement(button);
 
       await waitFor(() => {
         expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
@@ -125,7 +126,7 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       await waitFor(() => {
         expect(screen.getByRole('tooltip')).toBeInTheDocument();
@@ -150,7 +151,7 @@ describe('Tooltip', () => {
       const button = screen.getByRole('button');
       expect(button).not.toHaveAttribute('aria-describedby');
 
-      button.focus();
+      await focusElement(button);
 
       await waitFor(() => {
         expect(screen.getByRole('tooltip')).toBeInTheDocument();
@@ -166,7 +167,7 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       await waitFor(() => {
         const tooltip = screen.getByRole('tooltip');
@@ -182,7 +183,7 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       await waitFor(() => {
         expect(screen.getByRole('tooltip')).toHaveTextContent('これはヘルプテキストです');
@@ -221,7 +222,7 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       await waitFor(() => {
         const tooltip = screen.getByRole('tooltip');
@@ -237,7 +238,7 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       await waitFor(() => {
         const tooltip = screen.getByRole('tooltip');
@@ -253,7 +254,7 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       await waitFor(() => {
         const tooltip = screen.getByRole('tooltip');
@@ -269,7 +270,7 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       await waitFor(() => {
         const tooltip = screen.getByRole('tooltip');
@@ -287,7 +288,7 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       // フォーカス時は即時表示（delay無視）
       await waitFor(() => {
@@ -298,7 +299,7 @@ describe('Tooltip', () => {
     it('指定したmouseDelayの後にツールチップが表示される', async () => {
       const user = userEvent.setup({ delay: null });
       render(
-        <Tooltip content="ヘルプテキスト" mouseDelay={500}>
+        <Tooltip content="ヘルプテキスト" mouseDelay={150}>
           <button>ボタン</button>
         </Tooltip>
       );
@@ -308,8 +309,6 @@ describe('Tooltip', () => {
 
       // まだ表示されていない
       expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
-
-      vi.advanceTimersByTime(500);
 
       // 表示される
       await waitFor(() => {
@@ -335,7 +334,7 @@ describe('Tooltip', () => {
       expect(handleMouseEnter).toHaveBeenCalledTimes(1);
     });
 
-    it('既存のonFocusハンドラが呼ばれる', () => {
+    it('既存のonFocusハンドラが呼ばれる', async () => {
       const handleFocus = vi.fn();
 
       render(
@@ -345,7 +344,7 @@ describe('Tooltip', () => {
       );
 
       const button = screen.getByRole('button');
-      button.focus();
+      await focusElement(button);
 
       expect(handleFocus).toHaveBeenCalledTimes(1);
     });
