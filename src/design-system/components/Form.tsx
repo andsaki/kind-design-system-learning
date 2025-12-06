@@ -36,6 +36,10 @@ export interface FormFieldConfig<T> {
   required?: boolean;
   /** 入力サイズ */
   size?: "sm" | "md" | "lg";
+  /** 自分以外の情報を入力するフィールドか（autocompleteを無効化） */
+  isThirdPartyInput?: boolean;
+  /** input要素に渡す autocomplete ヒント（isThirdPartyInput が true の場合は 'off' が優先される） */
+  autoComplete?: React.InputHTMLAttributes<HTMLInputElement>["autoComplete"];
 }
 
 export interface FormProps<T extends z.ZodType<FieldValues>> {
@@ -115,6 +119,9 @@ export function Form<T extends z.ZodType<FieldValues>>({
             required={field.required}
             size={field.size}
             wcagLevel={wcagLevel}
+            autoComplete={
+              field.isThirdPartyInput ? "off" : field.autoComplete
+            }
             {...register(field.name)}
           />
         );
