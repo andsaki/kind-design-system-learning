@@ -20,6 +20,8 @@ import { HueWheelPage } from "./pages/design/HueWheelPage";
 // まとめ: モバイルナビでは HamburgerButton.controlsId と MobileDrawer.drawerId を共有し、
 // aria-controls で制御対象を結びつけることで支援技術に開閉先を伝える。
 // Storybook でも同パターンを解説しているため、実装時はこの接続を崩さないこと。
+// キーボード操作は WCAG 2.1 達成基準 2.1.1 Keyboard でも必須要件なので、
+// すべての新規コンポーネントも Tab/Fous/Escape などの動線を設計段階で確認してから実装すること。
 function App() {
   return (
     <Routes>

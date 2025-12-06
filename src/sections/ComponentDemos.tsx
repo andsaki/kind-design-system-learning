@@ -169,6 +169,11 @@ export function ComponentDemos({
           <Button isLoading>読み込み中</Button>
           <Button icon={<icons.component.button size={16} />}>アイコン付き</Button>
         </div>
+
+        <p className={css({ mt: 4, lineHeight: "relaxed", color: "contents.secondary" })}>
+          トーストは通知を軽く伝えたいときに適しており、ユーザーの作業を止めずに自動的に消えるフィードバックを提供します。
+          入力完了や保存成功など、即時のアクションを求めない情報に向いています。
+        </p>
       </section>
 
       <section
@@ -864,8 +869,9 @@ export function ComponentDemos({
           <icons.component.modal size={28} className={css({ color: "blue.600" })} strokeWidth={2} />
           Modal コンポーネント
         </h2>
-          <p className={css({ lineHeight: "normal", color: "contents.primary" })}>
+        <p className={css({ lineHeight: "normal", color: "contents.primary" })}>
           モーダルダイアログは、ユーザーの注意を特定のタスクに集中させるために使用します。
+          トーストのような軽量な通知とは異なり、背景操作をブロックして「今すぐ対応が必要」な状況を明確にします。
         </p>
 
         <div className={css({ mt: 6 })}>
