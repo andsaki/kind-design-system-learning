@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { accessibilityLevels } from '../constants/accessibility';
-import type { WCAGLevel } from '../constants/accessibility';
+import type { ComponentWCAGLevel } from '../constants/accessibility';
 import { css, cx } from '@/styled-system/css';
 
-export type { WCAGLevel } from '../constants/accessibility';
+export type { ComponentWCAGLevel as WCAGLevel } from '../constants/accessibility';
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
 export interface ToastProps {
@@ -22,8 +22,8 @@ export interface ToastProps {
   onClose: (id: string) => void;
   /** 表示位置のインデックス */
   index?: number;
-  /** WCAGレベル（A, AA, AAA） */
-  wcagLevel?: WCAGLevel;
+  /** WCAGレベル（AA, AAA） */
+  wcagLevel?: ComponentWCAGLevel;
 }
 
 /**

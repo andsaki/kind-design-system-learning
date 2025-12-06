@@ -188,11 +188,6 @@ describe('Select', () => {
       expect(screen.getByRole('combobox')).toBeInTheDocument();
     });
 
-    it('Aレベルが指定できる', () => {
-      render(<Select label="選択" options={mockOptions} wcagLevel="A" />);
-      expect(screen.getByRole('combobox')).toBeInTheDocument();
-    });
-
     it('AAAレベルが指定できる', () => {
       render(<Select label="選択" options={mockOptions} wcagLevel="AAA" />);
       expect(screen.getByRole('combobox')).toBeInTheDocument();

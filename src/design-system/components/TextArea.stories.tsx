@@ -347,7 +347,7 @@ export const KeyboardInteraction: Story = {
 /**
  * WCAGレベル比較
  *
- * A/AA/AAAの3つのアクセシビリティレベルのフォーカス表示の違いを確認できます。
+ * AA/AAAの2つのアクセシビリティレベルのフォーカス表示の違いを確認できます。
  * Tabキーでフォーカスを移動して確認してください。
  */
 export const WCAGLevels: Story = {
@@ -355,7 +355,6 @@ export const WCAGLevels: Story = {
     label: "",
   },
   render: () => {
-    const [valueA, setValueA] = useState("");
     const [valueAA, setValueAA] = useState("");
     const [valueAAA, setValueAAA] = useState("");
 
@@ -377,30 +376,6 @@ export const WCAGLevels: Story = {
             Tabキーでフォーカスを移動すると、各WCAGレベルのフォーカス表示の違いを確認できます。
             マウスクリックではフォーカススタイルは表示されません。
           </p>
-        </div>
-
-        <div style={{ width: "500px" }}>
-          <h3
-            style={{
-              marginBottom: "0.5rem",
-              fontSize: "14px",
-              fontWeight: "bold",
-            }}
-          >
-            レベルA（最低限）
-          </h3>
-          <p
-            style={{ marginBottom: "1rem", fontSize: "12px", color: "#6b7280" }}
-          >
-            薄いアウトラインのみ
-          </p>
-          <TextArea
-            label="レベルAのテキストエリア"
-            wcagLevel="A"
-            placeholder="テキストを入力..."
-            value={valueA}
-            onChange={(e) => setValueA(e.target.value)}
-          />
         </div>
 
         <div style={{ width: "500px" }}>

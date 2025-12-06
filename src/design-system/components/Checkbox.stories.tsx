@@ -213,7 +213,6 @@ const KeyboardInteractionDemo = () => {
 };
 
 const WcagLevelsDemo = () => {
-  const [checkedA, setCheckedA] = useState(false);
   const [checkedAA, setCheckedAA] = useState(false);
   const [checkedAAA, setCheckedAAA] = useState(false);
 
@@ -235,21 +234,6 @@ const WcagLevelsDemo = () => {
           Tabキーでフォーカスを移動すると、各WCAGレベルのフォーカス表示の違いを確認できます。
           マウスクリックではフォーカススタイルは表示されません。
         </p>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: "0.5rem", fontSize: "14px", fontWeight: "bold" }}>
-          レベルA（最低限）
-        </h3>
-        <p style={{ marginBottom: "1rem", fontSize: "12px", color: "#6b7280" }}>
-          薄いアウトラインのみ
-        </p>
-        <Checkbox
-          label="レベルAのチェックボックス"
-          wcagLevel="A"
-          checked={checkedA}
-          onChange={(e) => setCheckedA(e.target.checked)}
-        />
       </div>
 
       <div>
@@ -381,7 +365,7 @@ export const KeyboardInteraction: Story = {
 /**
  * WCAGレベル比較
  *
- * A/AA/AAAの3つのアクセシビリティレベルのフォーカス表示の違いを確認できます。
+ * AA/AAAの2つのアクセシビリティレベルのフォーカス表示の違いを確認できます。
  * Tabキーでフォーカスを移動して確認してください。
  */
 export const WCAGLevels: Story = {

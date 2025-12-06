@@ -1,6 +1,6 @@
 import React, { useId } from "react";
 import { input as inputRecipe } from "../../../styled-system/recipes";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 import { cx, css } from "@/styled-system/css";
 
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
@@ -14,8 +14,8 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   size?: 'sm' | 'md' | 'lg';
   /** 必須項目かどうか */
   required?: boolean;
-  /** WCAGアクセシビリティレベル (A/AA/AAA) @default 'AA' */
-  wcagLevel?: WCAGLevel;
+  /** WCAGアクセシビリティレベル (AA/AAA) @default 'AA' */
+  wcagLevel?: ComponentWCAGLevel;
   /** クリアボタンを表示するかどうか */
   clearable?: boolean;
   /** クリアボタンがクリックされた時のコールバック */

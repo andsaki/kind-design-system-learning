@@ -1,12 +1,6 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
 
 const triggerFocusStyles = {
-  A: {
-    backgroundColor: "transparent",
-    outlineColor: "blue.300",
-    outlineWidth: "0.125rem",
-    outlineOffset: "0",
-  },
   AA: {
     backgroundColor: "blue.50",
     outlineColor: "blue.700",
@@ -22,12 +16,6 @@ const triggerFocusStyles = {
 } as const;
 
 const optionFocusStyles = {
-  A: {
-    backgroundColor: "blue.50",
-    outlineColor: "blue.300",
-    outlineWidth: "0.125rem",
-    outlineOffset: "0",
-  },
   AA: {
     backgroundColor: "blue.100",
     outlineColor: "blue.700",
@@ -181,20 +169,6 @@ export const dropdown: SlotRecipeConfig = {
       filled: {},
     },
     wcagLevel: {
-      A: {
-        trigger: {
-          _focusVisible: {
-            outlineStyle: "solid",
-            ...triggerFocusStyles.A,
-          },
-        },
-        option: {
-          _focusVisible: {
-            outlineStyle: "solid",
-            ...optionFocusStyles.A,
-          },
-        },
-      },
       AA: {
         trigger: {
           _focusVisible: {

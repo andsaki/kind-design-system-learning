@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import type { ReactNode } from "react";
 import { modal as modalRecipe } from "../../../styled-system/recipes";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 
 export interface ModalProps {
   isOpen: boolean;
@@ -10,7 +10,7 @@ export interface ModalProps {
   children: ReactNode;
   footer?: ReactNode;
   size?: "sm" | "md" | "lg";
-  wcagLevel?: WCAGLevel;
+  wcagLevel?: ComponentWCAGLevel;
 }
 
 export const Modal: React.FC<ModalProps> = ({

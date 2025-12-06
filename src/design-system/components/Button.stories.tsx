@@ -230,8 +230,7 @@ export const AllStates: Story = {
 /**
  * WCAGレベル比較
  *
- * A/AA/AAAの3つのアクセシビリティレベルを比較できます。
- * - レベルA: 最低限（大きいテキストのみ推奨）
+ * AA/AAAの2つのアクセシビリティレベルを比較できます。
  * - レベルAA: 標準（ほとんどのサイトで推奨）★
  * - レベルAAA: 最高（公共機関・医療・金融など）
  */
@@ -239,21 +238,6 @@ export const WCAGLevels: Story = {
   args: {},
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-      <div>
-        <h3 style={{ marginBottom: '0.5rem', fontSize: '14px', fontWeight: 'bold' }}>
-          レベルA（最低限）
-        </h3>
-        <p style={{ marginBottom: '1rem', fontSize: '12px', color: '#666' }}>
-          コントラスト比: 3:1 | 大きいテキストのみ推奨
-        </p>
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          <Button wcagLevel="A" variant="primary">Primary</Button>
-          <Button wcagLevel="A" variant="secondary">Secondary</Button>
-          <Button wcagLevel="A" variant="outline">Outline</Button>
-          <Button wcagLevel="A" variant="danger">Danger</Button>
-        </div>
-      </div>
-
       <div>
         <h3 style={{ marginBottom: '0.5rem', fontSize: '14px', fontWeight: 'bold' }}>
           レベルAA（推奨）★
@@ -297,13 +281,6 @@ export const FocusComparison: Story = {
   args: {},
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-      <div>
-        <h3 style={{ marginBottom: '0.5rem', fontSize: '14px', fontWeight: 'bold' }}>
-          レベルA: 薄い青アウトライン（コントラスト比 3:1）
-        </h3>
-        <Button wcagLevel="A">フォーカスしてみてください</Button>
-      </div>
-
       <div>
         <h3 style={{ marginBottom: '0.5rem', fontSize: '14px', fontWeight: 'bold' }}>
           レベルAA: 青背景 + 濃い青アウトライン（コントラスト比 4.5:1）
@@ -376,21 +353,6 @@ export const KeyboardInteraction: Story = {
           <li><strong>Enter または Space</strong>: ボタンを実行</li>
           <li><strong>マウスクリック</strong>: フォーカススタイルは表示されない</li>
         </ul>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '0.5rem', fontSize: '14px', fontWeight: 'bold' }}>
-          レベルA（最低限のフォーカス表示）
-        </h3>
-        <p style={{ marginBottom: '1rem', fontSize: '12px', color: '#666' }}>
-          薄い青のアウトライン（2px）のみ
-        </p>
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          <Button wcagLevel="A" variant="primary">Primary</Button>
-          <Button wcagLevel="A" variant="secondary">Secondary</Button>
-          <Button wcagLevel="A" variant="outline">Outline</Button>
-          <Button wcagLevel="A" variant="danger">Danger</Button>
-        </div>
       </div>
 
       <div>

@@ -132,11 +132,6 @@ describe('Radio', () => {
       expect(screen.getByRole('radio')).toBeInTheDocument();
     });
 
-    it('Aレベルが指定できる', () => {
-      render(<Radio label="選択" name="test" wcagLevel="A" />);
-      expect(screen.getByRole('radio')).toBeInTheDocument();
-    });
-
     it('AAAレベルが指定できる', () => {
       render(<Radio label="選択" name="test" wcagLevel="AAA" />);
       expect(screen.getByRole('radio')).toBeInTheDocument();

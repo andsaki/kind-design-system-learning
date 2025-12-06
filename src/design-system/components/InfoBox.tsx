@@ -1,9 +1,10 @@
 import React from 'react';
 import { infoBox as infoBoxRecipe } from '../../../styled-system/recipes';
 import { cx } from '@/styled-system/css';
+import type { ComponentWCAGLevel } from '../constants/accessibility';
 
 export type InfoBoxVariant = 'info' | 'warning' | 'success' | 'tip';
-export type WCAGLevel = 'A' | 'AA' | 'AAA';
+export type WCAGLevel = ComponentWCAGLevel;
 
 export interface InfoBoxProps {
   variant?: InfoBoxVariant;

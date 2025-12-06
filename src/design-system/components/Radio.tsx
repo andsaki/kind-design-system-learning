@@ -1,14 +1,14 @@
 import React from "react";
 import { radio as radioRecipe } from "../../../styled-system/recipes";
 import { css, cx } from "@/styled-system/css";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 
 export interface RadioProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
   label: string;
   error?: string;
   helpText?: string;
-  wcagLevel?: WCAGLevel;
+  wcagLevel?: ComponentWCAGLevel;
 }
 
 export const Radio: React.FC<RadioProps> = ({
@@ -96,7 +96,8 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
       const radioValue = child.props.value;
       return React.cloneElement(child, {
         name: groupName,
-        defaultChecked: radioValue === defaultValue,
+        defaultChecked:
+          child.props.checked === undefined && radioValue === defaultValue,
       });
     }
     return child;

@@ -1,11 +1,6 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
 
 const focusStyles = {
-  A: {
-    backgroundColor: "blue.50",
-    color: "blue.500",
-    outlineColor: "blue.300",
-  },
   AA: {
     backgroundColor: "blue.50",
     color: "blue.700",
@@ -59,32 +54,6 @@ export const breadcrumbs: SlotRecipeConfig = {
   },
   variants: {
     wcagLevel: {
-      A: {
-        item: {
-          color: "contents.secondary",
-          "&[data-current='true']": {
-            color: "contents.primary",
-            fontWeight: "medium",
-          },
-        },
-        link: {
-          color: "contents.link",
-          _hover: {
-            color: "blue.600",
-            textDecorationThickness: "0.125rem",
-          },
-          _focusVisible: {
-            ...focusStyles.A,
-            outlineStyle: "solid",
-            outlineWidth: "0.1875rem",
-            outlineOffset: "0.125rem",
-            borderRadius: "0.25rem",
-          },
-        },
-        separator: {
-          color: "contents.tertiary",
-        },
-      },
       AA: {
         item: {
           color: "contents.secondary",

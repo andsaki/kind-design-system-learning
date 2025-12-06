@@ -1,7 +1,7 @@
 import React from 'react';
 import { accordion } from '../../../styled-system/recipes';
 import { css, cx } from '@/styled-system/css';
-import type { WCAGLevel } from '../constants/accessibility';
+import type { ComponentWCAGLevel } from '../constants/accessibility';
 
 const summaryTextClass = css({ flex: 1 });
 
@@ -10,8 +10,8 @@ export interface AccordionProps extends React.DetailsHTMLAttributes<HTMLDetailsE
   className?: string;
   /** 初期状態で開いているか */
   defaultOpen?: boolean;
-  /** WCAGアクセシビリティレベル (A/AA/AAA) @default 'AA' */
-  wcagLevel?: WCAGLevel;
+  /** WCAGアクセシビリティレベル (AA/AAA) @default 'AA' */
+  wcagLevel?: ComponentWCAGLevel;
 }
 
 /**
@@ -61,12 +61,12 @@ export const AccordionSummary: React.FC<AccordionSummaryProps> = ({
   const summaryRef = React.useRef<HTMLElement>(null);
 
   // 親のdetails要素からwcagLevelを取得
-  const [wcagLevel, setWcagLevel] = React.useState<WCAGLevel>('AA');
+  const [wcagLevel, setWcagLevel] = React.useState<ComponentWCAGLevel>('AA');
 
   React.useEffect(() => {
     if (summaryRef.current) {
       const detailsElement = summaryRef.current.closest('details');
-      const level = detailsElement?.getAttribute('data-wcag-level') as WCAGLevel;
+      const level = detailsElement?.getAttribute('data-wcag-level') as ComponentWCAGLevel;
       if (level) {
         setWcagLevel(level);
       }

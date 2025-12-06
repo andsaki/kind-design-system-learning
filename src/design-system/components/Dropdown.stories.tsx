@@ -88,31 +88,23 @@ export const WithDisabledOptions: Story = {
 
 export const WCAGLevels = {
   render: () => {
-    const [value1, setValue1] = useState('');
-    const [value2, setValue2] = useState('');
-    const [value3, setValue3] = useState('');
+    const [valueAA, setValueAA] = useState('');
+    const [valueAAA, setValueAAA] = useState('');
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
         <Dropdown
-          label="レベルA（デフォルト）"
+          label="レベルAA（デフォルト）"
           options={mockOptions}
-          value={value1}
-          onChange={setValue1}
-          wcagLevel="A"
-        />
-        <Dropdown
-          label="レベルAA"
-          options={mockOptions}
-          value={value2}
-          onChange={setValue2}
+          value={valueAA}
+          onChange={setValueAA}
           wcagLevel="AA"
         />
         <Dropdown
           label="レベルAAA"
           options={mockOptions}
-          value={value3}
-          onChange={setValue3}
+          value={valueAAA}
+          onChange={setValueAAA}
           wcagLevel="AAA"
         />
       </div>

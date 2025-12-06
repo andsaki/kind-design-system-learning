@@ -268,15 +268,6 @@ describe('Modal', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    it('Aレベルが指定できる', () => {
-      render(
-        <Modal isOpen={true} onClose={vi.fn()} title="タイトル" wcagLevel="A">
-          コンテンツ
-        </Modal>
-      );
-      expect(screen.getByRole('dialog')).toBeInTheDocument();
-    });
-
     it('AAAレベルが指定できる', () => {
       render(
         <Modal isOpen={true} onClose={vi.fn()} title="タイトル" wcagLevel="AAA">

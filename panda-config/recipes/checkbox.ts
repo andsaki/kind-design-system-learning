@@ -65,15 +65,6 @@ export const checkbox: SlotRecipeConfig = {
   },
   variants: {
     wcagLevel: {
-      A: {
-        input: {
-          _focusVisible: {
-            outlineColor: "#64b5f6",
-            outlineWidth: "0.125rem",
-            outlineOffset: "0",
-          },
-        },
-      },
       AA: {
         input: {
           _focusVisible: {

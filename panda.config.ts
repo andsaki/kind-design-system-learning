@@ -132,16 +132,12 @@ export default defineConfig({
         // All size variants
         { size: ["sm", "md", "lg"] },
         // All variant + wcagLevel combinations
-        { variant: ["outline"], wcagLevel: ["A"] },
         { variant: ["outline"], wcagLevel: ["AA"] },
         { variant: ["outline"], wcagLevel: ["AAA"] },
-        { variant: ["primary"], wcagLevel: ["A"] },
         { variant: ["primary"], wcagLevel: ["AA"] },
         { variant: ["primary"], wcagLevel: ["AAA"] },
-        { variant: ["secondary"], wcagLevel: ["A"] },
         { variant: ["secondary"], wcagLevel: ["AA"] },
         { variant: ["secondary"], wcagLevel: ["AAA"] },
-        { variant: ["danger"], wcagLevel: ["A"] },
         { variant: ["danger"], wcagLevel: ["AA"] },
         { variant: ["danger"], wcagLevel: ["AAA"] },
       ],
@@ -149,14 +145,14 @@ export default defineConfig({
         {
           size: ["sm", "md", "lg"],
           state: ["default", "error"],
-          wcagLevel: ["A", "AA", "AAA"],
+          wcagLevel: ["AA", "AAA"],
         },
       ],
       select: [
         {
           size: ["sm", "md", "lg"],
           state: ["default", "error"],
-          wcagLevel: ["A", "AA", "AAA"],
+          wcagLevel: ["AA", "AAA"],
           disabled: ["true"],
         },
       ],
@@ -179,12 +175,12 @@ export default defineConfig({
         },
       ],
       textarea: [
-        { state: ["default", "error"], wcagLevel: ["A", "AA", "AAA"] },
+        { state: ["default", "error"], wcagLevel: ["AA", "AAA"] },
       ],
-      accordion: [{ wcagLevel: ["A", "AA", "AAA"] }],
-      breadcrumbs: [{ wcagLevel: ["A", "AA", "AAA"] }],
+      accordion: [{ wcagLevel: ["AA", "AAA"] }],
+      breadcrumbs: [{ wcagLevel: ["AA", "AAA"] }],
       checkbox: [
-        { wcagLevel: ["A", "AA", "AAA"], state: ["default", "error"] },
+        { wcagLevel: ["AA", "AAA"], state: ["default", "error"] },
       ],
       dropdown: [
         { state: ["default", "error"], placeholder: ["empty", "filled"] },
@@ -198,14 +194,14 @@ export default defineConfig({
       infoBox: [
         {
           variant: ["info", "warning", "success", "tip"],
-          wcagLevel: ["A", "AA", "AAA"],
+          wcagLevel: ["AA", "AAA"],
           leftBorder: ["true"],
         },
       ],
-      modal: [{ size: ["sm", "md", "lg"], wcagLevel: ["A", "AA", "AAA"] }],
-      radio: [{ wcagLevel: ["A", "AA", "AAA"], state: ["default", "error"] }],
+      modal: [{ size: ["sm", "md", "lg"], wcagLevel: ["AA", "AAA"] }],
+      radio: [{ wcagLevel: ["AA", "AAA"], state: ["default", "error"] }],
       colorpicker: [
-        { size: ["sm", "md", "lg"], wcagLevel: ["A", "AA", "AAA"] },
+        { size: ["sm", "md", "lg"], wcagLevel: ["AA", "AAA"] },
       ],
     },
   },
