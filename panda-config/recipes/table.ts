@@ -1,16 +1,6 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
 
 const wcagTableColors = {
-  A: {
-    headerBg: "table.a.headerBg",
-    headerText: "table.a.headerText",
-    bodyText: "table.a.bodyText",
-    borderColor: "table.a.borderColor",
-    hoverBg: "table.a.hoverBg",
-    stripeOdd: "table.a.stripeOdd",
-    stripeEven: "table.a.stripeEven",
-    caption: "table.a.caption",
-  },
   AA: {
     headerBg: "table.aa.headerBg",
     headerText: "table.aa.headerText",
@@ -150,20 +140,6 @@ export const table: SlotRecipeConfig = {
       },
     },
     wcagLevel: {
-      A: {
-        headerCell: {
-          color: wcagTableColors.A.headerText,
-          backgroundColor: wcagTableColors.A.headerBg,
-          borderBottomColor: wcagTableColors.A.borderColor,
-        },
-        cell: {
-          color: wcagTableColors.A.bodyText,
-          borderBottomColor: wcagTableColors.A.borderColor,
-        },
-        caption: {
-          color: wcagTableColors.A.caption,
-        },
-      },
       AA: {
         headerCell: {
           color: wcagTableColors.AA.headerText,
@@ -234,17 +210,6 @@ export const table: SlotRecipeConfig = {
   compoundVariants: [
     {
       highlightOnHover: true,
-      wcagLevel: "A",
-      css: {
-        root: {
-          "& tbody tr:hover": {
-            backgroundColor: wcagTableColors.A.hoverBg,
-          },
-        },
-      },
-    },
-    {
-      highlightOnHover: true,
       wcagLevel: "AA",
       css: {
         root: {
@@ -262,18 +227,6 @@ export const table: SlotRecipeConfig = {
           "& tbody tr:hover": {
             backgroundColor: wcagTableColors.AAA.hoverBg,
           },
-        },
-      },
-    },
-    {
-      showColumnDividers: true,
-      wcagLevel: "A",
-      css: {
-        headerCell: {
-          borderRightColor: wcagTableColors.A.borderColor,
-        },
-        cell: {
-          borderRightColor: wcagTableColors.A.borderColor,
         },
       },
     },

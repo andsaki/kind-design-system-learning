@@ -88,13 +88,6 @@ describe('InfoBox', () => {
       const { container: aaContainer } = render(<InfoBox variant="info">内容</InfoBox>);
       expect(aaContainer.firstChild).toHaveClass('info-box__root--wcagLevel_AA');
 
-      const { container: aContainer } = render(
-        <InfoBox variant="info" wcagLevel="A">
-          内容
-        </InfoBox>
-      );
-      expect(aContainer.firstChild).toHaveClass('info-box__root--wcagLevel_A');
-
       const { container: aaaContainer } = render(
         <InfoBox variant="info" wcagLevel="AAA">
           内容

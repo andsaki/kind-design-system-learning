@@ -1,7 +1,7 @@
 import React from "react";
 import { cx } from "@/styled-system/css";
 import { table } from "@/styled-system/recipes";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 
 const srOnlyClass = {
   position: "absolute" as const,
@@ -24,7 +24,7 @@ type TableContextValue = {
   stickyHeader: boolean;
   highlightOnHover: boolean;
   showColumnDividers: boolean;
-  wcagLevel: WCAGLevel;
+  wcagLevel: ComponentWCAGLevel;
 };
 
 const defaultContext: TableContextValue = {
@@ -57,8 +57,8 @@ export interface TableProps
   highlightOnHover?: boolean;
   /** 列の区切り線を表示するか */
   showColumnDividers?: boolean;
-  /** WCAGコントラストレベル */
-  wcagLevel?: WCAGLevel;
+  /** WCAGコントラストレベル (AA/AAA) */
+  wcagLevel?: ComponentWCAGLevel;
   /** 横スクロール用コンテナーのARIAラベル */
   responsiveLabel?: string;
   /** コンテナーをスクロール可能にするか */

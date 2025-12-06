@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 import { Text } from "./Text";
 
 /**
@@ -543,7 +543,7 @@ export const WCAGPalette: Story = {
   },
   render: () => (
     <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-      {(["A", "AA", "AAA"] as WCAGLevel[]).map((level) => (
+      {(["AA", "AAA"] as ComponentWCAGLevel[]).map((level) => (
         <div
           key={level}
           style={{

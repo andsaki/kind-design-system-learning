@@ -1,9 +1,6 @@
 import type { RecipeConfig } from "@pandacss/dev";
 
 const wcagTextColors = {
-  A: {
-    color: "primitive.gray[600]",
-  },
   AA: {
     color: "contents.primary",
   },
@@ -108,7 +105,6 @@ export const text: RecipeConfig = {
       justify: { textAlign: "justify" },
     },
     wcagLevel: {
-      A: wcagTextColors.A,
       AA: wcagTextColors.AA,
       AAA: wcagTextColors.AAA,
     },

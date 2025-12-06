@@ -1,7 +1,7 @@
 import React from "react";
 import { button } from "../../../styled-system/recipes";
 import { cx } from "@/styled-system/css";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -13,8 +13,8 @@ export interface ButtonProps
   isLoading?: boolean;
   /** テキストの前に表示するアイコン */
   icon?: React.ReactNode;
-  /** WCAGアクセシビリティレベル (A/AA/AAA) @default 'AA' */
-  wcagLevel?: WCAGLevel;
+  /** WCAGアクセシビリティレベル (AA/AAA) @default 'AA' */
+  wcagLevel?: ComponentWCAGLevel;
 }
 
 /**

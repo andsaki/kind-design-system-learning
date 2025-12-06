@@ -1,12 +1,6 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
 
 const focusStyles = {
-  A: {
-    outlineColor: "colors.blue.300",
-    outlineWidth: "0.125rem",
-    outlineOffset: "0",
-    bg: "transparent",
-  },
   AA: {
     outlineColor: "colors.blue.700",
     outlineWidth: "0.1875rem",
@@ -79,16 +73,6 @@ export const radio: SlotRecipeConfig = {
   },
   variants: {
     wcagLevel: {
-      A: {
-        control: {
-          _focusVisible: {
-            outlineColor: focusStyles.A.outlineColor,
-            outlineWidth: focusStyles.A.outlineWidth,
-            outlineOffset: focusStyles.A.outlineOffset,
-            backgroundColor: focusStyles.A.bg,
-          },
-        },
-      },
       AA: {
         control: {
           _focusVisible: {

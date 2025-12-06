@@ -1,14 +1,6 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
 
 const focusStyles = {
-  A: {
-    "&[data-focused='true']": {
-      backgroundColor: "transparent",
-      color: "black",
-      outline: "0.125rem solid #64b5f6",
-      outlineOffset: "0",
-    },
-  },
   AA: {
     "&[data-focused='true']": {
       backgroundColor: "blue.50",
@@ -81,9 +73,6 @@ export const accordion: SlotRecipeConfig = {
   },
   variants: {
     wcagLevel: {
-      A: {
-        summary: focusStyles.A,
-      },
       AA: {
         summary: focusStyles.AA,
       },

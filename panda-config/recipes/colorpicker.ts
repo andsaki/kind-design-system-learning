@@ -1,14 +1,6 @@
 import type { RecipeConfig } from "@pandacss/dev";
 
 const focusStyles = {
-  A: {
-    _focusVisible: {
-      outlineColor: "blue.300",
-      outlineWidth: "thin",
-      outlineOffset: "0",
-      outlineStyle: "solid",
-    },
-  },
   AA: {
     _focusVisible: {
       outlineColor: "blue.700",
@@ -73,7 +65,6 @@ export const colorpicker: RecipeConfig = {
       },
     },
     wcagLevel: {
-      A: focusStyles.A,
       AA: focusStyles.AA,
       AAA: focusStyles.AAA,
     },

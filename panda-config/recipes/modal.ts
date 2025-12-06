@@ -107,24 +107,6 @@ export const modal: SlotRecipeConfig = {
       },
     },
     wcagLevel: {
-      A: {
-        dialog: {
-          borderWidth: "thin",
-          borderColor: "border.subtle",
-        },
-        header: {
-          color: "contents.primary",
-        },
-        body: {
-          color: "contents.primary",
-        },
-        closeButton: {
-          _focusVisible: {
-            outline: "0.125rem solid {colors.blue.300}",
-            outlineOffset: "0",
-          },
-        },
-      },
       AA: {
         dialog: {
           borderWidth: "base",

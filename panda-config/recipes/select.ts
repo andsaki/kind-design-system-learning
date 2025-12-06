@@ -87,15 +87,6 @@ export const select: SlotRecipeConfig = {
       },
     },
     wcagLevel: {
-      A: {
-        trigger: {
-          _focusVisible: {
-            outlineWidth: "0.125rem",
-            outlineColor: "colors.blue.300",
-            outlineOffset: "0",
-          },
-        },
-      },
       AA: {
         trigger: {
           _focusVisible: {

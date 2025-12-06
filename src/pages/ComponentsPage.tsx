@@ -50,7 +50,7 @@ const tableUsageHighlights = [
   {
     title: "Propsの優先度",
     description:
-      "variant（simple / striped）、size（sm/md/lg）、wcagLevel（A/AA/AAA）でコントラストと密度を制御します。",
+      "variant（simple / striped）、size（sm/md/lg）、wcagLevel（AA/AAA）でコントラストと密度を制御します。",
   },
   {
     title: "アクセシビリティ",

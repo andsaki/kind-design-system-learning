@@ -260,26 +260,6 @@ export const WCAGLevels: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
       <div>
         <h3 style={{ marginBottom: '16px', fontSize: '20px', fontWeight: 600 }}>
-          Level A（最低限）
-        </h3>
-        <Accordion wcagLevel="A" defaultOpen>
-          <AccordionSummary>レベルAのフォーカススタイル</AccordionSummary>
-          <AccordionContent>
-            <p>
-              レベルAは最低限のアクセシビリティです。薄い青色のアウトライン（2px）でフォーカスを示します。
-            </p>
-            <ul style={{ marginTop: '8px', paddingLeft: '20px' }}>
-              <li>アウトライン: 薄い青（primitive.blue[300]）</li>
-              <li>太さ: 2px</li>
-              <li>オフセット: なし</li>
-              <li>背景: 透明</li>
-            </ul>
-          </AccordionContent>
-        </Accordion>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '16px', fontSize: '20px', fontWeight: 600 }}>
           Level AA（推奨）★
         </h3>
         <Accordion wcagLevel="AA" defaultOpen>
@@ -350,7 +330,6 @@ export const WCAGLevels: Story = {
 \`\`\`
 
 **レベルの選び方:**
-- **Level A**: プロトタイプやMVPなど、最低限のアクセシビリティが必要な場合
 - **Level AA**: ほとんどのWebサイトで推奨（デフォルト）
 - **Level AAA**: 公共機関、医療、金融など、最高レベルのアクセシビリティが必要な場合
         `,

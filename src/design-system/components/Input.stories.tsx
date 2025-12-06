@@ -342,7 +342,7 @@ export const AllStates: Story = {
 /**
  * WCAGレベル比較
  *
- * A/AA/AAAの3つのアクセシビリティレベルを比較できます。
+ * AA/AAAの2つのアクセシビリティレベルを比較できます。
  * Tabキーでフォーカスを移動して、各レベルのフォーカススタイルを確認してください。
  */
 export const WCAGLevels: Story = {
@@ -365,16 +365,6 @@ export const WCAGLevels: Story = {
           <br />
           マウスクリックではフォーカススタイルは表示されません
         </p>
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '0.5rem', fontSize: '14px', fontWeight: 'bold' }}>
-          レベルA（最低限のフォーカス表示）
-        </h3>
-        <p style={{ marginBottom: '1rem', fontSize: '12px', color: '#666' }}>
-          薄い青のアウトライン（2px）+ 黒文字
-        </p>
-        <Input wcagLevel="A" label="お名前" placeholder="山田太郎" />
       </div>
 
       <div>
