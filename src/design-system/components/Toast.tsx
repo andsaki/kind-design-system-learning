@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { accessibilityLevels } from '../constants/accessibility';
 import type { WCAGLevel } from '../constants/accessibility';
 import { css, cx } from '@/styled-system/css';
@@ -154,6 +155,23 @@ export const Toast: React.FC<ToastProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  // キーボード利用者のフォーカス位置を覚えておき、トーストを閉じた後に戻す
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    setPortalTarget(document.body);
+  }, []);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement) {
+      previouslyFocusedElementRef.current = activeElement;
+    }
+  }, []);
 
   // マウント時にスライドイン
   useEffect(() => {
@@ -161,12 +179,31 @@ export const Toast: React.FC<ToastProps> = ({
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    if (isVisible && closeButtonRef.current) {
+      closeButtonRef.current.focus({ preventScroll: true });
+    }
+  }, [isVisible]);
+
+  const restoreFocus = useCallback(() => {
+    if (typeof document === 'undefined') return;
+    if (document.activeElement !== closeButtonRef.current) return;
+
+    const previous = previouslyFocusedElementRef.current;
+    if (!previous || typeof previous.focus !== 'function') return;
+    if (!previous.isConnected) return;
+
+    // トーストを閉じたら元の操作対象へフォーカスを戻す
+    previous.focus({ preventScroll: true });
+  }, []);
+
   const handleClose = useCallback(() => {
     setIsExiting(true);
+    restoreFocus();
     setTimeout(() => {
       onClose(id);
     }, 300); // アニメーション時間と合わせる
-  }, [onClose, id]);
+  }, [onClose, id, restoreFocus]);
 
   // 自動クローズ
   useEffect(() => {
@@ -202,7 +239,11 @@ export const Toast: React.FC<ToastProps> = ({
   // タイプに応じたテキストカラークラス（親要素の色を継承）
   const textColorClass = css({ color: 'inherit' });
 
-  return (
+  if (!portalTarget) {
+    return null;
+  }
+
+  return createPortal(
     <div
       role="alert"
       aria-live="polite"
@@ -235,7 +276,9 @@ export const Toast: React.FC<ToastProps> = ({
         type="button"
         onClick={handleClose}
         aria-label="通知を閉じる"
+        tabIndex={0}
         className={cx(closeButton, textColorClass)}
+        ref={closeButtonRef}
         onFocus={(e) => {
           e.currentTarget.style.outline = focusStyles.outline;
           e.currentTarget.style.outlineOffset = focusStyles.outlineOffset;
@@ -247,6 +290,7 @@ export const Toast: React.FC<ToastProps> = ({
       >
         ×
       </button>
-    </div>
+    </div>,
+    portalTarget,
   );
 };
