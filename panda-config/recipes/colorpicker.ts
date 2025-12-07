@@ -1,23 +1,11 @@
 import type { RecipeConfig } from "@pandacss/dev";
+import { getWcagFocusVisibleStyle, type WcagLevel } from "../shared/wcag";
 
-const focusStyles = {
-  AA: {
-    _focusVisible: {
-      outlineColor: "blue.700",
-      outlineWidth: "base",
-      outlineOffset: "0.5",
-      outlineStyle: "solid",
-    },
+const createFocusStyle = (level: WcagLevel) => ({
+  _focusVisible: {
+    ...getWcagFocusVisibleStyle(level, { includeBackground: false }),
   },
-  AAA: {
-    _focusVisible: {
-      outlineColor: "gray.900",
-      outlineWidth: "thick",
-      outlineOffset: "0.5",
-      outlineStyle: "solid",
-    },
-  },
-} as const;
+});
 
 export const colorpicker: RecipeConfig = {
   className: "colorpicker",
@@ -65,8 +53,8 @@ export const colorpicker: RecipeConfig = {
       },
     },
     wcagLevel: {
-      AA: focusStyles.AA,
-      AAA: focusStyles.AAA,
+      AA: createFocusStyle("AA"),
+      AAA: createFocusStyle("AAA"),
     },
   },
   defaultVariants: {

@@ -1,19 +1,5 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
-
-const focusStyles = {
-  AA: {
-    outlineColor: "colors.blue.700",
-    outlineWidth: "0.1875rem",
-    outlineOffset: "0.125rem",
-    bg: "colors.blue.50",
-  },
-  AAA: {
-    outlineColor: "colors.black",
-    outlineWidth: "0.25rem",
-    outlineOffset: "0.125rem",
-    bg: "colors.yellow",
-  },
-} as const;
+import { getWcagFocusVisibleStyle } from "../shared/wcag";
 
 export const radio: SlotRecipeConfig = {
   className: "radio",
@@ -75,22 +61,12 @@ export const radio: SlotRecipeConfig = {
     wcagLevel: {
       AA: {
         control: {
-          _focusVisible: {
-            outlineColor: focusStyles.AA.outlineColor,
-            outlineWidth: focusStyles.AA.outlineWidth,
-            outlineOffset: focusStyles.AA.outlineOffset,
-            backgroundColor: focusStyles.AA.bg,
-          },
+          _focusVisible: getWcagFocusVisibleStyle("AA"),
         },
       },
       AAA: {
         control: {
-          _focusVisible: {
-            outlineColor: focusStyles.AAA.outlineColor,
-            outlineWidth: focusStyles.AAA.outlineWidth,
-            outlineOffset: focusStyles.AAA.outlineOffset,
-            backgroundColor: focusStyles.AAA.bg,
-          },
+          _focusVisible: getWcagFocusVisibleStyle("AAA"),
         },
       },
     },

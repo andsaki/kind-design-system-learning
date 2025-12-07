@@ -1,38 +1,9 @@
 import type { RecipeConfig } from "@pandacss/dev";
+import { getWcagFocusVisibleStyle, type WcagLevel } from "../shared/wcag";
 
-const focusStyles = {
-  AA: {
-    backgroundColor: "blue.50",
-    color: "gray.900",
-    outlineColor: "blue.700",
-    outlineWidth: "base",
-    outlineOffset: "0.5",
-  },
-  AAA: {
-    backgroundColor: "yellow.400",
-    color: "gray.900",
-    outlineColor: "gray.900",
-    outlineWidth: "thick",
-    outlineOffset: "0.5",
-  },
-} as const;
-
-const dangerFocusStyles = {
-  AA: {
-    backgroundColor: "red.50",
-    color: "gray.900",
-    outlineColor: "red.700",
-    outlineWidth: "base",
-    outlineOffset: "0.5",
-  },
-  AAA: {
-    backgroundColor: "yellow.400",
-    color: "gray.900",
-    outlineColor: "gray.900",
-    outlineWidth: "thick",
-    outlineOffset: "0.5",
-  },
-} as const;
+const createButtonFocus = (level: WcagLevel) => ({
+  _focusVisible: getWcagFocusVisibleStyle(level),
+});
 
 export const button: RecipeConfig = {
   className: "button",
@@ -90,12 +61,8 @@ export const button: RecipeConfig = {
       },
     },
     wcagLevel: {
-      AA: {
-        _focusVisible: focusStyles.AA,
-      },
-      AAA: {
-        _focusVisible: focusStyles.AAA,
-      },
+      AA: createButtonFocus("AA"),
+      AAA: createButtonFocus("AAA"),
     },
   },
   compoundVariants: [
@@ -239,7 +206,7 @@ export const button: RecipeConfig = {
         backgroundColor: "red.700",  // コントラスト比改善: 4.5:1以上
         color: "white",
         borderColor: "red.700",
-        _focusVisible: dangerFocusStyles.AA,
+        _focusVisible: createButtonFocus("AA")._focusVisible,
         _hover: {
           _disabled: {
             backgroundColor: "gray.300",
@@ -262,7 +229,7 @@ export const button: RecipeConfig = {
         backgroundColor: "red.700",
         color: "white",
         borderColor: "red.800",
-        _focusVisible: dangerFocusStyles.AAA,
+        _focusVisible: createButtonFocus("AAA")._focusVisible,
         _hover: {
           _disabled: {
             backgroundColor: "gray.300",

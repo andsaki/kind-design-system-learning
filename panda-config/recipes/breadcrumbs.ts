@@ -1,17 +1,5 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
-
-const focusStyles = {
-  AA: {
-    backgroundColor: "blue.50",
-    color: "blue.700",
-    outlineColor: "blue.500",
-  },
-  AAA: {
-    backgroundColor: "yellow",
-    color: "blue.800",
-    outlineColor: "black",
-  },
-} as const;
+import { getWcagFocusVisibleStyle } from "../shared/wcag";
 
 export const breadcrumbs: SlotRecipeConfig = {
   className: "breadcrumbs",
@@ -69,10 +57,7 @@ export const breadcrumbs: SlotRecipeConfig = {
             textDecorationThickness: "0.125rem",
           },
           _focusVisible: {
-            ...focusStyles.AA,
-            outlineStyle: "solid",
-            outlineWidth: "0.1875rem",
-            outlineOffset: "0.125rem",
+            ...getWcagFocusVisibleStyle("AA"),
             borderRadius: "0.25rem",
           },
         },
@@ -95,10 +80,7 @@ export const breadcrumbs: SlotRecipeConfig = {
             textDecorationThickness: "0.125rem",
           },
           _focusVisible: {
-            ...focusStyles.AAA,
-            outlineStyle: "solid",
-            outlineWidth: "0.25rem",
-            outlineOffset: "0.125rem",
+            ...getWcagFocusVisibleStyle("AAA"),
             borderRadius: "0.25rem",
           },
         },

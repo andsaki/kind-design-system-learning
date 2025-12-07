@@ -1,4 +1,5 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
+import { getWcagFocusVisibleStyle } from "../shared/wcag";
 
 export const modal: SlotRecipeConfig = {
   className: "modal",
@@ -119,14 +120,7 @@ export const modal: SlotRecipeConfig = {
           color: "contents.primary",
         },
         closeButton: {
-          _focusVisible: {
-            outline: "0.1875rem solid {colors.blue.700}",
-            outlineOffset: "0.125rem",
-            backgroundColor: {
-              base: "blue.50",
-              _dark: "blue.900",
-            },
-          },
+          _focusVisible: getWcagFocusVisibleStyle("AA"),
         },
       },
       AAA: {
@@ -142,14 +136,7 @@ export const modal: SlotRecipeConfig = {
           color: "contents.primary",
         },
         closeButton: {
-          _focusVisible: {
-            outline: "0.25rem solid {colors.black}",
-            outlineOffset: "0.125rem",
-            backgroundColor: {
-              base: "yellow.100",
-              _dark: "yellow.900",
-            },
-          },
+          _focusVisible: getWcagFocusVisibleStyle("AAA"),
         },
       },
     },

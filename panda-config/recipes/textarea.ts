@@ -1,25 +1,12 @@
 import type { RecipeConfig } from "@pandacss/dev";
+import { getWcagFocusVisibleStyle, type WcagLevel } from "../shared/wcag";
 
-const focusStyles = {
-  AA: {
-    _focusVisible: {
-      backgroundColor: "blue.50",
-      color: "gray.900",
-      outlineColor: "blue.700",
-      outlineWidth: "base",
-      outlineOffset: "0.5",
-    },
+const createFocusStyle = (level: WcagLevel) => ({
+  _focusVisible: {
+    ...getWcagFocusVisibleStyle(level),
+    color: "gray.900",
   },
-  AAA: {
-    _focusVisible: {
-      backgroundColor: "yellow.400",
-      color: "gray.900",
-      outlineColor: "gray.900",
-      outlineWidth: "thick",
-      outlineOffset: "0.5",
-    },
-  },
-} as const;
+});
 
 export const textarea: RecipeConfig = {
   className: "textarea",
@@ -61,8 +48,8 @@ export const textarea: RecipeConfig = {
       },
     },
     wcagLevel: {
-      AA: focusStyles.AA,
-      AAA: focusStyles.AAA,
+      AA: createFocusStyle("AA"),
+      AAA: createFocusStyle("AAA"),
     },
   },
   defaultVariants: {
