@@ -88,6 +88,7 @@ export const select: SlotRecipeConfig = {
       },
     },
     wcagLevel: {
+      A: createFocusStyle("A"),
       AA: createFocusStyle("AA"),
       AAA: createFocusStyle("AAA"),
     },

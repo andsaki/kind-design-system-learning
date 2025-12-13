@@ -136,6 +136,16 @@ const wcagFocusDetails: Record<
     textLabel: string;
   }
 > = {
+  A: {
+    background: "transparent",
+    backgroundLabel: "transparent",
+    outline: "blue.300",
+    outlineLabel: "blue.300",
+    outlineWidth: "0.125rem（約2px）",
+    outlineOffset: "0",
+    text: "black",
+    textLabel: "black",
+  },
   AA: {
     background: "blue.50",
     backgroundLabel: "blue.50",

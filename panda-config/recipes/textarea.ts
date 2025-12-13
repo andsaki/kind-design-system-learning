@@ -48,6 +48,7 @@ export const textarea: RecipeConfig = {
       },
     },
     wcagLevel: {
+      A: createFocusStyle("A"),
       AA: createFocusStyle("AA"),
       AAA: createFocusStyle("AAA"),
     },

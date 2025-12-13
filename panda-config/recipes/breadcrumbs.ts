@@ -42,6 +42,29 @@ export const breadcrumbs: SlotRecipeConfig = {
   },
   variants: {
     wcagLevel: {
+      A: {
+        item: {
+          color: "gray.500",
+          "&[data-current='true']": {
+            color: "gray.700",
+            fontWeight: "medium",
+          },
+        },
+        link: {
+          color: "blue.500",
+          _hover: {
+            color: "blue.600",
+            textDecorationThickness: "0.0625rem",
+          },
+          _focusVisible: {
+            ...getWcagFocusVisibleStyle("A"),
+            borderRadius: "0.25rem",
+          },
+        },
+        separator: {
+          color: "gray.400",
+        },
+      },
       AA: {
         item: {
           color: "contents.secondary",

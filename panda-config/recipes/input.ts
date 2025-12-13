@@ -58,6 +58,7 @@ export const input: RecipeConfig = {
       },
     },
     wcagLevel: {
+      A: createFocusStyle("A"),
       AA: createFocusStyle("AA"),
       AAA: createFocusStyle("AAA"),
     },

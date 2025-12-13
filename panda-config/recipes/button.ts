@@ -61,11 +61,34 @@ export const button: RecipeConfig = {
       },
     },
     wcagLevel: {
+      A: createButtonFocus("A"),
       AA: createButtonFocus("AA"),
       AAA: createButtonFocus("AAA"),
     },
   },
   compoundVariants: [
+    // Primary - Level A
+    {
+      variant: "primary",
+      wcagLevel: "A",
+      css: {
+        backgroundColor: "blue.400",
+        color: "white",
+        borderColor: "blue.400",
+        _hover: {
+          _disabled: {
+            backgroundColor: "gray.300",
+          },
+          backgroundColor: "blue.500",
+          borderColor: "blue.500",
+        },
+        _disabled: {
+          backgroundColor: "gray.300",
+          borderColor: "gray.300",
+          color: "gray.700",
+        },
+      },
+    },
     // Primary - Level AA
     {
       variant: "primary",
@@ -107,6 +130,28 @@ export const button: RecipeConfig = {
           backgroundColor: "gray.300",
           borderColor: "gray.300",
           color: "gray.700",  // コントラスト比改善: 4.5:1以上
+        },
+      },
+    },
+    // Secondary - Level A
+    {
+      variant: "secondary",
+      wcagLevel: "A",
+      css: {
+        backgroundColor: "gray.200",
+        color: "gray.700",
+        borderColor: "gray.300",
+        _hover: {
+          _disabled: {
+            backgroundColor: "gray.100",
+          },
+          backgroundColor: "gray.100",
+          borderColor: "gray.300",
+        },
+        _disabled: {
+          backgroundColor: "gray.200",
+          borderColor: "gray.200",
+          color: "gray.700",
         },
       },
     },
@@ -154,6 +199,28 @@ export const button: RecipeConfig = {
         },
       },
     },
+    // Outline - Level A
+    {
+      variant: "outline",
+      wcagLevel: "A",
+      css: {
+        backgroundColor: "transparent",
+        color: "blue.400",
+        borderColor: "blue.400",
+        _hover: {
+          _disabled: {
+            backgroundColor: "transparent",
+          },
+          backgroundColor: "blue.50",
+          borderColor: "blue.500",
+        },
+        _disabled: {
+          backgroundColor: "transparent",
+          borderColor: "gray.300",
+          color: "gray.600",
+        },
+      },
+    },
     // Outline - Level AA
     {
       variant: "outline",
@@ -195,6 +262,29 @@ export const button: RecipeConfig = {
           backgroundColor: "transparent",
           borderColor: "gray.300",
           color: "gray.600",  // コントラスト比改善: 4.5:1以上
+        },
+      },
+    },
+    // Danger - Level A
+    {
+      variant: "danger",
+      wcagLevel: "A",
+      css: {
+        backgroundColor: "red.400",
+        color: "white",
+        borderColor: "red.400",
+        _focusVisible: createButtonFocus("A")._focusVisible,
+        _hover: {
+          _disabled: {
+            backgroundColor: "gray.300",
+          },
+          backgroundColor: "red.500",
+          borderColor: "red.500",
+        },
+        _disabled: {
+          backgroundColor: "gray.300",
+          borderColor: "gray.300",
+          color: "gray.700",
         },
       },
     },

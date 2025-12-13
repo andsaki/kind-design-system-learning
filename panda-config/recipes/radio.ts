@@ -59,6 +59,11 @@ export const radio: SlotRecipeConfig = {
   },
   variants: {
     wcagLevel: {
+      A: {
+        control: {
+          _focusVisible: getWcagFocusVisibleStyle("A"),
+        },
+      },
       AA: {
         control: {
           _focusVisible: getWcagFocusVisibleStyle("AA"),

@@ -62,6 +62,9 @@ export const accordion: SlotRecipeConfig = {
   },
   variants: {
     wcagLevel: {
+      A: {
+        summary: createSummaryFocus("A"),
+      },
       AA: {
         summary: createSummaryFocus("AA"),
       },

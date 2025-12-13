@@ -51,6 +51,12 @@ export const infoBox: SlotRecipeConfig = {
       },
     },
     wcagLevel: {
+      A: {
+        root: {
+          backgroundColor: wcagSurfaceBorders.A.backgroundColor,
+          borderColor: wcagSurfaceBorders.A.borderColor,
+        },
+      },
       AA: {
         root: {
           backgroundColor: wcagSurfaceBorders.AA.backgroundColor,

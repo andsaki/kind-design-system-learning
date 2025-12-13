@@ -141,6 +141,10 @@ export const dropdown: SlotRecipeConfig = {
       filled: {},
     },
     wcagLevel: {
+      A: {
+        ...createTriggerFocusStyle("A"),
+        ...createOptionFocusStyle("A"),
+      },
       AA: {
         ...createTriggerFocusStyle("AA"),
         ...createOptionFocusStyle("AA"),

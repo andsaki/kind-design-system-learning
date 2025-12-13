@@ -66,6 +66,11 @@ export const checkbox: SlotRecipeConfig = {
   },
   variants: {
     wcagLevel: {
+      A: {
+        input: {
+          _focusVisible: getWcagFocusVisibleStyle("A"),
+        },
+      },
       AA: {
         input: {
           _focusVisible: getWcagFocusVisibleStyle("AA"),

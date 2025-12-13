@@ -1,4 +1,10 @@
 export const wcagFocusStyles = {
+  A: {
+    backgroundColor: "transparent",
+    outlineColor: "blue.300",
+    outlineWidth: "0.125rem",
+    outlineOffset: "0",
+  },
   AA: {
     backgroundColor: "blue.50",
     outlineColor: "blue.700",
@@ -41,6 +47,11 @@ export const getWcagFocusVisibleStyle = (
 };
 
 export const wcagRingStyles = {
+  A: {
+    outlineColor: "blue.300",
+    outlineWidth: "0.125rem",
+    outlineOffset: "0",
+  },
   AA: {
     outlineColor: "blue.700",
     outlineWidth: "0.1875rem",
@@ -54,6 +65,10 @@ export const wcagRingStyles = {
 } as const;
 
 export const wcagSurfaceBorders = {
+  A: {
+    borderColor: "blue.200",
+    backgroundColor: "transparent",
+  },
   AA: {
     borderColor: "blue.300",
     backgroundColor: "blue.50",
