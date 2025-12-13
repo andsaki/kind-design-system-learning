@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { textarea as textareaRecipe } from "../../../styled-system/recipes";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 import { cx, css } from "@/styled-system/css";
 
 export interface TextAreaProps
@@ -17,8 +17,8 @@ export interface TextAreaProps
   showCount?: boolean;
   /** 最大文字数 */
   maxLength?: number;
-  /** WCAGアクセシビリティレベル (A/AA/AAA) @default 'AA' */
-  wcagLevel?: WCAGLevel;
+  /** WCAGアクセシビリティレベル (AA/AAA) @default 'AA' */
+  wcagLevel?: ComponentWCAGLevel;
 }
 
 /**

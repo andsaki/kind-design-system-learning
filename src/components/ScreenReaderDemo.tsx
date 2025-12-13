@@ -7,7 +7,7 @@ import { useSpeech } from "../hooks/useSpeech";
 import { getAccessibleText, getFieldsetAccessibleText } from "../utils/getAccessibleText";
 
 interface ScreenReaderDemoProps {
-  children: ReactNode;
+  children?: ReactNode;
   /** スクリーンリーダーが読み上げるテキスト（オプション、指定しない場合はDOMから自動取得） */
   srText?: string;
   /** 説明文 */

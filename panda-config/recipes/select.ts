@@ -1,4 +1,11 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
+import { getWcagFocusVisibleStyle, type WcagLevel } from "../shared/wcag";
+
+const createFocusStyle = (level: WcagLevel) => ({
+  trigger: {
+    _focusVisible: getWcagFocusVisibleStyle(level),
+  },
+});
 
 export const select: SlotRecipeConfig = {
   className: "select",
@@ -33,12 +40,6 @@ export const select: SlotRecipeConfig = {
       bgPosition: "right 0.75rem center",
       bgSize: "1.25rem",
       pr: 8,
-      _focusVisible: {
-        outline: "3px solid",
-        outlineColor: "border.focus",
-        outlineOffset: 2,
-        backgroundColor: "bg.secondary",
-      },
       _disabled: {
         cursor: "not-allowed",
         backgroundColor: "bg.disabled",
@@ -87,35 +88,9 @@ export const select: SlotRecipeConfig = {
       },
     },
     wcagLevel: {
-      A: {
-        trigger: {
-          _focusVisible: {
-            outlineWidth: "0.125rem",
-            outlineColor: "colors.blue.300",
-            outlineOffset: "0",
-          },
-        },
-      },
-      AA: {
-        trigger: {
-          _focusVisible: {
-            outlineWidth: "0.1875rem",
-            outlineColor: "colors.blue.700",
-            outlineOffset: "0.125rem",
-            backgroundColor: "colors.blue.50",
-          },
-        },
-      },
-      AAA: {
-        trigger: {
-          _focusVisible: {
-            outlineWidth: "0.25rem",
-            outlineColor: "colors.black",
-            outlineOffset: "0.125rem",
-            backgroundColor: "colors.yellow",
-          },
-        },
-      },
+      A: createFocusStyle("A"),
+      AA: createFocusStyle("AA"),
+      AAA: createFocusStyle("AAA"),
     },
     disabled: {
       true: {

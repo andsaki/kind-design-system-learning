@@ -121,11 +121,6 @@ describe('Button', () => {
       expect(button).toBeInTheDocument();
     });
 
-    it('Aレベルが指定できる', () => {
-      render(<Button wcagLevel="A">ボタン</Button>);
-      expect(screen.getByRole('button')).toBeInTheDocument();
-    });
-
     it('AAAレベルが指定できる', () => {
       render(<Button wcagLevel="AAA">ボタン</Button>);
       expect(screen.getByRole('button')).toBeInTheDocument();

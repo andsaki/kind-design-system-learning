@@ -406,7 +406,7 @@ export function ComponentDemos({
             <li><strong>ラベル関連付け</strong>: for/id属性で自動関連付け</li>
             <li><strong>エラー表示</strong>: aria-invalid, aria-describedby, role="alert"</li>
             <li><strong>必須項目</strong>: aria-required属性でスクリーンリーダーに通知</li>
-            <li><strong>WCAGレベル対応</strong>: A/AA/AAAの3段階</li>
+            <li><strong>WCAGレベル対応</strong>: AA/AAAの2段階</li>
             <li><strong>キーボードフォーカス</strong>: Tabキー操作時のみフォーカススタイル表示</li>
             <li><strong>ネイティブselect要素</strong>: アクセシビリティとユーザビリティを両立</li>
           </ul>
@@ -435,7 +435,7 @@ export function ComponentDemos({
             <li><strong>文字数カウント</strong>: maxLengthとshowCountで制限と表示</li>
             <li><strong>リサイズ可能</strong>: 縦方向にユーザーがサイズ変更可能</li>
             <li><strong>キーボードフォーカス</strong>: Tabキー操作時のみフォーカススタイル表示</li>
-            <li><strong>WCAGレベル対応</strong>: A/AA/AAAの3段階</li>
+            <li><strong>WCAGレベル対応</strong>: AA/AAAの2段階</li>
           </ul>
         </InfoBox>
       </section>
@@ -641,7 +641,7 @@ export function ComponentDemos({
             <li><strong>Zodスキーマ統合</strong>: 型安全なバリデーション</li>
             <li><strong>react-hook-form</strong>: 高パフォーマンスなフォーム管理</li>
             <li><strong>アクセシブルなエラー表示</strong>: aria-invalid, aria-describedby, role="alert"</li>
-            <li><strong>WCAGレベル対応</strong>: A/AA/AAA のフォーカススタイル</li>
+            <li><strong>WCAGレベル対応</strong>: AA/AAA のフォーカススタイル</li>
             <li><strong>ヘルパースキーマ</strong>: よく使うバリデーションを簡単に利用</li>
             <li><strong>再利用可能</strong>: fields配列でフォームを簡単に定義</li>
           </ul>
@@ -746,13 +746,6 @@ export function ComponentDemos({
           </p>
 
           <div className={flexColumn}>
-            <Accordion wcagLevel="A">
-              <AccordionSummary>Level A（最低限）</AccordionSummary>
-              <AccordionContent>
-                薄い青色のアウトライン（2px）。プロトタイプやMVP向け。
-              </AccordionContent>
-            </Accordion>
-
             <Accordion wcagLevel="AA" defaultOpen>
               <AccordionSummary>Level AA（推奨）★</AccordionSummary>
               <AccordionContent>

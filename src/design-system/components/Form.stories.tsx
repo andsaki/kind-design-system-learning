@@ -213,21 +213,7 @@ export const WCAGLevels: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
       <div>
-        <h3 style={{ marginBottom: '16px' }}>レベルA - 最小限のフォーカススタイル</h3>
-        <Form
-          schema={simpleSchema}
-          fields={[
-            { name: 'name', label: 'お名前', required: true },
-            { name: 'email', label: 'メールアドレス', type: 'email', required: true },
-          ]}
-          onSubmit={(data: SimpleFormData) => console.log('Level A:', data)}
-          wcagLevel="A"
-          submitText="送信（レベルA）"
-        />
-      </div>
-
-      <div>
-        <h3 style={{ marginBottom: '16px' }}>レベルAA - 標準のフォーカススタイル（推奨）</h3>
+        <h3 style={{ marginBottom: '16px' }}>AA（デフォルト）</h3>
         <Form
           schema={simpleSchema}
           fields={[
@@ -235,13 +221,12 @@ export const WCAGLevels: Story = {
             { name: 'email', label: 'メールアドレス', type: 'email', required: true },
           ]}
           onSubmit={(data: SimpleFormData) => console.log('Level AA:', data)}
-          wcagLevel="AA"
-          submitText="送信（レベルAA）"
+          submitText="送信（AA）"
         />
       </div>
 
       <div>
-        <h3 style={{ marginBottom: '16px' }}>レベルAAA - 最大限のフォーカス表示</h3>
+        <h3 style={{ marginBottom: '16px' }}>AAA（最大のフォーカス表示）</h3>
         <Form
           schema={simpleSchema}
           fields={[
@@ -250,7 +235,7 @@ export const WCAGLevels: Story = {
           ]}
           onSubmit={(data: SimpleFormData) => console.log('Level AAA:', data)}
           wcagLevel="AAA"
-          submitText="送信（レベルAAA）"
+          submitText="送信（AAA）"
         />
       </div>
     </div>
@@ -258,7 +243,7 @@ export const WCAGLevels: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'WCAGレベル（A/AA/AAA）によるフォーカススタイルの違い。Tabキーでフォーカスを移動して確認してください。',
+        story: 'コンポーネントで選べる WCAG レベルは AA / AAA の2段階。Tabキーでフォーカスを移動して違いを確認してください。',
       },
     },
   },
@@ -474,7 +459,7 @@ type FormData = z.infer<typeof schema>;
             <li><strong>Zodスキーマ統合</strong>: 型安全なバリデーション</li>
             <li><strong>react-hook-form</strong>: 高パフォーマンスなフォーム管理</li>
             <li><strong>アクセシブルなエラー表示</strong>: aria-invalid, aria-describedby, role="alert"</li>
-            <li><strong>WCAGレベル対応</strong>: A/AA/AAA のフォーカススタイル</li>
+            <li><strong>WCAGレベル対応</strong>: AA/AAA のフォーカススタイル</li>
             <li><strong>ヘルパースキーマ</strong>: よく使うバリデーションを簡単に利用</li>
           </ul>
         </div>
@@ -514,7 +499,7 @@ formSchemas.phone               // 電話番号`}
 - \`fields\`: フィールド設定配列
 - \`onSubmit\`: 送信時のコールバック
 - \`submitText\`: 送信ボタンのテキスト
-- \`wcagLevel\`: WCAGレベル（A/AA/AAA）
+- \`wcagLevel\`: WCAGレベル（AA/AAA）
 - \`defaultValues\`: デフォルト値
 - \`isSubmitting\`: 送信中の状態
         `,

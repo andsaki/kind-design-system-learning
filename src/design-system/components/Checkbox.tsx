@@ -1,7 +1,7 @@
 import React from "react";
 import { checkbox } from "../../../styled-system/recipes";
 import { css, cx } from "@/styled-system/css";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 
 export interface CheckboxProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
@@ -9,7 +9,7 @@ export interface CheckboxProps
   error?: string;
   helpText?: string;
   indeterminate?: boolean;
-  wcagLevel?: WCAGLevel;
+  wcagLevel?: ComponentWCAGLevel;
 }
 
 export const Checkbox: React.FC<CheckboxProps> = ({

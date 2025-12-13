@@ -1,16 +1,16 @@
 import React from 'react';
 import { breadcrumbs as breadcrumbsRecipe } from '../../../styled-system/recipes';
 import { cx } from '@/styled-system/css';
-import type { WCAGLevel } from '../constants/accessibility';
+import type { ComponentWCAGLevel } from '../constants/accessibility';
 
 // Context for passing WCAG level to child components
-const BreadcrumbsContext = React.createContext<WCAGLevel>('AA');
+const BreadcrumbsContext = React.createContext<ComponentWCAGLevel>('AA');
 
 export interface BreadcrumbsProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
   className?: string;
   label?: string;
-  wcagLevel?: WCAGLevel;
+  wcagLevel?: ComponentWCAGLevel;
 }
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({

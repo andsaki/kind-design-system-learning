@@ -355,7 +355,7 @@ export const MultipleGroups: Story = {
 /**
  * WCAGレベル比較
  *
- * A/AA/AAAの3つのアクセシビリティレベルのフォーカス表示の違いを確認できます。
+ * AA/AAAの2つのアクセシビリティレベルのフォーカス表示の違いを確認できます。
  * Tabキーでフォーカスを移動して確認してください。
  */
 export const WCAGLevels: Story = {
@@ -363,7 +363,6 @@ export const WCAGLevels: Story = {
     label: "",
   },
   render: () => {
-    const [selectedA, setSelectedA] = useState("option1");
     const [selectedAA, setSelectedAA] = useState("option1");
     const [selectedAAA, setSelectedAAA] = useState("option1");
 
@@ -385,33 +384,6 @@ export const WCAGLevels: Story = {
             Tabキーまたは矢印キーでフォーカスを移動すると、各WCAGレベルのフォーカス表示の違いを確認できます。
             マウスクリックではフォーカススタイルは表示されません。
           </p>
-        </div>
-
-        <div>
-          <h3 style={{ marginBottom: "0.5rem", fontSize: "14px", fontWeight: "bold" }}>
-            レベルA（最低限）
-          </h3>
-          <p style={{ marginBottom: "1rem", fontSize: "12px", color: "#6b7280" }}>
-            薄いアウトラインのみ
-          </p>
-          <RadioGroup label="お好きなフルーツは？">
-            <Radio
-              label="りんご"
-              name="fruit-a"
-              value="option1"
-              wcagLevel="A"
-              checked={selectedA === "option1"}
-              onChange={(e) => setSelectedA(e.target.value)}
-            />
-            <Radio
-              label="バナナ"
-              name="fruit-a"
-              value="option2"
-              wcagLevel="A"
-              checked={selectedA === "option2"}
-              onChange={(e) => setSelectedA(e.target.value)}
-            />
-          </RadioGroup>
         </div>
 
         <div>

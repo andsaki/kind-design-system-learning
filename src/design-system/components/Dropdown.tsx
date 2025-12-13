@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { css, cx } from "@/styled-system/css";
 import { dropdown as dropdownRecipe } from "../../../styled-system/recipes";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 
 export interface DropdownOption {
   value: string;
@@ -19,7 +19,7 @@ export interface DropdownProps {
   helperText?: string;
   disabled?: boolean;
   required?: boolean;
-  wcagLevel?: WCAGLevel;
+  wcagLevel?: ComponentWCAGLevel;
 }
 
 export const Dropdown: React.FC<DropdownProps> = ({

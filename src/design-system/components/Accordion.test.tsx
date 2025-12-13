@@ -95,17 +95,6 @@ describe('Accordion', () => {
       expect(details).toHaveAttribute('data-wcag-level', 'AA');
     });
 
-    it('Aレベルが指定できる', () => {
-      const { container } = render(
-        <Accordion wcagLevel="A">
-          <AccordionSummary>タイトル</AccordionSummary>
-          <AccordionContent>内容</AccordionContent>
-        </Accordion>
-      );
-      const details = container.querySelector('details');
-      expect(details).toHaveAttribute('data-wcag-level', 'A');
-    });
-
     it('AAAレベルが指定できる', () => {
       const { container } = render(
         <Accordion wcagLevel="AAA">

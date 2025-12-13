@@ -1,22 +1,5 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
-
-const focusStyles = {
-  A: {
-    backgroundColor: "blue.50",
-    color: "blue.500",
-    outlineColor: "blue.300",
-  },
-  AA: {
-    backgroundColor: "blue.50",
-    color: "blue.700",
-    outlineColor: "blue.500",
-  },
-  AAA: {
-    backgroundColor: "yellow",
-    color: "blue.800",
-    outlineColor: "black",
-  },
-} as const;
+import { getWcagFocusVisibleStyle } from "../shared/wcag";
 
 export const breadcrumbs: SlotRecipeConfig = {
   className: "breadcrumbs",
@@ -61,28 +44,25 @@ export const breadcrumbs: SlotRecipeConfig = {
     wcagLevel: {
       A: {
         item: {
-          color: "contents.secondary",
+          color: "gray.500",
           "&[data-current='true']": {
-            color: "contents.primary",
+            color: "gray.700",
             fontWeight: "medium",
           },
         },
         link: {
-          color: "contents.link",
+          color: "blue.500",
           _hover: {
             color: "blue.600",
-            textDecorationThickness: "0.125rem",
+            textDecorationThickness: "0.0625rem",
           },
           _focusVisible: {
-            ...focusStyles.A,
-            outlineStyle: "solid",
-            outlineWidth: "0.1875rem",
-            outlineOffset: "0.125rem",
+            ...getWcagFocusVisibleStyle("A"),
             borderRadius: "0.25rem",
           },
         },
         separator: {
-          color: "contents.tertiary",
+          color: "gray.400",
         },
       },
       AA: {
@@ -100,10 +80,7 @@ export const breadcrumbs: SlotRecipeConfig = {
             textDecorationThickness: "0.125rem",
           },
           _focusVisible: {
-            ...focusStyles.AA,
-            outlineStyle: "solid",
-            outlineWidth: "0.1875rem",
-            outlineOffset: "0.125rem",
+            ...getWcagFocusVisibleStyle("AA"),
             borderRadius: "0.25rem",
           },
         },
@@ -126,10 +103,7 @@ export const breadcrumbs: SlotRecipeConfig = {
             textDecorationThickness: "0.125rem",
           },
           _focusVisible: {
-            ...focusStyles.AAA,
-            outlineStyle: "solid",
-            outlineWidth: "0.25rem",
-            outlineOffset: "0.125rem",
+            ...getWcagFocusVisibleStyle("AAA"),
             borderRadius: "0.25rem",
           },
         },

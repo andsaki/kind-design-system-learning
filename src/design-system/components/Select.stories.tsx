@@ -171,27 +171,6 @@ export const WCAGLevels: Story = {
         padding: '1.5rem',
         backgroundColor: '#f9fafb',
         borderRadius: '1rem',
-        border: '1px solid #d1d5db'
-      }}>
-        <h3 style={{ marginBottom: '0.5rem', fontSize: '1.125rem', fontWeight: 'bold', color: '#1f2937' }}>
-          WCAG Level A
-        </h3>
-        <p style={{ marginBottom: '1rem', color: '#6b7280', fontSize: '0.875rem' }}>
-          基本的なアクセシビリティ要件を満たします<br />
-          フォーカススタイル: 薄い青のアウトライン
-        </p>
-        <Select
-          label="国を選択"
-          options={countryOptions}
-          placeholder="選択してください"
-          wcagLevel="A"
-        />
-      </div>
-
-      <div style={{
-        padding: '1.5rem',
-        backgroundColor: '#f9fafb',
-        borderRadius: '1rem',
         border: '1px solid #1d4ed8'
       }}>
         <h3 style={{ marginBottom: '0.5rem', fontSize: '1.125rem', fontWeight: 'bold', color: '#1f2937' }}>

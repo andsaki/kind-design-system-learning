@@ -1,4 +1,5 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
+import { wcagSurfaceBorders } from "../shared/wcag";
 
 export const infoBox: SlotRecipeConfig = {
   className: "info-box",
@@ -30,37 +31,44 @@ export const infoBox: SlotRecipeConfig = {
     variant: {
       info: {
         root: {
-          bg: "bg.secondary",
-          borderColor: "border.default",
           color: "contents.link",
         },
       },
       warning: {
         root: {
-          bg: "bg.secondary",
-          borderColor: "border.warning",
           color: "contents.warning",
         },
       },
       success: {
         root: {
-          bg: "bg.secondary",
-          borderColor: "border.success",
           color: "contents.success",
         },
       },
       tip: {
         root: {
-          bg: "bg.secondary",
-          borderColor: "border.default",
           color: "contents.primary",
         },
       },
     },
     wcagLevel: {
-      A: { root: {} },
-      AA: { root: {} },
-      AAA: { root: {} },
+      A: {
+        root: {
+          backgroundColor: wcagSurfaceBorders.A.backgroundColor,
+          borderColor: wcagSurfaceBorders.A.borderColor,
+        },
+      },
+      AA: {
+        root: {
+          backgroundColor: wcagSurfaceBorders.AA.backgroundColor,
+          borderColor: wcagSurfaceBorders.AA.borderColor,
+        },
+      },
+      AAA: {
+        root: {
+          backgroundColor: wcagSurfaceBorders.AAA.backgroundColor,
+          borderColor: wcagSurfaceBorders.AAA.borderColor,
+        },
+      },
     },
     leftBorder: {
       true: {
