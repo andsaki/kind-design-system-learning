@@ -190,11 +190,6 @@ describe('TextArea', () => {
       expect(screen.getByRole('textbox')).toBeInTheDocument();
     });
 
-    it('Aレベルが指定できる', () => {
-      render(<TextArea label="コメント" wcagLevel="A" />);
-      expect(screen.getByRole('textbox')).toBeInTheDocument();
-    });
-
     it('AAAレベルが指定できる', () => {
       render(<TextArea label="コメント" wcagLevel="AAA" />);
       expect(screen.getByRole('textbox')).toBeInTheDocument();

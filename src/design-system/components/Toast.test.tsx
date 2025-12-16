@@ -121,11 +121,6 @@ describe('Toast', () => {
       expect(screen.getByRole('alert')).toBeInTheDocument();
     });
 
-    it('Aレベルが指定できる', () => {
-      render(<Toast id="1" message="メッセージ" wcagLevel="A" onClose={vi.fn()} />);
-      expect(screen.getByRole('alert')).toBeInTheDocument();
-    });
-
     it('AAAレベルが指定できる', () => {
       render(<Toast id="1" message="メッセージ" wcagLevel="AAA" onClose={vi.fn()} />);
       expect(screen.getByRole('alert')).toBeInTheDocument();

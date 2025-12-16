@@ -1,31 +1,12 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
+import { getWcagFocusVisibleStyle, type WcagLevel } from "../shared/wcag";
 
-const focusStyles = {
-  A: {
-    "&[data-focused='true']": {
-      backgroundColor: "transparent",
-      color: "black",
-      outline: "0.125rem solid #64b5f6",
-      outlineOffset: "0",
-    },
+const createSummaryFocus = (level: WcagLevel) => ({
+  "&[data-focused='true']": {
+    ...getWcagFocusVisibleStyle(level),
+    color: level === "AAA" ? "black" : "gray.900",
   },
-  AA: {
-    "&[data-focused='true']": {
-      backgroundColor: "blue.50",
-      color: "gray.900",
-      outline: "0.1875rem solid blue.700",
-      outlineOffset: "0.125rem",
-    },
-  },
-  AAA: {
-    "&[data-focused='true']": {
-      backgroundColor: "yellow",
-      color: "black",
-      outline: "0.25rem solid black",
-      outlineOffset: "0.125rem",
-    },
-  },
-} as const;
+});
 
 export const accordion: SlotRecipeConfig = {
   className: "accordion",
@@ -82,13 +63,13 @@ export const accordion: SlotRecipeConfig = {
   variants: {
     wcagLevel: {
       A: {
-        summary: focusStyles.A,
+        summary: createSummaryFocus("A"),
       },
       AA: {
-        summary: focusStyles.AA,
+        summary: createSummaryFocus("AA"),
       },
       AAA: {
-        summary: focusStyles.AAA,
+        summary: createSummaryFocus("AAA"),
       },
     },
   },

@@ -1,52 +1,9 @@
 import type { RecipeConfig } from "@pandacss/dev";
+import { getWcagFocusVisibleStyle, type WcagLevel } from "../shared/wcag";
 
-const focusStyles = {
-  A: {
-    backgroundColor: "transparent",
-    color: "gray.900",
-    outlineColor: "blue.300",
-    outlineWidth: "thin",
-    outlineOffset: "0",
-  },
-  AA: {
-    backgroundColor: "blue.50",
-    color: "gray.900",
-    outlineColor: "blue.700",
-    outlineWidth: "base",
-    outlineOffset: "0.5",
-  },
-  AAA: {
-    backgroundColor: "yellow.400",
-    color: "gray.900",
-    outlineColor: "gray.900",
-    outlineWidth: "thick",
-    outlineOffset: "0.5",
-  },
-} as const;
-
-const dangerFocusStyles = {
-  A: {
-    backgroundColor: "transparent",
-    color: "gray.900",
-    outlineColor: "red.300",
-    outlineWidth: "thin",
-    outlineOffset: "0",
-  },
-  AA: {
-    backgroundColor: "red.50",
-    color: "gray.900",
-    outlineColor: "red.700",
-    outlineWidth: "base",
-    outlineOffset: "0.5",
-  },
-  AAA: {
-    backgroundColor: "yellow.400",
-    color: "gray.900",
-    outlineColor: "gray.900",
-    outlineWidth: "thick",
-    outlineOffset: "0.5",
-  },
-} as const;
+const createButtonFocus = (level: WcagLevel) => ({
+  _focusVisible: getWcagFocusVisibleStyle(level),
+});
 
 export const button: RecipeConfig = {
   className: "button",
@@ -104,15 +61,9 @@ export const button: RecipeConfig = {
       },
     },
     wcagLevel: {
-      A: {
-        _focusVisible: focusStyles.A,
-      },
-      AA: {
-        _focusVisible: focusStyles.AA,
-      },
-      AAA: {
-        _focusVisible: focusStyles.AAA,
-      },
+      A: createButtonFocus("A"),
+      AA: createButtonFocus("AA"),
+      AAA: createButtonFocus("AAA"),
     },
   },
   compoundVariants: [
@@ -128,13 +79,13 @@ export const button: RecipeConfig = {
           _disabled: {
             backgroundColor: "gray.300",
           },
-          backgroundColor: "blue.600",
-          borderColor: "blue.600",
+          backgroundColor: "blue.500",
+          borderColor: "blue.500",
         },
         _disabled: {
           backgroundColor: "gray.300",
           borderColor: "gray.300",
-          color: "gray.700",  // コントラスト比改善: 4.5:1以上
+          color: "gray.700",
         },
       },
     },
@@ -194,13 +145,13 @@ export const button: RecipeConfig = {
           _disabled: {
             backgroundColor: "gray.100",
           },
-          backgroundColor: "gray.50",
-          borderColor: "gray.400",
+          backgroundColor: "gray.100",
+          borderColor: "gray.300",
         },
         _disabled: {
           backgroundColor: "gray.200",
           borderColor: "gray.200",
-          color: "gray.700",  // コントラスト比改善: 4.5:1以上
+          color: "gray.700",
         },
       },
     },
@@ -261,12 +212,12 @@ export const button: RecipeConfig = {
             backgroundColor: "transparent",
           },
           backgroundColor: "blue.50",
-          borderColor: "blue.600",
+          borderColor: "blue.500",
         },
         _disabled: {
           backgroundColor: "transparent",
           borderColor: "gray.300",
-          color: "gray.600",  // コントラスト比改善: 4.5:1以上
+          color: "gray.600",
         },
       },
     },
@@ -322,18 +273,18 @@ export const button: RecipeConfig = {
         backgroundColor: "red.400",
         color: "white",
         borderColor: "red.400",
-        _focusVisible: dangerFocusStyles.A,
+        _focusVisible: createButtonFocus("A")._focusVisible,
         _hover: {
           _disabled: {
             backgroundColor: "gray.300",
           },
-          backgroundColor: "red.700",
-          borderColor: "red.700",
+          backgroundColor: "red.500",
+          borderColor: "red.500",
         },
         _disabled: {
           backgroundColor: "gray.300",
           borderColor: "gray.300",
-          color: "gray.700",  // コントラスト比改善: 4.5:1以上
+          color: "gray.700",
         },
       },
     },
@@ -345,7 +296,7 @@ export const button: RecipeConfig = {
         backgroundColor: "red.700",  // コントラスト比改善: 4.5:1以上
         color: "white",
         borderColor: "red.700",
-        _focusVisible: dangerFocusStyles.AA,
+        _focusVisible: createButtonFocus("AA")._focusVisible,
         _hover: {
           _disabled: {
             backgroundColor: "gray.300",
@@ -368,7 +319,7 @@ export const button: RecipeConfig = {
         backgroundColor: "red.700",
         color: "white",
         borderColor: "red.800",
-        _focusVisible: dangerFocusStyles.AAA,
+        _focusVisible: createButtonFocus("AAA")._focusVisible,
         _hover: {
           _disabled: {
             backgroundColor: "gray.300",

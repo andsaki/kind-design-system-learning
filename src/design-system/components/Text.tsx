@@ -1,7 +1,7 @@
 import React from "react";
 import { text as textRecipe } from "../../../styled-system/recipes";
 import { cx } from "@/styled-system/css";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 
 export interface TextProps {
   /** テキストのバリエーション */
@@ -23,8 +23,8 @@ export interface TextProps {
   color?: string;
   /** テキストの配置 */
   align?: "left" | "center" | "right" | "justify";
-  /** WCAGレベル */
-  wcagLevel?: WCAGLevel;
+  /** WCAGレベル (AA/AAA) */
+  wcagLevel?: ComponentWCAGLevel;
   /** 太字にする */
   bold?: boolean;
   /** イタリック体にする */

@@ -29,7 +29,7 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 export interface ToastProviderProps {
   children: ReactNode;
-  /** WCAGレベル（A, AA, AAA） */
+  /** WCAGレベル（AA, AAA） */
   wcagLevel?: WCAGLevel;
 }
 

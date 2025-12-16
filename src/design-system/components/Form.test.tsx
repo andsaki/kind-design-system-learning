@@ -177,14 +177,7 @@ describe('Form', () => {
       expect(screen.getAllByRole('textbox').length).toBe(2);
     });
 
-    it('Aレベルが適用される', () => {
-      render(
-        <Form schema={mockSchema} fields={mockFields} onSubmit={vi.fn()} wcagLevel="A" />
-      );
-      expect(screen.getAllByRole('textbox').length).toBe(2);
-    });
-
-    it('AAAレベルが適用される', () => {
+    it('AAAレベルが適用できる', () => {
       render(
         <Form schema={mockSchema} fields={mockFields} onSubmit={vi.fn()} wcagLevel="AAA" />
       );

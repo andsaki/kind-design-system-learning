@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import type { FocusEvent, KeyboardEvent, MouseEvent } from "react";
 import { css } from "@/styled-system/css";
 import {
   Button,
@@ -714,6 +715,51 @@ export const ARIAGuide = () => {
         </ul>
       </div>
 
+      <div className={css({ marginTop: 8 })}>
+        <SectionHeading>インライン要素の使い分け</SectionHeading>
+        <p
+          className={css({
+            color: "contents.secondary",
+            lineHeight: "relaxed",
+            marginBottom: 3,
+          })}
+        >
+          ARIA 属性の説明では <code>&lt;code&gt;</code> や <code>&lt;strong&gt;</code>{" "}
+          などのインライン要素がよく登場します。これらは視覚的な強調だけでなく、スクリーンリーダーに
+          「ここはコード片」「ここは重要語」と伝える役割もあります。
+        </p>
+        <ul
+          className={css({
+            color: "contents.primary",
+            lineHeight: "relaxed",
+            margin: 0,
+            paddingLeft: 5,
+          })}
+        >
+          <li>
+            <code>&lt;code&gt;</code>: 属性名やサンプルの値を囲むと「コード」として読み上げられ、
+            等幅フォントで表示されます。例:{" "}
+            <code>&lt;code&gt;aria-haspopup="menu"&lt;/code&gt;</code>
+          </li>
+          <li>
+            <code>&lt;strong&gt;</code>: 重要語を強調し、スクリーンリーダーも
+            「強調」や「ストロング」と案内します。例:{" "}
+            <code>&lt;strong&gt;必須&lt;/strong&gt;</code>
+          </li>
+          <li>
+            <code>&lt;em&gt;</code>: ニュアンスや語調を変えたい語句に使用。多くのスクリーンリーダーが
+            「強調」や声のトーンで違いを伝えるので、単なるスタイル目的ではなく意味的な強調に限定します。
+          </li>
+        </ul>
+        <CodeBlock
+          language="html"
+          code={`<p>
+  <strong>重要:</strong> <code>aria-label</code> には
+  <em>常に</em> 簡潔な説明文を設定してください。
+</p>`}
+        />
+      </div>
+
       {/* 試してみようセクション */}
       <div className={css({ marginTop: 8 })}>
         <h3
@@ -797,9 +843,668 @@ export const ARIAGuide = () => {
           </li>
         </ul>
       </div>
+
+      <div
+        className={css({
+          marginTop: 8,
+          padding: 4,
+          backgroundColor: "bg.primary",
+          borderRadius: "md",
+          borderWidth: "thin",
+          borderStyle: "solid",
+          borderColor: "border.default",
+          boxShadow: "sm",
+        })}
+      >
+        <SectionHeading>aria-haspopup の使い方</SectionHeading>
+        <p
+          className={css({
+            color: "contents.primary",
+            lineHeight: "relaxed",
+            marginBottom: 4,
+          })}
+        >
+          <code>aria-haspopup</code> は「このトリガーからどんな種類のポップアップが現れるか」を
+          スクリーンリーダーに予告する属性です。ネイティブの{" "}
+          <code>&lt;select&gt;</code> などでは不要ですが、カスタム UI を作るときは付与することで
+          ユーザーがフォーカス移動方法や期待される操作を把握できます。
+        </p>
+        <ul
+          className={css({
+            color: "contents.primary",
+            lineHeight: "relaxed",
+            margin: 0,
+            paddingLeft: 5,
+          })}
+        >
+          <li>
+            <strong>用途の違い:</strong>{" "}
+            <code>listbox</code> は「値を選ぶ」入力コンポーネント、<code>menu</code>{" "}
+            は「操作を選ぶ」コマンド一覧、<code>dialog</code> は「モーダルウィンドウ」を表現します。
+            実現したい UI の目的に応じて適切な値を選択してください。
+          </li>
+          <li>
+            <strong>値の選び方:</strong>{" "}
+            <code>"menu"</code> / <code>"listbox"</code> / <code>"dialog"</code>{" "}
+            などポップアップの種類を指定。Dropdown/Select では{" "}
+            <code>aria-haspopup="listbox"</code> が適切です。
+          </li>
+          <li>
+            <strong>スクリーンリーダーの案内:</strong>{" "}
+            <code>listbox</code> → 「リストボックス、N項目」、<code>menu</code>{" "}
+            → 「メニュー」、<code>dialog</code> → 「ダイアログ」のように
+            読み上げ内容が変わるため、ユーザーに期待される操作（矢印キーで移動、Enterで実行など）も伝わりやすくなります。
+          </li>
+          <li>
+            <strong>セットで使う属性:</strong>{" "}
+            <code>aria-expanded</code> で開閉状態を同期し、必要に応じて{" "}
+            <code>aria-controls</code> や <code>aria-labelledby</code> で
+            ポップアップとの関連を示します。
+          </li>
+          <li>
+            <strong>当プロジェクトの実装:</strong> Dropdown トリガーで{" "}
+            <code>aria-haspopup="listbox"</code> を使用し、開いたリストには{" "}
+            <code>role="listbox"</code> + <code>role="option"</code> を設定。
+            これによりスクリーンリーダーが「候補リストが開く」ことを認識できます。
+          </li>
+        </ul>
+        <CodeBlock
+          language="tsx"
+          code={`<button
+  type="button"
+  aria-haspopup="listbox"
+  aria-expanded={isOpen}
+  aria-controls="fruit-listbox"
+>
+  フルーツを選択
+</button>
+<ul id="fruit-listbox" role="listbox">
+  <li role="option" aria-selected="true">りんご</li>
+  <li role="option">バナナ</li>
+</ul>`}
+        />
+        <ScreenReaderDemo
+          label="スクリーンリーダーデモ"
+          description="VoiceOver では「りんご、ボタン、候補リストを開く」と案内され、Tab/Enterでリストを開くと各 option が順に読み上げられます。NVDA/JAWS でも aria-haspopup と role=listbox の組み合わせによりリストであることが伝わります。"
+        >
+          <AriaHaspopupDemo />
+        </ScreenReaderDemo>
+
+        <div className={css({ mt: 8 })}>
+          <h4
+            className={css({
+              mt: 0,
+              mb: 3,
+              fontSize: "lg",
+              color: "contents.primary",
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+            })}
+          >
+            <icons.component.button size={20} className={css({ color: "blue.600" })} />
+            メニュー (aria-haspopup="menu")
+          </h4>
+          <p
+            className={css({
+              color: "contents.secondary",
+              lineHeight: "relaxed",
+              marginBottom: 4,
+            })}
+          >
+            コンテキストメニューやアクションメニューは <code>aria-haspopup="menu"</code>{" "}
+            と <code>role="menu"</code> の組み合わせを使います。上下キーで項目移動、Enter/Spaceで決定できるようにし、項目には{" "}
+            <code>role="menuitem"</code> を設定します。
+          </p>
+          <ScreenReaderDemo
+            label="スクリーンリーダーデモ（メニュー）"
+            description="Tab でボタンにフォーカス → Enter/Space でメニューを開く → 上下矢印で項目移動 → Enter でアクションを決定できます。"
+          >
+            <AriaMenuHaspopupDemo />
+          </ScreenReaderDemo>
+        </div>
+
+        <div className={css({ mt: 8 })}>
+          <h4
+            className={css({
+              mt: 0,
+              mb: 3,
+              fontSize: "lg",
+              color: "contents.primary",
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+            })}
+          >
+            <icons.component.info size={20} className={css({ color: "orange.600" })} />
+            ダイアログ (aria-haspopup="dialog")
+          </h4>
+          <p
+            className={css({
+              color: "contents.secondary",
+              lineHeight: "relaxed",
+              marginBottom: 4,
+            })}
+          >
+            モーダルを開くトリガーは <code>aria-haspopup="dialog"</code>{" "}
+            を指定し、開いたダイアログ本体に <code>role="dialog"</code> +{" "}
+            <code>aria-modal="true"</code> を設定します。タイトルと本文を{" "}
+            <code>aria-labelledby</code> / <code>aria-describedby</code> で結びつけ、
+            Escapeキーで閉じられるように実装します。
+          </p>
+          <ScreenReaderDemo
+            label="スクリーンリーダーデモ（ダイアログ）"
+            description="トリガーを押すとモーダルが開き、VoiceOver/NVDA ではタイトル→本文→操作ボタンの順に読み上げられます。Esc か「閉じる」で元のボタンにフォーカスが戻ります。"
+          >
+            <AriaDialogHaspopupDemo />
+          </ScreenReaderDemo>
+        </div>
+      </div>
     </section>
   );
 };
+
+const demoOptions = [
+  { value: "apple", label: "りんご" },
+  { value: "banana", label: "バナナ" },
+  { value: "grape", label: "ぶどう" },
+  { value: "orange", label: "オレンジ" },
+];
+
+function AriaHaspopupDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(demoOptions[0].value);
+  const buttonId = useId();
+  const listboxId = `${buttonId}-listbox`;
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const selectedOption =
+    demoOptions.find((option) => option.value === selectedValue) ?? demoOptions[0];
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const optionId = `${listboxId}-${selectedValue}`;
+    const optionEl = document.getElementById(optionId);
+    if (optionEl instanceof HTMLElement) {
+      optionEl.focus();
+    }
+  }, [isOpen, listboxId, selectedValue]);
+
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (
+      wrapperRef.current &&
+      event.relatedTarget &&
+      wrapperRef.current.contains(event.relatedTarget as Node)
+    ) {
+      return;
+    }
+    setIsOpen(false);
+  };
+
+  const handleSelect = (value: string) => {
+    setSelectedValue(value);
+    setIsOpen(false);
+  };
+
+  const handleTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      setIsOpen(true);
+    } else if (event.key === "Escape") {
+      setIsOpen(false);
+    }
+  };
+
+  const handleOptionKeyDown = (event: KeyboardEvent<HTMLLIElement>, value: string) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleSelect(value);
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      setIsOpen(false);
+    }
+  };
+
+  return (
+    <div
+      ref={wrapperRef}
+      onBlur={handleBlur}
+      className={css({
+        mt: 4,
+        p: 4,
+        borderWidth: "thin",
+        borderStyle: "solid",
+        borderColor: "border.default",
+        borderRadius: "md",
+        backgroundColor: "bg.secondary",
+        maxW: "320px",
+      })}
+    >
+      <p className={css({ mt: 0, mb: 3, color: "contents.secondary", fontSize: "sm" })}>
+        下のボタンは <code>aria-haspopup="listbox"</code> を指定したカスタムの
+        ドロップダウン例です。
+      </p>
+      <button
+        id={buttonId}
+        type="button"
+        className={css({
+          width: "100%",
+          textAlign: "left",
+          padding: 3,
+          borderRadius: "sm",
+          borderWidth: "thin",
+          borderStyle: "solid",
+          borderColor: "border.default",
+          backgroundColor: "bg.primary",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: 2,
+        })}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-controls={listboxId}
+        onClick={() => setIsOpen((prev) => !prev)}
+        onKeyDown={handleTriggerKeyDown}
+      >
+        <span>{selectedOption.label}</span>
+        <span aria-hidden="true">▾</span>
+      </button>
+      {isOpen && (
+        <ul
+          id={listboxId}
+          role="listbox"
+          aria-labelledby={buttonId}
+          className={css({
+            mt: 2,
+            mb: 0,
+            listStyle: "none",
+            padding: 0,
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+            borderRadius: "md",
+            backgroundColor: "bg.primary",
+            boxShadow: "md",
+          })}
+        >
+          {demoOptions.map((option) => {
+            const optionId = `${listboxId}-${option.value}`;
+            const isSelected = option.value === selectedOption.value;
+            return (
+              <li
+                key={option.value}
+                id={optionId}
+                role="option"
+                aria-selected={isSelected}
+                tabIndex={isSelected ? 0 : -1}
+                onClick={() => handleSelect(option.value)}
+                onKeyDown={(event) => handleOptionKeyDown(event, option.value)}
+                className={css({
+                  px: 3,
+                  py: 2,
+                  cursor: "pointer",
+                  backgroundColor: isSelected ? "blue.50" : "transparent",
+                  color: "contents.primary",
+                  _hover: { backgroundColor: "blue.100" },
+                })}
+              >
+                {option.label}
+                {isSelected && (
+                  <span className={css({ ml: 2, color: "blue.700" })} aria-hidden="true">
+                    ✓
+                  </span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+const menuItems = [
+  { value: "edit", label: "編集する" },
+  { value: "duplicate", label: "複製する" },
+  { value: "archive", label: "アーカイブ" },
+  { value: "delete", label: "削除する" },
+];
+
+function AriaMenuHaspopupDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [lastAction, setLastAction] = useState<string>("");
+  const buttonId = useId();
+  const menuId = `${buttonId}-menu`;
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  const closeMenu = () => setIsOpen(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const targetId = `${menuId}-item-${activeIndex}`;
+    const el = document.getElementById(targetId);
+    if (el instanceof HTMLElement) {
+      el.focus();
+    }
+  }, [activeIndex, isOpen, menuId]);
+
+  const handleWrapperBlur = (event: FocusEvent<HTMLDivElement>) => {
+    if (
+      wrapperRef.current &&
+      event.relatedTarget &&
+      wrapperRef.current.contains(event.relatedTarget as Node)
+    ) {
+      return;
+    }
+    closeMenu();
+  };
+
+  const openMenu = () => {
+    setIsOpen(true);
+    setActiveIndex(0);
+  };
+
+  const handleTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      openMenu();
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      closeMenu();
+    }
+  };
+
+  const handleMenuKeyDown = (event: KeyboardEvent<HTMLLIElement>, index: number) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveIndex((prev) => (prev + 1) % menuItems.length);
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveIndex((prev) => (prev - 1 + menuItems.length) % menuItems.length);
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      setActiveIndex(0);
+    } else if (event.key === "End") {
+      event.preventDefault();
+      setActiveIndex(menuItems.length - 1);
+    } else if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleSelect(menuItems[index].label);
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      closeMenu();
+    }
+  };
+
+  const handleSelect = (label: string) => {
+    setLastAction(`「${label}」を選択しました`);
+    closeMenu();
+  };
+
+  return (
+    <div
+      ref={wrapperRef}
+      onBlur={handleWrapperBlur}
+      className={css({
+        mt: 4,
+        p: 4,
+        borderRadius: "md",
+        borderWidth: "thin",
+        borderStyle: "solid",
+        borderColor: "border.subtle",
+        backgroundColor: "bg.primary",
+        maxW: "320px",
+      })}
+    >
+      <p className={css({ mt: 0, mb: 3, color: "contents.secondary", fontSize: "sm" })}>
+        メニュー項目には <code>role="menuitem"</code> を付け、上下キーで移動させます。
+      </p>
+      <button
+        id={buttonId}
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        aria-controls={menuId}
+        onClick={() => (isOpen ? closeMenu() : openMenu())}
+        onKeyDown={handleTriggerKeyDown}
+        className={css({
+          width: "100%",
+          padding: 3,
+          borderWidth: "thin",
+          borderStyle: "solid",
+          borderColor: "border.default",
+          borderRadius: "sm",
+          backgroundColor: "bg.primary",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        })}
+      >
+        アクションを選択
+        <span aria-hidden="true">⋮</span>
+      </button>
+      {isOpen && (
+        <ul
+          id={menuId}
+          role="menu"
+          aria-labelledby={buttonId}
+          className={css({
+            mt: 2,
+            mb: 0,
+            listStyle: "none",
+            padding: 0,
+            borderWidth: "thin",
+            borderStyle: "solid",
+            borderColor: "border.default",
+            borderRadius: "md",
+            backgroundColor: "bg.secondary",
+            boxShadow: "md",
+          })}
+        >
+          {menuItems.map((item, index) => {
+            const itemId = `${menuId}-item-${index}`;
+            const isActive = index === activeIndex;
+            return (
+              <li
+                key={item.value}
+                id={itemId}
+                role="menuitem"
+                tabIndex={isActive ? 0 : -1}
+                onKeyDown={(event) => handleMenuKeyDown(event, index)}
+                onClick={() => handleSelect(item.label)}
+                className={css({
+                  px: 3,
+                  py: 2,
+                  cursor: "pointer",
+                  backgroundColor: isActive ? "blue.50" : "transparent",
+                  color: "contents.primary",
+                  _hover: { backgroundColor: "blue.100" },
+                })}
+              >
+                {item.label}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      {lastAction && (
+        <p
+          className={css({
+            margin: "0.5rem 0 0",
+            fontSize: "xs",
+            color: "contents.secondary",
+          })}
+        >
+          {lastAction}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function AriaDialogHaspopupDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const dialogId = useId();
+  const titleId = `${dialogId}-title`;
+  const descId = `${dialogId}-desc`;
+
+  const closeDialog = () => {
+    setIsOpen(false);
+    triggerRef.current?.focus();
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const timer = setTimeout(() => {
+      closeButtonRef.current?.focus();
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [isOpen]);
+
+  const handleDialogKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeDialog();
+    }
+  };
+
+  const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      closeDialog();
+    }
+  };
+
+  return (
+    <div
+      className={css({
+        position: "relative",
+        p: 4,
+        borderWidth: "thin",
+        borderStyle: "solid",
+        borderColor: "border.subtle",
+        borderRadius: "md",
+        backgroundColor: "bg.primary",
+      })}
+    >
+      <p className={css({ mt: 0, mb: 3, color: "contents.secondary", fontSize: "sm" })}>
+        <code>aria-haspopup="dialog"</code> + <code>aria-expanded</code> でモーダルを開くボタンを表現します。
+      </p>
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        aria-controls={`${dialogId}-panel`}
+        onClick={() => setIsOpen(true)}
+        className={css({
+          padding: 3,
+          borderWidth: "thin",
+          borderStyle: "solid",
+          borderColor: "border.default",
+          borderRadius: "sm",
+          backgroundColor: "blue.600",
+          color: "white",
+          fontWeight: "semibold",
+        })}
+      >
+        モーダルを開く
+      </button>
+      {isOpen && (
+        <div
+          role="presentation"
+          onClick={handleOverlayClick}
+          className={css({
+            position: "fixed",
+            inset: 0,
+            backgroundColor: "rgba(0,0,0,0.3)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 10,
+          })}
+        >
+          <div
+            id={`${dialogId}-panel`}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
+            aria-describedby={descId}
+            onKeyDown={handleDialogKeyDown}
+            tabIndex={-1}
+            className={css({
+              width: "min(90vw, 360px)",
+              backgroundColor: "bg.primary",
+              borderRadius: "lg",
+              borderWidth: "thin",
+              borderStyle: "solid",
+              borderColor: "border.default",
+              boxShadow: "xl",
+              p: 5,
+            })}
+          >
+            <h5 id={titleId} className={css({ mt: 0, mb: 2, color: "contents.primary" })}>
+              事前確認
+            </h5>
+            <p
+              id={descId}
+              className={css({
+                margin: 0,
+                color: "contents.secondary",
+                lineHeight: "relaxed",
+              })}
+            >
+              このモーダルは <code>role="dialog"</code> と{" "}
+              <code>aria-modal="true"</code> を使用しています。Esc で閉じることも可能です。
+            </p>
+            <div
+              className={css({
+                mt: 4,
+                display: "flex",
+                gap: 3,
+                justifyContent: "flex-end",
+              })}
+            >
+              <button
+                type="button"
+                className={css({
+                  padding: "0.5rem 0.75rem",
+                  borderWidth: "thin",
+                  borderStyle: "solid",
+                  borderColor: "border.default",
+                  borderRadius: "sm",
+                  backgroundColor: "bg.secondary",
+                })}
+                onClick={closeDialog}
+              >
+                キャンセル
+              </button>
+              <button
+                ref={closeButtonRef}
+                type="button"
+                className={css({
+                  padding: "0.5rem 0.75rem",
+                  borderRadius: "sm",
+                  borderWidth: "thin",
+                  borderStyle: "solid",
+                  borderColor: "blue.700",
+                  backgroundColor: "blue.700",
+                  color: "white",
+                  fontWeight: "semibold",
+                })}
+                onClick={closeDialog}
+              >
+                閉じる
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 // ARIA属性の有無を比較するデモ
 function ARIAComparisonDemo() {

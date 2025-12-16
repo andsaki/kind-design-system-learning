@@ -2,7 +2,7 @@ import type { RecipeConfig } from "@pandacss/dev";
 
 const wcagTextColors = {
   A: {
-    color: "primitive.gray[600]",
+    color: "gray.600",
   },
   AA: {
     color: "contents.primary",

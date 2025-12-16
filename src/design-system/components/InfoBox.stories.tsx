@@ -209,28 +209,11 @@ export const Accessibility: Story = {
 /**
  * WCAGレベル別の表示
  *
- * A（最低限）/ AA（推奨）/ AAA（最高）の3段階でコントラストを調整できます。
+ * AA（推奨）/ AAA（最高）の2段階でコントラストを調整できます。
  */
 export const WCAGLevels: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-      <div>
-        <h3 style={{ marginBottom: '1rem', fontSize: '18px', fontWeight: 'bold' }}>
-          Level A（最低限）
-        </h3>
-        <div style={{ display: 'grid', gap: '1rem' }}>
-          <InfoBox variant="info" wcagLevel="A" title="Info - Level A">
-            <p style={{ margin: 0 }}>最低限のコントラスト比を提供します。</p>
-          </InfoBox>
-          <InfoBox variant="warning" wcagLevel="A" title="Warning - Level A">
-            <p style={{ margin: 0 }}>プロトタイプやMVPに適しています。</p>
-          </InfoBox>
-          <InfoBox variant="success" wcagLevel="A" title="Success - Level A">
-            <p style={{ margin: 0 }}>大きなテキストでの使用が推奨されます。</p>
-          </InfoBox>
-        </div>
-      </div>
-
       <div>
         <h3 style={{ marginBottom: '1rem', fontSize: '18px', fontWeight: 'bold' }}>
           Level AA（推奨）★
@@ -267,9 +250,6 @@ export const WCAGLevels: Story = {
 
       <InfoBox variant="tip" icon="💡" title="使い分けのヒント" wcagLevel="AA">
         <ul style={{ margin: 0, paddingLeft: '1.5rem', lineHeight: 1.8 }}>
-          <li>
-            <strong>Level A</strong>: プロトタイプ、一時的なページ
-          </li>
           <li>
             <strong>Level AA</strong>: 一般的なWebサイト、アプリケーション（推奨）
           </li>
