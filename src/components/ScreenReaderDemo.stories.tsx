@@ -39,6 +39,7 @@ type Story = StoryObj<typeof meta>;
  */
 export const BasicInput: Story = {
   args: {
+    children: null,
     description: "ラベル付きテキスト入力がどのように読み上げられるかを確認できます。",
   },
   render: (args) => (
@@ -60,6 +61,7 @@ export const BasicInput: Story = {
  */
 export const RequiredField: Story = {
   args: {
+    children: null,
     description: "required属性とaria-requiredがどのように読み上げられるかを確認できます。",
   },
   render: (args) => (
@@ -85,6 +87,7 @@ export const RequiredField: Story = {
  */
 export const WithHelperText: Story = {
   args: {
+    children: null,
     description: "aria-describedbyでヘルプテキストが関連付けられた例です。",
   },
   render: (args) => (
@@ -109,6 +112,7 @@ export const WithHelperText: Story = {
  */
 export const DesignSystemInput: Story = {
   args: {
+    children: null,
     description: "プロジェクトのInputコンポーネントでの読み上げ例です。",
   },
   render: (args) => (
@@ -128,6 +132,7 @@ export const DesignSystemInput: Story = {
  */
 export const ButtonDemo: Story = {
   args: {
+    children: null,
     description: "ボタンのテキストがどのように読み上げられるかを確認できます。",
   },
   render: (args) => (
@@ -144,6 +149,7 @@ export const ButtonDemo: Story = {
  */
 export const IconButton: Story = {
   args: {
+    children: null,
     description: "aria-labelでアイコンボタンにラベルを付けた例です。",
   },
   render: (args) => (
@@ -160,6 +166,7 @@ export const IconButton: Story = {
  */
 export const CheckboxDemo: Story = {
   args: {
+    children: null,
     description: "チェックボックスの状態がどのように読み上げられるかを確認できます。",
   },
   render: (args) => (
@@ -174,6 +181,7 @@ export const CheckboxDemo: Story = {
  */
 export const FieldsetDemo: Story = {
   args: {
+    children: null,
     description: "fieldsetとlegendを使用したグループ化の読み上げ例です。",
   },
   render: (args) => (
@@ -208,6 +216,7 @@ export const FieldsetDemo: Story = {
  */
 export const CustomSrText: Story = {
   args: {
+    children: null,
     srText: "これはカスタムの読み上げテキストです。実際のDOMとは異なる内容を指定できます。",
     description: "srTextプロパティでカスタムテキストを指定した例です。",
   },
@@ -225,6 +234,7 @@ export const CustomSrText: Story = {
  */
 export const WithLabel: Story = {
   args: {
+    children: null,
     label: "Example Component",
     description: "ラベルを付けてコンポーネントを識別しやすくできます。",
   },
