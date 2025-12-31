@@ -66,8 +66,5 @@ export type { TextProps } from './Text';
 export { TextArea } from './TextArea';
 export type { TextAreaProps } from './TextArea';
 
-export { Checkbox } from './Checkbox';
-export type { CheckboxProps } from './Checkbox';
-
 export { InfoBox } from './InfoBox';
 export type { InfoBoxProps, InfoBoxVariant } from './InfoBox';
