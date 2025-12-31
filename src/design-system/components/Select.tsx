@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 import { select as selectRecipe } from '../../../styled-system/recipes';
 import { css, cx } from '@/styled-system/css';
-import type { WCAGLevel } from '../constants/accessibility';
+import type { ComponentWCAGLevel } from '../constants/accessibility';
 
 export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
   /** ラベルテキスト */
@@ -18,8 +18,8 @@ export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectE
   options: Array<{ value: string; label: string; disabled?: boolean }>;
   /** プレースホルダー（空の選択肢） */
   placeholder?: string;
-  /** WCAGアクセシビリティレベル (A/AA/AAA) @default 'AA' */
-  wcagLevel?: WCAGLevel;
+  /** WCAGアクセシビリティレベル (AA/AAA) @default 'AA' */
+  wcagLevel?: ComponentWCAGLevel;
 }
 
 /**

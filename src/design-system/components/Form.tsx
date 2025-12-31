@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "./Input";
 import { Button } from "./Button";
-import type { WCAGLevel } from "../constants/accessibility";
+import type { ComponentWCAGLevel } from "../constants/accessibility";
 import { css } from "@/styled-system/css";
 
 const formClass = css({
@@ -55,8 +55,8 @@ export interface FormProps<T extends z.ZodType<FieldValues>> {
   submitVariant?: "primary" | "secondary" | "outline";
   /** 送信ボタンのサイズ @default 'md' */
   submitSize?: "sm" | "md" | "lg";
-  /** WCAGレベル @default 'AA' */
-  wcagLevel?: WCAGLevel;
+  /** WCAGレベル（AA/AAA） @default 'AA' */
+  wcagLevel?: ComponentWCAGLevel;
   /** デフォルト値 */
   defaultValues?: z.infer<T>;
   /** フォームのカスタムスタイル */

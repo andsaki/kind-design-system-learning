@@ -118,32 +118,6 @@ export const WCAGLevels: Story = {
         padding: '1.5rem',
         backgroundColor: '#f9fafb',
         borderRadius: '1rem',
-        border: '2px solid primitive.gray[300]'
-      }}>
-        <h3 style={{ marginBottom: '0.5rem', fontSize: '1.125rem', fontWeight: 'bold', color: '#1f2937' }}>
-          WCAG Level A
-        </h3>
-        <p style={{ marginBottom: '1rem', color: '#6b7280', fontSize: '0.875rem' }}>
-          基本的なアクセシビリティ要件を満たします<br />
-          リンク色: <code style={{ backgroundColor: '#eff6ff', padding: '0.25rem 0.5rem', borderRadius: '0.5rem' }}>primitive.blue[500]</code> (コントラスト比 3.46:1)
-        </p>
-        <Breadcrumbs wcagLevel="A">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">ホーム</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/products">商品</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbItem isCurrent>カテゴリ</BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumbs>
-      </div>
-
-      <div style={{
-        padding: '1.5rem',
-        backgroundColor: '#f9fafb',
-        borderRadius: '1rem',
         border: '2px solid #1d4ed8'
       }}>
         <h3 style={{ marginBottom: '0.5rem', fontSize: '1.125rem', fontWeight: 'bold', color: '#1f2937' }}>

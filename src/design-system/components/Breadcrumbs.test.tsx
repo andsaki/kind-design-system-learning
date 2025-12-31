@@ -108,18 +108,6 @@ describe('Breadcrumbs', () => {
       expect(nav).toHaveAttribute('data-wcag-level', 'AA');
     });
 
-    it('Aレベルが指定できる', () => {
-      const { container } = render(
-        <Breadcrumbs wcagLevel="A">
-          <BreadcrumbList>
-            <BreadcrumbItem>テスト</BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumbs>
-      );
-      const nav = container.querySelector('nav');
-      expect(nav).toHaveAttribute('data-wcag-level', 'A');
-    });
-
     it('AAAレベルが指定できる', () => {
       const { container } = render(
         <Breadcrumbs wcagLevel="AAA">

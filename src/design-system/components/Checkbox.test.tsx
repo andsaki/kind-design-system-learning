@@ -149,11 +149,6 @@ describe('Checkbox', () => {
       expect(screen.getByRole('checkbox')).toBeInTheDocument();
     });
 
-    it('Aレベルが指定できる', () => {
-      render(<Checkbox label="チェック" wcagLevel="A" />);
-      expect(screen.getByRole('checkbox')).toBeInTheDocument();
-    });
-
     it('AAAレベルが指定できる', () => {
       render(<Checkbox label="チェック" wcagLevel="AAA" />);
       expect(screen.getByRole('checkbox')).toBeInTheDocument();

@@ -187,11 +187,6 @@ describe('Input', () => {
       expect(screen.getByLabelText('入力')).toBeInTheDocument();
     });
 
-    it('Aレベルが指定できる', () => {
-      render(<Input label="入力" wcagLevel="A" />);
-      expect(screen.getByLabelText('入力')).toBeInTheDocument();
-    });
-
     it('AAAレベルが指定できる', () => {
       render(<Input label="入力" wcagLevel="AAA" />);
       expect(screen.getByLabelText('入力')).toBeInTheDocument();

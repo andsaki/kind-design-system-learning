@@ -2,6 +2,7 @@ import { token } from '@/styled-system/tokens';
 
 export const WCAG_LEVELS = ['A', 'AA', 'AAA'] as const;
 export type WCAGLevel = (typeof WCAG_LEVELS)[number];
+export type ComponentWCAGLevel = WCAGLevel;
 
 type FocusStyle = {
   background: string;

@@ -1,4 +1,5 @@
 import type { SlotRecipeConfig } from "@pandacss/dev";
+import { getWcagFocusVisibleStyle } from "../shared/wcag";
 
 export const checkbox: SlotRecipeConfig = {
   className: "checkbox",
@@ -67,29 +68,17 @@ export const checkbox: SlotRecipeConfig = {
     wcagLevel: {
       A: {
         input: {
-          _focusVisible: {
-            outlineColor: "#64b5f6",
-            outlineWidth: "0.125rem",
-            outlineOffset: "0",
-          },
+          _focusVisible: getWcagFocusVisibleStyle("A"),
         },
       },
       AA: {
         input: {
-          _focusVisible: {
-            outlineColor: "#1976d2",
-            outlineWidth: "0.1875rem",
-            outlineOffset: "0.125rem",
-          },
+          _focusVisible: getWcagFocusVisibleStyle("AA"),
         },
       },
       AAA: {
         input: {
-          _focusVisible: {
-            outlineColor: "#000000",
-            outlineWidth: "0.25rem",
-            outlineOffset: "0.125rem",
-          },
+          _focusVisible: getWcagFocusVisibleStyle("AAA"),
         },
       },
     },
